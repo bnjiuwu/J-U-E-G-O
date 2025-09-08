@@ -1,9 +1,8 @@
 extends CharacterBody2D
 
 var input
-@export speed = 100.0
-var gravity = 10
-
+@export var speed = 100.0
+@export var gravity = 10
 
 
 
@@ -14,4 +13,29 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
+	movement(delta)
 	pass
+	
+	
+	
+func  movement(delta):
+	input = Input.get_action_strength("ui_right") - Input.get_action_strength("ui_left")
+	
+
+	
+	if input != 0:
+		if input > 0:
+			velocity.x += speed * delta
+			velocity.x = clamp(speed, 100.0, speed)
+			$Sprite2D.flip_h = false
+			
+		if input < 0: 
+			velocity.x -= speed * delta
+			velocity.x = clamp(-speed, 100.0, -speed)
+			$Sprite2D.flip_h = true
+	
+	if input == 0:
+		velocity.x = 0
+	
+	move_and_slide()
+	

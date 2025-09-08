@@ -1,11 +1,14 @@
 extends CharacterBody2D
 
 var input
-@export var speed = 100.0
+@export var move_speed = 100.0
 @export var gravity = 10
 
 
-
+func _physics_process(delta: float):
+	var input_axis = Input.get_axis("move_left", "move_right")
+	velocity.x = input_axis * move_speed
+	move_and_slide() 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	pass # Replace with function body.
@@ -13,29 +16,8 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	movement(delta)
+	
 	pass
 	
 	
-	
-func  movement(delta):
-	input = Input.get_action_strength("ui_right") - Input.get_action_strength("ui_left")
-	
-
-	
-	if input != 0:
-		if input > 0:
-			velocity.x += speed * delta
-			velocity.x = clamp(speed, 100.0, speed)
-			$AnimatedSprite2D.flip_h = false
-			
-		if input < 0: 
-			velocity.x -= speed * delta
-			velocity.x = clamp(-speed, 100.0, -speed)
-			$AnimatedSprite2D.flip_h = true
-	
-	if input == 0:
-		velocity.x = 0
-	
-	move_and_slide()
 	
