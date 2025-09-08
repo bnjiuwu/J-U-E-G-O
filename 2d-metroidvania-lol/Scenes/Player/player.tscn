@@ -1,0 +1,40 @@
+[gd_scene load_steps=6 format=3 uid="uid://braj8a8ooxs4t"]
+
+[ext_resource type="Script" uid="uid://dw6uvcpocgnu6" path="res://Scenes/Player/player.gd" id="1_xpcdj"]
+[ext_resource type="Texture2D" uid="uid://qivwdvekb6mx" path="res://sprites/robert.png" id="2_mtuoh"]
+[ext_resource type="Texture2D" uid="uid://bt73yjytwlqsr" path="res://sprites/karambit.png" id="3_htcer"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_mtuoh"]
+radius = 16.0
+height = 50.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_htcer"]
+size = Vector2(28.5, 25)
+
+[node name="player" type="CharacterBody2D"]
+script = ExtResource("1_xpcdj")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-4, -13)
+shape = SubResource("CapsuleShape2D_mtuoh")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+
+[node name="sword" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="sword"]
+position = Vector2(18, -3)
+shape = SubResource("RectangleShape2D_htcer")
+debug_color = Color(0.994283, 0.0689917, 1.92523e-07, 0.42)
+
+[node name="Robert" type="Sprite2D" parent="."]
+position = Vector2(-3, -18)
+texture = ExtResource("2_mtuoh")
+
+[node name="Karambit" type="Sprite2D" parent="."]
+position = Vector2(14, 5.96046e-08)
+rotation = 3.71057
+scale = Vector2(0.714774, 0.714774)
+texture = ExtResource("3_htcer")
