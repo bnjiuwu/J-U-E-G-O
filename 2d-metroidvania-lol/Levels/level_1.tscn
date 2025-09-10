@@ -1,16 +1,70 @@
-[gd_scene load_steps=2 format=3 uid="uid://c6n7qrlau6b0k"]
+[gd_scene load_steps=4 format=3 uid="uid://c6n7qrlau6b0k"]
 
 [ext_resource type="PackedScene" uid="uid://braj8a8ooxs4t" path="res://Scenes/Player/player.tscn" id="1_n0qsc"]
+[ext_resource type="Texture2D" uid="uid://bmadlquh1d2k3" path="res://sprites/basic_platform.png" id="2_dilhk"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_n0qsc"]
+size = Vector2(185, 25)
 
 [node name="level_1" type="Node2D"]
 position = Vector2(23, -10)
 
 [node name="player" parent="." instance=ExtResource("1_n0qsc")]
-position = Vector2(-37, -1)
+position = Vector2(-23, -22)
+
+[node name="Camera2D" type="Camera2D" parent="player"]
+position = Vector2(0, -4)
+scale = Vector2(0.70817, 1.09475)
+zoom = Vector2(2, 2)
+limit_smoothed = true
+position_smoothing_enabled = true
+rotation_smoothing_enabled = true
 
 [node name="Ground" type="StaticBody2D" parent="."]
 
 [node name="Sprite2D" type="Sprite2D" parent="Ground"]
 
-[node name="Camera2D" type="Camera2D" parent="."]
-zoom = Vector2(3, 3)
+[node name="BasicPlatform" type="Sprite2D" parent="Ground"]
+position = Vector2(4.49999, 49)
+scale = Vector2(0.341146, 0.146267)
+texture = ExtResource("2_dilhk")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Ground"]
+position = Vector2(-20, 20)
+shape = SubResource("RectangleShape2D_n0qsc")
+
+[node name="BasicPlatform2" type="Sprite2D" parent="Ground"]
+position = Vector2(-211.5, 13.25)
+scale = Vector2(0.341146, 0.146267)
+texture = ExtResource("2_dilhk")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Ground"]
+position = Vector2(-236, -15.75)
+shape = SubResource("RectangleShape2D_n0qsc")
+
+[node name="BasicPlatform3" type="Sprite2D" parent="Ground"]
+position = Vector2(-215.5, 122.25)
+scale = Vector2(0.341146, 0.146267)
+texture = ExtResource("2_dilhk")
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="Ground"]
+position = Vector2(-240, 93.25)
+shape = SubResource("RectangleShape2D_n0qsc")
+
+[node name="BasicPlatform4" type="Sprite2D" parent="Ground"]
+position = Vector2(267.5, 8.25001)
+scale = Vector2(0.341146, 0.146267)
+texture = ExtResource("2_dilhk")
+
+[node name="CollisionShape2D4" type="CollisionShape2D" parent="Ground"]
+position = Vector2(243, -20.75)
+shape = SubResource("RectangleShape2D_n0qsc")
+
+[node name="BasicPlatform5" type="Sprite2D" parent="Ground"]
+position = Vector2(242.5, 97.25)
+scale = Vector2(0.341146, 0.146267)
+texture = ExtResource("2_dilhk")
+
+[node name="CollisionShape2D5" type="CollisionShape2D" parent="Ground"]
+position = Vector2(218, 68.25)
+shape = SubResource("RectangleShape2D_n0qsc")
