@@ -1,14 +1,15 @@
 extends CharacterBody2D
 
+var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 @export var move_speed: float
 @export var jump_speed: float
-var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 @onready var animated_sprite = $AnimatedSprite2D
 var is_facing_right = true
+var facing_direction: Vector2 = Vector2.RIGHT
 
 #============== bullet ===========
 @export var bullet_scene: PackedScene
-@onready var muzzle: Marker2D = $cañon
+@onready var canon = $muzzle
 
 
 func _process(delta):
@@ -61,7 +62,23 @@ func move_x():
 	
 func fire_bullet():
 	var bullet = bullet_scene.instantiate()
-	var dir = Vector2.RIGHT if is_facing_right else Vector2.LEFT
+	
+	#direccion segun input
+	var dir = Vector2.ZERO
+	if Input.is_action_pressed("look_up"):
+		dir = Vector2.UP
+		canon.rotation = deg_to_rad(-90)
+	elif is_facing_right:
+		$muzzle.position.x = abs($muzzle.position.x)
+
+		dir = Vector2.RIGHT
+		canon.rotation = 0
+	else:
+		dir = Vector2.LEFT
+		$muzzle.position.x = -abs($muzzle.position.x)
+		canon.rotation = deg_to_rad(180)
+
 	bullet.direction = dir
-	bullet.global_position = $cañon.global_position
-	get_parent().add_child(bullet)
+	bullet.global_position = canon.global_position
+	bullet.rotation = dir.angle()
+	get_tree().current_scene.add_child(bullet)

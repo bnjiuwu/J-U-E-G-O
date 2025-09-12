@@ -7,13 +7,11 @@
 size = Vector2(185, 25)
 
 [node name="level_1" type="Node2D"]
-position = Vector2(23, -10)
 
 [node name="player" parent="." instance=ExtResource("1_n0qsc")]
-position = Vector2(-23, -22)
+move_speed = 200.0
 
 [node name="Camera2D" type="Camera2D" parent="player"]
-position = Vector2(0, -4)
 scale = Vector2(0.70817, 1.09475)
 zoom = Vector2(2, 2)
 limit_smoothed = true
@@ -21,6 +19,7 @@ position_smoothing_enabled = true
 rotation_smoothing_enabled = true
 
 [node name="Ground" type="StaticBody2D" parent="."]
+position = Vector2(24, 24)
 
 [node name="Sprite2D" type="Sprite2D" parent="Ground"]
 
