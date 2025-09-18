@@ -12,7 +12,7 @@ size = Vector2(185, 25)
 move_speed = 200.0
 
 [node name="Camera2D" type="Camera2D" parent="player"]
-scale = Vector2(0.70817, 1.09475)
+scale = Vector2(0.646, 1)
 zoom = Vector2(2, 2)
 limit_smoothed = true
 position_smoothing_enabled = true
@@ -67,3 +67,7 @@ texture = ExtResource("2_dilhk")
 [node name="CollisionShape2D5" type="CollisionShape2D" parent="Ground"]
 position = Vector2(218, 68.25)
 shape = SubResource("RectangleShape2D_n0qsc")
+
+[node name="background" type="StaticBody2D" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="background"]

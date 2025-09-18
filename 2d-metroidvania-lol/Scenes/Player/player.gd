@@ -1,10 +1,22 @@
 extends CharacterBody2D
 
+
+#=== dash properties ====
+@export var dash_speed: float = 600
+@export var dash_time: float = 0.2
+@export var dash_cooldown: float = 0.5
+
+var is_dashing: bool = false
+var dash_timer: float = 0.0
+var dash_cooldown_timer: float = 0.0
+
+
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 @export var move_speed: float
 @export var jump_speed: float
 @onready var animated_sprite = $AnimatedSprite2D
 var is_facing_right = true
+var is_facing_up = false
 var facing_direction: Vector2 = Vector2.RIGHT
 
 #============== bullet ===========
@@ -17,10 +29,13 @@ func _process(delta):
 		fire_bullet()
 
 func _physics_process(delta):
-	jump(delta)
-	move_x()
-	flip()
-	update_animation()
+	if not is_dashing:
+		jump(delta)
+		move_x()
+		flip()
+		update_animation()
+	dash(delta)
+	
 	move_and_slide()
 	
 func update_animation():
@@ -82,3 +97,26 @@ func fire_bullet():
 	bullet.global_position = canon.global_position
 	bullet.rotation = dir.angle()
 	get_tree().current_scene.add_child(bullet)
+
+func dash(delta):
+	# Si ya está en cooldown, lo contamos
+	if dash_cooldown_timer > 0:
+		dash_cooldown_timer -= delta
+
+	# Iniciar dash
+	if Input.is_action_just_pressed("dash") and dash_cooldown_timer <= 0 and not is_dashing:
+		is_dashing = true
+		dash_timer = dash_time
+		dash_cooldown_timer = dash_cooldown
+
+	# Mientras dura el dash
+	if is_dashing:
+		dash_timer -= delta
+		var dir = Vector2.RIGHT if is_facing_right else Vector2.LEFT
+		velocity = dir * dash_speed
+
+		# terminar dash
+		if dash_timer <= 0:
+			is_dashing = false
+
+	

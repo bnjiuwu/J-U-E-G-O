@@ -201,15 +201,15 @@ _data = {
 
 [node name="player" type="CharacterBody2D"]
 script = ExtResource("1_xpcdj")
-move_speed = 100.0
+dash_speed = 400.0
+move_speed = 70.0
 jump_speed = 400.0
 bullet_scene = ExtResource("2_0u5uq")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 scale = Vector2(0.994636, 1.03264)
 sprite_frames = SubResource("SpriteFrames_r5xpd")
-animation = &"walk"
-frame_progress = 0.721295
+animation = &"jump"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-1, 5)
