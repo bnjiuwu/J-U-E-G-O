@@ -2,9 +2,9 @@
 
 [ext_resource type="Script" uid="uid://dw6uvcpocgnu6" path="res://Scenes/Player/player.gd" id="1_xpcdj"]
 [ext_resource type="PackedScene" uid="uid://bfjsyuqkbr65o" path="res://Scenes/Bullet Scene/Bullet.tscn" id="2_0u5uq"]
-[ext_resource type="Texture2D" uid="uid://c6wcac5xj3vcq" path="res://sprites/roberto_jump.png" id="2_htcer"]
-[ext_resource type="Texture2D" uid="uid://baxhfylpjsfg6" path="res://sprites/idle.png" id="4_htcer"]
-[ext_resource type="Texture2D" uid="uid://bu62s307wao4b" path="res://sprites/walk_gun.png" id="5_htcer"]
+[ext_resource type="Texture2D" uid="uid://c6wcac5xj3vcq" path="res://sprites/roberto/roberto_jump.png" id="2_htcer"]
+[ext_resource type="Texture2D" uid="uid://baxhfylpjsfg6" path="res://sprites/roberto/idle.png" id="4_htcer"]
+[ext_resource type="Texture2D" uid="uid://bu62s307wao4b" path="res://sprites/roberto/walk_gun.png" id="5_htcer"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_r5xpd"]
 atlas = ExtResource("2_htcer")
