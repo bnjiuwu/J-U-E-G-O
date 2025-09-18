@@ -1,0 +1,68 @@
+[gd_scene load_steps=10 format=3 uid="uid://d3evjk846bf1b"]
+
+[ext_resource type="Script" uid="uid://cuwiarbxs7rkb" path="res://Scenes/Slime scene/slime.gd" id="1_dfub6"]
+[ext_resource type="Texture2D" uid="uid://dkio0507k5e1t" path="res://sprites/slime idle.png" id="2_obdvy"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dfub6"]
+atlas = ExtResource("2_obdvy")
+region = Rect2(0, 0, 34, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_obdvy"]
+atlas = ExtResource("2_obdvy")
+region = Rect2(34, 0, 34, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w1wy5"]
+atlas = ExtResource("2_obdvy")
+region = Rect2(68, 0, 34, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vhgc5"]
+atlas = ExtResource("2_obdvy")
+region = Rect2(102, 0, 34, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_pa6nx"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dfub6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_obdvy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_w1wy5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vhgc5")
+}],
+"loop": true,
+"name": &"slime_idle",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1iqch"]
+size = Vector2(29, 17)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_x82om"]
+size = Vector2(29, 17)
+
+[node name="Slime" type="CharacterBody2D"]
+script = ExtResource("1_dfub6")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -2)
+sprite_frames = SubResource("SpriteFrames_pa6nx")
+animation = &"slime_idle"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_1iqch")
+
+[node name="RayCast2D" type="RayCast2D" parent="."]
+target_position = Vector2(17, 13)
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_x82om")
+debug_color = Color(0.99882, 0, 0.131683, 0.42)
+
+[connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]

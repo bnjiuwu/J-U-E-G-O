@@ -5,12 +5,12 @@ extends CharacterBody2D
 @export var dash_speed: float = 600
 @export var dash_time: float = 0.2
 @export var dash_cooldown: float = 0.5
-
+  
 var is_dashing: bool = false
 var dash_timer: float = 0.0
 var dash_cooldown_timer: float = 0.0
 
-
+#===== movement =====
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 @export var move_speed: float
 @export var jump_speed: float
@@ -18,6 +18,10 @@ var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 var is_facing_right = true
 var is_facing_up = false
 var facing_direction: Vector2 = Vector2.RIGHT
+
+#==== health ======
+var health = 100
+
 
 #============== bullet ===========
 @export var bullet_scene: PackedScene
@@ -52,7 +56,8 @@ func update_animation():
 		animated_sprite.play("walk")
 	else:
 		animated_sprite.play("idle")
-		
+
+#==== movement ====
 func jump(delta):
 	# Gravedad siempre
 	if not is_on_floor():
@@ -62,19 +67,17 @@ func jump(delta):
 	# Salto
 	if Input.is_action_just_pressed("jump") and is_on_floor():
 		velocity.y = -jump_speed
-		
 func flip():
 	if velocity.x > 0:
 		is_facing_right = true
 		animated_sprite.flip_h = false
 	elif velocity.x < 0 :
 		is_facing_right = false
-		animated_sprite.flip_h = true
-		
+		animated_sprite.flip_h = true	
 func move_x():
 	var input_axis = Input.get_axis("move_left","move_right")
 	velocity.x = input_axis * move_speed
-	
+#==== fire bullet ===
 func fire_bullet():
 	var bullet = bullet_scene.instantiate()
 	
@@ -97,7 +100,7 @@ func fire_bullet():
 	bullet.global_position = canon.global_position
 	bullet.rotation = dir.angle()
 	get_tree().current_scene.add_child(bullet)
-
+#=== dash =====
 func dash(delta):
 	# Si ya está en cooldown, lo contamos
 	if dash_cooldown_timer > 0:
@@ -118,5 +121,13 @@ func dash(delta):
 		# terminar dash
 		if dash_timer <= 0:
 			is_dashing = false
+			
+func take_damage(amount):
+	health -= amount
+	print("Vida del jugador: ", health)
+	if health <= 0:
+		die()
 
-	
+func die():
+	print("El jugador ha muerto")
+	queue_free()

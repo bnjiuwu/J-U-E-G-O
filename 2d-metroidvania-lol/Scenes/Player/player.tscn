@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=3 uid="uid://braj8a8ooxs4t"]
+[gd_scene load_steps=29 format=3 uid="uid://braj8a8ooxs4t"]
 
 [ext_resource type="Script" uid="uid://dw6uvcpocgnu6" path="res://Scenes/Player/player.gd" id="1_xpcdj"]
 [ext_resource type="PackedScene" uid="uid://bfjsyuqkbr65o" path="res://Scenes/Bullet Scene/Bullet.tscn" id="2_0u5uq"]
@@ -146,6 +146,11 @@ animations = [{
 "name": &"jump",
 "speed": 8.0
 }, {
+"frames": [],
+"loop": true,
+"name": &"lookin_up",
+"speed": 5.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_jlvik")
@@ -179,26 +184,6 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_htcer"]
 size = Vector2(11.8632, 40.8373)
 
-[sub_resource type="Animation" id="Animation_dd0ac"]
-length = 0.001
-
-[sub_resource type="Animation" id="Animation_0u5uq"]
-resource_name = "idle"
-length = 3.0
-loop_mode = 1
-
-[sub_resource type="Animation" id="Animation_htcer"]
-resource_name = "walk"
-length = 1.2
-loop_mode = 1
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_0u5uq"]
-_data = {
-&"RESET": SubResource("Animation_dd0ac"),
-&"idle": SubResource("Animation_0u5uq"),
-&"walk": SubResource("Animation_htcer")
-}
-
 [node name="player" type="CharacterBody2D"]
 script = ExtResource("1_xpcdj")
 dash_speed = 400.0
@@ -209,7 +194,8 @@ bullet_scene = ExtResource("2_0u5uq")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 scale = Vector2(0.994636, 1.03264)
 sprite_frames = SubResource("SpriteFrames_r5xpd")
-animation = &"jump"
+animation = &"idle"
+frame_progress = 0.0660328
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-1, 5)
@@ -218,9 +204,3 @@ shape = SubResource("RectangleShape2D_htcer")
 
 [node name="muzzle" type="Node2D" parent="."]
 position = Vector2(29.205, 3.505)
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-&"": SubResource("AnimationLibrary_0u5uq")
-}
-autoplay = "idle"

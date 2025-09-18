@@ -1,6 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://c6n7qrlau6b0k"]
+[gd_scene load_steps=5 format=3 uid="uid://c6n7qrlau6b0k"]
 
 [ext_resource type="PackedScene" uid="uid://braj8a8ooxs4t" path="res://Scenes/Player/player.tscn" id="1_n0qsc"]
+[ext_resource type="PackedScene" uid="uid://d3evjk846bf1b" path="res://Scenes/Slime scene/slime.tscn" id="2_3mhv4"]
 [ext_resource type="Texture2D" uid="uid://bmadlquh1d2k3" path="res://sprites/basic_platform.png" id="2_dilhk"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_n0qsc"]
@@ -17,6 +18,9 @@ zoom = Vector2(2, 2)
 limit_smoothed = true
 position_smoothing_enabled = true
 rotation_smoothing_enabled = true
+
+[node name="Slime" parent="." instance=ExtResource("2_3mhv4")]
+position = Vector2(-217, -14)
 
 [node name="Ground" type="StaticBody2D" parent="."]
 position = Vector2(24, 24)

@@ -9,3 +9,5 @@ func _physics_process(delta):
 	
 	if position.x < -1000 or position.x > 1000 or position.y < -1000 or position.y > 1000:
 		queue_free()
+func _ready():
+	add_to_group("bullet")
