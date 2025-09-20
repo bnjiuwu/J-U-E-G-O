@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dpd56jmbofq5g"
-path="res://.godot/imported/idl.png-ad7e45912e5d9a1a0b79ecefc3913fc6.ctex"
+uid="uid://dhc1gdhci5i8k"
+path="res://.godot/imported/trees.png-6e75d14955cc1d57f0f9a335b96cef6f.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://sprites/idl.png"
-dest_files=["res://.godot/imported/idl.png-ad7e45912e5d9a1a0b79ecefc3913fc6.ctex"]
+source_file="res://images/Tile Maps/overworld/Tiles/Social/trees.png"
+dest_files=["res://.godot/imported/trees.png-6e75d14955cc1d57f0f9a335b96cef6f.ctex"]
 
 [params]
 

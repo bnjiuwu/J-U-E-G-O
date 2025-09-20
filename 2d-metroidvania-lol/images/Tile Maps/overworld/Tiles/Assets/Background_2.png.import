@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dpd56jmbofq5g"
-path="res://.godot/imported/idl.png-ad7e45912e5d9a1a0b79ecefc3913fc6.ctex"
+uid="uid://dy3awaemlwc22"
+path="res://.godot/imported/Background_2.png-1f834611df6ea5e9e20543ff47940692.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://sprites/idl.png"
-dest_files=["res://.godot/imported/idl.png-ad7e45912e5d9a1a0b79ecefc3913fc6.ctex"]
+source_file="res://images/Tile Maps/overworld/Tiles/Assets/Background_2.png"
+dest_files=["res://.godot/imported/Background_2.png-1f834611df6ea5e9e20543ff47940692.ctex"]
 
 [params]
 

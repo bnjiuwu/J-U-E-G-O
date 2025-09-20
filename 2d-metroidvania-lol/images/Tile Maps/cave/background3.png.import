@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dpd56jmbofq5g"
-path="res://.godot/imported/idl.png-ad7e45912e5d9a1a0b79ecefc3913fc6.ctex"
+uid="uid://di55dt2a58gtg"
+path="res://.godot/imported/background3.png-2a09f2bdfe37da6a788e98a429ae7c1a.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://sprites/idl.png"
-dest_files=["res://.godot/imported/idl.png-ad7e45912e5d9a1a0b79ecefc3913fc6.ctex"]
+source_file="res://images/Tile Maps/cave/background3.png"
+dest_files=["res://.godot/imported/background3.png-2a09f2bdfe37da6a788e98a429ae7c1a.ctex"]
 
 [params]
 

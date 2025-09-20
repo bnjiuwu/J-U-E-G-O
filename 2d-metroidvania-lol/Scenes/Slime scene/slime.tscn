@@ -52,12 +52,15 @@ script = ExtResource("1_dfub6")
 position = Vector2(0, -2)
 sprite_frames = SubResource("SpriteFrames_pa6nx")
 animation = &"slime_idle"
+frame_progress = 0.0560144
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_1iqch")
 
-[node name="RayCast2D" type="RayCast2D" parent="."]
-target_position = Vector2(17, 13)
+[node name="floor_check" type="RayCast2D" parent="."]
+position = Vector2(0, 10)
+exclude_parent = false
+target_position = Vector2(10, 20)
 
 [node name="Area2D" type="Area2D" parent="."]
 

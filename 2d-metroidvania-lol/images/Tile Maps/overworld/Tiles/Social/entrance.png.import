@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dpd56jmbofq5g"
-path="res://.godot/imported/idl.png-ad7e45912e5d9a1a0b79ecefc3913fc6.ctex"
+uid="uid://dq4qtl3lcg3wb"
+path="res://.godot/imported/entrance.png-a41edfc4bd720be4d0046ea49d1567f9.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://sprites/idl.png"
-dest_files=["res://.godot/imported/idl.png-ad7e45912e5d9a1a0b79ecefc3913fc6.ctex"]
+source_file="res://images/Tile Maps/overworld/Tiles/Social/entrance.png"
+dest_files=["res://.godot/imported/entrance.png-a41edfc4bd720be4d0046ea49d1567f9.ctex"]
 
 [params]
 
