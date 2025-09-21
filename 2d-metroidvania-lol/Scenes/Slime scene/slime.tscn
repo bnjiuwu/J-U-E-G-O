@@ -40,31 +40,33 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1iqch"]
-size = Vector2(29, 17)
+size = Vector2(43.5, 29.5)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_x82om"]
-size = Vector2(29, 17)
+size = Vector2(43.5, 29.5)
 
 [node name="Slime" type="CharacterBody2D"]
 script = ExtResource("1_dfub6")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-position = Vector2(0, -2)
+position = Vector2(-7.5, -10)
+scale = Vector2(1.44118, 1.5)
 sprite_frames = SubResource("SpriteFrames_pa6nx")
 animation = &"slime_idle"
-frame_progress = 0.0560144
+frame_progress = 0.546353
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-7.25, -6.25)
 shape = SubResource("RectangleShape2D_1iqch")
 
 [node name="floor_check" type="RayCast2D" parent="."]
-position = Vector2(0, 10)
 exclude_parent = false
 target_position = Vector2(10, 20)
 
 [node name="Area2D" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(-7.25, -6.25)
 shape = SubResource("RectangleShape2D_x82om")
 debug_color = Color(0.99882, 0, 0.131683, 0.42)
 

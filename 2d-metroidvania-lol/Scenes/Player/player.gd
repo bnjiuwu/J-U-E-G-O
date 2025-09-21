@@ -28,7 +28,7 @@ var health = 100
 @onready var canon = $muzzle
 
 
-func _process(delta):
+func _process(_delta):
 	if Input.is_action_just_pressed("attack"):
 		fire_bullet()
 
