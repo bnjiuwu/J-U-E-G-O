@@ -21,7 +21,9 @@ Se trata de un prototipo estilo **Metroidvania 2D**, con mecánicas básicas de 
 
 ## 📂 Estructura del proyecto
 ├── scenes/ # Escenas principales del juego
+
 ├── scripts/ # Lógica en GDScript
+
 ├── assets/ # Sprites, imágenes y sonidos
 
 
