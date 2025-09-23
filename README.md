@@ -1,11 +1,11 @@
-# 🎮 Roberto Manfinfla y su pistolita
+# Roberto Manfinfla y su pistolita
 
 Proyecto de **Programación Avanzada** desarrollado en **Godot Engine**.  
 Se trata de un prototipo estilo **Metroidvania 2D**, con mecánicas básicas de movimiento y combate.
 
 ---
 
-## 🚀 Características
+## Características
 - Movimiento del jugador (caminar, saltar, dash).
 - Sistema de disparo y ataque.
 - Escenarios tipo plataformas.
@@ -13,13 +13,13 @@ Se trata de un prototipo estilo **Metroidvania 2D**, con mecánicas básicas de 
 
 ---
 
-## 🛠️ Tecnologías
+## Tecnologías
 - [Godot Engine 4](https://godotengine.org/)  
 - Lenguaje: **GDScript**
 
 ---
 
-## 📂 Estructura del proyecto
+## Estructura del proyecto
 ├── scenes/ # Escenas principales del juego
 
 ├── scripts/ # Lógica en GDScript
@@ -29,7 +29,7 @@ Se trata de un prototipo estilo **Metroidvania 2D**, con mecánicas básicas de 
 
 ---
 
-## ▶️ Cómo ejecutar
+## Cómo ejecutar
 1. Instalar [Godot Engine](https://godotengine.org/download).
 2. Clonar este repositorio:
    ```bash
