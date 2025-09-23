@@ -36,7 +36,7 @@ Se trata de un prototipo estilo **Metroidvania 2D**, con mecánicas básicas de 
    git clone https://github.com/bnjiuwu/J-U-E-G-O.git
 
 ### Autores 
-- Benjamín
+- Benjamín Vega
 - Fernando
 - Tomás Guerra
 - Joaquín Carrasco
