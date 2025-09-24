@@ -16,23 +16,40 @@ var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 @export var jump_speed: float
 @onready var animated_sprite = $AnimatedSprite2D
 var is_facing_right = true
+
 var is_facing_up = false
 var facing_direction: Vector2 = Vector2.RIGHT
 
 #==== health ======
-var health = 100
-
+@export var max_health = 100
+var health: int
 
 #============== bullet ===========
 @export var bullet_scene: PackedScene
 @onready var canon = $muzzle
 
+#==== damage knockback =======
+var knockback_force: Vector2 = Vector2(300, -200) # (x: fuerza lateral, y: salto)
+var is_knockback: bool = false
+var knockback_timer: float = 0.0
+var knockback_duration: float = 0.2 # cuánto dura el retroceso
+
+
+
+func _ready() -> void:
+	health = max_health
+	add_to_group("player")
+	print("Player HP ready:",health)
+	
+	pass
 
 func _process(_delta):
 	if Input.is_action_just_pressed("attack"):
 		fire_bullet()
 
 func _physics_process(delta):
+
+	
 	if not is_dashing:
 		jump(delta)
 		move_x()
@@ -46,15 +63,19 @@ func update_animation():
 	if not is_on_floor():
 		if velocity.y < 0:
 			animated_sprite.play("jump")
+			print("jump")
 			pass
 		else:
 			animated_sprite.play("fall")
+			print("falling")
 			pass
 		return
 	
 	if velocity.x:
 		animated_sprite.play("walk")
+		print("moving")
 	else:
+		print("idle")
 		animated_sprite.play("idle")
 
 #==== movement ====
@@ -121,13 +142,30 @@ func dash(delta):
 		# terminar dash
 		if dash_timer <= 0:
 			is_dashing = false
-			
-func take_damage(amount):
+
+func _on_hitbox_area_entered(area: Area2D) -> void:
+	print("⚠️ Player detectó un área:", area.name)
+	
+	if area.is_in_group("enemy"):
+		print("⚡ Player hit by enemy")
+		take_damage(20)
+	elif area.is_in_group("projectile"):
+		print("💥 Daño por proyectil")
+		take_damage(10)
+		pass
+	elif area.is_in_group("world damage"):
+		print("daño por pincho")
+		take_damage(100)
+		
+func take_damage(amount) -> void:
 	health -= amount
-	print("Vida del jugador: ", health)
+	if health < 0:
+		health = 0
+	print("⚠️ Player recibió", amount, "daño | HP:", health)
+
 	if health <= 0:
 		die()
 
-func die():
-	print("El jugador ha muerto")
-	queue_free()
+func die() -> void:
+	print("💀 Player ha muerto")
+	queue_free() # aquí puedes cambiarlo por animación/game over

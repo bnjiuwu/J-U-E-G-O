@@ -6,7 +6,7 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_p470f"]
 size = Vector2(6, 15.625)
 
-[node name="Bullet" type="Area2D"]
+[node name="Bullet" type="Area2D" groups=["projectile"]]
 script = ExtResource("1_p470f")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]

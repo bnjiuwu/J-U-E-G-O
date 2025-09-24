@@ -24,7 +24,7 @@ func _ready():
 	start_pos = global_position
 	
 	# Agrupar al enemigo
-	add_to_group("enemies")
+	add_to_group("enemy")
 	
 	# Conectar señal del Area2D
 	hitbox.area_entered.connect(_on_area_2d_area_entered)
@@ -70,7 +70,10 @@ func take_damage(amount: int):
 	if health <= 0:
 		queue_free()
 
-func _on_area_2d_area_entered(area: Area2D):
-	if area.is_in_group("bullet"): # si entra una bala
-		take_damage(1)              # hacer daño al enemigo
-		area.queue_free()           # destruir la bala
+func _on_area_2d_area_entered(area: Area2D) -> void:
+	if area.is_in_group("player"):
+		print("💥 Enemy collided with player")
+	if area.is_in_group("bullet"):
+		print("💥 Enemy hit by bullet")
+		take_damage(1)
+		area.queue_free()

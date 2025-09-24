@@ -1,30 +1,32 @@
 [gd_scene load_steps=10 format=3 uid="uid://d3evjk846bf1b"]
 
 [ext_resource type="Script" uid="uid://cuwiarbxs7rkb" path="res://Scenes/Slime scene/slime.gd" id="1_dfub6"]
-[ext_resource type="Texture2D" uid="uid://dkio0507k5e1t" path="res://sprites/enemies/slime idle.png" id="2_obdvy"]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_dfub6"]
-atlas = ExtResource("2_obdvy")
-region = Rect2(0, 0, 34, 32)
+[ext_resource type="Texture2D" uid="uid://dkio0507k5e1t" path="res://sprites/enemies/slime idle.png" id="2_dfub6"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_obdvy"]
-atlas = ExtResource("2_obdvy")
-region = Rect2(34, 0, 34, 32)
+atlas = ExtResource("2_dfub6")
+region = Rect2(0, 0, 34, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_w1wy5"]
-atlas = ExtResource("2_obdvy")
-region = Rect2(68, 0, 34, 32)
+atlas = ExtResource("2_dfub6")
+region = Rect2(34, 0, 34, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_vhgc5"]
-atlas = ExtResource("2_obdvy")
+atlas = ExtResource("2_dfub6")
+region = Rect2(68, 0, 34, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bj3od"]
+atlas = ExtResource("2_dfub6")
 region = Rect2(102, 0, 34, 32)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_pa6nx"]
 animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_dfub6")
+"frames": [],
+"loop": true,
+"name": &"dead",
+"speed": 5.0
 }, {
+"frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_obdvy")
 }, {
@@ -33,6 +35,9 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_vhgc5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bj3od")
 }],
 "loop": true,
 "name": &"slime_idle",
@@ -40,12 +45,12 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1iqch"]
-size = Vector2(43.5, 29.5)
+size = Vector2(37, 24.5)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_x82om"]
 size = Vector2(43.5, 29.5)
 
-[node name="Slime" type="CharacterBody2D"]
+[node name="Slime" type="CharacterBody2D" groups=["enemy"]]
 script = ExtResource("1_dfub6")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
@@ -53,17 +58,18 @@ position = Vector2(-7.5, -10)
 scale = Vector2(1.44118, 1.5)
 sprite_frames = SubResource("SpriteFrames_pa6nx")
 animation = &"slime_idle"
-frame_progress = 0.546353
+frame_progress = 0.590855
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(-7.25, -6.25)
+position = Vector2(-7.5, -3.75)
 shape = SubResource("RectangleShape2D_1iqch")
 
 [node name="floor_check" type="RayCast2D" parent="."]
 exclude_parent = false
 target_position = Vector2(10, 20)
 
-[node name="Area2D" type="Area2D" parent="."]
+[node name="Area2D" type="Area2D" parent="." groups=["enemy"]]
+collision_mask = 5
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 position = Vector2(-7.25, -6.25)
