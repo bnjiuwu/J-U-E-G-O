@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://durpvbkj13utd"
-path="res://.godot/imported/monke.png-61c6174b30c5acc89078e2eb439a240c.ctex"
+uid="uid://dkqia2mxr4bnf"
+path="res://.godot/imported/sopaipilla.png-41f8afe93a0160cf221e3328e093bf1e.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://images/menu/monke.png"
-dest_files=["res://.godot/imported/monke.png-61c6174b30c5acc89078e2eb439a240c.ctex"]
+source_file="res://images/menu/sopaipilla.png"
+dest_files=["res://.godot/imported/sopaipilla.png-41f8afe93a0160cf221e3328e093bf1e.ctex"]
 
 [params]
 

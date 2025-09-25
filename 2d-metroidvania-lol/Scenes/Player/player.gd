@@ -48,16 +48,20 @@ func _process(_delta):
 		fire_bullet()
 
 func _physics_process(delta):
-
-	
 	if not is_dashing:
 		jump(delta)
 		move_x()
 		flip()
 		update_animation()
 	dash(delta)
-	
 	move_and_slide()
+		# Check collisions after moving
+	for i in get_slide_collision_count():
+		var col = get_slide_collision(i)
+		if col.get_collider().is_in_group("world damage"):
+			print("☠️ Player hit world hazard:", col.get_collider())
+			take_damage(100)
+
 	
 func update_animation():
 	if not is_on_floor():
