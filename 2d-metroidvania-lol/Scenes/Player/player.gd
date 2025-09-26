@@ -48,6 +48,8 @@ func _process(_delta):
 		fire_bullet()
 
 func _physics_process(delta):
+	
+	
 	if not is_dashing:
 		jump(delta)
 		move_x()
@@ -76,11 +78,18 @@ func update_animation():
 		return
 	
 	if velocity.x:
-		animated_sprite.play("walk")
-		print("moving")
+		if Input.is_action_pressed("look_up"):
+			animated_sprite.play("up_shoot_walk") # fixed name
+			print("moving + look up")
+		else:
+			animated_sprite.play("walk")
 	else:
-		print("idle")
-		animated_sprite.play("idle")
+		if Input.is_action_pressed("look_up"):
+			animated_sprite.play("up_idle")
+			print("idle + look up")
+		else:
+			animated_sprite.play("idle")
+			print("idle")
 
 #==== movement ====
 func jump(delta):
