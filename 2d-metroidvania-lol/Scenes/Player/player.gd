@@ -68,12 +68,18 @@ func _physics_process(delta):
 func update_animation():
 	if not is_on_floor():
 		if velocity.y < 0:
-			animated_sprite.play("jump")
-			print("jump")
+			if Input.is_action_pressed("look_up"):
+				animated_sprite.play("jump_looking_up")
+			else:
+				animated_sprite.play("jump")
+				print("jump")
 			pass
 		else:
-			animated_sprite.play("fall")
-			print("falling")
+			if Input.is_action_pressed("look_up"):
+				animated_sprite.play("fall_lookin_up")
+			else:
+				animated_sprite.play("fall")
+				print("falling")
 			pass
 		return
 	
@@ -114,26 +120,27 @@ func move_x():
 #==== fire bullet ===
 func fire_bullet():
 	var bullet = bullet_scene.instantiate()
-	
-	#direccion segun input
 	var dir = Vector2.ZERO
+	
 	if Input.is_action_pressed("look_up"):
 		dir = Vector2.UP
-		canon.rotation = deg_to_rad(-90)
+		$muzzle.position = Vector2(0, -19) # desplaza el punto arriba del Player
+		$muzzle.rotation = deg_to_rad(-90)
 	elif is_facing_right:
-		$muzzle.position.x = abs($muzzle.position.x)
-
 		dir = Vector2.RIGHT
-		canon.rotation = 0
+		$muzzle.position = Vector2(15, 0) # desplaza a la derecha
+		$muzzle.rotation = 0
 	else:
 		dir = Vector2.LEFT
-		$muzzle.position.x = -abs($muzzle.position.x)
-		canon.rotation = deg_to_rad(180)
+		$muzzle.position = Vector2(-19, 0) # desplaza a la izquierda
+		$muzzle.rotation = deg_to_rad(180)
 
 	bullet.direction = dir
-	bullet.global_position = canon.global_position
+	bullet.global_position = $muzzle.global_position
 	bullet.rotation = dir.angle()
 	get_tree().current_scene.add_child(bullet)
+
+	print("🔫 Bullet fired in direction:", dir)
 #=== dash =====
 func dash(delta):
 	# Si ya está en cooldown, lo contamos

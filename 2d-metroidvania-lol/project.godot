@@ -15,6 +15,10 @@ run/main_scene="uid://c6n7qrlau6b0k"
 config/features=PackedStringArray("4.4", "Forward Plus")
 config/icon="res://icon.svg"
 
+[display]
+
+window/stretch/mode="canvas_items"
+
 [global_group]
 
 enemy=""
