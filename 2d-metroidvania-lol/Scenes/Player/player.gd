@@ -99,14 +99,23 @@ func update_animation():
 
 #==== movement ====
 func jump(delta):
-	# Gravedad siempre
+	# Salto inicial
+	if Input.is_action_just_pressed("jump") and is_on_floor():
+		velocity.y = -jump_speed
+		print("Jump start")
+
+	# Salto más corto si sueltas el botón
+	if Input.is_action_just_released("jump") and velocity.y < 0:
+		velocity.y *= 0.5
+		print("Short hop")
+
+	# Aplicar gravedad
 	if not is_on_floor():
 		velocity.y += gravity * delta
 	else:
-		velocity.y = 0  # Reinicia cuando está en suelo
-	# Salto
-	if Input.is_action_just_pressed("jump") and is_on_floor():
-		velocity.y = -jump_speed
+		# No reiniciamos velocity.y aquí, lo maneja move_and_slide
+		pass
+		
 func flip():
 	if velocity.x > 0:
 		is_facing_right = true
