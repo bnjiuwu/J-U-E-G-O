@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="2d metroidvania lol"
-run/main_scene="uid://c6n7qrlau6b0k"
+run/main_scene="uid://dtnijel5sygcw"
 config/features=PackedStringArray("4.4", "Forward Plus")
 config/icon="res://icon.svg"
 

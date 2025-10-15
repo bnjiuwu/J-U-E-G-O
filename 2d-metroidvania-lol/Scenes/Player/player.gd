@@ -2,9 +2,9 @@ extends CharacterBody2D
 
 
 #=== dash properties ====
-@export var dash_speed: float = 600
-@export var dash_time: float = 0.2
-@export var dash_cooldown: float = 0.5
+@export var dash_speed: float = 500
+@export var dash_time: float = 0.3
+@export var dash_cooldown: float = 0.7
   
 var is_dashing: bool = false
 var dash_timer: float = 0.0
@@ -48,24 +48,28 @@ func _process(_delta):
 		fire_bullet()
 
 func _physics_process(delta):
-	
-	
 	if not is_dashing:
 		jump(delta)
 		move_x()
 		flip()
-		update_animation()
+		
 	dash(delta)
+	update_animation()
 	move_and_slide()
 		# Check collisions after moving
-	for i in get_slide_collision_count():
+	for i in range(get_slide_collision_count()):
 		var col = get_slide_collision(i)
 		if col.get_collider().is_in_group("world damage"):
 			print("☠️ Player hit world hazard:", col.get_collider())
 			take_damage(100)
 
-	
 func update_animation():
+	#--- dash
+	if is_dashing:
+		if animated_sprite.animation != "dash":
+			animated_sprite. play("dash")
+			print("dash")
+		return
 	if not is_on_floor():
 		if velocity.y < 0:
 			if Input.is_action_pressed("look_up"):
@@ -82,10 +86,10 @@ func update_animation():
 				print("falling")
 			pass
 		return
-	
+		
 	if velocity.x:
 		if Input.is_action_pressed("look_up"):
-			animated_sprite.play("up_shoot_walk") # fixed name
+			animated_sprite.play("up_shoot_walk") 
 			print("moving + look up")
 		else:
 			animated_sprite.play("walk")
@@ -115,7 +119,6 @@ func jump(delta):
 	else:
 		# No reiniciamos velocity.y aquí, lo maneja move_and_slide
 		pass
-		
 func flip():
 	if velocity.x > 0:
 		is_facing_right = true
@@ -155,23 +158,20 @@ func dash(delta):
 	# Si ya está en cooldown, lo contamos
 	if dash_cooldown_timer > 0:
 		dash_cooldown_timer -= delta
-
 	# Iniciar dash
 	if Input.is_action_just_pressed("dash") and dash_cooldown_timer <= 0 and not is_dashing:
 		is_dashing = true
 		dash_timer = dash_time
 		dash_cooldown_timer = dash_cooldown
-
 	# Mientras dura el dash
 	if is_dashing:
+		print("dash")
 		dash_timer -= delta
 		var dir = Vector2.RIGHT if is_facing_right else Vector2.LEFT
 		velocity = dir * dash_speed
-
 		# terminar dash
 		if dash_timer <= 0:
 			is_dashing = false
-
 func _on_hitbox_area_entered(area: Area2D) -> void:
 	print("⚠️ Player detectó un área:", area.name)
 	

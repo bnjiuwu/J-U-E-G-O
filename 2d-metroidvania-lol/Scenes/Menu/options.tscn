@@ -23,15 +23,15 @@ script = ExtResource("1_c4plk")
 
 [node name="ColorRect" type="ColorRect" parent="."]
 layout_mode = 0
-offset_right = 1152.0
-offset_bottom = 648.0
+offset_right = 960.0
+offset_bottom = 479.0
 color = Color(0.537011, 0.537011, 0.537011, 1)
 
 [node name="TextureRect" type="TextureRect" parent="ColorRect"]
 modulate = Color(0.542318, 0.542318, 0.542318, 1)
 layout_mode = 0
-offset_right = 1152.0
-offset_bottom = 648.0
+offset_right = 961.0
+offset_bottom = 480.0
 texture = ExtResource("2_c4plk")
 expand_mode = 1
 
@@ -56,7 +56,7 @@ text = "VIDEO"
 layout_mode = 2
 theme_override_font_sizes/font_size = 50
 theme_override_styles/normal = SubResource("StyleBoxFlat_3qr6s")
-text = "SOUND"
+text = "AUDIO"
 
 [node name="back" type="Button" parent="ColorRect/VBoxContainer"]
 layout_mode = 2
