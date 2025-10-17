@@ -5597,7 +5597,7 @@ text = "pene"
 script = ExtResource("2_rf6l5")
 
 [node name="Slime" parent="." instance=ExtResource("2_3mhv4")]
-position = Vector2(-234, 387)
+position = Vector2(-187, 353)
 
 [node name="Control" type="Control" parent="Slime"]
 layout_mode = 3

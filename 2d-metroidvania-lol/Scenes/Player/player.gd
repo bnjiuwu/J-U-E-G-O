@@ -3,7 +3,7 @@ extends CharacterBody2D
 
 #=== dash properties ====
 @export var dash_speed: float = 500
-@export var dash_time: float = 0.33
+@export var dash_time: float = 0.3
 @export var dash_cooldown: float = 0.7
   
 var is_dashing: bool = false
@@ -88,6 +88,7 @@ func update_animation():
 			
 			print("dash")
 		return
+		
 	if not is_dashing and peo_effect.visible:
 		peo_effect.visible = false
 		

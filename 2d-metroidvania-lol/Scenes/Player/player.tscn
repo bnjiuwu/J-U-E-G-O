@@ -459,7 +459,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_j7g5o")
 }],
-"loop": true,
+"loop": false,
 "name": &"peo",
 "speed": 22.0
 }]
@@ -479,9 +479,7 @@ bullet_scene = ExtResource("2_0u5uq")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 scale = Vector2(0.631472, 0.655599)
 sprite_frames = SubResource("SpriteFrames_bmb2s")
-animation = &"dash"
-frame = 1
-frame_progress = 0.842846
+animation = &"fall"
 
 [node name="PEO" type="AnimatedSprite2D" parent="."]
 position = Vector2(-19, 6)
