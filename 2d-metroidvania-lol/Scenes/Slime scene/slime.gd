@@ -2,7 +2,7 @@ extends CharacterBody2D
 
 @export var speed: float = 60
 @export var raycast_ahead: float = 10.0
-@export var raycast_ahead_wall: float = 25.0
+@export var raycast_ahead_wall: float = 22.0
 @export var raycast_down: float = 20.0
 @export var gravity: float = 900.0
 @export var flip_debounce: float = 0.12

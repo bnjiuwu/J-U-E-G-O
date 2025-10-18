@@ -465,10 +465,10 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_htcer"]
-size = Vector2(7.52855, 24.094)
+size = Vector2(4.56275, 23.6856)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dd0ac"]
-size = Vector2(18, 31)
+size = Vector2(12, 30)
 
 [node name="player" type="CharacterBody2D" groups=["player"]]
 script = ExtResource("1_xpcdj")
@@ -488,7 +488,7 @@ sprite_frames = SubResource("SpriteFrames_ckdd2")
 animation = &"peo"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, 4.74999)
+position = Vector2(0, 4.5)
 scale = Vector2(2.19166, 1.22437)
 shape = SubResource("RectangleShape2D_htcer")
 
@@ -499,7 +499,7 @@ position = Vector2(20, 4)
 collision_mask = 5
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
-position = Vector2(0, 4.5)
+position = Vector2(0, 4)
 shape = SubResource("RectangleShape2D_dd0ac")
 debug_color = Color(0.995169, 0, 0.209909, 0.42)
 

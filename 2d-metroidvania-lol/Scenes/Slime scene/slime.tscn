@@ -1,12 +1,8 @@
-[gd_scene load_steps=18 format=3 uid="uid://d3evjk846bf1b"]
+[gd_scene load_steps=17 format=3 uid="uid://d3evjk846bf1b"]
 
 [ext_resource type="Script" uid="uid://cuwiarbxs7rkb" path="res://Scenes/Slime scene/slime.gd" id="1_dfub6"]
 [ext_resource type="Texture2D" uid="uid://dkio0507k5e1t" path="res://sprites/enemies/slime idle.png" id="2_dfub6"]
 [ext_resource type="Texture2D" uid="uid://7r65trhund5o" path="res://sprites/enemies/slime_death.png" id="2_obdvy"]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_uwlkq"]
-atlas = ExtResource("2_obdvy")
-region = Rect2(0, 0, 34, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_pa6nx"]
 atlas = ExtResource("2_obdvy")
@@ -52,9 +48,6 @@ region = Rect2(102, 0, 34, 32)
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_uwlkq")
-}, {
-"duration": 1.0,
 "texture": SubResource("AtlasTexture_pa6nx")
 }, {
 "duration": 1.0,
@@ -74,7 +67,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"dead",
-"speed": 5.0
+"speed": 8.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -110,6 +103,7 @@ sprite_frames = SubResource("SpriteFrames_pa6nx")
 animation = &"dead"
 
 [node name="fisic_hitbox" type="CollisionShape2D" parent="."]
+position = Vector2(0, 1.635)
 shape = SubResource("RectangleShape2D_1iqch")
 
 [node name="floor_check" type="RayCast2D" parent="."]
