@@ -11,12 +11,14 @@ config_version=5
 [application]
 
 config/name="2d metroidvania lol"
-run/main_scene="uid://c6n7qrlau6b0k"
+run/main_scene="uid://dtnijel5sygcw"
 config/features=PackedStringArray("4.4", "Forward Plus")
 config/icon="res://icon.svg"
 
 [display]
 
+window/size/viewport_width=960
+window/size/viewport_height=480
 window/stretch/mode="canvas_items"
 
 [global_group]
@@ -24,6 +26,7 @@ window/stretch/mode="canvas_items"
 enemy=""
 player=""
 "world damage"=""
+"world colition"=""
 
 [input]
 
@@ -76,3 +79,4 @@ dash={
 [rendering]
 
 textures/canvas_textures/default_texture_filter=0
+renderer/rendering_method="mobile"
