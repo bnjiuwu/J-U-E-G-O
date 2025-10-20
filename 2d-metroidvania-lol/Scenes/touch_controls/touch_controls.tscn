@@ -1,111 +1,101 @@
-[gd_scene load_steps=6 format=3 uid="uid://dxecev8srqfuk"]
+[gd_scene load_steps=6 format=3 uid="uid://b2lni2j37kwvl"]
 
 [ext_resource type="PackedScene" uid="uid://dmr0fcamx7t56" path="res://addons/virtual_joystick/virtual_joystick_scene.tscn" id="1_as06w"]
-[ext_resource type="Script" uid="uid://tdwg6ycql7m4" path="res://Scenes/touch_controls/touch_controls.gd" id="1_qel7s"]
+[ext_resource type="Script" uid="uid://bhkt88s7hsmc8" path="res://Scenes/touch_controls/touch_controls.gd" id="1_ex53c"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lijdg"]
+bg_color = Color(0.6024156, 0, 0.09970736, 1)
+border_color = Color(0.8684916, 0.73857987, 0.9817973, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qel7s"]
-bg_color = Color(0.505358, 0.20904, 0.209635, 1)
+bg_color = Color(1.1431053e-07, 0.3555623, 0.021190044, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7fpjj"]
-bg_color = Color(3.24883e-07, 0.348082, 0.180335, 1)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xwkac"]
-bg_color = Color(0, 0.359445, 0.445794, 1)
+bg_color = Color(0, 0.20136902, 0.45916635, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
 
 [node name="touch_controls" type="CanvasLayer"]
-script = ExtResource("1_qel7s")
+script = ExtResource("1_ex53c")
 
 [node name="Virtual Joystick" parent="." instance=ExtResource("1_as06w")]
-anchors_preset = -1
-anchor_left = 0.006
-anchor_top = 0.567
-anchor_right = 0.215
-anchor_bottom = 0.983
-offset_left = 0.24
-offset_top = -0.160004
-offset_right = -0.400024
-offset_bottom = 0.159973
-pressed_color = Color(0.868427, 0.133749, 0, 1)
-action_left = "move_left"
-action_right = "move_right"
-action_up = "look_up"
+anchor_left = -0.003
+anchor_top = 0.473
+anchor_right = 0.302
+offset_left = 27.88
+offset_top = 0.959991
+offset_right = 28.1601
+offset_bottom = 112.0
+scale = Vector2(1, 1)
 
-[node name="Action_buttons" type="Control" parent="."]
+[node name="Control" type="Control" parent="."]
 layout_mode = 3
-anchor_left = 0.735
-anchor_top = 0.602
-anchor_right = 0.973
-anchor_bottom = 0.915
-offset_left = 0.399963
-offset_top = 0.039978
-offset_right = -0.0800781
-offset_bottom = -0.200012
-
-[node name="FIRE" type="Button" parent="Action_buttons"]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.658
-anchor_top = 0.393
+anchors_preset = 15
 anchor_right = 1.0
-anchor_bottom = 0.687
-offset_left = -0.0240173
-offset_top = 0.0499992
-offset_bottom = -0.0500031
+anchor_bottom = 1.0
+offset_left = 684.0
+offset_top = 309.0
+offset_right = -1.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="FIRE" type="Button" parent="Control"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.684
+anchor_top = 0.36600003
+anchor_right = 0.975
+anchor_bottom = 0.64000005
+offset_left = -0.1000061
+offset_top = 0.0739975
+offset_right = -0.125
+offset_bottom = -0.040008545
+theme_override_styles/normal = SubResource("StyleBoxFlat_lijdg")
+text = "FIRE
+"
+
+[node name="DASH" type="Button" parent="Control"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.393
+anchor_top = 0.665
+anchor_right = 0.684
+anchor_bottom = 0.938
+offset_left = -0.07500458
+offset_top = -0.06500244
+offset_right = -0.1000061
+offset_bottom = -0.018005371
 theme_override_styles/normal = SubResource("StyleBoxFlat_qel7s")
-text = "FIRE"
+text = "DASH"
 
-[node name="DASH" type="Button" parent="Action_buttons"]
+[node name="JUMP" type="Button" parent="Control"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.307
-anchor_top = 0.713
-anchor_right = 0.658
-anchor_bottom = 1.007
-offset_left = 0.0039978
-offset_top = 0.0499878
-offset_right = -0.0240173
-offset_bottom = -0.0500183
+anchor_left = 0.393
+anchor_top = 0.068
+anchor_right = 0.684
+anchor_bottom = 0.342
+offset_left = -0.07500458
+offset_top = 0.051999092
+offset_right = -0.1000061
+offset_bottom = -0.062000275
 theme_override_styles/normal = SubResource("StyleBoxFlat_7fpjj")
-text = "DASH
-"
+text = "JUMP"
 
-[node name="JUMP" type="Button" parent="Action_buttons"]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.307
-anchor_top = 0.073
-anchor_right = 0.658
-anchor_bottom = 0.367
-offset_left = 0.0039978
-offset_top = 0.0499992
-offset_right = -0.0240173
-offset_bottom = -0.0500031
-theme_override_styles/normal = SubResource("StyleBoxFlat_xwkac")
-text = "JUMP
-"
-
-[node name="SUPA ABILITY" type="Button" parent="Action_buttons"]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = -0.035
-anchor_top = 0.393
-anchor_right = 0.307
-anchor_bottom = 0.687
-offset_left = -0.02
-offset_top = 0.0499992
-offset_right = 0.0039978
-offset_bottom = -0.0500031
-text = "SUPA"
-
-[node name="pause" type="Button" parent="."]
-offset_right = 63.0
-offset_bottom = 41.0
-text = "PAUSE"
-
-[connection signal="button_down" from="Action_buttons/FIRE" to="." method="_on_fire_button_down"]
-[connection signal="button_up" from="Action_buttons/FIRE" to="." method="_on_fire_button_up"]
-[connection signal="button_down" from="Action_buttons/DASH" to="." method="_on_dash_button_down"]
-[connection signal="button_up" from="Action_buttons/DASH" to="." method="_on_dash_button_up"]
-[connection signal="button_down" from="Action_buttons/JUMP" to="." method="_on_jump_button_down"]
-[connection signal="button_up" from="Action_buttons/JUMP" to="." method="_on_jump_button_up"]
-[connection signal="pressed" from="pause" to="." method="_on_pause_pressed"]
+[connection signal="button_down" from="Control/FIRE" to="." method="_on_fire_button_down"]
+[connection signal="button_up" from="Control/FIRE" to="." method="_on_fire_button_up"]
+[connection signal="button_down" from="Control/DASH" to="." method="_on_dash_button_down"]
+[connection signal="button_up" from="Control/DASH" to="." method="_on_dash_button_up"]
+[connection signal="button_down" from="Control/JUMP" to="." method="_on_jump_button_down"]
+[connection signal="button_up" from="Control/JUMP" to="." method="_on_jump_button_up"]

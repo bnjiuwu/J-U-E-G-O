@@ -1,4 +1,6 @@
 extends CharacterBody2D
+
+
 #=== dash properties ====
 @export var dash_speed: float = 500
 @export var dash_time: float = 0.3
@@ -30,9 +32,9 @@ var health: int
 #============== bullet ===========
 @export var bullet_scene: PackedScene
 @onready var canon = $muzzle
+@export var shoot_delay := 0.2
+var shoot_timer := 0.0
 
-@export var fire_rate: float = 0.25
-var shooting_time := 0.0
 
 #==== damage knockback =======
 var knockback_force: Vector2 = Vector2(300, -200) # (x: fuerza lateral, y: salto)
@@ -44,14 +46,15 @@ func _ready() -> void:
 	health = max_health
 	add_to_group("player")
 	print("Player HP ready:",health)
+	
 	pass
 
 func _process(_delta):
-	shooting_time -= _delta
-	
-	if shooting_time <= 0 and Input.is_action_pressed("attack"):
+	if shoot_timer > 0:
+		shoot_timer -= _delta
+	if Input.is_action_pressed("attack") and shoot_timer <= 0:
 		fire_bullet()
-		shooting_time = fire_rate
+		shoot_timer = shoot_delay
 
 func _physics_process(delta):
 	if not is_dashing:
