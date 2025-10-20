@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=4 uid="uid://c6n7qrlau6b0k"]
+[gd_scene load_steps=21 format=4 uid="uid://c6n7qrlau6b0k"]
 
 [ext_resource type="PackedScene" uid="uid://braj8a8ooxs4t" path="res://Scenes/Player/player.tscn" id="1_n0qsc"]
 [ext_resource type="PackedScene" uid="uid://d3evjk846bf1b" path="res://Scenes/Slime scene/slime.tscn" id="2_3mhv4"]
@@ -11,6 +11,7 @@
 [ext_resource type="Texture2D" uid="uid://cvko3fxlsftvu" path="res://images/Tile Maps/cave/props1.png" id="9_ib2b2"]
 [ext_resource type="Texture2D" uid="uid://c7du7oqw22wl5" path="res://images/Tile Maps/cave/props2.png" id="10_cq012"]
 [ext_resource type="Texture2D" uid="uid://bingjbajxml1c" path="res://images/Tile Maps/cave/mainlev_build.png" id="11_hao24"]
+[ext_resource type="PackedScene" uid="uid://dxecev8srqfuk" path="res://Scenes/touch_controls/touch_controls.tscn" id="12_cq012"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_rf6l5"]
 texture = ExtResource("3_3mhv4")
@@ -5662,6 +5663,39 @@ sources/0 = SubResource("TileSetAtlasSource_aydgu")
 
 [node name="level_1" type="Node2D"]
 
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="touch_controls" parent="Control" instance=ExtResource("12_cq012")]
+
+[node name="player" parent="." instance=ExtResource("1_n0qsc")]
+position = Vector2(591, 354)
+move_speed = 150.0
+
+[node name="Camera2D" type="Camera2D" parent="player"]
+offset = Vector2(0, -25)
+zoom = Vector2(2.4, 2.4)
+limit_smoothed = true
+position_smoothing_enabled = true
+rotation_smoothing_enabled = true
+
+[node name="Control" type="Control" parent="player/Camera2D"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Label" type="Label" parent="player/Camera2D"]
+offset_left = -21.0
+offset_top = -41.0
+offset_right = 19.0
+offset_bottom = -18.0
+text = "pene"
+script = ExtResource("2_rf6l5")
+
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
 scroll_base_scale = Vector2(1.5, 1.5)
 scroll_ignore_camera_zoom = true
@@ -5705,31 +5739,6 @@ tile_set = SubResource("TileSet_4l21d")
 position = Vector2(8, 375)
 tile_map_data = PackedByteArray("AAAyAAIAAAALAAgAAAAzAAIAAAALAAgAAAA0AAIAAAALAAgAAAA1AAIAAAALAAgAAAA2AAIAAAALAAgAAAA3AAIAAAALAAgAAAAxAAIAAAALAAgAAAAwAAIAAAALAAgAAAAvAAIAAAALAAgAAAAuAAIAAAALAAgAAAAtAAIAAAALAAgAAAAMAAIAAAALAAgAAAANAAIAAAALAAgAAAAOAAIAAAALAAgAAAA=")
 tile_set = SubResource("TileSet_q7gkb")
-
-[node name="player" parent="." instance=ExtResource("1_n0qsc")]
-position = Vector2(591, 354)
-move_speed = 150.0
-
-[node name="Camera2D" type="Camera2D" parent="player"]
-offset = Vector2(0, -25)
-zoom = Vector2(2.4, 2.4)
-limit_smoothed = true
-position_smoothing_enabled = true
-rotation_smoothing_enabled = true
-
-[node name="Control" type="Control" parent="player/Camera2D"]
-layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
-
-[node name="Label" type="Label" parent="player/Camera2D"]
-offset_left = -21.0
-offset_top = -41.0
-offset_right = 19.0
-offset_bottom = -18.0
-text = "pene"
-script = ExtResource("2_rf6l5")
 
 [node name="Slime" parent="." instance=ExtResource("2_3mhv4")]
 position = Vector2(-187, 353)

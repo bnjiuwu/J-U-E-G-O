@@ -1,0 +1,111 @@
+[gd_scene load_steps=6 format=3 uid="uid://dxecev8srqfuk"]
+
+[ext_resource type="PackedScene" uid="uid://dmr0fcamx7t56" path="res://addons/virtual_joystick/virtual_joystick_scene.tscn" id="1_as06w"]
+[ext_resource type="Script" uid="uid://tdwg6ycql7m4" path="res://Scenes/touch_controls/touch_controls.gd" id="1_qel7s"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qel7s"]
+bg_color = Color(0.505358, 0.20904, 0.209635, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7fpjj"]
+bg_color = Color(3.24883e-07, 0.348082, 0.180335, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xwkac"]
+bg_color = Color(0, 0.359445, 0.445794, 1)
+
+[node name="touch_controls" type="CanvasLayer"]
+script = ExtResource("1_qel7s")
+
+[node name="Virtual Joystick" parent="." instance=ExtResource("1_as06w")]
+anchors_preset = -1
+anchor_left = 0.006
+anchor_top = 0.567
+anchor_right = 0.215
+anchor_bottom = 0.983
+offset_left = 0.24
+offset_top = -0.160004
+offset_right = -0.400024
+offset_bottom = 0.159973
+pressed_color = Color(0.868427, 0.133749, 0, 1)
+action_left = "move_left"
+action_right = "move_right"
+action_up = "look_up"
+
+[node name="Action_buttons" type="Control" parent="."]
+layout_mode = 3
+anchor_left = 0.735
+anchor_top = 0.602
+anchor_right = 0.973
+anchor_bottom = 0.915
+offset_left = 0.399963
+offset_top = 0.039978
+offset_right = -0.0800781
+offset_bottom = -0.200012
+
+[node name="FIRE" type="Button" parent="Action_buttons"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.658
+anchor_top = 0.393
+anchor_right = 1.0
+anchor_bottom = 0.687
+offset_left = -0.0240173
+offset_top = 0.0499992
+offset_bottom = -0.0500031
+theme_override_styles/normal = SubResource("StyleBoxFlat_qel7s")
+text = "FIRE"
+
+[node name="DASH" type="Button" parent="Action_buttons"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.307
+anchor_top = 0.713
+anchor_right = 0.658
+anchor_bottom = 1.007
+offset_left = 0.0039978
+offset_top = 0.0499878
+offset_right = -0.0240173
+offset_bottom = -0.0500183
+theme_override_styles/normal = SubResource("StyleBoxFlat_7fpjj")
+text = "DASH
+"
+
+[node name="JUMP" type="Button" parent="Action_buttons"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.307
+anchor_top = 0.073
+anchor_right = 0.658
+anchor_bottom = 0.367
+offset_left = 0.0039978
+offset_top = 0.0499992
+offset_right = -0.0240173
+offset_bottom = -0.0500031
+theme_override_styles/normal = SubResource("StyleBoxFlat_xwkac")
+text = "JUMP
+"
+
+[node name="SUPA ABILITY" type="Button" parent="Action_buttons"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -0.035
+anchor_top = 0.393
+anchor_right = 0.307
+anchor_bottom = 0.687
+offset_left = -0.02
+offset_top = 0.0499992
+offset_right = 0.0039978
+offset_bottom = -0.0500031
+text = "SUPA"
+
+[node name="pause" type="Button" parent="."]
+offset_right = 63.0
+offset_bottom = 41.0
+text = "PAUSE"
+
+[connection signal="button_down" from="Action_buttons/FIRE" to="." method="_on_fire_button_down"]
+[connection signal="button_up" from="Action_buttons/FIRE" to="." method="_on_fire_button_up"]
+[connection signal="button_down" from="Action_buttons/DASH" to="." method="_on_dash_button_down"]
+[connection signal="button_up" from="Action_buttons/DASH" to="." method="_on_dash_button_up"]
+[connection signal="button_down" from="Action_buttons/JUMP" to="." method="_on_jump_button_down"]
+[connection signal="button_up" from="Action_buttons/JUMP" to="." method="_on_jump_button_up"]
+[connection signal="pressed" from="pause" to="." method="_on_pause_pressed"]
