@@ -1,5 +1,6 @@
-[gd_scene load_steps=21 format=4 uid="uid://c6n7qrlau6b0k"]
+[gd_scene load_steps=23 format=4 uid="uid://c6n7qrlau6b0k"]
 
+[ext_resource type="Script" uid="uid://by4hegpiwf1wp" path="res://Levels/level 1/level_1.gd" id="1_hao24"]
 [ext_resource type="PackedScene" uid="uid://braj8a8ooxs4t" path="res://Scenes/Player/player.tscn" id="1_n0qsc"]
 [ext_resource type="PackedScene" uid="uid://d3evjk846bf1b" path="res://Scenes/Slime scene/slime.tscn" id="2_3mhv4"]
 [ext_resource type="Script" uid="uid://d4ra44v1qwfh" path="res://Levels/level 1/label.gd" id="2_rf6l5"]
@@ -5661,7 +5662,10 @@ texture = ExtResource("3_3mhv4")
 physics_layer_0/collision_layer = 1
 sources/0 = SubResource("TileSetAtlasSource_aydgu")
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_r7d4j"]
+
 [node name="level_1" type="Node2D"]
+script = ExtResource("1_hao24")
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
 scroll_base_scale = Vector2(1.5, 1.5)
@@ -5787,3 +5791,9 @@ offset_right = 40.0
 offset_bottom = 40.0
 
 [node name="touch_controls" parent="Control" instance=ExtResource("12_cq012")]
+
+[node name="spawner" type="Area2D" parent="."]
+position = Vector2(611, 370)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="spawner"]
+shape = SubResource("CircleShape2D_r7d4j")
