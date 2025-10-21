@@ -29,13 +29,13 @@ corner_radius_bottom_left = 3
 script = ExtResource("1_ex53c")
 
 [node name="Virtual Joystick" parent="." instance=ExtResource("1_as06w")]
-anchor_left = -0.003
-anchor_top = 0.473
-anchor_right = 0.302
-offset_left = 27.88
-offset_top = 0.959991
-offset_right = 28.1601
-offset_bottom = 112.0
+anchor_left = 0.025
+anchor_top = 0.583
+anchor_right = 0.23300001
+offset_left = 32.0
+offset_top = 0.16000366
+offset_right = 32.319992
+offset_bottom = 0.0
 scale = Vector2(1, 1)
 
 [node name="Control" type="Control" parent="."]
@@ -49,6 +49,7 @@ offset_right = -1.0
 offset_bottom = -10.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 
 [node name="FIRE" type="Button" parent="Control"]
 layout_mode = 1

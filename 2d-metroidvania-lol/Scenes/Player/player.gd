@@ -47,7 +47,7 @@ func _ready() -> void:
 	add_to_group("player")
 	print("Player HP ready:",health)
 	
-	pass
+
 
 func _process(_delta):
 	if shoot_timer > 0:
