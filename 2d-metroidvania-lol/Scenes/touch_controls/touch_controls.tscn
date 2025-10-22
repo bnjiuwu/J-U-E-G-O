@@ -4,7 +4,7 @@
 [ext_resource type="Script" uid="uid://bhkt88s7hsmc8" path="res://Scenes/touch_controls/touch_controls.gd" id="1_ex53c"]
 [ext_resource type="Texture2D" uid="uid://cdltfeauoa2ag" path="res://sprites/flamo.png" id="3_7fpjj"]
 [ext_resource type="Texture2D" uid="uid://bf1rd2jqkf2mn" path="res://sprites/glock.png" id="4_xwkac"]
-[ext_resource type="Texture2D" uid="uid://dc2faoixlgdje" path="res://sprites/jumpButton.png" id="5_rf610"]
+[ext_resource type="Texture2D" uid="uid://cnf2n3ev2g2g" path="res://sprites/bullet.png" id="5_7fpjj"]
 
 [node name="touch_controls" type="CanvasLayer"]
 script = ExtResource("1_ex53c")
@@ -22,8 +22,8 @@ offset_bottom = -0.08001709
 [node name="Control" type="Node2D" parent="."]
 
 [node name="FIRE" type="TouchScreenButton" parent="Control"]
-position = Vector2(848, 360)
-scale = Vector2(3.1470604, 1.2647059)
+position = Vector2(833, 360)
+scale = Vector2(3.5882375, 1.8235294)
 texture_normal = ExtResource("3_7fpjj")
 action = "attack"
 
@@ -34,7 +34,7 @@ texture_normal = ExtResource("4_xwkac")
 action = "dash"
 
 [node name="JUMP" type="TouchScreenButton" parent="Control"]
-position = Vector2(707.00006, 310.00003)
-scale = Vector2(0.24285713, 0.10317458)
-texture_normal = ExtResource("5_rf610")
+position = Vector2(696, 306)
+scale = Vector2(4.656249, 2.2399988)
+texture_normal = ExtResource("5_7fpjj")
 action = "jump"
