@@ -21,28 +21,6 @@ window/size/viewport_width=960
 window/size/viewport_height=480
 window/stretch/mode="canvas_items"
 
-[editor_plugins]
-
-enabled=PackedStringArray("res://addons/virtual_joystick/plugin.cfg")
-
-[file_customization]
-
-folder_colors={
-"res://Levels/": "purple",
-"res://Scenes/": "blue",
-"res://Scenes/Bullet Scene/": "yellow",
-"res://Scenes/Enemies Scene/": "red",
-"res://Scenes/Enemies Scene/Slime scene/": "green",
-"res://Scenes/Menu/": "gray",
-"res://Scenes/Player/": "orange",
-"res://addons/": "orange",
-"res://images/": "gray",
-"res://sprites/": "pink",
-"res://sprites/Health Bar/": "gray",
-"res://sprites/enemies/": "red",
-"res://sprites/roberto/": "yellow"
-}
-
 [global_group]
 
 enemy=""
