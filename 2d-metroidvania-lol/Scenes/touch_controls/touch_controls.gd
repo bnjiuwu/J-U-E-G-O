@@ -7,8 +7,6 @@ extends CanvasLayer
 @onready var dash_button: Button  = $Action_buttons/DASH
 @onready var jump_button: Button = $Action_buttons/JUMP
 
-
-
 func _ready():
 	pass
 	
@@ -40,5 +38,6 @@ func _on_jump_button_up() -> void:
 
 
 func _on_pause_pressed() -> void:
+	
 	
 	pass # Replace with function body.
