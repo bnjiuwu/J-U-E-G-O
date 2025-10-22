@@ -233,5 +233,5 @@ func take_damage(amount) -> void:
 
 func die() -> void:
 	print("💀 Player ha muerto")
-	print("ola")
+	
 	get_tree().reload_current_scene()#aquí puedes cambiarlo por animación/game over
