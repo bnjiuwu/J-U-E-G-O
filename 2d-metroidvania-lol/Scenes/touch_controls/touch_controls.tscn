@@ -10,14 +10,14 @@
 script = ExtResource("1_ex53c")
 
 [node name="Virtual Joystick" parent="." instance=ExtResource("1_as06w")]
-anchor_left = 0.027
-anchor_top = 0.569
-anchor_right = 0.23500001
-anchor_bottom = 0.98800004
-offset_left = 0.07999992
-offset_top = -0.11999512
-offset_right = 0.3999939
-offset_bottom = -0.08001709
+anchor_left = 0.025
+anchor_top = 0.583
+anchor_right = 0.23300001
+offset_left = 32.0
+offset_top = 0.16000366
+offset_right = 32.319992
+offset_bottom = 0.0
+scale = Vector2(1, 1)
 
 [node name="Control" type="Node2D" parent="."]
 
