@@ -1,0 +1,41 @@
+[gd_scene load_steps=6 format=3 uid="uid://b2lni2j37kwvl"]
+
+[ext_resource type="PackedScene" uid="uid://dmr0fcamx7t56" path="res://addons/virtual_joystick/virtual_joystick_scene.tscn" id="1_as06w"]
+[ext_resource type="Script" uid="uid://bhkt88s7hsmc8" path="res://Assets/Scenes/touch_controls/touch_controls.gd" id="1_ex53c"]
+[ext_resource type="Texture2D" uid="uid://bf1rd2jqkf2mn" path="res://Assets/sprites/objects type shi/glock.png" id="3_7fpjj"]
+[ext_resource type="Texture2D" uid="uid://cdltfeauoa2ag" path="res://Assets/sprites/objects type shi/flamo.png" id="4_xwkac"]
+[ext_resource type="Texture2D" uid="uid://cnf2n3ev2g2g" path="res://Assets/sprites/objects type shi/bullet.png" id="5_rf610"]
+
+[node name="touch_controls" type="CanvasLayer"]
+script = ExtResource("1_ex53c")
+
+[node name="Virtual Joystick" parent="." instance=ExtResource("1_as06w")]
+anchor_left = 0.058000002
+anchor_top = 0.583
+anchor_right = 0.26700002
+anchor_bottom = 1.0
+offset_left = 0.3199997
+offset_top = 0.16000366
+offset_right = -0.32000732
+offset_bottom = 0.0
+scale = Vector2(1, 1)
+
+[node name="Control" type="Node2D" parent="."]
+
+[node name="FIRE" type="TouchScreenButton" parent="Control"]
+position = Vector2(776, 343.99997)
+scale = Vector2(5.1764708, 2.8)
+texture_normal = ExtResource("3_7fpjj")
+action = "attack"
+
+[node name="DASH" type="TouchScreenButton" parent="Control"]
+position = Vector2(608, 408.00003)
+scale = Vector2(6.352941, 1.8823532)
+texture_normal = ExtResource("4_xwkac")
+action = "dash"
+
+[node name="JUMP" type="TouchScreenButton" parent="Control"]
+position = Vector2(624, 280)
+scale = Vector2(6.249998, 2.239999)
+texture_normal = ExtResource("5_rf610")
+action = "jump"
