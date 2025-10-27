@@ -30,6 +30,7 @@ folder_colors={
 "res://Assets/Scenes/Objects - Skills/": "pink",
 "res://Assets/Scenes/Player/": "orange",
 "res://Assets/Scenes/touch_controls/": "green",
+"res://Assets/Scenes/touch_controls/JOYSTICK/": "blue",
 "res://Assets/images/": "blue",
 "res://Assets/sprites/": "gray",
 "res://Assets/sprites/enemies/": "red",
@@ -91,8 +92,6 @@ dash={
 
 [input_devices]
 
-pointing/android/enable_long_press_as_right_click=true
-pointing/android/enable_pan_and_scale_gestures=true
 pointing/emulate_touch_from_mouse=true
 
 [layer_names]

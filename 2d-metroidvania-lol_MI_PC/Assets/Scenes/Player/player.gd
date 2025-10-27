@@ -36,6 +36,9 @@ var health: int
 @export var shoot_delay := 0.2
 var shoot_timer := 0.0
 
+#==== joystick =======
+@onready var joystick := get_node_or_null("/root/level_1/Control/touch_controls/VirtualJoystick")
+
 
 #==== damage knockback =======
 var knockback_force: Vector2 = Vector2(300, -200) # (x: fuerza lateral, y: salto)
@@ -164,45 +167,49 @@ func flip():
 func move_x():
 	var input_axis = Input.get_axis("move_left","move_right")
 	velocity.x = input_axis * move_speed
+	
 #==== fire bullet ===
 func fire_bullet():
 	var bullet = bullet_scene.instantiate()
 	var dir = Vector2.ZERO
-	var is_looking_up = Input.is_action_pressed("look_up")
-	var moving_horizontally = Input.is_action_pressed("move_right") or Input.is_action_pressed("move_left")
 	
-	# Disparar hacia arriba o diagonal
-	if is_looking_up:
-		if moving_horizontally:  # Diagonal si te estás moviendo
-			if is_facing_right:
-				dir = Vector2.from_angle(deg_to_rad(-45))  # Diagonal derecha-arriba
-				$muzzle.position = Vector2(14.14, -14.14)
-				$muzzle.rotation = deg_to_rad(-45.0)
-			else:
-				dir = Vector2.from_angle(deg_to_rad(-135))  # Diagonal izquierda-arriba
-				$muzzle.position = Vector2(-14.14, -14.14)
-				$muzzle.rotation = deg_to_rad(-135.0)
-		else:  # Directamente arriba si no te mueves
-			dir = Vector2.UP
-			$muzzle.position = Vector2(0, -19)
-			$muzzle.rotation = deg_to_rad(-90)
-	
-	# Disparar horizontal
-	elif is_facing_right:
-		dir = Vector2.RIGHT
-		$muzzle.position = Vector2(20, 0)
-		$muzzle.rotation = 0
+	# Obtener vector del joystick
+	if joystick and joystick.pressing:
+		var joy = joystick.posVector
+		if joy.length() > 0.1:  # margen de error
+			dir = joy.normalized()
+		else:
+			dir = Vector2.RIGHT if is_facing_right else Vector2.LEFT
 	else:
-		dir = Vector2.LEFT
-		$muzzle.position = Vector2(-20, 0)
-		$muzzle.rotation = deg_to_rad(180)
+		# fallback a input teclado
+		var is_looking_up = Input.is_action_pressed("look_up")
+		var moving_horizontally = Input.is_action_pressed("move_right") or Input.is_action_pressed("move_left")
+		
+		if is_looking_up:
+			if moving_horizontally:
+				if is_facing_right:
+					dir = Vector2.from_angle(deg_to_rad(-45))
+				else:
+					dir = Vector2.from_angle(deg_to_rad(-135))
+			else:
+				dir = Vector2.UP
+		elif is_facing_right:
+			dir = Vector2.RIGHT
+		else:
+			dir = Vector2.LEFT
 
+	# Configurar muzzle según dirección
+	$muzzle.position = dir * 14  # distancia base del muzzle
+	$muzzle.rotation = dir.angle()
+	
+	# Disparar bala
 	bullet.direction = dir
 	bullet.global_position = $muzzle.global_position
 	bullet.rotation = dir.angle()
 	get_tree().current_scene.add_child(bullet)
 
 	print("🔫 Bullet fired in direction:", dir)
+
 #=== dash =====
 func dash(delta):
 	# Si ya está en cooldown, lo contamos
