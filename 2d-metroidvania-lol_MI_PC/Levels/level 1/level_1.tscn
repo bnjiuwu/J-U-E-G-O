@@ -1,6 +1,7 @@
-[gd_scene load_steps=21 format=4 uid="uid://c6n7qrlau6b0k"]
+[gd_scene load_steps=23 format=4 uid="uid://c6n7qrlau6b0k"]
 
 [ext_resource type="PackedScene" uid="uid://braj8a8ooxs4t" path="res://Assets/Scenes/Player/player.tscn" id="1_n0qsc"]
+[ext_resource type="Script" uid="uid://by4hegpiwf1wp" path="res://Levels/level 1/level_1.gd" id="1_r7d4j"]
 [ext_resource type="PackedScene" uid="uid://d3evjk846bf1b" path="res://Assets/Scenes/Enemies Scene/Slime scene/slime.tscn" id="2_3mhv4"]
 [ext_resource type="Script" uid="uid://d4ra44v1qwfh" path="res://Levels/level 1/label.gd" id="2_rf6l5"]
 [ext_resource type="Texture2D" uid="uid://caqfa7afng3wv" path="res://Assets/images/Tile Maps/overworld/Tiles/Assets/Assets.png" id="3_3mhv4"]
@@ -12,6 +13,7 @@
 [ext_resource type="Texture2D" uid="uid://c7du7oqw22wl5" path="res://Assets/images/Tile Maps/cave/props2.png" id="10_cq012"]
 [ext_resource type="Texture2D" uid="uid://bingjbajxml1c" path="res://Assets/images/Tile Maps/cave/mainlev_build.png" id="11_hao24"]
 [ext_resource type="PackedScene" uid="uid://b2lni2j37kwvl" path="res://Assets/Scenes/touch_controls/touch_controls.tscn" id="12_cq012"]
+[ext_resource type="PackedScene" uid="uid://bu5ef6314c7ik" path="res://Assets/Scenes/PauseMenu/PauseMenu.tscn" id="12_hao24"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_rf6l5"]
 texture = ExtResource("3_3mhv4")
@@ -5662,6 +5664,7 @@ physics_layer_0/collision_layer = 1
 sources/0 = SubResource("TileSetAtlasSource_aydgu")
 
 [node name="level_1" type="Node2D"]
+script = ExtResource("1_r7d4j")
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
 scroll_base_scale = Vector2(1.5, 1.5)
@@ -5780,10 +5783,12 @@ offset_right = 12.0
 offset_bottom = -19.0
 script = ExtResource("4_syshm")
 
-[node name="Control" type="Control" parent="."]
+[node name="Controles" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="touch_controls" parent="Control" instance=ExtResource("12_cq012")]
+[node name="touch_controls" parent="Controles" instance=ExtResource("12_cq012")]
+
+[node name="PauseMenu" parent="." instance=ExtResource("12_hao24")]

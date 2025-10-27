@@ -7,7 +7,7 @@ func _on_play_pressed() -> void:
 
 #==== options ====
 func _on_options_pressed() -> void:
-	get_tree().change_scene_to_file("res://Scenes/Menu/options.tscn")
+	get_tree().change_scene_to_file("res://Assets/Scenes/Menu/options.tscn")
 	pass # Replace with function body.
 
 #==== Q U I T ======

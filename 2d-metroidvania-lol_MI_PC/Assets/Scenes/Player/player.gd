@@ -96,7 +96,7 @@ func update_animation():
 			peo_effect.play("peo")
 			peo_effect.frame = 0
 			
-			print("dash")
+			
 		return
 		
 	if not is_dashing and peo_effect.visible:
@@ -108,30 +108,30 @@ func update_animation():
 				animated_sprite.play("jump_looking_up")
 			else:
 				animated_sprite.play("jump")
-				print("jump")
+				
 			pass
 		else:
 			if Input.is_action_pressed("look_up"):
 				animated_sprite.play("fall_lookin_up")
 			else:
 				animated_sprite.play("fall")
-				print("falling")
+				
 			pass
 		return
 		
 	if velocity.x:
 		if Input.is_action_pressed("look_up"):
 			animated_sprite.play("up_shoot_walk") 
-			print("moving + look up")
+			
 		else:
 			animated_sprite.play("walk")
 	else:
 		if Input.is_action_pressed("look_up"):
 			animated_sprite.play("up_idle")
-			print("idle + look up")
+			
 		else:
 			animated_sprite.play("idle")
-			print("idle")
+			
 
 #==== movement ====
 func jump(delta):
