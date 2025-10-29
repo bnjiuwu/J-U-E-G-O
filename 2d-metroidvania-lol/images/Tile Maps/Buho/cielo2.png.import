@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://caqfa7afng3wv"
-path="res://.godot/imported/Assets.png-7b0f0920295871618c4d616a3e459cd3.ctex"
+uid="uid://w8h0wtbqns5n"
+path="res://.godot/imported/cielo2.png-ff618711dc6be32cee1be918a7accd8e.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://images/Tile Maps/overworld/Tiles/Assets/Assets.png"
-dest_files=["res://.godot/imported/Assets.png-7b0f0920295871618c4d616a3e459cd3.ctex"]
+source_file="res://images/Tile Maps/Buho/cielo2.png"
+dest_files=["res://.godot/imported/cielo2.png-ff618711dc6be32cee1be918a7accd8e.ctex"]
 
 [params]
 

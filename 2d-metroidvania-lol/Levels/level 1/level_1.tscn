@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=4 uid="uid://c6n7qrlau6b0k"]
+[gd_scene load_steps=21 format=4 uid="uid://c6n7qrlau6b0k"]
 
 [ext_resource type="PackedScene" uid="uid://braj8a8ooxs4t" path="res://Scenes/Player/player.tscn" id="1_n0qsc"]
 [ext_resource type="PackedScene" uid="uid://d3evjk846bf1b" path="res://Scenes/Slime scene/slime.tscn" id="2_3mhv4"]
@@ -5660,6 +5660,8 @@ texture = ExtResource("3_3mhv4")
 physics_layer_0/collision_layer = 1
 sources/0 = SubResource("TileSetAtlasSource_aydgu")
 
+[sub_resource type="TileSet" id="TileSet_ib2b2"]
+
 [node name="level_1" type="Node2D"]
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
@@ -5705,6 +5707,9 @@ tile_set = SubResource("TileSet_4l21d")
 position = Vector2(8, 375)
 tile_map_data = PackedByteArray("AAAyAAIAAAALAAgAAAAzAAIAAAALAAgAAAA0AAIAAAALAAgAAAA1AAIAAAALAAgAAAA2AAIAAAALAAgAAAA3AAIAAAALAAgAAAAxAAIAAAALAAgAAAAwAAIAAAALAAgAAAAvAAIAAAALAAgAAAAuAAIAAAALAAgAAAAtAAIAAAALAAgAAAAMAAIAAAALAAgAAAANAAIAAAALAAgAAAAOAAIAAAALAAgAAAA=")
 tile_set = SubResource("TileSet_q7gkb")
+
+[node name="buho_tilemap" type="TileMapLayer" parent="."]
+tile_set = SubResource("TileSet_ib2b2")
 
 [node name="player" parent="." instance=ExtResource("1_n0qsc")]
 position = Vector2(591, 354)
