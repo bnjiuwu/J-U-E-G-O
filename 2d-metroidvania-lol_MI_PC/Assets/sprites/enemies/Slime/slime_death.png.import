@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://e4fwo8hnu16y"
-path="res://.godot/imported/bat.png.png-f468c9d37cd3980ca76dc5780dac2950.ctex"
+uid="uid://7r65trhund5o"
+path="res://.godot/imported/slime_death.png-c7fd4454507c5f741cd92c92b2559311.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/sprites/enemies/bat.png.png"
-dest_files=["res://.godot/imported/bat.png.png-f468c9d37cd3980ca76dc5780dac2950.ctex"]
+source_file="res://Assets/sprites/enemies/Slime/slime_death.png"
+dest_files=["res://.godot/imported/slime_death.png-c7fd4454507c5f741cd92c92b2559311.ctex"]
 
 [params]
 

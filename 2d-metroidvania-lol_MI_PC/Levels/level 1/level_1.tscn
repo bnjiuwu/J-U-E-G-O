@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=4 uid="uid://c6n7qrlau6b0k"]
+[gd_scene load_steps=24 format=4 uid="uid://c6n7qrlau6b0k"]
 
 [ext_resource type="PackedScene" uid="uid://braj8a8ooxs4t" path="res://Assets/Scenes/Player/player.tscn" id="1_n0qsc"]
 [ext_resource type="Script" uid="uid://by4hegpiwf1wp" path="res://Levels/level 1/level_1.gd" id="1_r7d4j"]
@@ -13,7 +13,8 @@
 [ext_resource type="Texture2D" uid="uid://c7du7oqw22wl5" path="res://Assets/images/Tile Maps/cave/props2.png" id="10_cq012"]
 [ext_resource type="Texture2D" uid="uid://bingjbajxml1c" path="res://Assets/images/Tile Maps/cave/mainlev_build.png" id="11_hao24"]
 [ext_resource type="PackedScene" uid="uid://b2lni2j37kwvl" path="res://Assets/Scenes/touch_controls/touch_controls.tscn" id="12_cq012"]
-[ext_resource type="PackedScene" uid="uid://bu5ef6314c7ik" path="res://Assets/Scenes/PauseMenu/PauseMenu.tscn" id="12_hao24"]
+[ext_resource type="PackedScene" uid="uid://bu5ef6314c7ik" path="res://Assets/Scenes/Menu/PauseMenu/PauseMenu.tscn" id="12_hao24"]
+[ext_resource type="PackedScene" uid="uid://ljb2k5q033bq" path="res://Assets/Scenes/Menu/Death Menu/DeathMenu.tscn" id="15_gdql1"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_rf6l5"]
 texture = ExtResource("3_3mhv4")
@@ -5663,8 +5664,11 @@ texture = ExtResource("3_3mhv4")
 physics_layer_0/collision_layer = 1
 sources/0 = SubResource("TileSetAtlasSource_aydgu")
 
-[node name="level_1" type="Node2D"]
+[node name="level_1" type="Node2D" node_paths=PackedStringArray("player", "pause_menu", "death_menu")]
 script = ExtResource("1_r7d4j")
+player = NodePath("player")
+pause_menu = NodePath("PauseMenu")
+death_menu = NodePath("DeathMenu")
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
 scroll_base_scale = Vector2(1.5, 1.5)
@@ -5792,3 +5796,6 @@ offset_bottom = 40.0
 [node name="touch_controls" parent="Controles" instance=ExtResource("12_cq012")]
 
 [node name="PauseMenu" parent="." instance=ExtResource("12_hao24")]
+
+[node name="DeathMenu" parent="." instance=ExtResource("15_gdql1")]
+visible = false

@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://bklv4hrgtjjcc"]
 
-[ext_resource type="Script" uid="uid://br6oo1s4rqkns" path="res://Assets/Scenes/Menu/options.gd" id="1_c4plk"]
+[ext_resource type="Script" uid="uid://br6oo1s4rqkns" path="res://Assets/Scenes/Menu/opciones/options.gd" id="1_c4plk"]
 [ext_resource type="Texture2D" uid="uid://dkqia2mxr4bnf" path="res://Assets/images/menu/sopaipilla.png" id="2_c4plk"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3ymnh"]

@@ -1,5 +1,8 @@
 extends CharacterBody2D
 
+signal died
+var dead: bool = false
+
 
 #=== dash properties ====
 @export var dash_speed: float = 500
@@ -17,8 +20,12 @@ var max_jumps = 1
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 @export var move_speed: float
 @export var jump_speed: float
-@onready var animated_sprite = $AnimatedSprite2D
-@onready var peo_effect = $PEO
+
+#=== sprites ====
+@onready var animated_sprite:AnimatedSprite2D = $AnimatedSprite2D
+@onready var peo_effect: AnimatedSprite2D = $PEO
+
+#== vars ===
 var is_facing_right = true
 var is_facing_up = false
 var is_jumping = false
@@ -254,12 +261,17 @@ func take_damage(amount) -> void:
 		die()
 
 func die() -> void:
-	print("💀 Player ha muerto")
+	if dead: return
+	dead = true
+	print("💀 Player ha muerto → emitiendo señal")
+	velocity = Vector2.ZERO
 	set_physics_process(false)
-	set_process(false)
+	if has_node("CollisionShape2D"):
+		$CollisionShape2D.disabled = true
+
+	var frames := animated_sprite.sprite_frames
 	
-	# Espera un frame y recarga
-	await get_tree().create_timer(0.1).timeout
-	
-	if is_inside_tree():
-		get_tree().reload_current_scene() # aquí puedes cambiarlo por animación/game over
+	if frames and frames.has_animation("death"):
+		animated_sprite.play("death")
+
+	died.emit()

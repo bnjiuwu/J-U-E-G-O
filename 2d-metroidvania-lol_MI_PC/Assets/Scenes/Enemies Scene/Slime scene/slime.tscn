@@ -1,8 +1,8 @@
 [gd_scene load_steps=17 format=3 uid="uid://d3evjk846bf1b"]
 
 [ext_resource type="Script" uid="uid://cuwiarbxs7rkb" path="res://Assets/Scenes/Enemies Scene/Slime scene/slime.gd" id="1_dfub6"]
-[ext_resource type="Texture2D" uid="uid://dkio0507k5e1t" path="res://Assets/sprites/enemies/slime idle.png" id="2_dfub6"]
-[ext_resource type="Texture2D" uid="uid://7r65trhund5o" path="res://Assets/sprites/enemies/slime_death.png" id="2_obdvy"]
+[ext_resource type="Texture2D" uid="uid://dkio0507k5e1t" path="res://Assets/sprites/enemies/Slime/slime idle.png" id="2_dfub6"]
+[ext_resource type="Texture2D" uid="uid://7r65trhund5o" path="res://Assets/sprites/enemies/Slime/slime_death.png" id="2_obdvy"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_pa6nx"]
 atlas = ExtResource("2_obdvy")

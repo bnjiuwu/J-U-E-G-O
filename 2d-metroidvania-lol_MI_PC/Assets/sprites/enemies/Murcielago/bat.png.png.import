@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dkio0507k5e1t"
-path="res://.godot/imported/slime idle.png-43f2b3b1ea81a65931a9b58bb637c4b6.ctex"
+uid="uid://e4fwo8hnu16y"
+path="res://.godot/imported/bat.png.png-4c6af976acfd475e2b7d7f07a6b0d33d.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/sprites/enemies/slime idle.png"
-dest_files=["res://.godot/imported/slime idle.png-43f2b3b1ea81a65931a9b58bb637c4b6.ctex"]
+source_file="res://Assets/sprites/enemies/Murcielago/bat.png.png"
+dest_files=["res://.godot/imported/bat.png.png-4c6af976acfd475e2b7d7f07a6b0d33d.ctex"]
 
 [params]
 
