@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dkqia2mxr4bnf"
-path="res://.godot/imported/sopaipilla.png-210f1feb89b6cb9de9c440b2c652211f.ctex"
+uid="uid://du8n6slpnvmbt"
+path="res://.godot/imported/Purple_Damage.png-3715d10d7002083a41a736c01fe61f5e.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/images/menu/sopaipilla.png"
-dest_files=["res://.godot/imported/sopaipilla.png-210f1feb89b6cb9de9c440b2c652211f.ctex"]
+source_file="res://Assets/sprites/enemies/Murcielago/Purple_Damage.png"
+dest_files=["res://.godot/imported/Purple_Damage.png-3715d10d7002083a41a736c01fe61f5e.ctex"]
 
 [params]
 

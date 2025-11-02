@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ccc4e83hu1lb0"
-path="res://.godot/imported/New Project.png-64a06e3ae1c8ef4e1d858efec55ac29a.ctex"
+uid="uid://dkqia2mxr4bnf"
+path="res://.godot/imported/sopaipilla.png-92eace6cb3994cf436a07ec0da599d13.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/images/menu/New Project.png"
-dest_files=["res://.godot/imported/New Project.png-64a06e3ae1c8ef4e1d858efec55ac29a.ctex"]
+source_file="res://Assets/images/menus/sopaipilla.png"
+dest_files=["res://.godot/imported/sopaipilla.png-92eace6cb3994cf436a07ec0da599d13.ctex"]
 
 [params]
 

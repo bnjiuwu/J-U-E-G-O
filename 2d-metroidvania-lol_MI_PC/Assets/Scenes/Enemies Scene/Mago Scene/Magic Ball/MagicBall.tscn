@@ -1,0 +1,136 @@
+[gd_scene load_steps=20 format=3 uid="uid://dvpo3lknsqtvo"]
+
+[ext_resource type="Script" uid="uid://b4cekm765y2ah" path="res://Assets/Scenes/Enemies Scene/Mago Scene/Magic Ball/magic_ball.gd" id="1_8k563"]
+[ext_resource type="Texture2D" uid="uid://cc8taa3iv46i1" path="res://Assets/sprites/enemies/Mago/FireBall/PC _ Computer - Diablo _ Diablo_ Hellfire - Effects - Magic Missile (Blue) (1).png" id="2_ettrq"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3j6gd"]
+atlas = ExtResource("2_ettrq")
+region = Rect2(1, 1165, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kg3n0"]
+atlas = ExtResource("2_ettrq")
+region = Rect2(98, 1165, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_olbk8"]
+atlas = ExtResource("2_ettrq")
+region = Rect2(195, 1165, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uo774"]
+atlas = ExtResource("2_ettrq")
+region = Rect2(292, 1165, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_li1ta"]
+atlas = ExtResource("2_ettrq")
+region = Rect2(389, 1165, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cwp6l"]
+atlas = ExtResource("2_ettrq")
+region = Rect2(486, 1165, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ag5um"]
+atlas = ExtResource("2_ettrq")
+region = Rect2(583, 1165, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_iep78"]
+atlas = ExtResource("2_ettrq")
+region = Rect2(680, 1165, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7c4t7"]
+atlas = ExtResource("2_ettrq")
+region = Rect2(777, 1165, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_netqy"]
+atlas = ExtResource("2_ettrq")
+region = Rect2(874, 1165, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_c4hta"]
+atlas = ExtResource("2_ettrq")
+region = Rect2(971, 1165, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hk058"]
+atlas = ExtResource("2_ettrq")
+region = Rect2(1068, 1165, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ihk2o"]
+atlas = ExtResource("2_ettrq")
+region = Rect2(1165, 1165, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qbjdb"]
+atlas = ExtResource("2_ettrq")
+region = Rect2(1262, 1165, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_poe5a"]
+atlas = ExtResource("2_ettrq")
+region = Rect2(1359, 1165, 96, 96)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ag5am"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3j6gd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kg3n0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_olbk8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uo774")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_li1ta")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cwp6l")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ag5um")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_iep78")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7c4t7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_netqy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_c4hta")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hk058")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ihk2o")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qbjdb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_poe5a")
+}],
+"loop": true,
+"name": &"default",
+"speed": 18.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_xill4"]
+radius = 14.035668
+
+[node name="MagicBall" type="Area2D" groups=["enemy proyectile"]]
+collision_layer = 8
+script = ExtResource("1_8k563")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(-16, 0)
+sprite_frames = SubResource("SpriteFrames_ag5am")
+frame = 4
+frame_progress = 0.019261122
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(1, -4)
+shape = SubResource("CircleShape2D_xill4")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

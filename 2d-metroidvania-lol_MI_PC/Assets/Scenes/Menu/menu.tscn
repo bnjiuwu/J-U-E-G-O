@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3 uid="uid://dtnijel5sygcw"]
 
 [ext_resource type="Script" uid="uid://dd1vxc5v1n5oh" path="res://Assets/Scenes/Menu/menu.gd" id="1_3ymnh"]
-[ext_resource type="Texture2D" uid="uid://ccc4e83hu1lb0" path="res://Assets/images/menu/New Project.png" id="1_cqskg"]
+[ext_resource type="Texture2D" uid="uid://cjp40lu2vkmr4" path="res://Assets/images/menus/roberto_lol.png" id="2_bk0jr"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3ymnh"]
 bg_color = Color(0.609435, 0.593739, 0.578541, 0.454902)
@@ -27,13 +27,14 @@ layout_mode = 0
 offset_right = 958.0
 offset_bottom = 480.0
 mouse_filter = 2
-color = Color(0.537011, 0.537011, 0.537011, 1)
+color = Color(0.07284268, 0.072842605, 0.072842576, 1)
 
 [node name="TextureRect" type="TextureRect" parent="ColorRect"]
 layout_mode = 0
-offset_right = 958.0
+offset_left = 313.0
+offset_right = 878.0
 offset_bottom = 480.0
-texture = ExtResource("1_cqskg")
+texture = ExtResource("2_bk0jr")
 expand_mode = 1
 
 [node name="VBoxContainer" type="VBoxContainer" parent="ColorRect"]

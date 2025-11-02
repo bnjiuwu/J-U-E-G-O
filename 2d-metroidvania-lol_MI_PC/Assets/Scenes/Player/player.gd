@@ -97,7 +97,7 @@ func update_animation():
 		
 		 # opcional, si quieres que el efecto también se invierta
 		if animated_sprite.animation != "dash":
-			animated_sprite. play("dash")
+			animated_sprite.play("dash")
 			
 			peo_effect.visible = true
 			peo_effect.play("peo")

@@ -1,0 +1,104 @@
+[gd_scene load_steps=15 format=3 uid="uid://xoxuswob6rae"]
+
+[ext_resource type="Script" uid="uid://bs4tmtql58en4" path="res://Assets/Scenes/Enemies Scene/Bat Scene/bat.gd" id="1_e58xu"]
+[ext_resource type="Texture2D" uid="uid://dgi6awh6vgsiw" path="res://Assets/sprites/enemies/Murcielago/Blue_Damage.png" id="2_1epkk"]
+[ext_resource type="Texture2D" uid="uid://b0grug1ceqrtw" path="res://Assets/sprites/enemies/Murcielago/Blue_Flying.png" id="3_m61hb"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_doup7"]
+atlas = ExtResource("2_1epkk")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_32bvc"]
+atlas = ExtResource("3_m61hb")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3jygo"]
+atlas = ExtResource("3_m61hb")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ynugq"]
+atlas = ExtResource("3_m61hb")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pagy8"]
+atlas = ExtResource("3_m61hb")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bhqbe"]
+atlas = ExtResource("3_m61hb")
+region = Rect2(0, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ysryi"]
+atlas = ExtResource("3_m61hb")
+region = Rect2(32, 32, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_s42su"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_doup7")
+}],
+"loop": true,
+"name": &"damage",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_32bvc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3jygo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ynugq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pagy8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bhqbe")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ysryi")
+}],
+"loop": true,
+"name": &"fly2",
+"speed": 12.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_oslhr"]
+radius = 11.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_np2nm"]
+radius = 94.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_pvj82"]
+radius = 15.033297
+
+[node name="Bat" type="CharacterBody2D" groups=["enemy"]]
+script = ExtResource("1_e58xu")
+
+[node name="animated" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_s42su")
+animation = &"fly2"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_oslhr")
+
+[node name="DetectionZone" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionZone"]
+shape = SubResource("CircleShape2D_np2nm")
+debug_color = Color(1, 0, 0.1333332, 0.050980393)
+
+[node name="Hitbox" type="Area2D" parent="." groups=["enemy"]]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+shape = SubResource("CircleShape2D_pvj82")
+debug_color = Color(0.87, 0, 0.841, 0.1882353)
+
+[node name="WallCheck" type="RayCast2D" parent="."]
+target_position = Vector2(30, 50)
+
+[connection signal="body_entered" from="DetectionZone" to="." method="_on_detection_zone_body_entered"]
+[connection signal="body_exited" from="DetectionZone" to="." method="_on_detection_zone_body_exited"]

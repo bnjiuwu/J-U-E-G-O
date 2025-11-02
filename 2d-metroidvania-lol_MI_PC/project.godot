@@ -24,8 +24,13 @@ window/stretch/mode="canvas_items"
 [file_customization]
 
 folder_colors={
+"res://Assets/Fonts/": "purple",
 "res://Assets/Scenes/": "yellow",
 "res://Assets/Scenes/Enemies Scene/": "red",
+"res://Assets/Scenes/Enemies Scene/Bat Scene/": "gray",
+"res://Assets/Scenes/Enemies Scene/Mago Scene/": "purple",
+"res://Assets/Scenes/Enemies Scene/PapaRoberto Scene/": "orange",
+"res://Assets/Scenes/Enemies Scene/Slime scene/": "green",
 "res://Assets/Scenes/Menu/": "gray",
 "res://Assets/Scenes/Menu/Death Menu/": "purple",
 "res://Assets/Scenes/Menu/PauseMenu/": "green",
@@ -37,6 +42,9 @@ folder_colors={
 "res://Assets/images/": "blue",
 "res://Assets/sprites/": "gray",
 "res://Assets/sprites/enemies/": "red",
+"res://Assets/sprites/enemies/Mago/": "orange",
+"res://Assets/sprites/enemies/Murcielago/": "pink",
+"res://Assets/sprites/enemies/Slime/": "green",
 "res://Assets/sprites/roberto/": "pink",
 "res://Levels/": "teal",
 "res://addons/": "orange"
@@ -101,7 +109,6 @@ pause={
 [input_devices]
 
 pointing/emulate_touch_from_mouse=true
-pointing/emulate_mouse_from_touch=false
 
 [layer_names]
 

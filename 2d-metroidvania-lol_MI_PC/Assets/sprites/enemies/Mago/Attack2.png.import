@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://e4fwo8hnu16y"
-path="res://.godot/imported/bat.png.png-4c6af976acfd475e2b7d7f07a6b0d33d.ctex"
+uid="uid://vsf01qdu1mb3"
+path="res://.godot/imported/Attack2.png-6f6e36212aab6dc045cadb7221b5be61.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/sprites/enemies/Murcielago/bat.png.png"
-dest_files=["res://.godot/imported/bat.png.png-4c6af976acfd475e2b7d7f07a6b0d33d.ctex"]
+source_file="res://Assets/sprites/enemies/Mago/Attack2.png"
+dest_files=["res://.godot/imported/Attack2.png-6f6e36212aab6dc045cadb7221b5be61.ctex"]
 
 [params]
 
