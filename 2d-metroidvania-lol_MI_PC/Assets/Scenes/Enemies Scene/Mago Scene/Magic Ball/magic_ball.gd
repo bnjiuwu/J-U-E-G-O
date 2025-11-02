@@ -9,13 +9,7 @@ var direction: Vector2 = Vector2.RIGHT
 @onready var col: CollisionShape2D = $CollisionShape2D
 
 func _ready():
-	# brillo azul sencillo (aditivo)
-	var mat := CanvasItemMaterial.new()
-	mat.blend_mode = CanvasItemMaterial.BLEND_MODE_ADD
-	material = mat
-	self.modulate = Color(0.4, 0.7, 1.0, 1.0) # celeste-azul
-	# autodestroy
-	get_tree().create_timer(lifetime).timeout.connect(queue_free)
+	pass
 
 func set_direction(dir: Vector2) -> void:
 	direction = dir.normalized()
@@ -23,7 +17,7 @@ func set_direction(dir: Vector2) -> void:
 
 func _physics_process(delta):
 	global_position += direction * speed * delta
-	sprite.play("default")
+	sprite.play("default_purple")
 	
 
 # Colisiones (con cuerpos o áreas)

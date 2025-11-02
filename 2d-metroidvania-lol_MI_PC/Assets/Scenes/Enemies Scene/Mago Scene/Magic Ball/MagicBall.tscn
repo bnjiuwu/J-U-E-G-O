@@ -1,7 +1,8 @@
-[gd_scene load_steps=20 format=3 uid="uid://dvpo3lknsqtvo"]
+[gd_scene load_steps=36 format=3 uid="uid://dvpo3lknsqtvo"]
 
 [ext_resource type="Script" uid="uid://b4cekm765y2ah" path="res://Assets/Scenes/Enemies Scene/Mago Scene/Magic Ball/magic_ball.gd" id="1_8k563"]
 [ext_resource type="Texture2D" uid="uid://cc8taa3iv46i1" path="res://Assets/sprites/enemies/Mago/FireBall/PC _ Computer - Diablo _ Diablo_ Hellfire - Effects - Magic Missile (Blue) (1).png" id="2_ettrq"]
+[ext_resource type="Texture2D" uid="uid://2xqhfr4lt8nw" path="res://Assets/sprites/enemies/Mago/FireBall/PC _ Computer - Diablo _ Diablo_ Hellfire - Effects - Magic Missile (Blue) (1) (1).png" id="3_tpifb"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_3j6gd"]
 atlas = ExtResource("2_ettrq")
@@ -63,6 +64,66 @@ region = Rect2(1262, 1165, 96, 96)
 atlas = ExtResource("2_ettrq")
 region = Rect2(1359, 1165, 96, 96)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_snlie"]
+atlas = ExtResource("3_tpifb")
+region = Rect2(1, 1165, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ntsr4"]
+atlas = ExtResource("3_tpifb")
+region = Rect2(98, 1165, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_x7soe"]
+atlas = ExtResource("3_tpifb")
+region = Rect2(195, 1165, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hcwdh"]
+atlas = ExtResource("3_tpifb")
+region = Rect2(292, 1165, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ttmim"]
+atlas = ExtResource("3_tpifb")
+region = Rect2(389, 1165, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mf60p"]
+atlas = ExtResource("3_tpifb")
+region = Rect2(486, 1165, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wgvjb"]
+atlas = ExtResource("3_tpifb")
+region = Rect2(583, 1165, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3ipxl"]
+atlas = ExtResource("3_tpifb")
+region = Rect2(680, 1165, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_q4wf1"]
+atlas = ExtResource("3_tpifb")
+region = Rect2(777, 1165, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ms72u"]
+atlas = ExtResource("3_tpifb")
+region = Rect2(874, 1165, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cvc33"]
+atlas = ExtResource("3_tpifb")
+region = Rect2(971, 1165, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3ub5w"]
+atlas = ExtResource("3_tpifb")
+region = Rect2(1068, 1165, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_75umg"]
+atlas = ExtResource("3_tpifb")
+region = Rect2(1165, 1165, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ue2a8"]
+atlas = ExtResource("3_tpifb")
+region = Rect2(1262, 1165, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mtb7w"]
+atlas = ExtResource("3_tpifb")
+region = Rect2(1359, 1165, 96, 96)
+
 [sub_resource type="SpriteFrames" id="SpriteFrames_ag5am"]
 animations = [{
 "frames": [{
@@ -114,6 +175,56 @@ animations = [{
 "loop": true,
 "name": &"default",
 "speed": 18.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_snlie")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ntsr4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_x7soe")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hcwdh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ttmim")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mf60p")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wgvjb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3ipxl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_q4wf1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ms72u")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cvc33")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3ub5w")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_75umg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ue2a8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mtb7w")
+}],
+"loop": true,
+"name": &"default_purple",
+"speed": 18.0
 }]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_xill4"]
@@ -126,8 +237,8 @@ script = ExtResource("1_8k563")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(-16, 0)
 sprite_frames = SubResource("SpriteFrames_ag5am")
-frame = 4
-frame_progress = 0.019261122
+animation = &"default_purple"
+frame_progress = 0.32749456
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(1, -4)

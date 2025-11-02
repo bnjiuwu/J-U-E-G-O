@@ -371,7 +371,8 @@ magic_ball_scene = ExtResource("2_artgm")
 [node name="sprite" type="AnimatedSprite2D" parent="."]
 scale = Vector2(0.5631579, 0.5631579)
 sprite_frames = SubResource("SpriteFrames_q8ne4")
-animation = &"attack2"
+animation = &"attack1"
+frame = 6
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-2, 2.75)
