@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://nnyiqy46q48k"
-path="res://.godot/imported/BolaMagica (1) (1).png-24e667eac2a316c7ac508b6728251a73.ctex"
+uid="uid://2xqhfr4lt8nw"
+path="res://.godot/imported/PC _ Computer - Diablo _ Diablo_ Hellfire - Effects - Magic Missile (Blue) (1) (1).png-88d3f54f3d6d366eb2c4d093a1c405c6.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/sprites/enemies/Mago/FireBall/BolaMagica (1) (1).png"
-dest_files=["res://.godot/imported/BolaMagica (1) (1).png-24e667eac2a316c7ac508b6728251a73.ctex"]
+source_file="res://Assets/sprites/enemies/Mago/FireBall/PC _ Computer - Diablo _ Diablo_ Hellfire - Effects - Magic Missile (Blue) (1) (1).png"
+dest_files=["res://.godot/imported/PC _ Computer - Diablo _ Diablo_ Hellfire - Effects - Magic Missile (Blue) (1) (1).png-88d3f54f3d6d366eb2c4d093a1c405c6.ctex"]
 
 [params]
 
