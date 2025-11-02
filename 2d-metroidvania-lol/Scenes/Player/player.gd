@@ -32,6 +32,9 @@ var health: int
 #============== bullet ===========
 @export var bullet_scene: PackedScene
 @onready var canon = $muzzle
+@export var shoot_delay := 0.2
+var shoot_timer := 0.0
+
 
 #==== damage knockback =======
 var knockback_force: Vector2 = Vector2(300, -200) # (x: fuerza lateral, y: salto)
@@ -44,11 +47,14 @@ func _ready() -> void:
 	add_to_group("player")
 	print("Player HP ready:",health)
 	
-	pass
+
 
 func _process(_delta):
-	if Input.is_action_just_pressed("attack"):
+	if shoot_timer > 0:
+		shoot_timer -= _delta
+	if Input.is_action_pressed("attack") and shoot_timer <= 0:
 		fire_bullet()
+		shoot_timer = shoot_delay
 
 func _physics_process(delta):
 	if not is_dashing:

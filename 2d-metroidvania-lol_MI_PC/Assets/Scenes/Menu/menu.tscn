@@ -1,0 +1,72 @@
+[gd_scene load_steps=6 format=3 uid="uid://dtnijel5sygcw"]
+
+[ext_resource type="Script" uid="uid://dd1vxc5v1n5oh" path="res://Assets/Scenes/Menu/menu.gd" id="1_3ymnh"]
+[ext_resource type="Texture2D" uid="uid://cjp40lu2vkmr4" path="res://Assets/images/menus/roberto_lol.png" id="2_bk0jr"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3ymnh"]
+bg_color = Color(0.609435, 0.593739, 0.578541, 0.454902)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3qr6s"]
+bg_color = Color(0.6, 0.6, 0.6, 0.482353)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_j7r1e"]
+bg_color = Color(1, 0, 0, 0.517647)
+
+[node name="Menu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+focus_mode = 2
+script = ExtResource("1_3ymnh")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 0
+offset_right = 958.0
+offset_bottom = 480.0
+mouse_filter = 2
+color = Color(0.07284268, 0.072842605, 0.072842576, 1)
+
+[node name="TextureRect" type="TextureRect" parent="ColorRect"]
+layout_mode = 0
+offset_left = 313.0
+offset_right = 878.0
+offset_bottom = 480.0
+texture = ExtResource("2_bk0jr")
+expand_mode = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ColorRect"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -128.5
+offset_right = 228.0
+offset_bottom = 128.5
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/separation = 13
+
+[node name="play" type="Button" parent="ColorRect/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 50
+theme_override_styles/normal = SubResource("StyleBoxFlat_3ymnh")
+text = "JUGAR"
+
+[node name="options" type="Button" parent="ColorRect/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 50
+theme_override_styles/normal = SubResource("StyleBoxFlat_3qr6s")
+text = "OPTIONS"
+
+[node name="quit" type="Button" parent="ColorRect/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 50
+theme_override_styles/normal = SubResource("StyleBoxFlat_j7r1e")
+text = "QUIT"
+
+[connection signal="pressed" from="ColorRect/VBoxContainer/play" to="." method="_on_play_pressed"]
+[connection signal="pressed" from="ColorRect/VBoxContainer/options" to="." method="_on_options_pressed"]
+[connection signal="pressed" from="ColorRect/VBoxContainer/quit" to="." method="_on_quit_pressed"]

@@ -19,12 +19,14 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+focus_mode = 2
 script = ExtResource("1_3ymnh")
 
 [node name="ColorRect" type="ColorRect" parent="."]
 layout_mode = 0
 offset_right = 958.0
 offset_bottom = 480.0
+mouse_filter = 2
 color = Color(0.537011, 0.537011, 0.537011, 1)
 
 [node name="TextureRect" type="TextureRect" parent="ColorRect"]
@@ -43,6 +45,7 @@ offset_top = -128.5
 offset_right = 228.0
 offset_bottom = 128.5
 grow_vertical = 2
+mouse_filter = 2
 theme_override_constants/separation = 13
 
 [node name="play" type="Button" parent="ColorRect/VBoxContainer"]

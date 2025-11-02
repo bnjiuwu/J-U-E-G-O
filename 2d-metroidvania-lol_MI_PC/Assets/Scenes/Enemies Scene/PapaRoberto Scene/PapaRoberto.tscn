@@ -1,0 +1,102 @@
+[gd_scene load_steps=15 format=3 uid="uid://gbohe3bsoon2"]
+
+[ext_resource type="Script" uid="uid://bn4ipw1chsa2f" path="res://Assets/Scenes/Enemies Scene/PapaRoberto Scene/papa_roberto.gd" id="1_wv475"]
+[ext_resource type="PackedScene" uid="uid://mh33218besl7" path="res://Assets/Scenes/Enemies Scene/PapaRoberto Scene/Insulto Scene/Insulto.tscn" id="2_b4u60"]
+[ext_resource type="Texture2D" uid="uid://bskkdoku1etre" path="res://Assets/sprites/enemies/Papa Roberto/Padre Roberto Update.png" id="2_jpdcp"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b4u60"]
+atlas = ExtResource("2_jpdcp")
+region = Rect2(0, 0, 42, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wxyix"]
+atlas = ExtResource("2_jpdcp")
+region = Rect2(42, 0, 42, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6bs0w"]
+atlas = ExtResource("2_jpdcp")
+region = Rect2(84, 0, 42, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jpdcp"]
+atlas = ExtResource("2_jpdcp")
+region = Rect2(0, 64, 42, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_akep2"]
+atlas = ExtResource("2_jpdcp")
+region = Rect2(42, 64, 42, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_557b5"]
+atlas = ExtResource("2_jpdcp")
+region = Rect2(84, 64, 42, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_rvslg"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b4u60")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wxyix")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6bs0w")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jpdcp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_akep2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_557b5")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 3.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_afvr2"]
+size = Vector2(38, 56)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_wv475"]
+radius = 140.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jpdcp"]
+size = Vector2(320, 32)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2tv7y"]
+size = Vector2(52, 62)
+
+[node name="PapaRoberto" type="CharacterBody2D" groups=["enemy"]]
+script = ExtResource("1_wv475")
+insult_scene = ExtResource("2_b4u60")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_rvslg")
+animation = &"idle"
+frame_progress = 0.3592189
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_afvr2")
+
+[node name="InsultSpawnPoint" type="Node2D" parent="."]
+
+[node name="DetectionArea" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionArea"]
+shape = SubResource("CircleShape2D_wv475")
+
+[node name="AttackArea" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackArea"]
+shape = SubResource("RectangleShape2D_jpdcp")
+
+[node name="Hitbox" type="Area2D" parent="." groups=["enemy"]]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+shape = SubResource("RectangleShape2D_2tv7y")
+debug_color = Color(0.98740715, 0.07660497, 0.20819211, 0.41960785)

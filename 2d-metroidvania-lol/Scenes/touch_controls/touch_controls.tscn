@@ -1,0 +1,102 @@
+[gd_scene load_steps=6 format=3 uid="uid://b2lni2j37kwvl"]
+
+[ext_resource type="PackedScene" uid="uid://dmr0fcamx7t56" path="res://addons/virtual_joystick/virtual_joystick_scene.tscn" id="1_as06w"]
+[ext_resource type="Script" uid="uid://bhkt88s7hsmc8" path="res://Scenes/touch_controls/touch_controls.gd" id="1_ex53c"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lijdg"]
+bg_color = Color(0.6024156, 0, 0.09970736, 1)
+border_color = Color(0.8684916, 0.73857987, 0.9817973, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qel7s"]
+bg_color = Color(1.1431053e-07, 0.3555623, 0.021190044, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7fpjj"]
+bg_color = Color(0, 0.20136902, 0.45916635, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
+[node name="touch_controls" type="CanvasLayer"]
+script = ExtResource("1_ex53c")
+
+[node name="Virtual Joystick" parent="." instance=ExtResource("1_as06w")]
+anchor_left = 0.025
+anchor_top = 0.583
+anchor_right = 0.23300001
+offset_left = 32.0
+offset_top = 0.16000366
+offset_right = 32.319992
+offset_bottom = 0.0
+scale = Vector2(1, 1)
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 684.0
+offset_top = 309.0
+offset_right = -1.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="FIRE" type="Button" parent="Control"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.684
+anchor_top = 0.36600003
+anchor_right = 0.975
+anchor_bottom = 0.64000005
+offset_left = -0.1000061
+offset_top = 0.0739975
+offset_right = -0.125
+offset_bottom = -0.040008545
+theme_override_styles/normal = SubResource("StyleBoxFlat_lijdg")
+text = "FIRE
+"
+
+[node name="DASH" type="Button" parent="Control"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.393
+anchor_top = 0.665
+anchor_right = 0.684
+anchor_bottom = 0.938
+offset_left = -0.07500458
+offset_top = -0.06500244
+offset_right = -0.1000061
+offset_bottom = -0.018005371
+theme_override_styles/normal = SubResource("StyleBoxFlat_qel7s")
+text = "DASH"
+
+[node name="JUMP" type="Button" parent="Control"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.393
+anchor_top = 0.068
+anchor_right = 0.684
+anchor_bottom = 0.342
+offset_left = -0.07500458
+offset_top = 0.051999092
+offset_right = -0.1000061
+offset_bottom = -0.062000275
+theme_override_styles/normal = SubResource("StyleBoxFlat_7fpjj")
+text = "JUMP"
+
+[connection signal="button_down" from="Control/FIRE" to="." method="_on_fire_button_down"]
+[connection signal="button_up" from="Control/FIRE" to="." method="_on_fire_button_up"]
+[connection signal="button_down" from="Control/DASH" to="." method="_on_dash_button_down"]
+[connection signal="button_up" from="Control/DASH" to="." method="_on_dash_button_up"]
+[connection signal="button_down" from="Control/JUMP" to="." method="_on_jump_button_down"]
+[connection signal="button_up" from="Control/JUMP" to="." method="_on_jump_button_up"]
