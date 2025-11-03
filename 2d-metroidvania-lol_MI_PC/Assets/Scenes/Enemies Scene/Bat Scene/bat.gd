@@ -1,94 +1,195 @@
 extends CharacterBody2D
 
 # --- Propiedades ---
-@export var patrol_speed: float = 50.0
-@export var attack_speed: float = 130.0
-@export var retreat_speed: float = 200.0      # 💨 MÁS RÁPIDO al retroceder
-@export var retreat_duration: float = 0.6     # ⏱️ Tiempo de retroceso corto
-@export var damage_amount: int = 20
+@export var patrol_speed: float = 40.0
+@export var dive_speed: float = 260.0
+@export var retreat_speed: float = 180.0
+@export var attack_cooldown: float = 1.5
+@export var charge_time: float = 0.5
 @export var max_health: int = 3
-@export var flip_cooldown: float = 0.45
+@export var damage_amount: int = 20
+@export var flip_cooldown: float = 0.4
+@export var dive_duration: float = 1.5
 
 var health: int
-var _flip_lock := 0.0
-var _retreat_timer := 0.0                    # ⏳ tiempo restante de retroceso
+var is_dead: bool = false
 
-# --- Estados y Lógica ---
-enum State { PATROL, ATTACK, RETREAT }
+var _flip_lock := 0.0
+var _attack_cooldown_timer := 0.0
+var _charge_timer := 0.0
+var _retreat_timer := 0.0
+var _detect_lock_timer := 0.0
+var _dive_timer := 0.0
+var _lift_cooldown := 0.0  # 🕒 evita impulsos seguidos al suelo/techo
+
+# --- Estados ---
+enum State { PATROL, CHARGING, DIVE, RETREAT }
 var current_state = State.PATROL
 var player_target: CharacterBody2D = null
-var direction: int = 1 # 1 derecha, -1 izquierda
+var direction: int = -1
+var dive_direction: Vector2 = Vector2.ZERO
 
-# --- Referencias a Nodos ---
-var sprite: AnimatedSprite2D = null
+# --- Nodos ---
+@onready var sprite: AnimatedSprite2D = $animated
 @onready var wall_check: RayCast2D = $WallCheck
+@onready var floor_check: RayCast2D = $FloorCheck
+@onready var ceiling_check: RayCast2D = $CeilingCheck
 @onready var detection_zone: Area2D = $DetectionZone
+@onready var hitbox: Area2D = $Hitbox
 
+# --- Ready ---
 func _ready():
 	health = max_health
-
-	sprite = get_node_or_null("animated") as AnimatedSprite2D
-	if sprite and sprite.sprite_frames and sprite.sprite_frames.has_animation("fly2"):
+	if sprite:
 		sprite.play("fly2")
+	setup_sensors()
 
-	if wall_check:
-		wall_check.enabled = true
-
+# --- Física ---
 func _physics_process(delta):
-	_flip_lock = max(_flip_lock - delta, 0.0)
+	if is_dead:
+		return
+
+	_flip_lock = max(_flip_lock - delta, 0)
+	_lift_cooldown = max(_lift_cooldown - delta, 0)
+	if _attack_cooldown_timer > 0:
+		_attack_cooldown_timer -= delta
+	if _detect_lock_timer > 0:
+		_detect_lock_timer -= delta
 
 	match current_state:
 		State.PATROL:
-			patrol_movement()
-		State.ATTACK:
-			attack_movement()
+			patrol_behavior()
+		State.CHARGING:
+			charge_behavior(delta)
+		State.DIVE:
+			dive_behavior(delta)
 		State.RETREAT:
-			retreat_movement(delta)
+			retreat_behavior(delta)
 
 	if sprite:
-		sprite.flip_h = (direction == -1)
+		sprite.flip_h = (direction == 1)
 
+	_update_directional_nodes()
 	move_and_slide()
 
-# --- Movimientos ---
-func patrol_movement():
+	# --- Ajuste de altura automática ---
+	if current_state in [State.PATROL, State.RETREAT]:
+		_check_floor_and_lift(delta)
+		_check_ceiling_and_lower(delta)
+
+# --- Setup ---
+func setup_sensors():
+	if wall_check: wall_check.enabled = true
+	if floor_check: floor_check.enabled = true
+	if ceiling_check: ceiling_check.enabled = true
+	if detection_zone:
+		detection_zone.monitoring = true
+		detection_zone.monitorable = true
+
+func _update_directional_nodes():
+	if wall_check:
+		wall_check.position.x = sign(direction) * abs(wall_check.position.x)
+		wall_check.target_position.x = sign(direction) * abs(wall_check.target_position.x)
+	if detection_zone:
+		detection_zone.position.x = sign(direction) * abs(detection_zone.position.x)
+
+# --- Patrulla ---
+func patrol_behavior():
 	velocity.x = direction * patrol_speed
-	velocity.y = 0.0
+	velocity.y = sin(Time.get_ticks_msec() / 300.0) * 40
 
 	if wall_check and wall_check.is_colliding() and _flip_lock <= 0.0:
 		_flip()
 
-func attack_movement():
-	if not player_target:
+# --- Carga ---
+func charge_behavior(delta):
+	_charge_timer -= delta
+	velocity = Vector2.ZERO
+	if sprite:
+		sprite.play("charge")
+
+	# ⚠️ Desactivar detección mientras carga
+	if detection_zone:
+		detection_zone.monitoring = false
+		detection_zone.monitorable = false
+
+	if _charge_timer <= 0:
+		if player_target:
+			direction = 1 if player_target.global_position.x > global_position.x else -1
+			_update_directional_nodes()
+			dive_direction = (player_target.global_position - global_position).normalized()
+		else:
+			dive_direction = Vector2(direction, 0)
+
+		current_state = State.DIVE
+		_dive_timer = dive_duration
+		_detect_lock_timer = 1.8
+
+# --- Dive ---
+func dive_behavior(delta):
+	_dive_timer -= delta
+	velocity = dive_direction * dive_speed
+
+	if detection_zone:
+		detection_zone.monitoring = false
+		detection_zone.monitorable = false
+
+	# Fin del dive por pared o tiempo
+	if wall_check and wall_check.is_colliding():
+		var normal = wall_check.get_collision_normal()
+		if abs(normal.x) > 0.5:
+			on_attack_hit_player()
+	elif _dive_timer <= 0.0:
+		print("[🦇] Dive finalizado (tiempo límite)")
 		current_state = State.PATROL
-		return
+		player_target = null
+		_detect_lock_timer = 0.8
+		if detection_zone:
+			detection_zone.monitoring = true
+			detection_zone.monitorable = true
 
-	var dir_vec := global_position.direction_to(player_target.global_position)
-	velocity = dir_vec * attack_speed
-
-	if velocity.x > 0.0:
-		direction = 1
-	elif velocity.x < 0.0:
-		direction = -1
-
-# --- Nuevo movimiento de retroceso ---
-func retreat_movement(delta: float):
+# --- Retroceso ---
+func retreat_behavior(delta):
 	_retreat_timer -= delta
-	if not player_target:
+	velocity = Vector2(-direction, 0).normalized() * retreat_speed
+	if _retreat_timer <= 0:
 		current_state = State.PATROL
-		return
+		player_target = null
+		_detect_lock_timer = 0.5
+		if detection_zone:
+			detection_zone.monitoring = true
+			detection_zone.monitorable = true
 
-	var away_vec := global_position.direction_to(player_target.global_position) * -1
-	velocity = away_vec * retreat_speed
+# --- Transición tras ataque ---
+func on_attack_hit_player():
+	_retreat_timer = 0.6
+	current_state = State.RETREAT
+	_attack_cooldown_timer = attack_cooldown
+	_detect_lock_timer = 1.5
 
-	if _retreat_timer <= 0.0:
-		current_state = State.ATTACK  # vuelve a atacar tras retroceder
+# --- Comprobación de suelo y techo ---
+func _check_floor_and_lift(delta: float):
+	if not floor_check or _lift_cooldown > 0: return
+	if floor_check.is_colliding():
+		var dist_to_floor = floor_check.get_collision_point().y - global_position.y
+		if dist_to_floor < 25:
+			print("[🦇] Impulso hacia arriba (suelo detectado)")
+			velocity.y = -180.0
+			_lift_cooldown = 0.3
+
+func _check_ceiling_and_lower(delta: float):
+	if not ceiling_check or _lift_cooldown > 0: return
+	if ceiling_check.is_colliding():
+		var dist_to_ceiling = global_position.y - ceiling_check.get_collision_point().y
+		if dist_to_ceiling < 25:
+			print("[🦇] Impulso hacia abajo (techo detectado)")
+			velocity.y = 180.0
+			_lift_cooldown = 0.3
 
 # --- Flip ---
 func _flip():
 	direction *= -1
 	_flip_lock = flip_cooldown
-
 	if wall_check:
 		wall_check.enabled = false
 		wall_check.position.x *= -1
@@ -99,25 +200,57 @@ func _re_enable_wallcheck():
 	if wall_check:
 		wall_check.enabled = true
 
-# --- Daño y muerte ---
+# --- Daño ---
 func take_damage(amount: int):
+	if is_dead:
+		return
 	health -= amount
 	if health <= 0:
-		queue_free()
+		die()
 
-# --- Señales DetectionZone ---
+# --- Detección ---
 func _on_detection_zone_body_entered(body: Node):
+	if _detect_lock_timer > 0 or current_state in [State.CHARGING, State.DIVE, State.RETREAT]:
+		return
 	if body.is_in_group("player"):
 		player_target = body
-		current_state = State.ATTACK
+		_charge_timer = charge_time
+		current_state = State.CHARGING
+		print("[🦇] Jugador detectado → inicia carga")
 
 func _on_detection_zone_body_exited(body: Node):
-	if body == player_target:
+	if body == player_target and current_state == State.PATROL:
 		player_target = null
-		current_state = State.PATROL
+		print("[🦇] Jugador fuera de rango")
 
-# --- Llamar RETREAT luego de atacar ---
-func on_attack_hit_player():
-	# cuando daña al jugador, activa el retroceso
-	_retreat_timer = retreat_duration
-	current_state = State.RETREAT
+# --- Hitbox ---
+func _on_hitbox_area_entered(area: Area2D):
+	if is_dead: return
+	if area.is_in_group("projectile"):
+		print("💥 Murciélago recibió bala")
+		take_damage(1)
+		area.queue_free()
+
+# --- Muerte ---
+func die():
+	if is_dead: return
+	is_dead = true
+	print("💀 Murciélago ha muerto")
+
+	velocity = Vector2.ZERO
+	set_physics_process(false)
+	if detection_zone:
+		detection_zone.monitoring = false
+		detection_zone.monitorable = false
+	if wall_check:
+		wall_check.enabled = false
+	if has_node("CollisionShape2D"):
+		$CollisionShape2D.disabled = true
+
+	if sprite and sprite.sprite_frames.has_animation("death"):
+		sprite.play("death")
+		await sprite.animation_finished
+	else:
+		var tween := get_tree().create_tween()
+		tween.tween_property(self, "modulate:a", 0.0, 0.4)
+	queue_free()

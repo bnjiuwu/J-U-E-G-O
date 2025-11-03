@@ -471,6 +471,8 @@ size = Vector2(4.56275, 23.6856)
 size = Vector2(12, 30)
 
 [node name="player" type="CharacterBody2D" groups=["player"]]
+collision_layer = 2
+collision_mask = 53
 script = ExtResource("1_xpcdj")
 move_speed = 100.0
 jump_speed = 400.0
@@ -496,7 +498,8 @@ shape = SubResource("RectangleShape2D_htcer")
 position = Vector2(20, 4)
 
 [node name="Hitbox" type="Area2D" parent="." groups=["player"]]
-collision_mask = 5
+collision_layer = 2
+collision_mask = 53
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
 position = Vector2(0, 4)

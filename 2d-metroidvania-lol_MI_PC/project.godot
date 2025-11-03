@@ -112,7 +112,12 @@ pointing/emulate_touch_from_mouse=true
 
 [layer_names]
 
+2d_physics/layer_1="TILE MAP COLITION"
+2d_physics/layer_2="JUGADOR"
 2d_physics/layer_3="world damage"
+2d_physics/layer_4="BULLET"
+2d_physics/layer_5="ENEMIES"
+2d_physics/layer_6="ENEMIES PROJECTILES"
 
 [rendering]
 

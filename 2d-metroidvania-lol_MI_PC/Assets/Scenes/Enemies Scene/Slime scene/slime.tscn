@@ -94,6 +94,8 @@ size = Vector2(29, 16.75)
 size = Vector2(43.5, 28)
 
 [node name="Slime" type="CharacterBody2D" groups=["enemy"]]
+collision_layer = 16
+collision_mask = 11
 script = ExtResource("1_dfub6")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
@@ -118,7 +120,8 @@ target_position = Vector2(24, -11)
 collision_mask = 7
 
 [node name="Area2D" type="Area2D" parent="." groups=["enemy"]]
-collision_mask = 5
+collision_layer = 16
+collision_mask = 11
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 position = Vector2(0, -4)

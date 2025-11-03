@@ -38,6 +38,12 @@ func _ready():
 	
 	# Inicializar animación
 	sprite.flip_h = direction == 1
+	
+func _process(delta):
+	# Revisión manual por si la señal no se activa
+	if is_dead and not sprite.is_playing():
+		print("💀 Slime eliminado (por fin!)")
+		queue_free()
 
 func _physics_process(delta):
 
@@ -96,6 +102,7 @@ func take_damage(amount: int):
 	if is_dead:
 		return
 		
+		
 	health -= amount
 	print("Enemy HP:", health)
 	
@@ -126,11 +133,6 @@ func die():
 
 
 
-func _process(delta):
-	# Revisión manual por si la señal no se activa
-	if is_dead and not sprite.is_playing():
-		print("💀 Slime eliminado (por fin!)")
-		queue_free()
 
 
 func _on_animated_sprite_2d_animation_finished() -> void:

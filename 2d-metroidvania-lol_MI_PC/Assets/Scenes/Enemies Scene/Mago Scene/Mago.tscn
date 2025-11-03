@@ -1,4 +1,4 @@
-[gd_scene load_steps=57 format=3 uid="uid://rqnm23qh8syg"]
+[gd_scene load_steps=58 format=3 uid="uid://rqnm23qh8syg"]
 
 [ext_resource type="Script" uid="uid://cvldqbrwc1meo" path="res://Assets/Scenes/Enemies Scene/Mago Scene/mago.gd" id="1_qlsdm"]
 [ext_resource type="PackedScene" uid="uid://dvpo3lknsqtvo" path="res://Assets/Scenes/Enemies Scene/Mago Scene/Magic Ball/MagicBall.tscn" id="2_artgm"]
@@ -358,24 +358,27 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_top6t"]
-size = Vector2(26, 46.5)
+size = Vector2(24, 43)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jxp6p"]
+size = Vector2(26, 44)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_qtivd"]
 size = Vector2(200, 23)
 
 [node name="Mago" type="CharacterBody2D" groups=["enemy"]]
-collision_layer = 2
+collision_layer = 16
+collision_mask = 11
 script = ExtResource("1_qlsdm")
 magic_ball_scene = ExtResource("2_artgm")
 
 [node name="sprite" type="AnimatedSprite2D" parent="."]
 scale = Vector2(0.5631579, 0.5631579)
 sprite_frames = SubResource("SpriteFrames_q8ne4")
-animation = &"attack1"
-frame = 6
+animation = &"idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(-2, 2.75)
+position = Vector2(-3, 4.5)
 shape = SubResource("RectangleShape2D_top6t")
 
 [node name="WallCheck" type="RayCast2D" parent="."]
@@ -385,19 +388,31 @@ target_position = Vector2(20, 0)
 position = Vector2(8, 15)
 target_position = Vector2(0, 30)
 
+[node name="Hitbox" type="Area2D" parent="."]
+collision_layer = 16
+collision_mask = 11
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+position = Vector2(-3, 4)
+shape = SubResource("RectangleShape2D_jxp6p")
+debug_color = Color(1, 0.00999999, 0.059500158, 0.28627452)
+
 [node name="DetectionZone" type="Area2D" parent="."]
+collision_layer = 16
+collision_mask = 3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionZone"]
 position = Vector2(111, -1)
 shape = SubResource("RectangleShape2D_qtivd")
-debug_color = Color(0.66, 0, 0.14300002, 0.17254902)
+debug_color = Color(0.5764178, 0.0001845333, 0.5564465, 0.17254902)
 
 [node name="MagicBallSpawnPoint" type="Node2D" parent="."]
-position = Vector2(25, 0)
+position = Vector2(48, -18)
 
 [node name="FireCooldown" type="Timer" parent="."]
 
 [connection signal="animation_finished" from="sprite" to="." method="_on_sprite_animation_finished"]
+[connection signal="area_entered" from="Hitbox" to="." method="_on_hitbox_area_entered"]
 [connection signal="body_entered" from="DetectionZone" to="." method="_on_detection_zone_body_entered"]
 [connection signal="body_exited" from="DetectionZone" to="." method="_on_detection_zone_body_exited"]
 [connection signal="timeout" from="FireCooldown" to="." method="_on_fire_cooldown_timeout"]

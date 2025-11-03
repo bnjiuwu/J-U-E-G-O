@@ -48,17 +48,19 @@ var shoot_timer := 0.0
 
 
 #==== damage knockback =======
-var knockback_force: Vector2 = Vector2(300, -200) # (x: fuerza lateral, y: salto)
+@export var invulnerability_time: float = 1.0
+
+@export var knockback_force: Vector2 = Vector2(300, -200) # (x: fuerza lateral, y: salto)
 var is_knockback: bool = false
 var knockback_timer: float = 0.0
 var knockback_duration: float = 0.2 # cuánto dura el retroceso
+var is_invulnerable: bool = false
 
 func _ready() -> void:
 	health = max_health
 	add_to_group("player")
 	print("Player HP ready:",health)
 	
-
 
 func _process(_delta):
 	if shoot_timer > 0:
@@ -76,6 +78,11 @@ func _physics_process(delta):
 	dash(delta)
 	update_animation()
 	move_and_slide()
+	if is_knockback:
+		knockback_timer -= delta
+		if knockback_timer <= 0.0:
+			is_knockback = false
+			
 		# Check collisions after moving
 	for i in range(get_slide_collision_count()):
 		var col = get_slide_collision(i)
@@ -251,14 +258,32 @@ func _on_hitbox_area_entered(area: Area2D) -> void:
 		print("daño por pincho")
 		take_damage(max_health)
 		
-func take_damage(amount) -> void:
+func take_damage(amount: int, attacker_pos: Vector2 = global_position) -> void:
+	if is_invulnerable:
+		return
+		
+	is_invulnerable = true
+	modulate = Color(1,0.4,0.4,1)  #flashaso rojo
+	
+	#--- daño ---
 	health -= amount
+	print("⚠️ Player recibió", amount, "daño | HP:", health)
+	
 	if health < 0:
 		health = 0
-	print("⚠️ Player recibió", amount, "daño | HP:", health)
 
 	if health <= 0:
 		die()
+		
+	var dir = sign(global_position.x - attacker_pos.x)
+	velocity = Vector2(knockback_force.x * dir, knockback_force.y * 2)
+	is_knockback = true
+	knockback_timer = knockback_duration
+	
+	await get_tree().create_timer(invulnerability_time).timeout
+	is_invulnerable = false
+	modulate = Color(1,1,1,1)
+	
 
 func die() -> void:
 	if dead: return

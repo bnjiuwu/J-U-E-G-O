@@ -1,8 +1,8 @@
 [gd_scene load_steps=36 format=3 uid="uid://dvpo3lknsqtvo"]
 
 [ext_resource type="Script" uid="uid://b4cekm765y2ah" path="res://Assets/Scenes/Enemies Scene/Mago Scene/Magic Ball/magic_ball.gd" id="1_8k563"]
-[ext_resource type="Texture2D" uid="uid://cc8taa3iv46i1" path="res://Assets/sprites/enemies/Mago/FireBall/PC _ Computer - Diablo _ Diablo_ Hellfire - Effects - Magic Missile (Blue) (1).png" id="2_ettrq"]
-[ext_resource type="Texture2D" uid="uid://2xqhfr4lt8nw" path="res://Assets/sprites/enemies/Mago/FireBall/PC _ Computer - Diablo _ Diablo_ Hellfire - Effects - Magic Missile (Blue) (1) (1).png" id="3_tpifb"]
+[ext_resource type="Texture2D" uid="uid://cc8taa3iv46i1" path="res://Assets/sprites/enemies/Mago/MagicBall/PC _ Computer - Diablo _ Diablo_ Hellfire - Effects - Magic Missile (Blue) (1).png" id="2_ettrq"]
+[ext_resource type="Texture2D" uid="uid://2xqhfr4lt8nw" path="res://Assets/sprites/enemies/Mago/MagicBall/PC _ Computer - Diablo _ Diablo_ Hellfire - Effects - Magic Missile (Blue) (1) (1).png" id="3_tpifb"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_3j6gd"]
 atlas = ExtResource("2_ettrq")
@@ -231,14 +231,15 @@ animations = [{
 radius = 14.035668
 
 [node name="MagicBall" type="Area2D" groups=["enemy proyectile"]]
-collision_layer = 8
+collision_layer = 32
+collision_mask = 3
 script = ExtResource("1_8k563")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(-16, 0)
 sprite_frames = SubResource("SpriteFrames_ag5am")
 animation = &"default_purple"
-frame_progress = 0.32749456
+frame_progress = 0.60537666
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(1, -4)

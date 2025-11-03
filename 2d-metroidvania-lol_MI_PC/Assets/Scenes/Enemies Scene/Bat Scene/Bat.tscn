@@ -66,16 +66,18 @@ animations = [{
 "speed": 12.0
 }]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_oslhr"]
-radius = 11.0
+[sub_resource type="CircleShape2D" id="CircleShape2D_e58xu"]
+radius = 9.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_np2nm"]
-radius = 94.0
+radius = 75.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_pvj82"]
-radius = 15.033297
+radius = 11.0
 
 [node name="Bat" type="CharacterBody2D" groups=["enemy"]]
+collision_layer = 16
+collision_mask = 11
 script = ExtResource("1_e58xu")
 
 [node name="animated" type="AnimatedSprite2D" parent="."]
@@ -83,22 +85,33 @@ sprite_frames = SubResource("SpriteFrames_s42su")
 animation = &"fly2"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("CircleShape2D_oslhr")
+shape = SubResource("CircleShape2D_e58xu")
 
 [node name="DetectionZone" type="Area2D" parent="."]
+collision_layer = 16
+collision_mask = 11
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionZone"]
 shape = SubResource("CircleShape2D_np2nm")
 debug_color = Color(1, 0, 0.1333332, 0.050980393)
 
 [node name="Hitbox" type="Area2D" parent="." groups=["enemy"]]
+collision_layer = 16
+collision_mask = 11
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
 shape = SubResource("CircleShape2D_pvj82")
 debug_color = Color(0.87, 0, 0.841, 0.1882353)
 
 [node name="WallCheck" type="RayCast2D" parent="."]
-target_position = Vector2(30, 50)
+target_position = Vector2(-21, 0)
+
+[node name="FloorCheck" type="RayCast2D" parent="."]
+target_position = Vector2(0, 21)
+
+[node name="CeilingCheck" type="RayCast2D" parent="."]
+target_position = Vector2(0, -21)
 
 [connection signal="body_entered" from="DetectionZone" to="." method="_on_detection_zone_body_entered"]
 [connection signal="body_exited" from="DetectionZone" to="." method="_on_detection_zone_body_exited"]
+[connection signal="area_entered" from="Hitbox" to="." method="_on_hitbox_area_entered"]
