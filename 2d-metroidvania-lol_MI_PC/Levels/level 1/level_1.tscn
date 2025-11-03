@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=4 uid="uid://c6n7qrlau6b0k"]
+[gd_scene load_steps=29 format=4 uid="uid://c6n7qrlau6b0k"]
 
 [ext_resource type="PackedScene" uid="uid://braj8a8ooxs4t" path="res://Assets/Scenes/Player/player.tscn" id="1_n0qsc"]
 [ext_resource type="Script" uid="uid://by4hegpiwf1wp" path="res://Levels/level 1/level_1.gd" id="1_r7d4j"]
@@ -14,10 +14,12 @@
 [ext_resource type="Texture2D" uid="uid://bingjbajxml1c" path="res://Assets/images/Tile Maps/cave/mainlev_build.png" id="11_hao24"]
 [ext_resource type="PackedScene" uid="uid://b2lni2j37kwvl" path="res://Assets/Scenes/touch_controls/touch_controls.tscn" id="12_cq012"]
 [ext_resource type="PackedScene" uid="uid://bu5ef6314c7ik" path="res://Assets/Scenes/Menu/PauseMenu/PauseMenu.tscn" id="12_hao24"]
+[ext_resource type="Script" uid="uid://bwojlpbnfj53w" path="res://Levels/level 1/PapaRobertoLabel.gd" id="12_wsgfw"]
 [ext_resource type="PackedScene" uid="uid://ljb2k5q033bq" path="res://Assets/Scenes/Menu/Death Menu/DeathMenu.tscn" id="15_gdql1"]
 [ext_resource type="PackedScene" uid="uid://gbohe3bsoon2" path="res://Assets/Scenes/Enemies Scene/PapaRoberto Scene/PapaRoberto.tscn" id="16_o7ywo"]
 [ext_resource type="PackedScene" uid="uid://xoxuswob6rae" path="res://Assets/Scenes/Enemies Scene/Bat Scene/Bat.tscn" id="17_4l21d"]
 [ext_resource type="PackedScene" uid="uid://rqnm23qh8syg" path="res://Assets/Scenes/Enemies Scene/Mago Scene/Mago.tscn" id="18_dke4e"]
+[ext_resource type="Script" uid="uid://dhymobvyqteow" path="res://Levels/level 1/mago_label.gd" id="19_uxjm4"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_rf6l5"]
 texture = ExtResource("3_3mhv4")
@@ -5718,7 +5720,7 @@ tile_map_data = PackedByteArray("AAAyAAIAAAALAAgAAAAzAAIAAAALAAgAAAA0AAIAAAALAAg
 tile_set = SubResource("TileSet_q7gkb")
 
 [node name="player" parent="." instance=ExtResource("1_n0qsc")]
-position = Vector2(1500, 354)
+position = Vector2(-500, 354)
 move_speed = 150.0
 
 [node name="Camera2D" type="Camera2D" parent="player"]
@@ -5744,6 +5746,13 @@ script = ExtResource("2_rf6l5")
 
 [node name="PapaRoberto" parent="." instance=ExtResource("16_o7ywo")]
 position = Vector2(-211, 327)
+
+[node name="Label" type="Label" parent="PapaRoberto"]
+offset_left = -19.0
+offset_top = -47.0
+offset_right = 21.0
+offset_bottom = -24.0
+script = ExtResource("12_wsgfw")
 
 [node name="Slime2" parent="." instance=ExtResource("2_3mhv4")]
 position = Vector2(920, 271)
@@ -5795,3 +5804,10 @@ position = Vector2(-855, 298)
 
 [node name="Mago" parent="." instance=ExtResource("18_dke4e")]
 position = Vector2(1867, 395)
+
+[node name="Label" type="Label" parent="Mago"]
+offset_left = -21.0
+offset_top = -40.0
+offset_right = 19.0
+offset_bottom = -17.0
+script = ExtResource("19_uxjm4")

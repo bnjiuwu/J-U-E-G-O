@@ -31,6 +31,8 @@ func _ready():
 
 	fire_cooldown.one_shot = true
 	fire_cooldown.timeout.connect(_on_fire_cooldown_timeout)
+	
+	sprite.frame_changed.connect(_on_frame_changed)
 
 func _physics_process(delta):
 	if is_dead:
@@ -49,6 +51,12 @@ func _physics_process(delta):
 	_update_directional_nodes()
 	move_and_slide()
 	update_animation()
+
+func _on_frame_changed():
+	if not is_attacking:
+		return
+	if sprite.animation in ["attack1","attack2"] and sprite.frame == 4:
+		fire_magic_ball()
 
 # --- Dirección nodos ---
 func _update_directional_nodes():
@@ -69,7 +77,6 @@ func _update_directional_nodes():
 		var shape := DetectionZone.get_node_or_null("CollisionShape2D")
 		if shape:
 			shape.position.x = sign(direction) * abs(shape.position.x)
-
 
 # --- Patrulla ---
 func patrol_movement():
@@ -96,7 +103,6 @@ func attack_behavior():
 		if can_fire and not is_attacking:
 			is_attacking = true
 			can_fire = false
-			fire_magic_ball()
 			fire_cooldown.start(fire_rate)
 			sprite.play("attack1" if randf() < 0.5 else "attack2")
 
@@ -158,3 +164,12 @@ func _on_fire_cooldown_timeout():
 func _on_sprite_animation_finished():
 	if sprite.animation.begins_with("attack"):
 		is_attacking = false
+
+func _on_hitbox_area_entered(area: Area2D) -> void:
+	if is_dead:
+		return
+
+	if area.is_in_group("projectile"):
+		print("💥 Mago recibió impacto de bala")
+		take_damage(1)
+		area.queue_free()

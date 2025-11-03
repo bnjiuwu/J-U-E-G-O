@@ -10,6 +10,8 @@ font_size = 13
 font_color = Color(1, 0, 0, 1)
 
 [node name="Insulto" type="Area2D" groups=["enemy proyectile"]]
+collision_layer = 32
+collision_mask = 3
 script = ExtResource("1_qt0ti")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
