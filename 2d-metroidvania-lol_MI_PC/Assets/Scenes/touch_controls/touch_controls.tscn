@@ -53,7 +53,7 @@ texture_normal = ExtResource("5_nytqx")
 shape = SubResource("CircleShape2D_nytqx")
 action = "jump"
 
-[node name="TouchScreenButton" type="TouchScreenButton" parent="Control"]
+[node name="SKILL" type="TouchScreenButton" parent="Control"]
 position = Vector2(583, 327.00003)
 scale = Vector2(0.21666671, 0.15370373)
 texture_normal = ExtResource("6_nytqx")
