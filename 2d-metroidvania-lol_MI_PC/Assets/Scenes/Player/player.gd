@@ -39,9 +39,14 @@ var health: int
 
 #============== bullet ===========
 @export var bullet_scene: PackedScene
+@export var big_bullet_scene: PackedScene
 @onready var canon = $muzzle
+
 @export var shoot_delay := 0.2
 var shoot_timer := 0.0
+
+@export var skill_delay := 1.3
+
 
 #==== joystick =======
 @onready var joystick := get_node_or_null("/root/level_1/Control/touch_controls/VirtualJoystick")
@@ -68,6 +73,9 @@ func _process(_delta):
 	if Input.is_action_pressed("attack") and shoot_timer <= 0 :
 		fire_bullet()
 		shoot_timer = shoot_delay
+	if Input.is_action_pressed("skill") and shoot_timer <= 0 :
+		activate_skill()
+		shoot_timer = skill_delay
 
 func _physics_process(delta):
 	if not is_dashing:
@@ -224,6 +232,50 @@ func fire_bullet():
 
 	print("🔫 Bullet fired in direction:", dir)
 
+func activate_skill():
+	var basic_skill = big_bullet_scene.instantiate()
+	var dir = Vector2.ZERO
+	
+	# Obtener vector del joystick
+	if joystick and joystick.pressing:
+		var joy = joystick.posVector
+		if joy.length() > 0.1:  # margen de error
+			dir = joy.normalized()
+		else:
+			dir = Vector2.RIGHT if is_facing_right else Vector2.LEFT
+	else:
+		# fallback a input teclado
+		var is_looking_up = Input.is_action_pressed("look_up")
+		var moving_horizontally = Input.is_action_pressed("move_right") or Input.is_action_pressed("move_left")
+		
+		if is_looking_up:
+			if moving_horizontally:
+				if is_facing_right:
+					dir = Vector2.from_angle(deg_to_rad(-45))
+				else:
+					dir = Vector2.from_angle(deg_to_rad(-135))
+			else:
+				dir = Vector2.UP
+		elif is_facing_right:
+			dir = Vector2.RIGHT
+		else:
+			dir = Vector2.LEFT
+
+	# Configurar muzzle según dirección
+	$muzzle.position = dir * 14  # distancia base del muzzle
+	$muzzle.rotation = dir.angle()
+	
+	# Disparar bala
+	basic_skill.direction = dir
+	basic_skill.global_position = $muzzle.global_position
+	basic_skill.rotation = dir.angle()
+	get_tree().current_scene.add_child(basic_skill)
+
+	print("WEON DISPARO ABILIDAD LOOL:", dir)
+	pass
+
+
+
 #=== dash =====
 func dash(delta):
 	# Si ya está en cooldown, lo contamos
@@ -284,7 +336,6 @@ func take_damage(amount: int, attacker_pos: Vector2 = global_position) -> void:
 	is_invulnerable = false
 	modulate = Color(1,1,1,1)
 	
-
 func die() -> void:
 	if dead: return
 	dead = true

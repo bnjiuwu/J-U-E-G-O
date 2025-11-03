@@ -361,7 +361,7 @@ animations = [{
 size = Vector2(24, 43)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jxp6p"]
-size = Vector2(26, 44)
+size = Vector2(26, 45)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_qtivd"]
 size = Vector2(200, 23)
@@ -370,6 +370,7 @@ size = Vector2(200, 23)
 collision_layer = 16
 collision_mask = 11
 script = ExtResource("1_qlsdm")
+max_health = 200
 magic_ball_scene = ExtResource("2_artgm")
 
 [node name="sprite" type="AnimatedSprite2D" parent="."]
@@ -393,7 +394,7 @@ collision_layer = 16
 collision_mask = 11
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
-position = Vector2(-3, 4)
+position = Vector2(-3, 4.5)
 shape = SubResource("RectangleShape2D_jxp6p")
 debug_color = Color(1, 0.00999999, 0.059500158, 0.28627452)
 

@@ -75,6 +75,7 @@ size = Vector2(39, 53)
 collision_layer = 16
 collision_mask = 11
 script = ExtResource("1_wv475")
+max_health = 300
 insult_scene = ExtResource("2_b4u60")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]

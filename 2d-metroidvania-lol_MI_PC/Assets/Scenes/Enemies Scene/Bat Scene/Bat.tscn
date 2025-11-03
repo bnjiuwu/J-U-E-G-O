@@ -79,6 +79,7 @@ radius = 11.0
 collision_layer = 16
 collision_mask = 11
 script = ExtResource("1_e58xu")
+max_health = 60
 
 [node name="animated" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_s42su")
@@ -107,10 +108,10 @@ debug_color = Color(0.87, 0, 0.841, 0.1882353)
 target_position = Vector2(-21, 0)
 
 [node name="FloorCheck" type="RayCast2D" parent="."]
-target_position = Vector2(0, 21)
+target_position = Vector2(0, 25)
 
 [node name="CeilingCheck" type="RayCast2D" parent="."]
-target_position = Vector2(0, -21)
+target_position = Vector2(0, -25)
 
 [connection signal="body_entered" from="DetectionZone" to="." method="_on_detection_zone_body_entered"]
 [connection signal="body_exited" from="DetectionZone" to="." method="_on_detection_zone_body_exited"]
