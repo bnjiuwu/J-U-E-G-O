@@ -1,5 +1,6 @@
 extends Node2D
 
+@onready var camera = $player/Camera2D
 @onready var touch_controls = $Controles/touch_controls
 @export var player: CharacterBody2D
 @export var pause_menu: CanvasLayer

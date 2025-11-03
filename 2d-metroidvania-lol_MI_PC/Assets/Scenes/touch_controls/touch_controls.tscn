@@ -1,20 +1,25 @@
-[gd_scene load_steps=11 format=3 uid="uid://b2lni2j37kwvl"]
+[gd_scene load_steps=13 format=3 uid="uid://b2lni2j37kwvl"]
 
 [ext_resource type="Script" uid="uid://bhkt88s7hsmc8" path="res://Assets/Scenes/touch_controls/touch_controls.gd" id="1_ex53c"]
 [ext_resource type="Texture2D" uid="uid://dmnbwls7bnmaw" path="res://Assets/sprites/objects type shi/fireBoton.png" id="3_165yt"]
 [ext_resource type="Texture2D" uid="uid://27xoik24p6oq" path="res://Assets/sprites/objects type shi/dashBoton.png" id="4_v3deu"]
 [ext_resource type="Texture2D" uid="uid://dqnmdewspxnqc" path="res://Assets/sprites/objects type shi/saltoBoton.png" id="5_nytqx"]
 [ext_resource type="PackedScene" uid="uid://4oey0atca4as" path="res://Assets/Scenes/touch_controls/JOYSTICK/joystick.tscn" id="6_165yt"]
+[ext_resource type="Texture2D" uid="uid://bfjotngjgiet5" path="res://Assets/sprites/objects type shi/SkillButton.png" id="6_nytqx"]
 [ext_resource type="Texture2D" uid="uid://ds3bu2tri7jve" path="res://Assets/sprites/objects type shi/pause boton.png" id="6_v3deu"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_165yt"]
-size = Vector2(300, 400)
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_v3deu"]
+radius = 116.665
+height = 395.46
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_v3deu"]
 size = Vector2(180, 60)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_nytqx"]
 radius = 260.31
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_77qbl"]
+radius = 245.4
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_165yt"]
 radius = 248.93
@@ -28,25 +33,32 @@ position = Vector2(163, 368)
 [node name="Control" type="Node2D" parent="."]
 
 [node name="FIRE" type="TouchScreenButton" parent="Control"]
-position = Vector2(777, 324)
-scale = Vector2(0.42558157, 0.21162796)
+position = Vector2(798, 318)
+scale = Vector2(0.30232584, 0.23953493)
 texture_normal = ExtResource("3_165yt")
-shape = SubResource("RectangleShape2D_165yt")
+shape = SubResource("CapsuleShape2D_v3deu")
 action = "attack"
 
 [node name="DASH" type="TouchScreenButton" parent="Control"]
-position = Vector2(592.00006, 410.99997)
-scale = Vector2(1.036842, 0.9333325)
+position = Vector2(688.00006, 410)
+scale = Vector2(0.73684204, 1.0166672)
 texture_normal = ExtResource("4_v3deu")
 shape = SubResource("RectangleShape2D_v3deu")
 action = "dash"
 
 [node name="JUMP" type="TouchScreenButton" parent="Control"]
-position = Vector2(600.00006, 279)
-scale = Vector2(0.30793652, 0.101587296)
+position = Vector2(669, 271)
+scale = Vector2(0.25873014, 0.12063491)
 texture_normal = ExtResource("5_nytqx")
 shape = SubResource("CircleShape2D_nytqx")
 action = "jump"
+
+[node name="TouchScreenButton" type="TouchScreenButton" parent="Control"]
+position = Vector2(583, 327.00003)
+scale = Vector2(0.21666671, 0.15370373)
+texture_normal = ExtResource("6_nytqx")
+shape = SubResource("CircleShape2D_77qbl")
+action = "skill"
 
 [node name="pause_button" type="TouchScreenButton" parent="."]
 scale = Vector2(0.15833333, 0.12833333)

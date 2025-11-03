@@ -1,0 +1,40 @@
+[gd_scene load_steps=6 format=3 uid="uid://85sqmcso35sm"]
+
+[ext_resource type="Script" uid="uid://c8sbsf2gcrmns" path="res://Assets/Scenes/Objects - Skills/basic skill/basic_skill.gd" id="1_bgd66"]
+[ext_resource type="Texture2D" uid="uid://c68xbx5tawd0w" path="res://Assets/sprites/objects type shi/big bullet (1).png" id="2_pyo1f"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_iu0wm"]
+atlas = ExtResource("2_pyo1f")
+region = Rect2(0, 0, 626, 462)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ysul3"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_iu0wm")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_bgd66"]
+radius = 16.25
+height = 83.5
+
+[node name="BasicSkill" type="Area2D" groups=["Skills"]]
+collision_layer = 8
+collision_mask = 16
+script = ExtResource("1_bgd66")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(-39.000004, -7.0000005)
+scale = Vector2(0.49567097, 0.495671)
+sprite_frames = SubResource("SpriteFrames_ysul3")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(34.75, 1.5)
+rotation = 1.5707964
+shape = SubResource("CapsuleShape2D_bgd66")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

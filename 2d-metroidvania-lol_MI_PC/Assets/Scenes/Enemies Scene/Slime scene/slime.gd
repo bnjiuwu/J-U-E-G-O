@@ -147,6 +147,10 @@ func _on_area_2d_area_entered(area: Area2D) -> void:
 		print("💥 Enemy collided with player")
 	if area.is_in_group("projectile"):
 		print("💥 Enemy hit by bullet")
-		take_damage(1)
+		take_damage(area.damage)
+		area.queue_free()
+	if area.is_in_group("Skills"):
+		print("💥 Mago recibió impacto de bala")
+		take_damage(area.damage)
 		area.queue_free()
 	

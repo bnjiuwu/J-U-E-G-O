@@ -208,5 +208,9 @@ func _on_attack_range_entered(body):
 
 func _on_hitbox_area_entered(area: Area2D):
 	if area.is_in_group("projectile"):
-		take_damage(10)
+		take_damage(area.damage)
+		area.queue_free()
+	if area.is_in_group("Skills"):
+		print("💥 Mago recibió impacto de bala")
+		take_damage(area.damage)
 		area.queue_free()

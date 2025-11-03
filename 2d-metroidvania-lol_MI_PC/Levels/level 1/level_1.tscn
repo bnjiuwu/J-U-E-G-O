@@ -5720,12 +5720,12 @@ tile_map_data = PackedByteArray("AAAyAAIAAAALAAgAAAAzAAIAAAALAAgAAAA0AAIAAAALAAg
 tile_set = SubResource("TileSet_q7gkb")
 
 [node name="player" parent="." instance=ExtResource("1_n0qsc")]
-position = Vector2(-500, 354)
+position = Vector2(1500, 354)
 move_speed = 150.0
 
 [node name="Camera2D" type="Camera2D" parent="player"]
 offset = Vector2(0, -25)
-zoom = Vector2(2.4, 2.4)
+zoom = Vector2(2, 2)
 limit_smoothed = true
 position_smoothing_enabled = true
 rotation_smoothing_enabled = true
@@ -5795,6 +5795,7 @@ offset_bottom = 40.0
 [node name="touch_controls" parent="Controles" instance=ExtResource("12_cq012")]
 
 [node name="PauseMenu" parent="." instance=ExtResource("12_hao24")]
+visible = false
 
 [node name="DeathMenu" parent="." instance=ExtResource("15_gdql1")]
 visible = false
