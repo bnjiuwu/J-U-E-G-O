@@ -7,11 +7,11 @@ extends CharacterBody2D
 @export var attack_cooldown: float = 1.5
 @export var charge_time: float = 0.5
 @export var max_health: int = 3
-@export var damage_amount: int = 20
+@export var damage: int = 20
 @export var flip_cooldown: float = 0.4
 @export var dive_duration: float = 1.5
 @export var wave_amp: float = 40.0          # amplitud de la onda
-@export var wave_freq_ms: float = 300.0     # periodo de la onda (ms)
+@export var wave_freq_ms: float = 400.0     # periodo de la onda (ms)
 @export var kick_strength: float = 180.0    # fuerza del impulso vertical
 @export var kick_duration: float = 0.15     # duración del impulso (s)
 

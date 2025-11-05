@@ -1,0 +1,96 @@
+[gd_scene load_steps=12 format=3 uid="uid://nfjhoahtx3yq"]
+
+[ext_resource type="Script" uid="uid://xqyrhj8kwu7w" path="res://Assets/Scenes/Enemies Scene/Aspid Scene/primal_aspid.gd" id="1_u1syw"]
+[ext_resource type="PackedScene" uid="uid://dq3k3oo2qg6n6" path="res://Assets/Scenes/Enemies Scene/Aspid Scene/Aspid projectile/Aspid projectile.tscn" id="2_u1syw"]
+[ext_resource type="Texture2D" uid="uid://ck8d7w408mp1v" path="res://Assets/sprites/enemies/Murcielago/bat.png.png" id="3_cagbd"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_508jy"]
+atlas = ExtResource("3_cagbd")
+region = Rect2(3, 0, 33, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lgvi0"]
+atlas = ExtResource("3_cagbd")
+region = Rect2(38, 0, 20, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vo1e2"]
+atlas = ExtResource("3_cagbd")
+region = Rect2(66, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_h2hxu"]
+atlas = ExtResource("3_cagbd")
+region = Rect2(98, 0, 36, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_wgh61"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_508jy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lgvi0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vo1e2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_h2hxu")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 9.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_lhdl7"]
+radius = 19.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_u1syw"]
+radius = 200.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_0v8cw"]
+radius = 25.0
+
+[node name="PrimalAspid" type="CharacterBody2D" groups=["enemy"]]
+collision_layer = 16
+collision_mask = 11
+script = ExtResource("1_u1syw")
+projectile_scene = ExtResource("2_u1syw")
+max_health = 80
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(1.71875, 1.71875)
+sprite_frames = SubResource("SpriteFrames_wgh61")
+animation = &"idle"
+frame = 2
+frame_progress = 0.026273727
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 8)
+shape = SubResource("CircleShape2D_lhdl7")
+
+[node name="ShootSpawnPoint" type="Node2D" parent="."]
+
+[node name="DetectionArea" type="Area2D" parent="."]
+collision_layer = 16
+collision_mask = 11
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionArea"]
+shape = SubResource("CircleShape2D_u1syw")
+debug_color = Color(0.61960787, 0, 0, 0.11372549)
+
+[node name="hitbox" type="Area2D" parent="." groups=["enemy"]]
+collision_layer = 16
+collision_mask = 11
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="hitbox"]
+position = Vector2(0, 8)
+shape = SubResource("CircleShape2D_0v8cw")
+debug_color = Color(0.5529412, 0, 0.6117647, 0.32941177)
+
+[node name="AttackTimer" type="Timer" parent="."]
+wait_time = 2.0
+autostart = true
+
+[connection signal="body_entered" from="DetectionArea" to="." method="_on_DetectionArea_body_entered"]
+[connection signal="body_exited" from="DetectionArea" to="." method="_on_DetectionArea_body_exited"]
+[connection signal="area_entered" from="hitbox" to="." method="_on_hitbox_area_entered"]
+[connection signal="timeout" from="AttackTimer" to="." method="_on_AttackTimer_timeout"]

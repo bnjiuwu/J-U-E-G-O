@@ -4,8 +4,9 @@ extends CharacterBody2D
 @export var speed: float = 30.0
 @export var attack_range: float = 200.0
 @export var fire_rate: float = 1.5
-@export var max_health: int = 5
+@export var max_health: int = 200
 @export var magic_ball_scene: PackedScene
+@export var damage:int = 15
 
 var health: int
 var gravity: float = float(ProjectSettings.get_setting("physics/2d/default_gravity"))
@@ -171,10 +172,10 @@ func _on_hitbox_area_entered(area: Area2D) -> void:
 
 	if area.is_in_group("projectile"):
 		print("💥 Mago recibió impacto de bala")
-		take_damage(1)
+		take_damage(area.damage)
 		area.queue_free()
 	
 	if area.is_in_group("Skills"):
-		print("💥 Mago recibió impacto de bala")
+		print("💥 Mago recibió BIG BULLET DAMAGE:", area.damage)
 		take_damage(area.damage)
 		area.queue_free()

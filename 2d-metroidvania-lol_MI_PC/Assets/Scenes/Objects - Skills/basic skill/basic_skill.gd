@@ -9,7 +9,7 @@ var start_position: Vector2
 
 func _ready():
 	start_position = global_position
-	add_to_group("projectile")
+	add_to_group("Skills")
 	connect("body_entered", Callable(self, "_on_body_entered")) # detectar cuerpos
 
 func _physics_process(delta):

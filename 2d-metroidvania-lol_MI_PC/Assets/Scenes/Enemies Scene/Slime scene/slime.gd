@@ -6,9 +6,12 @@ extends CharacterBody2D
 @export var raycast_down: float = 20.0
 @export var gravity: float = 900.0
 @export var flip_debounce: float = 0.12
+@export var damage: int = 10
+
+
 
 # --- Vida del enemigo ---
-@export var max_health: int = 3
+@export var max_health: int = 80
 var health: int
 var start_pos: Vector2
 
