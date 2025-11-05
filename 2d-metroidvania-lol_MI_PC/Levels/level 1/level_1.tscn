@@ -1,6 +1,6 @@
 [gd_scene load_steps=31 format=4 uid="uid://c6n7qrlau6b0k"]
 
-[ext_resource type="Script" uid="uid://br6vsyeyt07i6" path="res://Assets/Scenes/Enemies Scene/Kintama Owl Scene/kintama_owl.gd" id="1_gk84l"]
+[ext_resource type="Script" uid="uid://br6vsyeyt07i6" path="res://Levels/level 1/level_1.gd" id="1_gk84l"]
 [ext_resource type="PackedScene" uid="uid://braj8a8ooxs4t" path="res://Assets/Scenes/Player/player.tscn" id="1_n0qsc"]
 [ext_resource type="PackedScene" uid="uid://d3evjk846bf1b" path="res://Assets/Scenes/Enemies Scene/Slime scene/slime.tscn" id="2_3mhv4"]
 [ext_resource type="Script" uid="uid://d4ra44v1qwfh" path="res://Levels/level 1/label.gd" id="2_rf6l5"]

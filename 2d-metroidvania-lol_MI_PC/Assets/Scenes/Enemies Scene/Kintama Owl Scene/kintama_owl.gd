@@ -168,7 +168,6 @@ func _build_sprite_frames() -> void:
 	_add_sheet_animation(frames, "walk", walk_texture, walk_frames, true, 10.0)
 	_add_sheet_animation(frames, "fly", fly_texture, fly_frames, true, 12.0)
 
-@warning_ignore("shadowed_variable_base_class")
 func _add_sheet_animation(frames: SpriteFrames, name: String, texture: Texture2D, frame_count: int, loop: bool, speed: float) -> void:
 	if texture == null or frame_count <= 0 or sheet_columns <= 0 or sheet_rows <= 0:
 		return
@@ -189,7 +188,6 @@ func _add_sheet_animation(frames: SpriteFrames, name: String, texture: Texture2D
 
 	for index in range(frame_count):
 		var column := index % sheet_columns
-		@warning_ignore("integer_division")
 		var row := index / sheet_columns
 		var atlas := AtlasTexture.new()
 		atlas.atlas = texture
