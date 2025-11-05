@@ -1,3 +1,61 @@
-[gd_scene format=3 uid="uid://cayi1fgdre0s2"]
+[gd_scene load_steps=8 format=3 uid="uid://cayi1fgdre0s2"]
 
-[node name="KintamaOwl" type="Node2D"]
+[ext_resource type="Script" path="res://Assets/Scenes/Enemies Scene/Kintama Owl Scene/kintama_owl.gd" id="1_usun8"]
+[ext_resource type="Texture2D" path="res://Assets/sprites/enemies/Kintama/idle_kintama.png" id="2_usun8"]
+[ext_resource type="Texture2D" path="res://Assets/sprites/enemies/Kintama/walk_kintama.png" id="3_usun8"]
+[ext_resource type="Texture2D" path="res://Assets/sprites/enemies/Kintama/fly_kintama.png" id="4_usun8"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_default"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_body"]
+size = Vector2(40, 56)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hitbox"]
+size = Vector2(44, 60)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_detection"]
+radius = 140.0
+
+[node name="KintamaOwl" type="CharacterBody2D" groups=["enemy"]]
+collision_layer = 16
+collision_mask = 11
+script = ExtResource("1_usun8")
+idle_texture = ExtResource("2_usun8")
+walk_texture = ExtResource("3_usun8")
+fly_texture = ExtResource("4_usun8")
+
+[node name="Sprite" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_default")
+animation = &"idle"
+centered = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -2)
+shape = SubResource("RectangleShape2D_body")
+
+[node name="DetectionZone" type="Area2D" parent="."]
+collision_layer = 16
+collision_mask = 11
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionZone"]
+shape = SubResource("CircleShape2D_detection")
+debug_color = Color(0.576471, 0.337255, 1, 0.137255)
+
+[node name="Hitbox" type="Area2D" parent="." groups=["enemy"]]
+collision_layer = 16
+collision_mask = 11
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+position = Vector2(0, -2)
+shape = SubResource("RectangleShape2D_hitbox")
+debug_color = Color(1, 0.376471, 0.917647, 0.14902)
+
+[node name="FloorCheck" type="RayCast2D" parent="."]
+position = Vector2(18, 24)
+target_position = Vector2(0, 28)
+enabled = true
+
+[node name="WallCheck" type="RayCast2D" parent="."]
+position = Vector2(20, 0)
+target_position = Vector2(24, 0)
+enabled = true
