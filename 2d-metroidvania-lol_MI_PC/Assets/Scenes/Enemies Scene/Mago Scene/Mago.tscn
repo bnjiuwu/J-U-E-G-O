@@ -358,7 +358,7 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_top6t"]
-size = Vector2(24, 43)
+size = Vector2(20, 41)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jxp6p"]
 size = Vector2(26, 45)
@@ -370,7 +370,6 @@ size = Vector2(200, 23)
 collision_layer = 16
 collision_mask = 11
 script = ExtResource("1_qlsdm")
-max_health = 200
 magic_ball_scene = ExtResource("2_artgm")
 
 [node name="sprite" type="AnimatedSprite2D" parent="."]
@@ -379,7 +378,7 @@ sprite_frames = SubResource("SpriteFrames_q8ne4")
 animation = &"idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(-3, 4.5)
+position = Vector2(-3, 5.5)
 shape = SubResource("RectangleShape2D_top6t")
 
 [node name="WallCheck" type="RayCast2D" parent="."]

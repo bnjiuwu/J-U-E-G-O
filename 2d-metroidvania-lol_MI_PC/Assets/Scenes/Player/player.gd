@@ -45,11 +45,12 @@ var health: int
 @export var shoot_delay := 0.2
 var shoot_timer := 0.0
 
-@export var skill_delay := 1.3
+@export var skill_delay := 1.5
+var skill_timer:= 0.0
 
 
 #==== joystick =======
-@onready var joystick := get_node_or_null("/root/level_1/Control/touch_controls/VirtualJoystick")
+@onready var joystick := get_node_or_null("/root/level_1/Control/touch_controls/Joystick")
 
 
 #==== damage knockback =======
@@ -69,10 +70,12 @@ func _ready() -> void:
 
 func _process(_delta):
 	if shoot_timer > 0:
+		skill_timer -= _delta
 		shoot_timer -= _delta
 	if Input.is_action_pressed("attack") and shoot_timer <= 0 :
 		fire_bullet()
 		shoot_timer = shoot_delay
+		
 	if Input.is_action_pressed("skill") and shoot_timer <= 0 :
 		activate_skill()
 		shoot_timer = skill_delay
@@ -304,7 +307,7 @@ func _on_hitbox_area_entered(area: Area2D) -> void:
 		take_damage(20)
 	elif area.is_in_group("enemy projectile"):
 		print("💥 Daño por proyectil")
-		take_damage(10)
+		take_damage(area.damage)
 		pass
 	elif area.is_in_group("world damage"):
 		print("daño por pincho")
