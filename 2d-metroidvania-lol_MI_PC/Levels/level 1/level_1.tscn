@@ -1,7 +1,7 @@
-[gd_scene load_steps=30 format=4 uid="uid://c6n7qrlau6b0k"]
+[gd_scene load_steps=31 format=4 uid="uid://c6n7qrlau6b0k"]
 
+[ext_resource type="Script" uid="uid://br6vsyeyt07i6" path="res://Assets/Scenes/Enemies Scene/Kintama Owl Scene/kintama_owl.gd" id="1_gk84l"]
 [ext_resource type="PackedScene" uid="uid://braj8a8ooxs4t" path="res://Assets/Scenes/Player/player.tscn" id="1_n0qsc"]
-[ext_resource type="Script" uid="uid://by4hegpiwf1wp" path="res://Levels/level 1/level_1.gd" id="1_r7d4j"]
 [ext_resource type="PackedScene" uid="uid://d3evjk846bf1b" path="res://Assets/Scenes/Enemies Scene/Slime scene/slime.tscn" id="2_3mhv4"]
 [ext_resource type="Script" uid="uid://d4ra44v1qwfh" path="res://Levels/level 1/label.gd" id="2_rf6l5"]
 [ext_resource type="Texture2D" uid="uid://caqfa7afng3wv" path="res://Assets/images/Tile Maps/overworld/Tiles/Assets/Assets.png" id="3_3mhv4"]
@@ -21,6 +21,7 @@
 [ext_resource type="PackedScene" uid="uid://rqnm23qh8syg" path="res://Assets/Scenes/Enemies Scene/Mago Scene/Mago.tscn" id="18_dke4e"]
 [ext_resource type="Script" uid="uid://dhymobvyqteow" path="res://Levels/level 1/mago_label.gd" id="19_uxjm4"]
 [ext_resource type="PackedScene" uid="uid://nfjhoahtx3yq" path="res://Assets/Scenes/Enemies Scene/Aspid Scene/PrimalAspid.tscn" id="21_bq83f"]
+[ext_resource type="PackedScene" uid="uid://cayi1fgdre0s2" path="res://Assets/Scenes/Enemies Scene/Kintama Owl Scene/kintama_owl.tscn" id="22_xwobx"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_rf6l5"]
 texture = ExtResource("3_3mhv4")
@@ -5670,11 +5671,8 @@ texture = ExtResource("3_3mhv4")
 physics_layer_0/collision_layer = 1
 sources/0 = SubResource("TileSetAtlasSource_aydgu")
 
-[node name="level_1" type="Node2D" node_paths=PackedStringArray("player", "pause_menu", "death_menu")]
-script = ExtResource("1_r7d4j")
-player = NodePath("player")
-pause_menu = NodePath("PauseMenu")
-death_menu = NodePath("DeathMenu")
+[node name="level_1" type="Node2D"]
+script = ExtResource("1_gk84l")
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
 scroll_base_scale = Vector2(1.5, 1.5)
@@ -5746,7 +5744,7 @@ text = "pene"
 script = ExtResource("2_rf6l5")
 
 [node name="PapaRoberto" parent="." instance=ExtResource("16_o7ywo")]
-position = Vector2(-211, 327)
+position = Vector2(786, 29)
 
 [node name="Label" type="Label" parent="PapaRoberto"]
 offset_left = -19.0
@@ -5815,4 +5813,7 @@ offset_bottom = -17.0
 script = ExtResource("19_uxjm4")
 
 [node name="PrimalAspid" parent="." instance=ExtResource("21_bq83f")]
-position = Vector2(1391, 304)
+position = Vector2(1384, 301)
+
+[node name="KintamaOwl" parent="." instance=ExtResource("22_xwobx")]
+position = Vector2(1247, 184)
