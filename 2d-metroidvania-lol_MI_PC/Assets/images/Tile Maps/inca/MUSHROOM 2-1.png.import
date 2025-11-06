@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dau0fmw3ffwpy"
-path="res://.godot/imported/cielo2.png-b3f6245ebd043bae2b952cdba19c62cc.ctex"
+uid="uid://dcbr30jx33hbm"
+path="res://.godot/imported/MUSHROOM 2-1.png-9b4423fa4c9e95ef1222cba5c1396304.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/images/Backgrounds/BUHO/cielo2.png"
-dest_files=["res://.godot/imported/cielo2.png-b3f6245ebd043bae2b952cdba19c62cc.ctex"]
+source_file="res://Assets/images/Tile Maps/inca/MUSHROOM 2-1.png"
+dest_files=["res://.godot/imported/MUSHROOM 2-1.png-9b4423fa4c9e95ef1222cba5c1396304.ctex"]
 
 [params]
 
