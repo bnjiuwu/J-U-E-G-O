@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://bxrtd5wmuxd7f"]
+
+[ext_resource type="PackedScene" uid="uid://bjxvrrouvo5u3" path="res://Assets/Scenes/Map Borders/MapBorders.tscn" id="1_ykl37"]
+
+[node name="Level2" type="Node2D"]
+
+[node name="MapBorders" parent="." instance=ExtResource("1_ykl37")]

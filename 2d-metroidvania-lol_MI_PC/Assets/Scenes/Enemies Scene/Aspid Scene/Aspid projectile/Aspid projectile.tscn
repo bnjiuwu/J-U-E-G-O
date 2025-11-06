@@ -19,7 +19,8 @@ animations = [{
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_wd0yv"]
-height = 26.0
+radius = 6.0
+height = 22.0
 
 [node name="AspidProjectile" type="Area2D" groups=["enemy proyectile"]]
 collision_layer = 32
@@ -31,7 +32,7 @@ scale = Vector2(0.2, 0.2)
 sprite_frames = SubResource("SpriteFrames_frhdh")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(-2, 3)
+position = Vector2(-1, 1)
 shape = SubResource("CapsuleShape2D_wd0yv")
 
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]

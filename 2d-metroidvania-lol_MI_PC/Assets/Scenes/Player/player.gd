@@ -4,6 +4,11 @@ signal died
 var dead: bool = false
 
 
+
+
+@export var material_personaje_rojo: ShaderMaterial
+
+
 #=== dash properties ====
 @export var dash_speed: float = 500
 @export var dash_time: float = 0.3
@@ -34,7 +39,7 @@ var is_jumping = false
 var facing_direction: Vector2 = Vector2.RIGHT
 
 #==== health ======
-@export var max_health = 100
+@export var max_health: int = 100
 var health: int
 
 #============== bullet ===========
@@ -318,7 +323,8 @@ func take_damage(amount: int, attacker_pos: Vector2 = global_position) -> void:
 		return
 		
 	is_invulnerable = true
-	modulate = Color(1,0.4,0.4,1)  #flashaso rojo
+	
+	modulate = Color(1.0, 0.0, 0.0, 1.0)
 	
 	#--- daño ---
 	health -= amount
@@ -337,7 +343,7 @@ func take_damage(amount: int, attacker_pos: Vector2 = global_position) -> void:
 	
 	await get_tree().create_timer(invulnerability_time).timeout
 	is_invulnerable = false
-	modulate = Color(1,1,1,1)
+	modulate = Color(1.0, 1.0, 1.0, 1.0)
 	
 func die() -> void:
 	if dead: return
