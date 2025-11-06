@@ -5816,4 +5816,4 @@ script = ExtResource("19_uxjm4")
 position = Vector2(1384, 301)
 
 [node name="KintamaOwl" parent="." instance=ExtResource("22_xwobx")]
-position = Vector2(1246, 118)
+position = Vector2(-362, 353)
