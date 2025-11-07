@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cnf2n3ev2g2g"
-path="res://.godot/imported/bullet.png-398ba32f7a1ef7061f8ac4cb1ba8ae67.ctex"
+uid="uid://bht6efpj5jaed"
+path="res://.godot/imported/BatSprite.png-105b27880b672c91d011dfbd610dff42.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/sprites/objects type shi/bullet.png"
-dest_files=["res://.godot/imported/bullet.png-398ba32f7a1ef7061f8ac4cb1ba8ae67.ctex"]
+source_file="res://Assets/sprites/enemies/Murcielago/BatSprite.png"
+dest_files=["res://.godot/imported/BatSprite.png-105b27880b672c91d011dfbd610dff42.ctex"]
 
 [params]
 
