@@ -1,9 +1,10 @@
-[gd_scene load_steps=4 format=3 uid="uid://b6tjkpvhcvtc1"]
+[gd_scene load_steps=4 format=3 uid="uid://be2knpf84ilki"]
 
-[ext_resource type="Texture2D" uid="uid://biuyfqd78moln" path="res://Assets/images/Tile Maps/inca/Tilesheet - WOODS.png" id="1_5gphx"]
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_th15m"]
+load_path = "res://.godot/imported/Tilesheet - WOODS.png-51160d98161a6ea3f028ac0c550c5171.ctex"
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_rwe0p"]
-texture = ExtResource("1_5gphx")
+texture = SubResource("CompressedTexture2D_th15m")
 1:0/0 = 0
 2:0/0 = 0
 3:0/0 = 0

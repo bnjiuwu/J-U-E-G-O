@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://m8xwwqq7b67m"
-path="res://.godot/imported/GRASS 3-2.png-2c8e3787914a0ddb776124072b61f525.ctex"
+uid="uid://dw3br1eg0dx3g"
+path="res://.godot/imported/buho_BK3.png-6d1d21793b4d75c77fa66125200a0f4d.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/images/Tile Maps/inca/GRASS 3-2.png"
-dest_files=["res://.godot/imported/GRASS 3-2.png-2c8e3787914a0ddb776124072b61f525.ctex"]
+source_file="res://Assets/images/Backgrounds/BUHO/buho_BK3.png"
+dest_files=["res://.godot/imported/buho_BK3.png-6d1d21793b4d75c77fa66125200a0f4d.ctex"]
 
 [params]
 

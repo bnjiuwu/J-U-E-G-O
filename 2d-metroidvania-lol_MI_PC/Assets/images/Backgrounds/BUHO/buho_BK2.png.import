@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://bye76obiqbd1"
-path="res://.godot/imported/suelo4.png-5564a96e817cd4999860acf5f515fafa.ctex"
+path="res://.godot/imported/buho_BK2.png-86f053b73f0ff8d62495fb28d2d1f470.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/images/Backgrounds/BUHO/suelo4.png"
-dest_files=["res://.godot/imported/suelo4.png-5564a96e817cd4999860acf5f515fafa.ctex"]
+source_file="res://Assets/images/Backgrounds/BUHO/buho_BK2.png"
+dest_files=["res://.godot/imported/buho_BK2.png-86f053b73f0ff8d62495fb28d2d1f470.ctex"]
 
 [params]
 

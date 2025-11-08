@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cudm54nc2kkgs"
-path="res://.godot/imported/MUSHROOM 1-1.png-d23a563938f6e967f0d1c311f6930c52.ctex"
+uid="uid://dwchplms8h1re"
+path="res://.godot/imported/golem_bk3.png-72ae8717ad56bbfad65fd1f70b4b8da9.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/images/Tile Maps/inca/MUSHROOM 1-1.png"
-dest_files=["res://.godot/imported/MUSHROOM 1-1.png-d23a563938f6e967f0d1c311f6930c52.ctex"]
+source_file="res://Assets/images/Backgrounds/GOLEM/golem_bk3.png"
+dest_files=["res://.godot/imported/golem_bk3.png-72ae8717ad56bbfad65fd1f70b4b8da9.ctex"]
 
 [params]
 

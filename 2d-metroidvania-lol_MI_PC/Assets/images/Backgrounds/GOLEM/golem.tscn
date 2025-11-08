@@ -1,11 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://dytutime5hb6d"]
+[gd_scene load_steps=4 format=3 uid="uid://d4c3gvxefdhq0"]
 
-[ext_resource type="Texture2D" uid="uid://bgn6qwvj72n6l" path="res://Assets/images/Tile Maps/sombrio/free.png" id="1_aumt1"]
+[ext_resource type="Texture2D" uid="uid://bgn6qwvj72n6l" path="res://Assets/images/Backgrounds/BUHO/ASbuho.png" id="1_u244p"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_k6oax"]
-texture = ExtResource("1_aumt1")
-0:0/0 = 0
-1:0/0 = 0
+texture = ExtResource("1_u244p")
 2:0/0 = 0
 3:0/0 = 0
 4:0/0 = 0
@@ -26,8 +24,6 @@ texture = ExtResource("1_aumt1")
 19:0/0 = 0
 21:0/0 = 0
 22:0/0 = 0
-0:1/0 = 0
-1:1/0 = 0
 2:1/0 = 0
 3:1/0 = 0
 4:1/0 = 0
@@ -49,8 +45,6 @@ texture = ExtResource("1_aumt1")
 20:1/0 = 0
 21:1/0 = 0
 22:1/0 = 0
-0:2/0 = 0
-1:2/0 = 0
 2:2/0 = 0
 3:2/0 = 0
 4:2/0 = 0
@@ -73,8 +67,6 @@ texture = ExtResource("1_aumt1")
 21:2/0 = 0
 22:2/0 = 0
 23:2/0 = 0
-0:3/0 = 0
-1:3/0 = 0
 2:3/0 = 0
 3:3/0 = 0
 4:3/0 = 0
