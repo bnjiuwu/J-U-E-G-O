@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dy2no87gqivti"
-path="res://.godot/imported/cielo4.png-2c909df932695200b31a2f1481d27b51.ctex"
+uid="uid://bilufbqv3wkir"
+path="res://.godot/imported/golem_bk6.png-ccbd2e88f9112b9685b1ae2e872fd423.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/images/Backgrounds/BUHO/cielo4.png"
-dest_files=["res://.godot/imported/cielo4.png-2c909df932695200b31a2f1481d27b51.ctex"]
+source_file="res://Assets/images/Backgrounds/GOLEM/golem_bk6.png"
+dest_files=["res://.godot/imported/golem_bk6.png-ccbd2e88f9112b9685b1ae2e872fd423.ctex"]
 
 [params]
 

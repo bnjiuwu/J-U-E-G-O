@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dwchplms8h1re"
-path="res://.godot/imported/Plan 2.opcional.png-3938d6753d3736aff92aed7849322806.ctex"
+uid="uid://bgn6qwvj72n6l"
+path="res://.godot/imported/ASbuho.png-6c4b1a31f786844b9518e87c840166b7.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/images/Backgrounds/GOLEM/Plan 2.opcional.png"
-dest_files=["res://.godot/imported/Plan 2.opcional.png-3938d6753d3736aff92aed7849322806.ctex"]
+source_file="res://Assets/images/Backgrounds/BUHO/ASbuho.png"
+dest_files=["res://.godot/imported/ASbuho.png-6c4b1a31f786844b9518e87c840166b7.ctex"]
 
 [params]
 

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cygxbhpxgxh5w"
-path="res://.godot/imported/medio1.png-8904e0470ce91f4540431439c71d3d78.ctex"
+uid="uid://cdo33seqnek76"
+path="res://.godot/imported/cielo2.png-ff618711dc6be32cee1be918a7accd8e.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/images/Backgrounds/BUHO/medio1.png"
-dest_files=["res://.godot/imported/medio1.png-8904e0470ce91f4540431439c71d3d78.ctex"]
+source_file="res://images/Tile Maps/Buho/cielo2.png"
+dest_files=["res://.godot/imported/cielo2.png-ff618711dc6be32cee1be918a7accd8e.ctex"]
 
 [params]
 

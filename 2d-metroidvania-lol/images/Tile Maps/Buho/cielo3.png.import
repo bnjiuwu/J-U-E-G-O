@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cuq1g25fqtpah"
-path="res://.godot/imported/estatico1.png-a2f92a81ec3f29d964d59f4e40a05f87.ctex"
+uid="uid://22mry1n3iir6"
+path="res://.godot/imported/cielo3.png-02563201757c2ab6756c14294d2594bd.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/images/Backgrounds/BUHO/estatico1.png"
-dest_files=["res://.godot/imported/estatico1.png-a2f92a81ec3f29d964d59f4e40a05f87.ctex"]
+source_file="res://images/Tile Maps/Buho/cielo3.png"
+dest_files=["res://.godot/imported/cielo3.png-02563201757c2ab6756c14294d2594bd.ctex"]
 
 [params]
 

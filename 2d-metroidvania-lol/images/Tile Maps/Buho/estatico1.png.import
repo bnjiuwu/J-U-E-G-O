@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://gqndl1smwbwj"
-path="res://.godot/imported/background1.png-789e9021e5f02f5fe4657bd11355452e.ctex"
+uid="uid://c55op2g41aku0"
+path="res://.godot/imported/estatico1.png-338f7372c8e9526a6e5af938867e53e7.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/images/Backgrounds/GOLEM/background1.png"
-dest_files=["res://.godot/imported/background1.png-789e9021e5f02f5fe4657bd11355452e.ctex"]
+source_file="res://images/Tile Maps/Buho/estatico1.png"
+dest_files=["res://.godot/imported/estatico1.png-338f7372c8e9526a6e5af938867e53e7.ctex"]
 
 [params]
 

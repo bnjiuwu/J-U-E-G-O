@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dw3br1eg0dx3g"
-path="res://.godot/imported/suelo2.png-cacb2d84bf98379375f771eb84c967da.ctex"
+uid="uid://dft1ys4ww55xj"
+path="res://.godot/imported/golem_bk1.png-31f4fe134275df093b1869c294166ba5.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/images/Backgrounds/BUHO/suelo2.png"
-dest_files=["res://.godot/imported/suelo2.png-cacb2d84bf98379375f771eb84c967da.ctex"]
+source_file="res://Assets/images/Backgrounds/GOLEM/golem_bk1.png"
+dest_files=["res://.godot/imported/golem_bk1.png-31f4fe134275df093b1869c294166ba5.ctex"]
 
 [params]
 
