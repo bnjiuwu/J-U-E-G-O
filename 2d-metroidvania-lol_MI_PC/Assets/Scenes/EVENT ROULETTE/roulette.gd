@@ -1,77 +1,182 @@
-extends Control
+extends Node2D
 
-@export var scroll_speed: float = 900.0    # velocidad horizontal
-@export var scroll_time: float = 2.0       # tiempo total antes de detenerse
+# ---------------------------
+# CONFIGURACIÓN
+# ---------------------------
+const SLOT_W := 225.0
+const SLOT_H := 225.0
+const CENTER_Y := 240.0
+const VIEW_CENTER_X := 480.0
 
-@onready var strip: HBoxContainer = $HBoxContainer
-@onready var anim: AnimationPlayer = $AnimationPlayer
-@onready var indicator: Sprite2D = $"Black Line"
+@export var items_to_generate := 40
+@export var base_tick_time := 0.03     # velocidad inicial
+@export var tick_growth := 1.12        # curva de desaceleración
+@export var extra_ticks := 30          # vueltas antes del objetivo
 
-var is_scrolling := false
-var stop_target_x := 0.0
-var stopping := false
+# ---------------------------
+# NODOS
+# ---------------------------
+@onready var scroll := $Scroll
+@onready var slots := $Scroll/Slots
+@onready var slots_dup := $Scroll/SlotsDuplicate
+@onready var indicator := $Indicator
 
-var rarities = [
-	{"name": "blue", "weight": 50},
-	{"name": "purple", "weight": 30},
-	{"name": "pink", "weight": 15},
-	{"name": "red", "weight": 4},
-	{"name": "gold", "weight": 1}
+# ---------------------------
+# VARIABLES
+# ---------------------------
+var full_strip_width: float
+var target_name: String
+var target_index: int
+var final_slot_index: int
+var current_index: int = 0
+
+var tick_time: float
+var spinning: bool = false
+
+var rarities := [
+	{"name":"blue",   "weight":50, "texture": preload("res://Assets/sprites/EVENT ROULETTE/blue.png")},
+	{"name":"purple", "weight":30, "texture": preload("res://Assets/sprites/EVENT ROULETTE/purple.png")},
+	{"name":"pink",   "weight":15, "texture": preload("res://Assets/sprites/EVENT ROULETTE/pink.png")},
+	{"name":"red",    "weight": 4, "texture": preload("res://Assets/sprites/EVENT ROULETTE/red.png")},
+	{"name":"gold",   "weight": 1, "texture": preload("res://Assets/sprites/EVENT ROULETTE/yellow.png")}
 ]
 
+# =========================================================
+# READY
+# =========================================================
 func _ready():
-	is_scrolling = true
-	anim.play("scroll_start")
-	
-	# luego de X segundos, elegimos raro
-	await get_tree().create_timer(scroll_time).timeout
-	_stop_on_random_rarity()
+	generate_slots()
+	await get_tree().process_frame
+	start_spin()
+	print("----- DEBUG ORIGEN -----")
+	print("Roulette pos:", global_position)
+	print("Scroll pos:", scroll.position, "Scroll global:", scroll.global_position)
+	print("Indicator pos:", indicator.position, "Indicator global:", indicator.global_position)
+	print("Parent:", get_parent())
 
-func _process(delta):
-	if is_scrolling:
-		strip.position.x -= scroll_speed * delta
 
-	# Movimiento de “detención”
-	if stopping:
-		# mueve la tira hasta alinearse con stop_target_x
-		var diff = stop_target_x - strip.position.x
-		if abs(diff) < 20:			
-			strip.position.x = stop_target_x
-			stopping = false
-			print("🎉 FINAL:", get_selected_rarity())
-		else:
-			strip.position.x += diff * 5 * delta # frena suavemente SIN TWEEN
 
-func _stop_on_random_rarity():
-	is_scrolling = false
+# =========================================================
+# GENERAR RUNA DE SLOTS
+# =========================================================
+func generate_slots():
+	var x := 0.0
 
-	var selected = _weighted_random()
-	var node := strip.get_node(selected["name"])
+	# full width exacto, sin trucos, sin spacing extra
+	full_strip_width = SLOT_W * items_to_generate
 
-	# Queremos que ese sprite quede JUSTO bajo el indicador
-	var indicator_x = indicator.global_position.x
-	var target_x = indicator_x - node.global_position.x
+	for i in range(items_to_generate):
+		var d = weighted_random()
+		var tex: Texture2D = d["texture"]
 
-	stop_target_x = strip.position.x + target_x
-	stopping = true
+		var s := Sprite2D.new()
+		s.texture = tex
+		s.position = Vector2(x + SLOT_W * 0.5, CENTER_Y)
+		s.name = d["name"]
+		slots.add_child(s)
 
-func _weighted_random():
-	var total = 0
+		x += SLOT_W
+
+	# duplicado exacto
+	for child: Sprite2D in slots.get_children():
+		var clone := Sprite2D.new()
+		clone.texture = child.texture
+		clone.name = child.name
+		clone.position = child.position + Vector2(full_strip_width, 0)
+		slots_dup.add_child(clone)
+
+# =========================================================
+# RANDOM PONDERADO
+# =========================================================
+func weighted_random() -> Dictionary:
+	var total := 0
 	for r in rarities:
 		total += r["weight"]
-
-	var roll = randi() % total
-	var cum = 0
-
+	var roll := randi() % total
+	var acc := 0
 	for r in rarities:
-		cum += r["weight"]
-		if roll < cum:
+		acc += r["weight"]
+		if roll < acc:
 			return r
+	return rarities[0]
 
-	return rarities[0]  # fallback
+# =========================================================
+# Elegir objetivo antes de girar
+# =========================================================
+func choose_target():
+	var chosen = weighted_random()
+	target_name = chosen["name"]
+	print("🎯 Objetivo elegido:", target_name)
 
-func get_selected_rarity() -> String:
-	for r in rarities:
-		if strip.get_node(r["name"]).global_position.x == indicator.global_position.x:
-			return r["name"]
-	return "Unknown"
+	# buscar el PRIMER slot que coincida
+	var index := 0
+	for s in slots.get_children():
+		if s.name == target_name:
+			target_index = index
+			return
+		index += 1
+
+# =========================================================
+# INICIAR SPIN
+# =========================================================
+func start_spin():
+	scroll.position = Vector2.ZERO
+	choose_target()
+
+	# Queremos varias vueltas antes de caer en objetivo
+	final_slot_index = target_index + extra_ticks
+	current_index = 0
+
+	# Reset posición
+	scroll.position.x = 0
+	tick_time = base_tick_time
+
+	spinning = true
+	spin_tick()
+
+# =========================================================
+# TICK — mover 1 slot por paso
+# =========================================================
+func spin_tick():
+	if not spinning:
+		return
+
+	# mover 1 casilla a la izquierda
+	scroll.position.x -= SLOT_W
+
+	# wrap infinito
+	if scroll.position.x <= -full_strip_width:
+		scroll.position.x += full_strip_width
+
+	current_index += 1
+
+	if current_index >= final_slot_index:
+		# detener EXACTAMENTE en target
+		align_exact()
+		return
+
+	# aumentar delay (desaceleración tipo ease-out)
+	tick_time *= tick_growth
+
+	# siguiente tick
+	await get_tree().create_timer(tick_time).timeout
+	spin_tick()
+
+# =========================================================
+# Alinear EXACTO sin correcciones extrañas
+# =========================================================
+func align_exact():
+	spinning = false
+	print("🏁 GANADOR:", target_name)
+	apply_reward(target_name)
+
+# =========================================================
+# Recompensa final
+# =========================================================
+func apply_reward(n):
+	match n:
+		"blue": print("→ Recompensa común")
+		"purple": print("→ Recompensa rara")
+		"pink": print("→ Recompensa épica")
+		"red": print("🔥 Recompensa legendaria")
+		"gold": print("💎💛 Recompensa ULTRA 💛💎")
