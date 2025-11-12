@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=4 uid="uid://c6n7qrlau6b0k"]
+[gd_scene load_steps=31 format=4 uid="uid://c6n7qrlau6b0k"]
 
 [ext_resource type="Script" uid="uid://by4hegpiwf1wp" path="res://Levels/level 1/level_1.gd" id="1_gk84l"]
 [ext_resource type="PackedScene" uid="uid://braj8a8ooxs4t" path="res://Assets/Scenes/Player/player.tscn" id="1_n0qsc"]
@@ -23,6 +23,7 @@
 [ext_resource type="PackedScene" uid="uid://nfjhoahtx3yq" path="res://Assets/Scenes/Enemies Scene/Aspid Scene/PrimalAspid.tscn" id="21_bq83f"]
 [ext_resource type="PackedScene" uid="uid://cayi1fgdre0s2" path="res://Assets/Scenes/Enemies Scene/Kintama Owl Scene/kintama_owl.tscn" id="22_xwobx"]
 [ext_resource type="PackedScene" uid="uid://r6of1qds6lyu" path="res://Assets/Scenes/Enemies Scene/Golem Scene/golem.tscn" id="23_xwobx"]
+[ext_resource type="PackedScene" uid="uid://6povpxr3u3k1" path="res://Assets/Scenes/Flambo/flambo.tscn" id="22_gk84l"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_rf6l5"]
 texture = ExtResource("3_3mhv4")
@@ -5745,7 +5746,8 @@ text = "pene"
 script = ExtResource("2_rf6l5")
 
 [node name="PapaRoberto" parent="." instance=ExtResource("16_o7ywo")]
-position = Vector2(786, 29)
+z_index = 2
+position = Vector2(-211, 327)
 
 [node name="Label" type="Label" parent="PapaRoberto"]
 offset_left = -19.0
@@ -5822,3 +5824,10 @@ fly_speed = 90.0
 
 [node name="Golem" parent="." instance=ExtResource("23_xwobx")]
 position = Vector2(1235, 111)
+position = Vector2(1391, 304)
+
+[node name="Flambo" parent="." node_paths=PackedStringArray("mondongo") instance=ExtResource("22_gk84l")]
+show_behind_parent = true
+z_index = 1
+position = Vector2(1479, 353)
+mondongo = NodePath("../player")
