@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=4 uid="uid://c6n7qrlau6b0k"]
+[gd_scene load_steps=31 format=4 uid="uid://c6n7qrlau6b0k"]
 
 [ext_resource type="PackedScene" uid="uid://braj8a8ooxs4t" path="res://Assets/Scenes/Player/player.tscn" id="1_n0qsc"]
 [ext_resource type="Script" uid="uid://by4hegpiwf1wp" path="res://Levels/level 1/level_1.gd" id="1_r7d4j"]
@@ -21,6 +21,7 @@
 [ext_resource type="PackedScene" uid="uid://rqnm23qh8syg" path="res://Assets/Scenes/Enemies Scene/Mago Scene/Mago.tscn" id="18_dke4e"]
 [ext_resource type="Script" uid="uid://dhymobvyqteow" path="res://Levels/level 1/mago_label.gd" id="19_uxjm4"]
 [ext_resource type="PackedScene" uid="uid://nfjhoahtx3yq" path="res://Assets/Scenes/Enemies Scene/Aspid Scene/PrimalAspid.tscn" id="21_bq83f"]
+[ext_resource type="PackedScene" uid="uid://6povpxr3u3k1" path="res://Assets/Scenes/Flambo/flambo.tscn" id="22_gk84l"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_rf6l5"]
 texture = ExtResource("3_3mhv4")
@@ -5746,6 +5747,7 @@ text = "pene"
 script = ExtResource("2_rf6l5")
 
 [node name="PapaRoberto" parent="." instance=ExtResource("16_o7ywo")]
+z_index = 2
 position = Vector2(-211, 327)
 
 [node name="Label" type="Label" parent="PapaRoberto"]
@@ -5816,3 +5818,9 @@ script = ExtResource("19_uxjm4")
 
 [node name="PrimalAspid" parent="." instance=ExtResource("21_bq83f")]
 position = Vector2(1391, 304)
+
+[node name="Flambo" parent="." node_paths=PackedStringArray("mondongo") instance=ExtResource("22_gk84l")]
+show_behind_parent = true
+z_index = 1
+position = Vector2(1479, 353)
+mondongo = NodePath("../player")
