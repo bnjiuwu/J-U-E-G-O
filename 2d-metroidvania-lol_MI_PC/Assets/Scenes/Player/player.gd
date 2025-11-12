@@ -3,11 +3,7 @@ extends CharacterBody2D
 signal died
 var dead: bool = false
 
-
-
-
 @export var material_personaje_rojo: ShaderMaterial
-
 
 #=== dash properties ====
 @export var dash_speed: float = 500
@@ -57,11 +53,10 @@ var skill_timer:= 0.0
 #==== joystick =======
 @onready var joystick := get_node_or_null("/root/level_1/Control/touch_controls/Joystick")
 
-
 #==== damage knockback =======
 @export var invulnerability_time: float = 1.0
 
-@export var knockback_force: Vector2 = Vector2(300, -200) # (x: fuerza lateral, y: salto)
+@export var knockback_force: Vector2 = Vector2(-300, -200) # (x: fuerza lateral, y: salto)
 var is_knockback: bool = false
 var knockback_timer: float = 0.0
 var knockback_duration: float = 0.2 # cuánto dura el retroceso
