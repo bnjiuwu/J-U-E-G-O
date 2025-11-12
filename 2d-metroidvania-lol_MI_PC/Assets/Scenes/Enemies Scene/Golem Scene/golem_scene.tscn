@@ -1,9 +1,9 @@
-[gd_scene format=3 uid="uid://hrio4t6tsrhc"]
+[gd_scene load_steps=9 format=4 uid="uid://hrio4t6tsrhc"]
 
-[ext_resource type="Script" path="res://Assets/Scenes/Enemies Scene/Golem Scene/golem.gd" id="1_golem"]
-[ext_resource type="Texture2D" path="res://Assets/sprites/enemies/Golem/idle Golem.png" id="2_golem"]
-[ext_resource type="Texture2D" path="res://Assets/sprites/enemies/Golem/walk golem.png" id="3_golem"]
-[ext_resource type="Texture2D" path="res://Assets/sprites/enemies/Golem/throw golem.png" id="4_golem"]
+[ext_resource type="Script" uid="uid://c1ug0htq8fvp8" path="res://Assets/Scenes/Enemies Scene/Golem Scene/golem.gd" id="1_golem"]
+[ext_resource type="Texture2D" uid="uid://b54gbtsaf8whn" path="res://Assets/sprites/enemies/Golem/idle Golem.png" id="2_golem"]
+[ext_resource type="Texture2D" uid="uid://cf1oidoehoqbx" path="res://Assets/sprites/enemies/Golem/walk golem.png" id="3_golem"]
+[ext_resource type="Texture2D" uid="uid://6fauialhm0jy" path="res://Assets/sprites/enemies/Golem/throw golem.png" id="4_golem"]
 [ext_resource type="PackedScene" path="res://Assets/Scenes/Enemies Scene/Golem Scene/golem_rock_projectile.tscn" id="5_proj"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_default"]

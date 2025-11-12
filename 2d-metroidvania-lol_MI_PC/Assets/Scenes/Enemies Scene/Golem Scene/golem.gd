@@ -142,7 +142,9 @@ func _play_anim(name: String, loop: bool = true) -> void:
 		if _sprite.sprite_frames.has_animation(name):
 			_sprite.animation = name
 			_sprite.play()
-			_sprite.loop = loop
+			# Godot 4 no expone `loop` directo en AnimatedSprite2D; usar SpriteFrames
+			if _sprite.sprite_frames:
+				_sprite.sprite_frames.set_animation_loop(name, loop)
 
 func _handle_flip() -> void:
 	if _sprite:
