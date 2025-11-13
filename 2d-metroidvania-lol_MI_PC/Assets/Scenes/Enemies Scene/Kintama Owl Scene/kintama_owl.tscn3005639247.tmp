@@ -1,0 +1,158 @@
+[gd_scene load_steps=21 format=3 uid="uid://cayi1fgdre0s2"]
+
+[ext_resource type="Script" uid="uid://br6vsyeyt07i6" path="res://Assets/Scenes/Enemies Scene/Kintama Owl Scene/kintama_owl.gd" id="1_usun8"]
+[ext_resource type="Texture2D" uid="uid://02vwqs6au50h" path="res://Assets/sprites/enemies/Kintama/idle_kintama.png" id="2_usun8"]
+[ext_resource type="Texture2D" uid="uid://cym7prkfwv3ui" path="res://Assets/sprites/enemies/Kintama/walk_kintama.png" id="3_usun8"]
+[ext_resource type="Texture2D" uid="uid://rn36kb61klai" path="res://Assets/sprites/enemies/Kintama/fly_kintama.png" id="4_usun8"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e4vbw"]
+atlas = ExtResource("4_usun8")
+region = Rect2(0, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_m6k1m"]
+atlas = ExtResource("4_usun8")
+region = Rect2(128, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_s0pmr"]
+atlas = ExtResource("4_usun8")
+region = Rect2(0, 128, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_12u6w"]
+atlas = ExtResource("4_usun8")
+region = Rect2(128, 128, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b4nbe"]
+atlas = ExtResource("2_usun8")
+region = Rect2(0, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ax7ye"]
+atlas = ExtResource("2_usun8")
+region = Rect2(128, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_eqleg"]
+atlas = ExtResource("2_usun8")
+region = Rect2(0, 128, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_y4dka"]
+atlas = ExtResource("2_usun8")
+region = Rect2(128, 128, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pbrp4"]
+atlas = ExtResource("3_usun8")
+region = Rect2(0, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_eprfr"]
+atlas = ExtResource("3_usun8")
+region = Rect2(128, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_iidal"]
+atlas = ExtResource("3_usun8")
+region = Rect2(0, 128, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fvon8"]
+atlas = ExtResource("3_usun8")
+region = Rect2(128, 128, 128, 128)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_default"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_e4vbw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_m6k1m")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s0pmr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_12u6w")
+}],
+"loop": true,
+"name": &"fly",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b4nbe")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ax7ye")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_eqleg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_y4dka")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pbrp4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_eprfr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_iidal")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fvon8")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_body"]
+size = Vector2(107, 122)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_detection"]
+radius = 63.07139
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hitbox"]
+size = Vector2(106, 122)
+
+[node name="KintamaOwl" type="CharacterBody2D" groups=["enemy"]]
+collision_layer = 16
+collision_mask = 11
+script = ExtResource("1_usun8")
+idle_texture = ExtResource("2_usun8")
+walk_texture = ExtResource("3_usun8")
+fly_texture = ExtResource("4_usun8")
+
+[node name="Sprite" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_default")
+animation = &"fly"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-1.5, 2)
+shape = SubResource("RectangleShape2D_body")
+
+[node name="DetectionZone" type="Area2D" parent="."]
+collision_layer = 16
+collision_mask = 11
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionZone"]
+shape = SubResource("CircleShape2D_detection")
+debug_color = Color(0.576471, 0.337255, 1, 0.137255)
+
+[node name="Hitbox" type="Area2D" parent="." groups=["enemy"]]
+collision_layer = 16
+collision_mask = 11
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+position = Vector2(-1, 1)
+shape = SubResource("RectangleShape2D_hitbox")
+debug_color = Color(1, 0.376471, 0.917647, 0.14902)
+
+[node name="FloorCheck" type="RayCast2D" parent="."]
+position = Vector2(18, 24)
+target_position = Vector2(0, 28)
+
+[node name="WallCheck" type="RayCast2D" parent="."]
+position = Vector2(20, 0)
+target_position = Vector2(24, 0)
