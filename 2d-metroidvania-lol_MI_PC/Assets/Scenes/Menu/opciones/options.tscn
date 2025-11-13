@@ -1,69 +1,258 @@
-[gd_scene load_steps=6 format=3 uid="uid://bklv4hrgtjjcc"]
+[gd_scene load_steps=5 format=3 uid="uid://bklv4hrgtjjcc"]
 
 [ext_resource type="Script" uid="uid://br6oo1s4rqkns" path="res://Assets/Scenes/Menu/opciones/options.gd" id="1_c4plk"]
 [ext_resource type="Texture2D" uid="uid://dkqia2mxr4bnf" path="res://Assets/images/menus/sopaipilla.png" id="2_c4plk"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3ymnh"]
-bg_color = Color(0.609435, 0.593739, 0.578541, 0.454902)
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_card"]
+bg_color = Color(0.505882, 0.494118, 0.482353, 0.843137)
+corner_radius_bottom_left = 20
+corner_radius_bottom_right = 20
+corner_radius_top_left = 20
+corner_radius_top_right = 20
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3qr6s"]
-bg_color = Color(0.6, 0.6, 0.6, 0.482353)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_j7r1e"]
-bg_color = Color(0.558287, 0.558287, 0.558287, 0.517647)
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_button"]
+bg_color = Color(0.623529, 0.411765, 0.270588, 0.878431)
+corner_radius_bottom_left = 16
+corner_radius_bottom_right = 16
+corner_radius_top_left = 16
+corner_radius_top_right = 16
 
 [node name="Options" type="Control"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
 script = ExtResource("1_c4plk")
 
 [node name="ColorRect" type="ColorRect" parent="."]
 layout_mode = 0
 offset_right = 960.0
-offset_bottom = 479.0
-color = Color(0.537011, 0.537011, 0.537011, 1)
+offset_bottom = 480.0
+color = Color(0.435294, 0.415686, 0.403922, 1)
 
 [node name="TextureRect" type="TextureRect" parent="ColorRect"]
-modulate = Color(0.542318, 0.542318, 0.542318, 1)
 layout_mode = 0
-offset_right = 961.0
+offset_right = 960.0
 offset_bottom = 480.0
 texture = ExtResource("2_c4plk")
 expand_mode = 1
+stretch_mode = 3
+modulate = Color(0.588235, 0.588235, 0.588235, 0.431373)
 
-[node name="VBoxContainer" type="VBoxContainer" parent="ColorRect"]
+[node name="MainMargin" type="MarginContainer" parent="ColorRect"]
 layout_mode = 1
-anchors_preset = 4
-anchor_top = 0.5
-anchor_bottom = 0.5
-offset_top = -116.0
-offset_right = 259.0
-offset_bottom = 117.0
-grow_vertical = 2
-theme_override_constants/separation = 13
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 24.0
+offset_top = 24.0
+offset_right = -24.0
+offset_bottom = -24.0
 
-[node name="video" type="Button" parent="ColorRect/VBoxContainer"]
+[node name="ContentScroll" type="ScrollContainer" parent="ColorRect/MainMargin"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 50
-theme_override_styles/normal = SubResource("StyleBoxFlat_3ymnh")
-text = "VIDEO"
+size_flags_horizontal = 3
+size_flags_vertical = 3
+scroll_horizontal = false
 
-[node name="sound" type="Button" parent="ColorRect/VBoxContainer"]
+[node name="Content" type="VBoxContainer" parent="ColorRect/MainMargin/ContentScroll"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 50
-theme_override_styles/normal = SubResource("StyleBoxFlat_3qr6s")
-text = "AUDIO"
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_minimum_size = Vector2(0, 420)
+theme_override_constants/separation = 28
 
-[node name="back" type="Button" parent="ColorRect/VBoxContainer"]
+[node name="HeaderLabel" type="Label" parent="ColorRect/MainMargin/ContentScroll/Content"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 50
-theme_override_styles/normal = SubResource("StyleBoxFlat_j7r1e")
-text = "BACK"
+size_flags_horizontal = 3
+horizontal_alignment = 1
+text = "OPCIONES"
+theme_override_font_sizes/font_size = 58
 
-[connection signal="pressed" from="ColorRect/VBoxContainer/video" to="." method="_on_video_pressed"]
-[connection signal="pressed" from="ColorRect/VBoxContainer/sound" to="." method="_on_sound_pressed"]
-[connection signal="pressed" from="ColorRect/VBoxContainer/back" to="." method="_on_back_pressed"]
+[node name="AudioCard" type="PanelContainer" parent="ColorRect/MainMargin/ContentScroll/Content"]
+layout_mode = 2
+size_flags_horizontal = 3
+custom_minimum_size = Vector2(0, 220)
+theme_override_styles/panel = SubResource("StyleBoxFlat_card")
+
+[node name="AudioVBox" type="VBoxContainer" parent="ColorRect/MainMargin/ContentScroll/Content/AudioCard"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+margin_left = 32
+margin_top = 24
+margin_right = 32
+margin_bottom = 24
+theme_override_constants/separation = 18
+
+[node name="AudioTitle" type="Label" parent="ColorRect/MainMargin/ContentScroll/Content/AudioCard/AudioVBox"]
+layout_mode = 2
+text = "Audio"
+theme_override_font_sizes/font_size = 44
+
+[node name="AudioSeparator" type="HSeparator" parent="ColorRect/MainMargin/ContentScroll/Content/AudioCard/AudioVBox"]
+layout_mode = 2
+
+[node name="MasterRow" type="HBoxContainer" parent="ColorRect/MainMargin/ContentScroll/Content/AudioCard/AudioVBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 16
+
+[node name="MasterLabel" type="Label" parent="ColorRect/MainMargin/ContentScroll/Content/AudioCard/AudioVBox/MasterRow"]
+layout_mode = 2
+size_flags_horizontal = 1
+text = "Volumen general"
+theme_override_font_sizes/font_size = 34
+
+[node name="MasterSlider" type="HSlider" parent="ColorRect/MainMargin/ContentScroll/Content/AudioCard/AudioVBox/MasterRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+min_value = 0.0
+max_value = 1.0
+step = 0.01
+value = 1.0
+
+[node name="MasterValue" type="Label" parent="ColorRect/MainMargin/ContentScroll/Content/AudioCard/AudioVBox/MasterRow"]
+layout_mode = 2
+custom_minimum_size = Vector2(96, 0)
+horizontal_alignment = 2
+text = "100%"
+theme_override_font_sizes/font_size = 30
+
+[node name="MusicRow" type="HBoxContainer" parent="ColorRect/MainMargin/ContentScroll/Content/AudioCard/AudioVBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 16
+
+[node name="MusicLabel" type="Label" parent="ColorRect/MainMargin/ContentScroll/Content/AudioCard/AudioVBox/MusicRow"]
+layout_mode = 2
+size_flags_horizontal = 1
+text = "Música"
+theme_override_font_sizes/font_size = 34
+
+[node name="MusicSlider" type="HSlider" parent="ColorRect/MainMargin/ContentScroll/Content/AudioCard/AudioVBox/MusicRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+min_value = 0.0
+max_value = 1.0
+step = 0.01
+value = 1.0
+
+[node name="MusicValue" type="Label" parent="ColorRect/MainMargin/ContentScroll/Content/AudioCard/AudioVBox/MusicRow"]
+layout_mode = 2
+custom_minimum_size = Vector2(96, 0)
+horizontal_alignment = 2
+text = "100%"
+theme_override_font_sizes/font_size = 30
+
+[node name="SfxRow" type="HBoxContainer" parent="ColorRect/MainMargin/ContentScroll/Content/AudioCard/AudioVBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 16
+
+[node name="SfxLabel" type="Label" parent="ColorRect/MainMargin/ContentScroll/Content/AudioCard/AudioVBox/SfxRow"]
+layout_mode = 2
+size_flags_horizontal = 1
+text = "Efectos"
+theme_override_font_sizes/font_size = 34
+
+[node name="SfxSlider" type="HSlider" parent="ColorRect/MainMargin/ContentScroll/Content/AudioCard/AudioVBox/SfxRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+min_value = 0.0
+max_value = 1.0
+step = 0.01
+value = 1.0
+
+[node name="SfxValue" type="Label" parent="ColorRect/MainMargin/ContentScroll/Content/AudioCard/AudioVBox/SfxRow"]
+layout_mode = 2
+custom_minimum_size = Vector2(96, 0)
+horizontal_alignment = 2
+text = "100%"
+theme_override_font_sizes/font_size = 30
+
+[node name="GameplayCard" type="PanelContainer" parent="ColorRect/MainMargin/ContentScroll/Content"]
+layout_mode = 2
+size_flags_horizontal = 3
+custom_minimum_size = Vector2(0, 210)
+theme_override_styles/panel = SubResource("StyleBoxFlat_card")
+
+[node name="GameplayVBox" type="VBoxContainer" parent="ColorRect/MainMargin/ContentScroll/Content/GameplayCard"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+margin_left = 32
+margin_top = 24
+margin_right = 32
+margin_bottom = 24
+theme_override_constants/separation = 18
+
+[node name="GameplayTitle" type="Label" parent="ColorRect/MainMargin/ContentScroll/Content/GameplayCard/GameplayVBox"]
+layout_mode = 2
+text = "Juego"
+theme_override_font_sizes/font_size = 44
+
+[node name="GameplaySeparator" type="HSeparator" parent="ColorRect/MainMargin/ContentScroll/Content/GameplayCard/GameplayVBox"]
+layout_mode = 2
+
+[node name="VibrationRow" type="HBoxContainer" parent="ColorRect/MainMargin/ContentScroll/Content/GameplayCard/GameplayVBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 16
+
+[node name="VibrationLabel" type="Label" parent="ColorRect/MainMargin/ContentScroll/Content/GameplayCard/GameplayVBox/VibrationRow"]
+layout_mode = 2
+size_flags_horizontal = 1
+text = "Vibración"
+theme_override_font_sizes/font_size = 34
+
+[node name="VibrationToggle" type="CheckButton" parent="ColorRect/MainMargin/ContentScroll/Content/GameplayCard/GameplayVBox/VibrationRow"]
+layout_mode = 2
+text = "ON"
+
+[node name="LeftHandRow" type="HBoxContainer" parent="ColorRect/MainMargin/ContentScroll/Content/GameplayCard/GameplayVBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 16
+
+[node name="LeftHandLabel" type="Label" parent="ColorRect/MainMargin/ContentScroll/Content/GameplayCard/GameplayVBox/LeftHandRow"]
+layout_mode = 2
+size_flags_horizontal = 1
+text = "Modo zurdo"
+theme_override_font_sizes/font_size = 34
+
+[node name="LeftHandToggle" type="CheckButton" parent="ColorRect/MainMargin/ContentScroll/Content/GameplayCard/GameplayVBox/LeftHandRow"]
+layout_mode = 2
+text = "ON"
+
+[node name="ButtonsRow" type="HBoxContainer" parent="ColorRect/MainMargin/ContentScroll/Content"]
+layout_mode = 2
+size_flags_horizontal = 3
+custom_minimum_size = Vector2(0, 72)
+theme_override_constants/separation = 24
+
+[node name="ResetButton" type="Button" parent="ColorRect/MainMargin/ContentScroll/Content/ButtonsRow"]
+layout_mode = 2
+size_flags_horizontal = 1
+text = "Restaurar"
+theme_override_styles/normal = SubResource("StyleBoxFlat_button")
+theme_override_font_sizes/font_size = 36
+
+[node name="Spacer" type="Control" parent="ColorRect/MainMargin/ContentScroll/Content/ButtonsRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="BackButton" type="Button" parent="ColorRect/MainMargin/ContentScroll/Content/ButtonsRow"]
+layout_mode = 2
+size_flags_horizontal = 1
+text = "Volver"
+theme_override_styles/normal = SubResource("StyleBoxFlat_button")
+theme_override_font_sizes/font_size = 36
+
+[connection signal="value_changed" from="ColorRect/MainMargin/ContentScroll/Content/AudioCard/AudioVBox/MasterRow/MasterSlider" to="." method="_on_master_slider_value_changed"]
+[connection signal="value_changed" from="ColorRect/MainMargin/ContentScroll/Content/AudioCard/AudioVBox/MusicRow/MusicSlider" to="." method="_on_music_slider_value_changed"]
+[connection signal="value_changed" from="ColorRect/MainMargin/ContentScroll/Content/AudioCard/AudioVBox/SfxRow/SfxSlider" to="." method="_on_sfx_slider_value_changed"]
+[connection signal="toggled" from="ColorRect/MainMargin/ContentScroll/Content/GameplayCard/GameplayVBox/VibrationRow/VibrationToggle" to="." method="_on_vibration_toggle_toggled"]
+[connection signal="toggled" from="ColorRect/MainMargin/ContentScroll/Content/GameplayCard/GameplayVBox/LeftHandRow/LeftHandToggle" to="." method="_on_left_handed_toggle_toggled"]
+[connection signal="pressed" from="ColorRect/MainMargin/ContentScroll/Content/ButtonsRow/ResetButton" to="." method="_on_reset_button_pressed"]
+[connection signal="pressed" from="ColorRect/MainMargin/ContentScroll/Content/ButtonsRow/BackButton" to="." method="_on_back_pressed"]
