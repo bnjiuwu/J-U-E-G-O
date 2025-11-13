@@ -1,20 +1,10 @@
 extends CharacterBody2D
 
-# GOLEM ENEMY IMPLEMENTATION
-# Comportamiento: patrulla lenta, detecta jugador cerca, lanza una roca (proyectil) tras cargar
-# Animaciones esperadas: idle, walk, throw (se derivan de hojas de sprites: idle Golem.png, walk golem.png, throw golem.png)
+# GOLEM ENEMY IMPLEMENTATION (Godot 4.5)
+# Comportamiento: patrulla lenta, detecta jugador cerca y realiza una animación de lanzamiento.
+# Animaciones requeridas: idle, walk, throw (se generan desde las hojas idle Golem.png, walk golem.png, throw golem.png).
 
 enum State { IDLE, WALK, WINDUP, THROW, RECOVER }
-
-@export var idle_texture: Texture2D
-@export var walk_texture: Texture2D
-@export var throw_texture: Texture2D
-@export var sheet_columns: int = 4
-@export var sheet_rows: int = 4
-@export var idle_frames: int = 4
-@export var walk_frames: int = 6
-@export var throw_frames: int = 6
-@export var animation_speed: float = 6.0
 
 @export var patrol_speed: float = 50.0
 @export var gravity: float = 900.0
@@ -23,8 +13,6 @@ enum State { IDLE, WALK, WINDUP, THROW, RECOVER }
 @export var throw_distance: float = 420.0
 @export var windup_time: float = 0.8
 @export var recover_time: float = 0.6
-@export var projectile_scene: PackedScene
-@export var projectile_speed: float = 320.0
 @export var max_health: int = 60
 @export var contact_damage: int = 10
 
@@ -42,8 +30,8 @@ var _timer_wander: float = 0.0
 @onready var _wall_raycast: RayCast2D = $WallCheck if has_node("WallCheck") else null
 
 func _ready():
+	randomize()
 	_health = max_health
-	_build_frames()
 	_enter_state(State.IDLE)
 	if _detection:
 		_detection.body_entered.connect(_on_detection_body_entered)
@@ -81,7 +69,8 @@ func _process_idle(delta: float) -> void:
 		return
 	_timer_wander -= delta
 	if _timer_wander <= 0.0:
-		_direction = -1 if randf() < 0.5 else 1
+		_direction = (randf() < 0.5) ? -1 : 1
+		_timer_wander = randf_range(wander_time_min, wander_time_max)
 		_enter_state(State.WALK)
 
 func _process_walk(delta: float) -> void:
@@ -99,19 +88,12 @@ func _process_walk(delta: float) -> void:
 		velocity.x = 0
 
 func _process_throw() -> void:
-	# Lanzar proyectil una única vez al entrar en THROW
-	_spawn_projectile()
-	_enter_state(State.RECOVER)
-
-func _spawn_projectile() -> void:
-	if not projectile_scene or not _target:
-		return
-	var proj = projectile_scene.instantiate()
-	if proj and proj.has_method("initialize"):
-		var dir = (_target.global_position - global_position).normalized()
-		proj.global_position = global_position + Vector2(sign(dir.x)*20, -10)
-		proj.initialize(dir * projectile_speed, contact_damage)
-	get_tree().current_scene.add_child(proj)
+	# Mantenerse en la animación de lanzamiento hasta que termine el tiempo calculado.
+	var throw_duration := _get_animation_duration("throw")
+	if throw_duration <= 0.0:
+		throw_duration = 0.6
+	if _state_time >= throw_duration:
+		_enter_state(State.RECOVER)
 
 func _can_throw_at_target() -> bool:
 	if not _target: return false
@@ -133,6 +115,7 @@ func _enter_state(new_state: State) -> void:
 			_face_target()
 			_play_anim("throw", false)
 		State.THROW:
+			velocity.x = 0
 			_play_anim("throw", false)
 		State.RECOVER:
 			_play_anim("idle")
@@ -145,6 +128,8 @@ func _play_anim(name: String, loop: bool = true) -> void:
 			# Godot 4 no expone `loop` directo en AnimatedSprite2D; usar SpriteFrames
 			if _sprite.sprite_frames:
 				_sprite.sprite_frames.set_animation_loop(name, loop)
+				if not loop and name == "throw":
+					_sprite.frame = 0
 
 func _handle_flip() -> void:
 	if _sprite:
@@ -179,34 +164,14 @@ func _on_hitbox_body_entered(body: Node) -> void:
 	if body.is_in_group("player") and body.has_method("take_damage"):
 		body.take_damage(contact_damage)
 
-func _build_frames() -> void:
-	if not _sprite:
-		return
-	var frames = SpriteFrames.new()
-	_add_sheet_animation(frames, "idle", idle_texture, idle_frames, true)
-	_add_sheet_animation(frames, "walk", walk_texture, walk_frames, true)
-	_add_sheet_animation(frames, "throw", throw_texture, throw_frames, false)
-	_sprite.sprite_frames = frames
-	_sprite.animation = "idle"
-
-func _add_sheet_animation(frames: SpriteFrames, name: String, texture: Texture2D, frame_count: int, loop: bool) -> void:
-	if not texture:
-		return
-	frames.add_animation(name)
-	frames.set_animation_loop(name, loop)
-	frames.set_animation_speed(name, animation_speed)
-	var w = texture.get_width() / sheet_columns
-	var h = texture.get_height() / sheet_rows
-	var max_possible = sheet_columns * sheet_rows
-	frame_count = clamp(frame_count, 1, max_possible)
-	for i in range(frame_count):
-		var col = i % sheet_columns
-		var row = i / sheet_columns
-		var region = Rect2(col * w, row * h, w, h)
-		var atlas = AtlasTexture.new()
-		atlas.atlas = texture
-		atlas.region = region
-		frames.add_frame(name, atlas)
-
 func randf_range(a: float, b: float) -> float:
 	return randf() * (b - a) + a
+
+func _get_animation_duration(anim_name: String) -> float:
+	if not _sprite or not _sprite.sprite_frames:
+		return 0.0
+	if not _sprite.sprite_frames.has_animation(anim_name):
+		return 0.0
+	var frames = _sprite.sprite_frames.get_frame_count(anim_name)
+	var speed = max(_sprite.sprite_frames.get_animation_speed(anim_name), 0.01)
+	return frames / speed
