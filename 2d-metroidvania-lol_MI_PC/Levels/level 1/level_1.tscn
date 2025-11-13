@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=4 uid="uid://c6n7qrlau6b0k"]
+[gd_scene load_steps=33 format=4 uid="uid://c6n7qrlau6b0k"]
 
 [ext_resource type="Script" uid="uid://by4hegpiwf1wp" path="res://Levels/level 1/level_1.gd" id="1_gk84l"]
 [ext_resource type="PackedScene" uid="uid://braj8a8ooxs4t" path="res://Assets/Scenes/Player/player.tscn" id="1_n0qsc"]
@@ -22,7 +22,7 @@
 [ext_resource type="Script" uid="uid://dhymobvyqteow" path="res://Levels/level 1/mago_label.gd" id="19_uxjm4"]
 [ext_resource type="PackedScene" uid="uid://nfjhoahtx3yq" path="res://Assets/Scenes/Enemies Scene/Aspid Scene/PrimalAspid.tscn" id="21_bq83f"]
 [ext_resource type="PackedScene" uid="uid://cayi1fgdre0s2" path="res://Assets/Scenes/Enemies Scene/Kintama Owl Scene/kintama_owl.tscn" id="22_xwobx"]
-[ext_resource type="Script" uid="uid://rgq03wb6n1tb" path="res://Assets/Scenes/Enemies Scene/Golem Scene/golem_rock_projectile.gd" id="23_xwobx"]
+[ext_resource type="PackedScene" uid="uid://r6of1qds6lyu" path="res://Assets/Scenes/Enemies Scene/Golem Scene/golem.tscn" id="23_xwobx"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_rf6l5"]
 texture = ExtResource("3_3mhv4")
@@ -5672,6 +5672,8 @@ texture = ExtResource("3_3mhv4")
 physics_layer_0/collision_layer = 1
 sources/0 = SubResource("TileSetAtlasSource_aydgu")
 
+[sub_resource type="GDScript" id="GDScript_vn1ki"]
+
 [node name="level_1" type="Node2D"]
 script = ExtResource("1_gk84l")
 
@@ -5818,5 +5820,7 @@ position = Vector2(1384, 301)
 
 [node name="KintamaOwl" parent="." instance=ExtResource("22_xwobx")]
 position = Vector2(-362, 353)
-script = ExtResource("23_xwobx")
-lifetime = 4.0
+script = SubResource("GDScript_vn1ki")
+
+[node name="Golem" parent="." groups=["enemy"] instance=ExtResource("23_xwobx")]
+position = Vector2(1253, 167)

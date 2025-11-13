@@ -136,6 +136,7 @@ animations = [{
 }]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_r46aw"]
+radius = 78.160095
 
 [node name="Golem" type="CharacterBody2D"]
 script = ExtResource("1_ymxtc")
@@ -158,5 +159,8 @@ shape = SubResource("CircleShape2D_r46aw")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
 
 [node name="FloorCheck" type="RayCast2D" parent="."]
+position = Vector2(0, 43)
 
 [node name="WallCheck" type="RayCast2D" parent="."]
+position = Vector2(0, 43)
+rotation = -1.5707964

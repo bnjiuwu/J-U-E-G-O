@@ -81,7 +81,7 @@ func _process_idle(delta: float) -> void:
 		return
 	_timer_wander -= delta
 	if _timer_wander <= 0.0:
-		_direction = (randf() < 0.5) ? -1 : 1
+		_direction = -1 if randf() < 0.5 else 1
 		_enter_state(State.WALK)
 
 func _process_walk(delta: float) -> void:
