@@ -1,6 +1,8 @@
 extends CharacterBody2D
 
 signal died
+signal roberto_fue_golpeado
+signal roberto_murio
 var dead: bool = false
 
 
@@ -320,6 +322,7 @@ func take_damage(amount: int, attacker_pos: Vector2 = global_position) -> void:
 	
 	#--- daño ---
 	health -= amount
+	emit_signal("roberto_fue_golpeado")
 	print("⚠️ Player recibió", amount, "daño | HP:", health)
 	
 	if health < 0:
@@ -340,6 +343,7 @@ func take_damage(amount: int, attacker_pos: Vector2 = global_position) -> void:
 func die() -> void:
 	if dead: return
 	dead = true
+	emit_signal("roberto_murio")
 	print("💀 Player ha muerto → emitiendo señal")
 	velocity = Vector2.ZERO
 	set_physics_process(false)
