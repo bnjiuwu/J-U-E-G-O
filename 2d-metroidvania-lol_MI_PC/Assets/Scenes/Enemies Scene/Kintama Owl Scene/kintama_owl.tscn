@@ -96,6 +96,9 @@ animations = [{
 [sub_resource type="CircleShape2D" id="CircleShape2D_e4vbw"]
 radius = 49.819675
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hitbox"]
+extents = Vector2(56, 52)
+
 [sub_resource type="CircleShape2D" id="CircleShape2D_detection"]
 radius = 147.01361
 
@@ -103,7 +106,7 @@ radius = 147.01361
 collision_layer = 16
 collision_mask = 11
 script = ExtResource("1_usun8")
-fly_speed = 100.0
+fly_speed = 72.0
 
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
 position = Vector2(3, 6)
@@ -124,13 +127,32 @@ position = Vector2(2, 1)
 shape = SubResource("CircleShape2D_detection")
 debug_color = Color(0.576471, 0.337255, 1, 0.137255)
 
+[node name="Hitbox" type="Area2D" parent="." groups=["enemy"]]
+collision_layer = 16
+collision_mask = 11
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+position = Vector2(2, 12)
+shape = SubResource("RectangleShape2D_hitbox")
+debug_color = Color(0.937255, 0.286275, 0.878431, 0.247059)
+
 [node name="FloorCheck" type="RayCast2D" parent="."]
-position = Vector2(0, 50)
-target_position = Vector2(0, 28)
+enabled = true
+exclude_parent = true
+position = Vector2(0, 24)
+target_position = Vector2(0, 32)
+collision_mask = 7
+collide_with_areas = false
+collide_with_bodies = true
 
 [node name="WallCheck" type="RayCast2D" parent="."]
-position = Vector2(45, 0)
-target_position = Vector2(24, 0)
+enabled = true
+exclude_parent = true
+position = Vector2(20, -4)
+target_position = Vector2(32, -4)
+collision_mask = 7
+collide_with_areas = false
+collide_with_bodies = true
 
 [connection signal="body_entered" from="DetectionZone" to="." method="_on_detection_zone_body_entered"]
 [connection signal="body_exited" from="DetectionZone" to="." method="_on_detection_zone_body_exited"]

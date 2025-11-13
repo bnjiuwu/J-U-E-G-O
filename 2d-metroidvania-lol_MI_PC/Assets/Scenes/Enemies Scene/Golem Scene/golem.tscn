@@ -1,37 +1,17 @@
-[gd_scene load_steps=24 format=4 uid="uid://r6of1qds6lyu"]
+[gd_scene load_steps=20 format=3 uid="uid://r6of1qds6lyu"]
 
 [ext_resource type="Script" uid="uid://c1ug0htq8fvp8" path="res://Assets/Scenes/Enemies Scene/Golem Scene/golem.gd" id="1_ymxtc"]
 [ext_resource type="Texture2D" uid="uid://b54gbtsaf8whn" path="res://Assets/sprites/enemies/Golem/idle Golem.png" id="2_016tv"]
 [ext_resource type="Texture2D" uid="uid://6fauialhm0jy" path="res://Assets/sprites/enemies/Golem/throw golem.png" id="3_brxpk"]
 [ext_resource type="Texture2D" uid="uid://cf1oidoehoqbx" path="res://Assets/sprites/enemies/Golem/walk golem.png" id="4_jvu7w"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_nmdtm"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_ymxtc"]
 atlas = ExtResource("2_016tv")
-region = Rect2(25, 12, 155, 155)
+region = Rect2(0, 0, 170, 156)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_6twl5"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_016tv"]
 atlas = ExtResource("2_016tv")
-region = Rect2(180, 12, 155, 155)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_uj0ht"]
-atlas = ExtResource("2_016tv")
-region = Rect2(335, 12, 155, 155)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_wuboa"]
-atlas = ExtResource("2_016tv")
-region = Rect2(25, 167, 155, 155)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_0hdr4"]
-atlas = ExtResource("2_016tv")
-region = Rect2(25, 322, 155, 155)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_g4nmt"]
-atlas = ExtResource("2_016tv")
-region = Rect2(180, 167, 155, 155)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_7ga55"]
-atlas = ExtResource("2_016tv")
-region = Rect2(335, 167, 155, 155)
+region = Rect2(0, 156, 170, 156)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_xw23s"]
 atlas = ExtResource("3_brxpk")
@@ -73,25 +53,10 @@ region = Rect2(166, 18, 158, 155)
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_nmdtm")
+"texture": SubResource("AtlasTexture_ymxtc")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_6twl5")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_uj0ht")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_wuboa")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_0hdr4")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_g4nmt")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_7ga55")
+"texture": SubResource("AtlasTexture_016tv")
 }],
 "loop": true,
 "name": &"idle",
@@ -110,7 +75,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_ckww7")
 }],
-"loop": true,
+"loop": false,
 "name": &"throw",
 "speed": 5.0
 }, {
@@ -136,28 +101,26 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_body"]
-size = Vector2(60, 70)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_hitbox"]
-size = Vector2(68, 72)
+extents = Vector2(48, 56)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_r46aw"]
-radius = 220.0
+radius = 180.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hitbox"]
+extents = Vector2(54, 52)
 
 [node name="Golem" type="CharacterBody2D" groups=["enemy"]]
 collision_layer = 16
 collision_mask = 11
 script = ExtResource("1_ymxtc")
-idle_texture = ExtResource("2_016tv")
-walk_texture = ExtResource("4_jvu7w")
-throw_texture = ExtResource("3_brxpk")
 
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_dxdwf")
 animation = &"idle"
+frame_progress = 0.48903066
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, -6)
+position = Vector2(0, -12)
 shape = SubResource("RectangleShape2D_body")
 
 [node name="DetectionZone" type="Area2D" parent="."]
@@ -165,7 +128,7 @@ collision_layer = 16
 collision_mask = 11
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionZone"]
-position = Vector2(0, -12)
+position = Vector2(0, -20)
 shape = SubResource("CircleShape2D_r46aw")
 
 [node name="Hitbox" type="Area2D" parent="." groups=["enemy"]]
@@ -173,15 +136,18 @@ collision_layer = 16
 collision_mask = 11
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
-position = Vector2(0, -6)
+position = Vector2(0, -12)
 shape = SubResource("RectangleShape2D_hitbox")
 
 [node name="FloorCheck" type="RayCast2D" parent="."]
-position = Vector2(24, 32)
-target_position = Vector2(0, 32)
-enabled = true
+position = Vector2(36, 40)
+exclude_parent = false
+target_position = Vector2(0, 64)
+collision_mask = 7
+collide_with_areas = true
 
 [node name="WallCheck" type="RayCast2D" parent="."]
-position = Vector2(28, 0)
-target_position = Vector2(32, 0)
-enabled = true
+position = Vector2(40, -10)
+exclude_parent = false
+target_position = Vector2(48, 0)
+collision_mask = 7

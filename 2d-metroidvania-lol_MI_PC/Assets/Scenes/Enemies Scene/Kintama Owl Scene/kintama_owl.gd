@@ -8,16 +8,21 @@ const LAYER_WORLD := 1
 const LAYER_PLAYER := 3
 
 # --- Configuración de RayCasts ---
-const WALL_LEN: float = 24.0
+const WALL_LEN: float = 32.0
+const WALL_CHECK_OFFSET_X: float = 20.0
+const WALL_CHECK_OFFSET_Y: float = -4.0
 const FLOOR_AHEAD_X: float = 18.0
-const FLOOR_DOWN_Y: float = 26.0
+const FLOOR_DOWN_Y: float = 32.0
+const FLOOR_CHECK_Y: float = 24.0
 
 # --- Atributos de Movimiento ---
 @export var idle_wait_range: Vector2 = Vector2(1.2, 2.0)
 @export var walk_speed: float = 55.0
-@export var fly_speed: float = 160.0
+@export var fly_speed: float = 90.0
 @export var attack_duration: float = 1.6
 @export var attack_cooldown: float = 1.2
+@export var contact_damage: int = 20
+@export var max_health: int = 200
 
 # --- Detección del Jugador ---
 @export var player_path: NodePath
@@ -31,17 +36,20 @@ var attack_timer: float = 0.0
 var cooldown_timer: float = 0.0
 var direction: int = -1
 var player: CharacterBody2D = null
+var _health: int = 0
 
 # --- Referencias de Nodos ---
 @onready var sprite: AnimatedSprite2D = $Sprite
 @onready var floor_check: RayCast2D = $FloorCheck
 @onready var wall_check: RayCast2D = $WallCheck
 @onready var detection_area: Area2D = $DetectionZone
+@onready var hitbox: Area2D = $Hitbox if has_node("Hitbox") else null
 
 
 func _ready() -> void:
 	idle_timer = randf_range(idle_wait_range.x, idle_wait_range.y)
 	_refresh_player_ref_from_path()
+	_health = max_health
 
 	# Configurar Raycasts (solo colisionan con el mundo)
 	for ray in [floor_check, wall_check]:
@@ -57,7 +65,12 @@ func _ready() -> void:
 		detection_area.set_collision_mask_value(LAYER_PLAYER, true)
 		# Las señales (body_entered/exited) deben estar conectadas en el editor
 
+	if hitbox:
+		hitbox.body_entered.connect(_on_hitbox_body_entered)
+		hitbox.area_entered.connect(_on_hitbox_area_entered)
+
 	sprite.play("idle")
+	_update_directional_nodes()
 
 
 func _physics_process(delta: float) -> void:
@@ -111,7 +124,10 @@ func _physics_process(delta: float) -> void:
 
 
 func _apply_ground_physics(delta: float) -> void:
-	velocity.y += gravity * delta
+	if is_on_floor():
+		velocity.y = min(velocity.y, 0.0)
+	else:
+		velocity.y += gravity * delta
 
 func _update_directional_nodes() -> void:
 	# El sprite solo se flipea si no está atacando
@@ -120,10 +136,13 @@ func _update_directional_nodes() -> void:
 	
 	# Mover los raycasts según la dirección
 	if floor_check:
-		floor_check.position.x = direction * FLOOR_AHEAD_X
-		floor_check.target_position.y = FLOOR_DOWN_Y
+		floor_check.position = Vector2(direction * FLOOR_AHEAD_X, FLOOR_CHECK_Y)
+		floor_check.target_position = Vector2(0.0, FLOOR_DOWN_Y)
+		floor_check.force_raycast_update()
 	if wall_check:
-		wall_check.target_position.x = direction * WALL_LEN
+		wall_check.position = Vector2(direction * WALL_CHECK_OFFSET_X, WALL_CHECK_OFFSET_Y)
+		wall_check.target_position = Vector2(direction * WALL_LEN, WALL_CHECK_OFFSET_Y)
+		wall_check.force_raycast_update()
 
 func _flip_direction() -> void:
 	direction *= -1
@@ -163,6 +182,29 @@ func _on_detection_zone_body_entered(body: Node2D) -> void:
 func _on_detection_zone_body_exited(body: Node2D) -> void:
 	if body == player:
 		player = null # Pierde el objetivo, pero seguirá atacando hasta que termine el timer
+
+func _on_hitbox_body_entered(body: Node2D) -> void:
+	if body.is_in_group("player") and body.has_method("take_damage"):
+		body.take_damage(contact_damage, global_position)
+
+func _on_hitbox_area_entered(area: Area2D) -> void:
+	if area.is_in_group("player"):
+		var player_body := area.get_parent()
+		if player_body and player_body.has_method("take_damage"):
+			player_body.take_damage(contact_damage, global_position)
+	elif area.has_method("take_damage"):
+		area.take_damage(contact_damage)
+
+func take_damage(amount: int) -> void:
+	_health -= amount
+	if _health <= 0:
+		_die()
+		return
+	if state != State.ATTACK:
+		_enter_attack()
+
+func _die() -> void:
+	queue_free()
 
 # --- Helpers para Referencia del Jugador ---
 

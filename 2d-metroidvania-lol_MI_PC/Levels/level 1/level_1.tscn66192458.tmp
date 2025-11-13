@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=4 uid="uid://c6n7qrlau6b0k"]
+[gd_scene load_steps=33 format=4 uid="uid://c6n7qrlau6b0k"]
 
 [ext_resource type="Script" uid="uid://by4hegpiwf1wp" path="res://Levels/level 1/level_1.gd" id="1_gk84l"]
 [ext_resource type="PackedScene" uid="uid://braj8a8ooxs4t" path="res://Assets/Scenes/Player/player.tscn" id="1_n0qsc"]
@@ -5672,6 +5672,8 @@ texture = ExtResource("3_3mhv4")
 physics_layer_0/collision_layer = 1
 sources/0 = SubResource("TileSetAtlasSource_aydgu")
 
+[sub_resource type="GDScript" id="GDScript_vn1ki"]
+
 [node name="level_1" type="Node2D"]
 script = ExtResource("1_gk84l")
 
@@ -5818,7 +5820,7 @@ position = Vector2(1384, 301)
 
 [node name="KintamaOwl" parent="." instance=ExtResource("22_xwobx")]
 position = Vector2(-362, 353)
-fly_speed = 90.0
+script = SubResource("GDScript_vn1ki")
 
 [node name="Golem" parent="." instance=ExtResource("23_xwobx")]
-position = Vector2(1235, 111)
+position = Vector2(1253, 167)

@@ -6,7 +6,11 @@ extends CharacterBody2D
 
 enum State { IDLE, WALK, WINDUP, THROW, RECOVER }
 
-@export var patrol_speed: float = 50.0
+const FLOOR_CHECK_HORIZONTAL_OFFSET := 36.0
+const WALL_CHECK_HORIZONTAL_OFFSET := 40.0
+const WALL_CHECK_TARGET_X := 48.0
+
+@export var patrol_speed: float = 32.0
 @export var gravity: float = 900.0
 @export var wander_time_min: float = 1.5
 @export var wander_time_max: float = 3.5
@@ -38,6 +42,7 @@ func _ready():
 		_detection.body_exited.connect(_on_detection_body_exited)
 	if _hitbox:
 		_hitbox.body_entered.connect(_on_hitbox_body_entered)
+		_hitbox.area_entered.connect(_on_hitbox_area_entered)
 
 func _physics_process(delta: float) -> void:
 	_apply_gravity(delta)
@@ -64,21 +69,32 @@ func _apply_gravity(delta: float) -> void:
 		velocity.y = min(velocity.y, 0)
 
 func _process_idle(delta: float) -> void:
-	if _target and _can_throw_at_target():
-		_enter_state(State.WINDUP)
+	if _target:
+		if _can_throw_at_target():
+			_enter_state(State.WINDUP)
+			return
+		_direction = -1 if _target.global_position.x < global_position.x else 1
+		_timer_wander = randf_range(wander_time_min, wander_time_max)
+		_enter_state(State.WALK)
 		return
 	_timer_wander -= delta
 	if _timer_wander <= 0.0:
-		_direction = (randf() < 0.5) ? -1 : 1
+		_direction = -1 if randf() < 0.5 else 1
 		_timer_wander = randf_range(wander_time_min, wander_time_max)
 		_enter_state(State.WALK)
 
 func _process_walk(delta: float) -> void:
-	if _target and _can_throw_at_target():
-		_enter_state(State.WINDUP)
-		return
+	if _target:
+		if _can_throw_at_target():
+			_enter_state(State.WINDUP)
+			return
+		_direction = -1 if _target.global_position.x < global_position.x else 1
 	velocity.x = _direction * patrol_speed
 	_handle_flip()
+	if _floor_raycast:
+		_floor_raycast.force_raycast_update()
+	if _wall_raycast:
+		_wall_raycast.force_raycast_update()
 	if _wall_raycast and _wall_raycast.is_colliding():
 		_direction *= -1
 	if _floor_raycast and not _floor_raycast.is_colliding():
@@ -135,10 +151,10 @@ func _handle_flip() -> void:
 	if _sprite:
 		_sprite.flip_h = _direction < 0
 	if _floor_raycast:
-		_floor_raycast.position.x = 18 * _direction
+		_floor_raycast.position.x = FLOOR_CHECK_HORIZONTAL_OFFSET * _direction
 	if _wall_raycast:
-		_wall_raycast.position.x = 20 * _direction
-		_wall_raycast.target_position.x = 24 * _direction
+		_wall_raycast.position.x = WALL_CHECK_HORIZONTAL_OFFSET * _direction
+		_wall_raycast.target_position = Vector2(WALL_CHECK_TARGET_X * _direction, 0.0)
 
 func _face_target() -> void:
 	if _target:
@@ -162,7 +178,15 @@ func _on_detection_body_exited(body: Node) -> void:
 
 func _on_hitbox_body_entered(body: Node) -> void:
 	if body.is_in_group("player") and body.has_method("take_damage"):
-		body.take_damage(contact_damage)
+		body.take_damage(contact_damage, global_position)
+
+func _on_hitbox_area_entered(area: Area2D) -> void:
+	if area.is_in_group("player"):
+		var player_body := area.get_parent()
+		if player_body and player_body.has_method("take_damage"):
+			player_body.take_damage(contact_damage, global_position)
+	elif area.has_method("take_damage"):
+		area.take_damage(contact_damage)
 
 func randf_range(a: float, b: float) -> float:
 	return randf() * (b - a) + a
