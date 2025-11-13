@@ -363,8 +363,9 @@ size = Vector2(20, 41)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jxp6p"]
 size = Vector2(26, 45)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_qtivd"]
-size = Vector2(200, 23)
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_jxp6p"]
+radius = 118.0
+height = 394.0
 
 [node name="Mago" type="CharacterBody2D" groups=["enemy"]]
 collision_layer = 16
@@ -388,7 +389,7 @@ target_position = Vector2(20, 0)
 position = Vector2(8, 15)
 target_position = Vector2(0, 30)
 
-[node name="Hitbox" type="Area2D" parent="."]
+[node name="Hitbox" type="Area2D" parent="." groups=["enemy"]]
 collision_layer = 16
 collision_mask = 11
 
@@ -402,12 +403,12 @@ collision_layer = 16
 collision_mask = 3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionZone"]
-position = Vector2(111, -1)
-shape = SubResource("RectangleShape2D_qtivd")
+rotation = 1.5707964
+shape = SubResource("CapsuleShape2D_jxp6p")
 debug_color = Color(0.5764178, 0.0001845333, 0.5564465, 0.17254902)
 
 [node name="MagicBallSpawnPoint" type="Node2D" parent="."]
-position = Vector2(48, -18)
+position = Vector2(45, -2)
 
 [node name="FireCooldown" type="Timer" parent="."]
 
