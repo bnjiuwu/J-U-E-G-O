@@ -21,6 +21,7 @@ var direction: int = 0
 @onready var detection_area: Area2D = $DetectionArea
 @onready var attack_area: Area2D = $AttackArea
 @onready var insult_spawn_point: Node2D = $InsultSpawnPoint
+@onready var floor_check : RayCast2D = $RayCast2D
 
 func _ready() -> void:
 	health = max_health
@@ -31,6 +32,11 @@ func _ready() -> void:
 	print("👑 Padre Roberto listo con", health, "HP")
 
 func _physics_process(delta):
+		# Actualizar raycast
+	var tp = floor_check.target_position
+	tp.x = 10 * direction
+	tp.y = 30
+	floor_check.target_position = tp
 	if is_dead:
 		return
 	
@@ -41,6 +47,12 @@ func _physics_process(delta):
 	update_behavior(delta)
 	update_animation()
 	move_and_slide()
+	
+	if is_on_floor() and (not floor_check.is_colliding()):
+		direction *= -1
+		animated_sprite.flip_h = direction == 1
+		
+
 
 # --- Áreas de detección ---
 func setup_detection_area():
@@ -171,9 +183,6 @@ func take_damage(amount: int):
 	health -= amount
 	print("💥 Papa Roberto recibió", amount, "daño | HP:", health)
 
-	var knockback_dir = Vector2.RIGHT if is_facing_right else Vector2.LEFT
-	velocity += knockback_dir * -150
-	
 	if health <= 0:
 		die()
 
