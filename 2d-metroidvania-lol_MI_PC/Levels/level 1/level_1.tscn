@@ -5422,6 +5422,8 @@ script = ExtResource("1_r7d4j")
 player = NodePath("player")
 pause_menu = NodePath("PauseMenu")
 death_menu = NodePath("DeathMenu")
+[node name="level_1" type="Node2D"]
+script = ExtResource("1_gk84l")
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
 scroll_base_scale = Vector2(1.5, 1.5)
@@ -5782,3 +5784,9 @@ position = Vector2(178, -5509)
 
 [connection signal="body_entered" from="Area efects/trigger zoom camera" to="." method="_on_trigger_zoom_camera_body_entered"]
 [connection signal="body_exited" from="Area efects/trigger zoom camera" to="." method="_on_trigger_zoom_camera_body_exited"]
+[node name="KintamaOwl" parent="." instance=ExtResource("22_xwobx")]
+position = Vector2(-362, 353)
+fly_speed = 90.0
+
+[node name="Golem" parent="." instance=ExtResource("23_xwobx")]
+position = Vector2(1235, 111)
