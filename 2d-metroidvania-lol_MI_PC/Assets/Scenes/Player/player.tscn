@@ -600,11 +600,10 @@ size = Vector2(12, 31)
 
 [node name="player" type="CharacterBody2D" groups=["player"]]
 collision_layer = 2
-collision_mask = 53
+collision_mask = 117
 script = ExtResource("1_xpcdj")
 material_personaje_rojo = ExtResource("2_bjw0c")
-move_speed = 150.0
-jump_speed = 450.0
+jump_pad_height = 1800.0
 bullet_scene = ExtResource("2_0u5uq")
 big_bullet_scene = ExtResource("3_1fs6i")
 
@@ -630,7 +629,7 @@ position = Vector2(20, 4)
 
 [node name="Hitbox" type="Area2D" parent="." groups=["player"]]
 collision_layer = 0
-collision_mask = 52
+collision_mask = 116
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
 position = Vector2(0, 4.5)

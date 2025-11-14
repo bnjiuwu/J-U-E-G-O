@@ -33,6 +33,7 @@ folder_colors={
 "res://Assets/Scenes/Enemies Scene/Mago Scene/": "purple",
 "res://Assets/Scenes/Enemies Scene/PapaRoberto Scene/": "orange",
 "res://Assets/Scenes/Enemies Scene/Slime scene/": "green",
+"res://Assets/Scenes/Map Help/": "green",
 "res://Assets/Scenes/Menu/": "gray",
 "res://Assets/Scenes/Menu/Death Menu/": "purple",
 "res://Assets/Scenes/Menu/PauseMenu/": "green",
@@ -128,6 +129,7 @@ pointing/emulate_touch_from_mouse=true
 2d_physics/layer_4="BULLET"
 2d_physics/layer_5="ENEMIES"
 2d_physics/layer_6="ENEMIES PROJECTILES"
+2d_physics/layer_7="CONSUMIBLES"
 
 [rendering]
 

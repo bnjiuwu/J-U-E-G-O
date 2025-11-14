@@ -5,7 +5,9 @@ var dead: bool = false
 
 @export var material_personaje_rojo: ShaderMaterial
 
-#=== dash properties ====
+
+
+#=== dash properties ==== 
 @export var dash_speed: float = 500
 @export var dash_time: float = 0.3
 @export var dash_cooldown: float = 0.7
@@ -19,8 +21,10 @@ var max_jumps = 1
 
 #===== movement =====
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
-@export var move_speed: float
-@export var jump_speed: float
+@export var move_speed: float = 150
+@export var jump_speed: float = 450
+@export var jump_pad_height: float = jump_speed * 2
+
 
 #=== sprites ====
 @onready var animated_sprite:AnimatedSprite2D = $AnimatedSprite2D
@@ -81,6 +85,8 @@ func _process(_delta):
 		shoot_timer = skill_delay
 
 func _physics_process(delta):
+	if health > 100:
+		health == 100
 	if not is_dashing:
 		jump(delta)
 		move_x()
