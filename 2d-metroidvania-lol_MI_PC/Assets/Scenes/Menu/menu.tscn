@@ -9,11 +9,11 @@ bg_color = Color(0.609435, 0.593739, 0.578541, 0.454902)
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3qr6s"]
 bg_color = Color(0.6, 0.6, 0.6, 0.482353)
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bk0jr"]
+bg_color = Color(0.025840001, 0.66066414, 0.90532964, 0.312)
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_j7r1e"]
 bg_color = Color(1, 0, 0, 0.517647)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bk0jr"]
-bg_color = Color(0, 0.3623615, 0.69507015, 0.57500005)
 
 [node name="Menu" type="Control"]
 layout_mode = 3
@@ -64,20 +64,20 @@ theme_override_font_sizes/font_size = 50
 theme_override_styles/normal = SubResource("StyleBoxFlat_3qr6s")
 text = "OPTIONS"
 
+[node name="multi" type="Button" parent="ColorRect/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+theme_override_styles/normal = SubResource("StyleBoxFlat_bk0jr")
+text = "MULTIJUGADOR
+"
+
 [node name="quit" type="Button" parent="ColorRect/VBoxContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 50
 theme_override_styles/normal = SubResource("StyleBoxFlat_j7r1e")
 text = "QUIT"
 
-[node name="multi" type="Button" parent="ColorRect/VBoxContainer"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 33
-theme_override_styles/normal = SubResource("StyleBoxFlat_bk0jr")
-text = "MULTIJUGADOR
-"
-
 [connection signal="pressed" from="ColorRect/VBoxContainer/play" to="." method="_on_play_pressed"]
 [connection signal="pressed" from="ColorRect/VBoxContainer/options" to="." method="_on_options_pressed"]
-[connection signal="pressed" from="ColorRect/VBoxContainer/quit" to="." method="_on_quit_pressed"]
 [connection signal="pressed" from="ColorRect/VBoxContainer/multi" to="." method="_on_multi_pressed"]
+[connection signal="pressed" from="ColorRect/VBoxContainer/quit" to="." method="_on_quit_pressed"]
