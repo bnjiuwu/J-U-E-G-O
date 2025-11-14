@@ -34,7 +34,10 @@ func _ready():
 	# Agrupar al enemigo
 	add_to_group("enemy")
 	
-
+	# Conectar señal del Area2D
+	hitbox.area_entered.connect(_on_area_2d_area_entered)
+	
+	sprite.animation_finished.connect(_on_animated_sprite_2d_animation_finished)  
 	
 	# Inicializar animación
 	sprite.flip_h = direction == 1
