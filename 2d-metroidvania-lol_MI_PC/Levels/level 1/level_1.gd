@@ -6,6 +6,21 @@ extends Node2D
 @export var pause_menu: CanvasLayer
 @export var death_menu: CanvasLayer
 
+@onready var animation_player: AnimationPlayer = $player/Camera2D/AnimationPlayer
+
+@onready var mago := $Mago2
+
+# ESTA ES LA RULETA REAL QUE YA EXISTE EN EL CANVAS
+@onready var ruleta := $player/Camera2D/CanvasLayer/Roulette
+
+
+func _physics_process(delta: float) -> void:
+	animation_player.play("fade")
+	
+	pass
+func _ready():
+#	mago.connect("test_case", Callable(self, "_on_mago_test_case"))
+
 func _ready():
 	# Conectar la señal de muerte del jugador con el death menu
 	if player and death_menu:
