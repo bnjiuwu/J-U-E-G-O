@@ -8,8 +8,7 @@ extends CharacterBody2D
 @export var attack_cooldown: float = 2.0
 @export var attack_spread_deg: float = 25.0
 @export var projectile_scene: PackedScene
-@export var max_health: int = 80
-@export var damage: int = 10
+@export var max_health: int = 3
 
 # --- COMPORTAMIENTO DE COMBATE ---
 @export var detect_distance: float = 300.0

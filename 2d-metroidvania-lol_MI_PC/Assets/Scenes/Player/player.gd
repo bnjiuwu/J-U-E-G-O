@@ -1,9 +1,10 @@
 extends CharacterBody2D
 
 signal died
+signal roberto_fue_golpeado
+signal roberto_murio
 var dead: bool = false
 
-@export var material_personaje_rojo: ShaderMaterial
 
 
 
@@ -39,7 +40,7 @@ var is_jumping = false
 var facing_direction: Vector2 = Vector2.RIGHT
 
 #==== health ======
-@export var max_health: int = 100
+@export var max_health = 100
 var health: int
 
 #============== bullet ===========
@@ -57,10 +58,11 @@ var skill_timer:= 0.0
 #==== joystick =======
 @onready var joystick := get_node_or_null("/root/level_1/Control/touch_controls/Joystick")
 
+
 #==== damage knockback =======
 @export var invulnerability_time: float = 1.0
 
-@export var knockback_force: Vector2 = Vector2(-300, -200) # (x: fuerza lateral, y: salto)
+@export var knockback_force: Vector2 = Vector2(300, -200) # (x: fuerza lateral, y: salto)
 var is_knockback: bool = false
 var knockback_timer: float = 0.0
 var knockback_duration: float = 0.2 # cuánto dura el retroceso
@@ -100,8 +102,12 @@ func _physics_process(delta):
 		if knockback_timer <= 0.0:
 			is_knockback = false
 			
-
-#	_check_environment_damage()
+		# Check collisions after moving
+	for i in range(get_slide_collision_count()):
+		var col = get_slide_collision(i)
+		if col.get_collider().is_in_group("world damage"):
+			print("☠️ Player hit world hazard:", col.get_collider())
+			take_damage(100)
 
 func update_animation():
 	#--- dash
@@ -235,7 +241,7 @@ func fire_bullet():
 	bullet.rotation = dir.angle()
 	get_tree().current_scene.add_child(bullet)
 
-	#print("🔫 Bullet fired in direction:", dir)
+	print("🔫 Bullet fired in direction:", dir)
 
 func activate_skill():
 	var basic_skill = big_bullet_scene.instantiate()
@@ -280,6 +286,7 @@ func activate_skill():
 	pass
 
 
+
 #=== dash =====
 func dash(delta):
 	# Si ya está en cooldown, lo contamos
@@ -310,17 +317,20 @@ func _on_hitbox_area_entered(area: Area2D) -> void:
 		print("💥 Daño por proyectil")
 		take_damage(area.damage)
 		pass
-
+	elif area.is_in_group("world damage"):
+		print("daño por pincho")
+		take_damage(max_health)
+		
 func take_damage(amount: int, attacker_pos: Vector2 = global_position) -> void:
 	if is_invulnerable:
 		return
 		
 	is_invulnerable = true
-	
-	modulate = Color(1.0, 0.0, 0.0, 1.0)
+	modulate = Color(1,0.4,0.4,1)  #flashaso rojo
 	
 	#--- daño ---
 	health -= amount
+	emit_signal("roberto_fue_golpeado")
 	print("⚠️ Player recibió", amount, "daño | HP:", health)
 	
 	if health < 0:
@@ -336,11 +346,12 @@ func take_damage(amount: int, attacker_pos: Vector2 = global_position) -> void:
 	
 	await get_tree().create_timer(invulnerability_time).timeout
 	is_invulnerable = false
-	modulate = Color(1.0, 1.0, 1.0, 1.0)
+	modulate = Color(1,1,1,1)
 	
 func die() -> void:
 	if dead: return
 	dead = true
+	emit_signal("roberto_murio")
 	print("💀 Player ha muerto → emitiendo señal")
 	velocity = Vector2.ZERO
 	set_physics_process(false)
@@ -351,15 +362,5 @@ func die() -> void:
 	
 	if frames and frames.has_animation("death"):
 		animated_sprite.play("death")
-		
-	modulate = Color(1.0, 1.0, 1.0, 1.0)
-	
-	await animated_sprite.animation_finished
+
 	died.emit()
-
-
-func _on_hitbox_body_entered(body: Node2D) -> void:
-	if body.is_in_group("world colition"):
-		modulate = Color(1.0, 0.0, 0.0, 1.0)
-		die()
-	pass # Replace with function body.
