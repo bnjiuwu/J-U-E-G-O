@@ -12,17 +12,23 @@ func _process(delta: float) -> void:
 	label.text = str(ctn_health)
 	
 	if ctn_health <= 0:
+
 		queue_free()
 	pass
 
+var health_timer: float = 0.5
 
 func _on_area_2d_body_entered(body: Node2D) -> void:
+	body.modulate = Color(0.0, 0.852, 0.0, 1.0)
 	if body.health < 100 and body.health + 20 > 100:
 		body.health = 100
+		await body.get_tree().create_timer(health_timer).timeout
+		body.modulate = Color(1.0, 1.0, 1.0, 1.0)
 		ctn_health -= 1
 		
 	if body.health < 100 and body.health + 20 <= 100:
 		body.health += 20
+		await body.get_tree().create_timer(health_timer).timeout
+		body.modulate = Color(1.0, 1.0, 1.0, 1.0)
 		ctn_health -= 1
-
 	pass # Replace with function body.
