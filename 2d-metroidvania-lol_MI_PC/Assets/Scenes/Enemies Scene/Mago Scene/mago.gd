@@ -1,5 +1,8 @@
 extends CharacterBody2D
 
+signal test_case
+
+
 # --- Propiedades ---
 @export var speed: float = 30.0
 @export var attack_range: float = 200.0
@@ -142,10 +145,16 @@ func take_damage(amount: int):
 
 	health -= amount
 	if health <= 0:
-		is_dead = true
-		sprite.play("death")
-		await sprite.animation_finished
-		queue_free()
+		die()
+
+
+
+func die():
+	is_dead = true
+	sprite.play("death")
+	await sprite.animation_finished
+	test_case.emit()
+	queue_free()
 
 # --- Detección ---
 func _on_detection_zone_body_entered(body: Node):

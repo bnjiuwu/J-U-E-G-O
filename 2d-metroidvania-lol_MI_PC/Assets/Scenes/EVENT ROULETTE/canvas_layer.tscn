@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://ht1pv155sp5a"]
+
+[ext_resource type="PackedScene" uid="uid://bgj1kec0hcvbb" path="res://Assets/Scenes/EVENT ROULETTE/Roulette.tscn" id="1_8rwtw"]
+
+[node name="CanvasLayer" type="CanvasLayer"]
+
+[node name="Roulette" parent="." instance=ExtResource("1_8rwtw")]

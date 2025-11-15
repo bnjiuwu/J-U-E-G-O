@@ -361,7 +361,7 @@ func _abrir_lobby():
 						"payload": {
 							"type": "ready",
 							"player": MY_PLAYER_NAME,
-							"value": nuevo_estado
+							"ready": nuevo_estado
 						}
 					}
 				})

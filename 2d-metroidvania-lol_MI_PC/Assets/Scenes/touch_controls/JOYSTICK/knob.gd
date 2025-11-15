@@ -48,6 +48,7 @@ func calculateVector():
 
 	# Definir inputs discretos para Godot
 	# Movimiento horizontal
+	"""
 	if parent.posVector.x < -0.2:
 		Input.action_press("move_left")
 		Input.action_release("move_right")
@@ -63,6 +64,8 @@ func calculateVector():
 		Input.action_press("look_up")
 	else:
 		Input.action_release("look_up")
+		
+	"""
 
 
 func _on_button_button_down() -> void:
