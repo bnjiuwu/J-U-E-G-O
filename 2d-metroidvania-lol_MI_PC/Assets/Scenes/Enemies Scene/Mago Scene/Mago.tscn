@@ -365,7 +365,7 @@ size = Vector2(26, 45)
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_jxp6p"]
 radius = 118.0
-height = 394.0
+height = 518.0
 
 [node name="Mago" type="CharacterBody2D" groups=["enemy"]]
 collision_layer = 16

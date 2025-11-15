@@ -1,6 +1,5 @@
 extends Node2D
 
-@onready var camera = $player/Camera2D
 @onready var touch_controls = $Controles/touch_controls
 
 @export var player: CharacterBody2D
@@ -8,8 +7,8 @@ extends Node2D
 @export var death_menu: CanvasLayer
 
 @onready var animation_player: AnimationPlayer = $player/Camera2D/AnimationPlayer
-
 @onready var mago := $Mago2
+
 
 # ESTA ES LA RULETA REAL QUE YA EXISTE EN EL CANVAS
 @onready var ruleta := $player/Camera2D/CanvasLayer/Roulette

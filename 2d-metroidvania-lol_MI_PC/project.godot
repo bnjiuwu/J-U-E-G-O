@@ -130,6 +130,7 @@ pointing/emulate_touch_from_mouse=true
 2d_physics/layer_5="ENEMIES"
 2d_physics/layer_6="ENEMIES PROJECTILES"
 2d_physics/layer_7="CONSUMIBLES"
+2d_physics/layer_8="AREA TRIGGER"
 
 [rendering]
 

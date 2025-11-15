@@ -5,8 +5,6 @@ var dead: bool = false
 
 @export var material_personaje_rojo: ShaderMaterial
 
-
-
 #=== dash properties ==== 
 @export var dash_speed: float = 500
 @export var dash_time: float = 0.3
@@ -15,9 +13,16 @@ var dead: bool = false
 var is_dashing: bool = false
 var dash_timer: float = 0.0
 var dash_cooldown_timer: float = 0.0
+
 #===== jump ===
 var jump_count = 0
-var max_jumps = 1
+var max_jumps = 2
+#==== coyote jump ===== 
+var coyote_time := 0.20
+var coyote_timer := 0.0
+var jump_buffer_time := 0.12
+var jump_buffer_timer := 0.0
+var has_left_ground := false
 
 #===== movement =====
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
@@ -66,6 +71,8 @@ var knockback_timer: float = 0.0
 var knockback_duration: float = 0.2 # cuánto dura el retroceso
 var is_invulnerable: bool = false
 
+
+
 func _ready() -> void:
 	health = max_health
 	add_to_group("player")
@@ -85,8 +92,7 @@ func _process(_delta):
 		shoot_timer = skill_delay
 
 func _physics_process(delta):
-	if health > 100:
-		health == 100
+
 	if not is_dashing:
 		jump(delta)
 		move_x()
@@ -161,29 +167,74 @@ func update_animation():
 			
 
 #==== movement ====
-func jump(delta):
-	# Salto inicial
-	if Input.is_action_just_pressed("jump") and is_on_floor():
-		jump_count += 1
+func jump(delta: float) -> void:
+	# =========================
+	#  UPDATE COYOTE TIMER
+	# =========================
+	if is_on_floor():
+		coyote_timer = coyote_time
+		has_left_ground = false
+	else:
+		coyote_timer = max(0, coyote_timer - delta)
+
+	# =========================
+	#  UPDATE JUMP BUFFER
+	# =========================
+	if Input.is_action_just_pressed("jump"):
+		jump_buffer_timer = jump_buffer_time
+	else:
+		jump_buffer_timer = max(0, jump_buffer_timer - delta)
+
+	var wants_to_jump := jump_buffer_timer > 0
+
+
+	# =========================
+	#  NORMAL OR COYOTE JUMP
+	# =========================
+	if wants_to_jump and (is_on_floor() or coyote_timer > 0):
 		velocity.y = -jump_speed
-		print("Jump start")
-	
-	elif Input.is_action_just_pressed("jump") and not is_on_floor() and jump_count < max_jumps:
+		jump_count = 1                    # 1st jump used
+		has_left_ground = true           # airborn
+		coyote_timer = 0                 # consume coyote
+		jump_buffer_timer = 0
+		return
+
+
+	# =========================
+	#  DOUBLE JUMP
+	# =========================
+	# IMPORTANT:
+	# must be airborne AND after the first real jump
+	# NOT during coyote
+	if wants_to_jump \
+	and not is_on_floor() \
+	and coyote_timer <= 0 \
+	and jump_count < max_jumps:
+
 		velocity.y = -jump_speed
 		jump_count += 1
-		print("double jump")
-		
-	# Salto más corto si sueltas el botón
+		has_left_ground = true
+		jump_buffer_timer = 0
+		print("DOUBLE JUMP")
+		return
+
+
+	# =========================
+	# VARIABLE JUMP HEIGHT
+	# =========================
 	if Input.is_action_just_released("jump") and velocity.y < 0:
 		velocity.y *= 0.5
-		print("Short hop")
 
-	# Aplicar gravedad
+	# =========================
+	# APPLY GRAVITY
+	# =========================
 	if not is_on_floor():
 		velocity.y += gravity * delta
 	else:
 		jump_count = 0
-		pass
+
+		
+		
 func flip():
 	if velocity.x > 0:
 		is_facing_right = true

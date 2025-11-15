@@ -18,7 +18,7 @@ func _process(delta: float) -> void:
 
 func _on_area_2d_body_entered(body: Node2D) -> void:
 	if body.health < 100 and body.health + 20 > 100:
-		body.health == 100
+		body.health = 100
 		ctn_health -= 1
 		
 	if body.health < 100 and body.health + 20 <= 100:
