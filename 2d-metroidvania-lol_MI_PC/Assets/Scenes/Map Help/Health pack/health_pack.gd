@@ -16,7 +16,7 @@ func _process(delta: float) -> void:
 		queue_free()
 	pass
 
-var health_timer: float = 0.5
+var health_timer: float = 0.2
 
 func _on_area_2d_body_entered(body: Node2D) -> void:
 	body.modulate = Color(0.0, 0.852, 0.0, 1.0)
@@ -31,4 +31,5 @@ func _on_area_2d_body_entered(body: Node2D) -> void:
 		await body.get_tree().create_timer(health_timer).timeout
 		body.modulate = Color(1.0, 1.0, 1.0, 1.0)
 		ctn_health -= 1
+	body.modulate = Color(1.0, 1.0, 1.0, 1.0)
 	pass # Replace with function body.

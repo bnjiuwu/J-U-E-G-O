@@ -66,7 +66,7 @@ animations = [{
 "texture": SubResource("AtlasTexture_x0g0p")
 }],
 "loop": false,
-"name": &"dead",
+"name": &"death",
 "speed": 8.0
 }, {
 "frames": [{
@@ -83,12 +83,29 @@ animations = [{
 "texture": SubResource("AtlasTexture_bj3od")
 }],
 "loop": true,
-"name": &"slime_idle",
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_obdvy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_w1wy5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vhgc5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bj3od")
+}],
+"loop": true,
+"name": &"walk",
 "speed": 5.0
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1iqch"]
-size = Vector2(29, 16.75)
+size = Vector2(36, 21.01)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_x82om"]
 size = Vector2(43.5, 28)
@@ -97,36 +114,37 @@ size = Vector2(43.5, 28)
 collision_layer = 16
 collision_mask = 11
 script = ExtResource("1_dfub6")
+max_health = 80
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(1.43051e-06, -8)
 scale = Vector2(1.44118, 1.5)
 sprite_frames = SubResource("SpriteFrames_pa6nx")
-animation = &"dead"
+animation = &"death"
 
 [node name="fisic_hitbox" type="CollisionShape2D" parent="."]
-position = Vector2(0, 1.635)
+position = Vector2(0, -0.4949999)
 shape = SubResource("RectangleShape2D_1iqch")
 
 [node name="floor_check" type="RayCast2D" parent="."]
 exclude_parent = false
-target_position = Vector2(10, 20)
-collision_mask = 7
-collide_with_areas = true
+target_position = Vector2(-17, 17)
+collision_mask = 71
 
 [node name="wall_check" type="RayCast2D" parent="."]
+position = Vector2(0, -4)
 exclude_parent = false
-target_position = Vector2(24, -11)
-collision_mask = 7
+target_position = Vector2(-28, 0)
+collision_mask = 71
 
-[node name="Area2D" type="Area2D" parent="." groups=["enemy"]]
+[node name="hitbox" type="Area2D" parent="." groups=["enemy"]]
 collision_layer = 16
 collision_mask = 11
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="hitbox"]
 position = Vector2(0, -4)
 shape = SubResource("RectangleShape2D_x82om")
 debug_color = Color(0.99882, 0, 0.131683, 0.42)
 
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
-[connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]
+[connection signal="area_entered" from="hitbox" to="." method="_on_area_2d_area_entered"]

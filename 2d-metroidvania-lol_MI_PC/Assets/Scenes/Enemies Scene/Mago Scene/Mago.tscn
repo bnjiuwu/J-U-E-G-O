@@ -1,4 +1,4 @@
-[gd_scene load_steps=58 format=3 uid="uid://rqnm23qh8syg"]
+[gd_scene load_steps=49 format=3 uid="uid://rqnm23qh8syg"]
 
 [ext_resource type="Script" uid="uid://cvldqbrwc1meo" path="res://Assets/Scenes/Enemies Scene/Mago Scene/mago.gd" id="1_qlsdm"]
 [ext_resource type="PackedScene" uid="uid://dvpo3lknsqtvo" path="res://Assets/Scenes/Enemies Scene/Mago Scene/Magic Ball/MagicBall.tscn" id="2_artgm"]
@@ -6,7 +6,6 @@
 [ext_resource type="Texture2D" uid="uid://vsf01qdu1mb3" path="res://Assets/sprites/enemies/Mago/Attack2.png" id="3_artgm"]
 [ext_resource type="Texture2D" uid="uid://dw0ku4x2jasbp" path="res://Assets/sprites/enemies/Mago/Idle.png" id="4_0lsyp"]
 [ext_resource type="Texture2D" uid="uid://bll3wvowd8im8" path="res://Assets/sprites/enemies/Mago/Death.png" id="5_pg5cv"]
-[ext_resource type="Texture2D" uid="uid://bic588p181ox1" path="res://Assets/sprites/enemies/Mago/mago.png" id="6_vantj"]
 [ext_resource type="Texture2D" uid="uid://5bqa7b6imnlx" path="res://Assets/sprites/enemies/Mago/Run.png" id="7_qyjv3"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_dcoex"]
@@ -124,38 +123,6 @@ region = Rect2(924, 0, 231, 190)
 [sub_resource type="AtlasTexture" id="AtlasTexture_41lp7"]
 atlas = ExtResource("4_0lsyp")
 region = Rect2(1155, 0, 231, 190)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_aj7hu"]
-atlas = ExtResource("6_vantj")
-region = Rect2(0, 0, 391, 517)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_gi1im"]
-atlas = ExtResource("6_vantj")
-region = Rect2(391, 0, 391, 517)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_0pj0q"]
-atlas = ExtResource("6_vantj")
-region = Rect2(782, 0, 391, 517)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_5sw4f"]
-atlas = ExtResource("6_vantj")
-region = Rect2(1173, 0, 391, 517)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_sgbc1"]
-atlas = ExtResource("6_vantj")
-region = Rect2(1173, 517, 391, 517)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_ietp3"]
-atlas = ExtResource("6_vantj")
-region = Rect2(782, 517, 391, 517)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_youut"]
-atlas = ExtResource("6_vantj")
-region = Rect2(391, 517, 391, 517)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_u4so8"]
-atlas = ExtResource("6_vantj")
-region = Rect2(0, 517, 391, 517)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_omsrj"]
 atlas = ExtResource("7_qyjv3")
@@ -300,35 +267,6 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_aj7hu")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_gi1im")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_0pj0q")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_5sw4f")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_sgbc1")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_ietp3")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_youut")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_u4so8")
-}],
-"loop": true,
-"name": &"plop",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
 "texture": SubResource("AtlasTexture_omsrj")
 }, {
 "duration": 1.0,
@@ -353,7 +291,7 @@ animations = [{
 "texture": SubResource("AtlasTexture_hqfc2")
 }],
 "loop": true,
-"name": &"run",
+"name": &"walk",
 "speed": 10.0
 }]
 
@@ -373,10 +311,10 @@ collision_mask = 11
 script = ExtResource("1_qlsdm")
 magic_ball_scene = ExtResource("2_artgm")
 
-[node name="sprite" type="AnimatedSprite2D" parent="."]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 scale = Vector2(0.5631579, 0.5631579)
 sprite_frames = SubResource("SpriteFrames_q8ne4")
-animation = &"idle"
+animation = &"walk"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-3, 5.5)
@@ -412,7 +350,7 @@ position = Vector2(45, -2)
 
 [node name="FireCooldown" type="Timer" parent="."]
 
-[connection signal="animation_finished" from="sprite" to="." method="_on_sprite_animation_finished"]
+[connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_sprite_animation_finished"]
 [connection signal="area_entered" from="Hitbox" to="." method="_on_hitbox_area_entered"]
 [connection signal="body_entered" from="DetectionZone" to="." method="_on_detection_zone_body_entered"]
 [connection signal="body_exited" from="DetectionZone" to="." method="_on_detection_zone_body_exited"]

@@ -22,7 +22,7 @@ var is_attacking: bool = false
 var is_dead: bool = false
 
 # --- Nodos ---
-@onready var sprite: AnimatedSprite2D = $sprite
+@onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var floor_check: RayCast2D = $FloorCheck
 @onready var wall_check: RayCast2D = $WallCheck
 @onready var MagicBallSpawnPoint: Node2D = $MagicBallSpawnPoint
