@@ -42,7 +42,7 @@ func _ready():
 	# Inicializar animación
 	sprite.flip_h = direction == 1
 	
-func _process(delta):
+func _process(_delta):
 	# Revisión manual por si la señal no se activa
 	if is_dead and not sprite.is_playing():
 		print("💀 Slime eliminado (por fin!)")

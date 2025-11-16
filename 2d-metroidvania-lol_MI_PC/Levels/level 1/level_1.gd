@@ -14,14 +14,12 @@ extends Node2D
 @onready var ruleta := $player/Camera2D/CanvasLayer/Roulette
 
 
-func _physics_process(delta: float) -> void:
-	animation_player.play("fade")
-	
-	pass
-func _ready():
 #	mago.connect("test_case", Callable(self, "_on_mago_test_case"))
 
 func _ready():
+	if animation_player:
+		animation_player.play("fade")
+
 	# Conectar la señal de muerte del jugador con el death menu
 	if player and death_menu:
 		player.died.connect(_on_player_died)

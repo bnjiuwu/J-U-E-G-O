@@ -62,7 +62,7 @@ func _patrol_logic():
 		sprite.flip_h = direction < 0
 
 # --- MOVIMIENTO EN COMBATE ---
-func _combat_movement(delta):
+func _combat_movement(_delta):
 	if not player:
 		return
 

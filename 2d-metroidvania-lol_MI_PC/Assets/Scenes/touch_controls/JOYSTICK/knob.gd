@@ -13,7 +13,7 @@ func _ready() -> void:
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if pressing:
 		var mouse_pos = get_global_mouse_position()
 		if mouse_pos.distance_to(parent.global_position) <= maxLength:
