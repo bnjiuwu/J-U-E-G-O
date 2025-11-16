@@ -161,7 +161,7 @@ func launch_insult():
 # --- Animaciones ---
 func update_animation():
 	if is_dead:
-		if animated_sprite.animation != "death":
+		if animated_sprite.has_animation("death") and animated_sprite.animation != "death":
 			animated_sprite.play("death")
 		return
 
@@ -195,9 +195,11 @@ func die():
 	print("💀 Papa Roberto ha muerto")
 	
 	$CollisionShape2D.disabled = true
-	animated_sprite.play("death")
+	if animated_sprite.has_animation("death"):
+		animated_sprite.play("death")
 	set_physics_process(false)
-	await animated_sprite.animation_finished
+	if animated_sprite.has_animation("death"):
+		await animated_sprite.animation_finished
 	queue_free()
 
 # --- Señales ---
