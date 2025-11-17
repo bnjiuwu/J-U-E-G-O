@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ck8d7w408mp1v"
-path="res://.godot/imported/bat.png.png-4c6af976acfd475e2b7d7f07a6b0d33d.ctex"
+uid="uid://cjo2dwq4s2skh"
+path="res://.godot/imported/All_Fire_Bullet_Pixel_16x16_01.png-b4b38192def58790410af0d8d70bff10.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/sprites/enemies/Murcielago/bat.png.png"
-dest_files=["res://.godot/imported/bat.png.png-4c6af976acfd475e2b7d7f07a6b0d33d.ctex"]
+source_file="res://Assets/sprites/enemies/PrimalAspid/proyectile/All_Fire_Bullet_Pixel_16x16_01.png"
+dest_files=["res://.godot/imported/All_Fire_Bullet_Pixel_16x16_01.png-b4b38192def58790410af0d8d70bff10.ctex"]
 
 [params]
 

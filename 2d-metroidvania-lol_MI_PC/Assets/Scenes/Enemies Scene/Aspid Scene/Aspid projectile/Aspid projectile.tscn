@@ -1,39 +1,94 @@
-[gd_scene load_steps=6 format=3 uid="uid://dq3k3oo2qg6n6"]
+[gd_scene load_steps=13 format=3 uid="uid://dq3k3oo2qg6n6"]
 
 [ext_resource type="Script" uid="uid://dfbueym8yarii" path="res://Assets/Scenes/Enemies Scene/Aspid Scene/Aspid projectile/aspid_projectile.gd" id="1_1tjr3"]
-[ext_resource type="Texture2D" uid="uid://b4b86xenusyvg" path="res://Assets/sprites/objects type shi/palta.png" id="2_lqvl4"]
+[ext_resource type="Texture2D" uid="uid://cc78rn8pxhxwl" path="res://Assets/sprites/enemies/PrimalAspid/proyectile/All_Fire_Bullet_Pixel_16x16_00_pink2.png" id="2_1tjr3"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lqvl4"]
+atlas = ExtResource("2_1tjr3")
+region = Rect2(208, 288, 16, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_mjxjk"]
-atlas = ExtResource("2_lqvl4")
-region = Rect2(0, 0, 270, 270)
+atlas = ExtResource("2_1tjr3")
+region = Rect2(224, 288, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_frhdh"]
+atlas = ExtResource("2_1tjr3")
+region = Rect2(240, 288, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wd0yv"]
+atlas = ExtResource("2_1tjr3")
+region = Rect2(256, 288, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qf00d"]
+atlas = ExtResource("2_1tjr3")
+region = Rect2(256, 240, 32, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g2v8h"]
+atlas = ExtResource("2_1tjr3")
+region = Rect2(288, 240, 32, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_oxndh"]
+atlas = ExtResource("2_1tjr3")
+region = Rect2(320, 240, 32, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uvgno"]
+atlas = ExtResource("2_1tjr3")
+region = Rect2(352, 240, 32, 16)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_frhdh"]
 animations = [{
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_lqvl4")
+}, {
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_mjxjk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_frhdh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wd0yv")
+}],
+"loop": false,
+"name": &"contact",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qf00d")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_g2v8h")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_oxndh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uvgno")
 }],
 "loop": true,
 "name": &"default",
-"speed": 5.0
+"speed": 10.0
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_wd0yv"]
-radius = 6.0
-height = 22.0
+radius = 12.0
 
 [node name="AspidProjectile" type="Area2D" groups=["enemy proyectile"]]
 collision_layer = 32
 collision_mask = 3
 script = ExtResource("1_1tjr3")
+damage = 40
 lifetime = 4.0
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-scale = Vector2(0.2, 0.2)
+scale = Vector2(2, 2)
 sprite_frames = SubResource("SpriteFrames_frhdh")
+animation = &"contact"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(-1, 1)
+rotation = 1.5707964
 shape = SubResource("CapsuleShape2D_wd0yv")
 
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]

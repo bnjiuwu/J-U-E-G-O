@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bht6efpj5jaed"
-path="res://.godot/imported/BatSprite.png-105b27880b672c91d011dfbd610dff42.ctex"
+uid="uid://bcdemtwnebg85"
+path="res://.godot/imported/explotion-a.png-79a8e8168b1d1c23d1ff7dc6b3939d95.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/sprites/enemies/Murcielago/BatSprite.png"
-dest_files=["res://.godot/imported/BatSprite.png-105b27880b672c91d011dfbd610dff42.ctex"]
+source_file="res://Assets/sprites/objects type shi/Explotions/explotion-a.png"
+dest_files=["res://.godot/imported/explotion-a.png-79a8e8168b1d1c23d1ff7dc6b3939d95.ctex"]
 
 [params]
 

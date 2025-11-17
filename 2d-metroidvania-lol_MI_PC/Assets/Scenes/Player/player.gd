@@ -46,6 +46,7 @@ var facing_direction: Vector2 = Vector2.RIGHT
 #==== health ======
 @export var max_health: int = 100
 var health: int
+@onready var health_bar: TextureProgressBar = $HealthBar
 
 #============== bullet ===========
 @export var bullet_scene: PackedScene
@@ -72,11 +73,19 @@ var knockback_duration: float = 0.2 # cuánto dura el retroceso
 var is_invulnerable: bool = false
 
 
+func _update_health_bar():
+	if not health_bar:
+		return
+	health_bar.max_value = max_health
+	health_bar.value = health
+	# PARA VER LA BARRA SIEMPRE:
+	health_bar.visible = true
 
 func _ready() -> void:
 	health = max_health
 	add_to_group("player")
 	print("Player HP ready:",health)
+	_update_health_bar()
 	
 
 func _process(_delta):
@@ -90,6 +99,8 @@ func _process(_delta):
 	if Input.is_action_pressed("skill") and shoot_timer <= 0 :
 		activate_skill()
 		shoot_timer = skill_delay
+		
+		
 
 func _physics_process(delta):
 
@@ -385,6 +396,7 @@ func take_damage(amount: int, attacker_pos: Vector2 = global_position) -> void:
 	
 	#--- daño ---
 	health -= amount
+	_update_health_bar()
 	print("⚠️ Player recibió", amount, "daño | HP:", health)
 	
 	if health < 0:

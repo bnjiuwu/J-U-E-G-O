@@ -8,9 +8,6 @@ var start_position: Vector2
 var has_hit: bool = false
 
 
-@onready var col: CollisionShape2D = $CollisionShape2D
-
-
 func _ready():
 	start_position = global_position
 

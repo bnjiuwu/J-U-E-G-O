@@ -1,4 +1,4 @@
-[gd_scene load_steps=88 format=3 uid="uid://braj8a8ooxs4t"]
+[gd_scene load_steps=91 format=3 uid="uid://braj8a8ooxs4t"]
 
 [ext_resource type="Script" uid="uid://dw6uvcpocgnu6" path="res://Assets/Scenes/Player/player.gd" id="1_xpcdj"]
 [ext_resource type="PackedScene" uid="uid://bfjsyuqkbr65o" path="res://Assets/Scenes/Bullet Scene/Bullet.tscn" id="2_0u5uq"]
@@ -13,6 +13,9 @@
 [ext_resource type="Texture2D" uid="uid://c4d0er8pdloj7" path="res://Assets/sprites/roberto/rob_atk_up.png" id="6_gk6dx"]
 [ext_resource type="Texture2D" uid="uid://06d8p2es3ey0" path="res://Assets/sprites/roberto/explotion_death.png" id="6_s3f76"]
 [ext_resource type="Texture2D" uid="uid://bhpo5wktpe37e" path="res://Assets/sprites/roberto/peo_dash.png" id="10_jhyir"]
+[ext_resource type="Texture2D" uid="uid://b5tor0b0gr14s" path="res://Assets/sprites/Health Bar/health bar empty.png" id="14_0h5f3"]
+[ext_resource type="Texture2D" uid="uid://bc4nroe2f0on5" path="res://Assets/sprites/Health Bar/health bar full.png" id="15_dkee6"]
+[ext_resource type="Texture2D" uid="uid://bdjy131sdad40" path="res://Assets/sprites/Health Bar/health bar frame.png" id="16_meuei"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_rblve"]
 atlas = ExtResource("3_gk6dx")
@@ -635,6 +638,16 @@ collision_mask = 116
 position = Vector2(0, 4.5)
 shape = SubResource("RectangleShape2D_dd0ac")
 debug_color = Color(0.995169, 0, 0.209909, 0.42)
+
+[node name="HealthBar" type="TextureProgressBar" parent="."]
+offset_left = -46.0
+offset_top = -42.0
+offset_right = 54.0
+offset_bottom = -2.0
+value = 100.0
+texture_under = ExtResource("14_0h5f3")
+texture_over = ExtResource("16_meuei")
+texture_progress = ExtResource("15_dkee6")
 
 [connection signal="area_entered" from="Hitbox" to="." method="_on_hitbox_area_entered"]
 [connection signal="body_entered" from="Hitbox" to="." method="_on_hitbox_body_entered"]

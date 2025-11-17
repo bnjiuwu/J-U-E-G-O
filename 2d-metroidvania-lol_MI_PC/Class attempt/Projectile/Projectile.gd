@@ -8,11 +8,15 @@ class_name Projectile
 @export var hit_on_contact: bool = true   # si desaparece al impacto
 @export var destroy_after_contact: bool = true
 
+
 var velocity: Vector2
 var alive_time: float = 0.0
 var has_impacted: bool = false
 
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
+@onready var col: CollisionShape2D = $CollisionShape2D
+@onready var area: Area2D = self
+
 
 func _ready() -> void:
 	velocity = direction.normalized() * speed
@@ -59,6 +63,7 @@ func impact() -> void:
 	has_impacted = true
 
 	velocity = Vector2.ZERO  # detener movimiento
+	_disable_collision() # <--- ESTA LÍNEA ES LA IMPORTANTE
 
 	if sprite and sprite.sprite_frames.has_animation("contact"):
 		sprite.play("contact")
@@ -79,3 +84,8 @@ func set_direction(dir: Vector2) -> void:
 	direction = dir.normalized()
 	velocity = direction * speed
 	rotation = direction.angle()
+
+func _disable_collision():
+	if area and area.monitoring:
+		area.monitoring = false
+		area.monitorable = false

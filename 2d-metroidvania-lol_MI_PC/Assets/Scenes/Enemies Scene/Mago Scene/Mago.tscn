@@ -308,6 +308,16 @@ height = 486.0
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qlsdm"]
 bg_color = Color(0.8012637, 1.540184e-06, 6.738305e-07, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+anti_aliasing = false
 
 [node name="Mago" type="CharacterBody2D" groups=["enemy"]]
 collision_layer = 16
@@ -319,9 +329,7 @@ max_health = 200
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 scale = Vector2(0.5631579, 0.5631579)
 sprite_frames = SubResource("SpriteFrames_q8ne4")
-animation = &"walk"
-frame = 2
-frame_progress = 0.90165585
+animation = &"attack1"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-3, 6)
@@ -358,9 +366,9 @@ position = Vector2(31, 0)
 
 [node name="HealthBar" type="ProgressBar" parent="."]
 offset_left = -17.0
-offset_top = -23.0
+offset_top = -28.0
 offset_right = 17.0
-offset_bottom = -18.0
+offset_bottom = -23.0
 theme_override_styles/fill = SubResource("StyleBoxFlat_qlsdm")
 max_value = 200.0
 value = 200.0

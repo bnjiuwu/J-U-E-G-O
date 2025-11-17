@@ -1,8 +1,9 @@
-[gd_scene load_steps=33 format=4 uid="uid://c6n7qrlau6b0k"]
+[gd_scene load_steps=34 format=4 uid="uid://c6n7qrlau6b0k"]
 
 [ext_resource type="PackedScene" uid="uid://braj8a8ooxs4t" path="res://Assets/Scenes/Player/player.tscn" id="1_n0qsc"]
 [ext_resource type="Script" uid="uid://by4hegpiwf1wp" path="res://Levels/level 1/level_1.gd" id="1_r7d4j"]
 [ext_resource type="PackedScene" uid="uid://d3evjk846bf1b" path="res://Assets/Scenes/Enemies Scene/Slime scene/slime.tscn" id="2_3mhv4"]
+[ext_resource type="Script" uid="uid://d4ra44v1qwfh" path="res://Levels/level 1/label.gd" id="2_rf6l5"]
 [ext_resource type="Texture2D" uid="uid://caqfa7afng3wv" path="res://Assets/images/Tile Maps/overworld/Tiles/Assets/Assets.png" id="3_3mhv4"]
 [ext_resource type="PackedScene" uid="uid://bjxvrrouvo5u3" path="res://Assets/Scenes/Map Borders/MapBorders_level1.tscn" id="5_gk84l"]
 [ext_resource type="Texture2D" uid="uid://cthieo60smtmm" path="res://Assets/images/Tile Maps/cave/background1.png" id="6_i6ka7"]
@@ -5471,7 +5472,7 @@ tile_map_data = PackedByteArray("AADb//7/AQAMAAgAAADb////AQAMAAkAAADc//7/AQANAAg
 tile_set = SubResource("TileSet_rfktq")
 
 [node name="player" parent="." instance=ExtResource("1_n0qsc")]
-position = Vector2(-1309, -129)
+position = Vector2(-1595, -349)
 
 [node name="Camera2D" type="Camera2D" parent="player"]
 offset = Vector2(0, -25)
@@ -5500,6 +5501,14 @@ root_node = NodePath("../../..")
 libraries = {
 &"": SubResource("AnimationLibrary_7ppep")
 }
+
+[node name="Label" type="Label" parent="player/Camera2D"]
+offset_left = -21.0
+offset_top = -41.0
+offset_right = 19.0
+offset_bottom = -18.0
+text = "pene"
+script = ExtResource("2_rf6l5")
 
 [node name="CanvasLayer" parent="player/Camera2D" instance=ExtResource("24_vn1ki")]
 

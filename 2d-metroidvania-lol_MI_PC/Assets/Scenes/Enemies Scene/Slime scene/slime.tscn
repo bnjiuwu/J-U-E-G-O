@@ -113,6 +113,16 @@ size = Vector2(43.5, 28)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_x3kn5"]
 bg_color = Color(0.83571845, 1.732707e-06, 4.813075e-07, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+anti_aliasing = false
 
 [node name="Slime" type="CharacterBody2D" groups=["enemy"]]
 collision_layer = 16
@@ -133,13 +143,13 @@ shape = SubResource("RectangleShape2D_1iqch")
 
 [node name="floor_check" type="RayCast2D" parent="."]
 exclude_parent = false
-target_position = Vector2(-17, 17)
+target_position = Vector2(17, 17)
 collision_mask = 71
 
 [node name="wall_check" type="RayCast2D" parent="."]
 position = Vector2(0, -4)
 exclude_parent = false
-target_position = Vector2(-22, 0)
+target_position = Vector2(22, 0)
 collision_mask = 69
 
 [node name="Hitbox" type="Area2D" parent="." groups=["enemy_hitbox"]]
