@@ -93,6 +93,21 @@ func _process(_delta):
 
 func _physics_process(delta):
 
+	# ▶ PRIORIDAD: si está en knockback, se mueve sólo por la fuerza recibida
+	if is_knockback:
+		# aplicar gravedad mientras está en el aire en knockback
+		if not is_on_floor():
+			velocity.y += gravity * delta
+
+		move_and_slide()
+
+		knockback_timer -= delta
+		if knockback_timer <= 0.0:
+			is_knockback = false
+		return  # 🔴 importante: no seguir con el movimiento normal
+
+
+	# ▶ MOVIMIENTO NORMAL (sin knockback)
 	if not is_dashing:
 		jump(delta)
 		move_x()
@@ -101,11 +116,7 @@ func _physics_process(delta):
 	dash(delta)
 	update_animation()
 	move_and_slide()
-	if is_knockback:
-		knockback_timer -= delta
-		if knockback_timer <= 0.0:
-			is_knockback = false
-			
+
 
 #	_check_environment_damage()
 
@@ -354,13 +365,15 @@ func dash(delta):
 
 func _on_hitbox_area_entered(area: Area2D) -> void:
 	print("⚠️ Player detectó un área:", area.name)
-	if area.is_in_group("enemy"):
+	
+	if area.is_in_group("enemy_hitbox"):
 		print("⚡ Player hit by enemy")
-		take_damage(20)
+		take_damage(20, area.global_position)
+	
 	elif area.is_in_group("enemy projectile"):
 		print("💥 Daño por proyectil")
-		take_damage(area.damage)
-		pass
+		take_damage(area.damage, area.global_position)
+
 
 func take_damage(amount: int, attacker_pos: Vector2 = global_position) -> void:
 	if is_invulnerable:

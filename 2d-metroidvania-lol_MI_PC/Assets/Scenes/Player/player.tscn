@@ -627,7 +627,7 @@ shape = SubResource("RectangleShape2D_htcer")
 [node name="muzzle" type="Node2D" parent="."]
 position = Vector2(20, 4)
 
-[node name="Hitbox" type="Area2D" parent="." groups=["player"]]
+[node name="Hitbox" type="Area2D" parent="." groups=["player_hitbox"]]
 collision_layer = 0
 collision_mask = 116
 

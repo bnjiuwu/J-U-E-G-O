@@ -1,8 +1,7 @@
 extends Enemy
 class_name EnemyGround
 
-@export var gravity: float = ProjectSettings.get_setting("physics/2d/default_gravity")
-
+var gravity: float = ProjectSettings.get_setting("physics/2d/default_gravity")
 
 func enemy_behavior(delta: float) -> void:
 	# gravedad básica
@@ -11,13 +10,14 @@ func enemy_behavior(delta: float) -> void:
 	else:
 		velocity.y = 0
 
-	# comportamiento específico (slime, etc.)
+	# comportamiento específico (slime, mago, etc.)
 	ground_behavior(delta)
 
+	# mover primero
 	move_and_slide()
 
+	# luego detectar movimiento horizontal correcto
 	is_moving = abs(velocity.x) > 0.1
-
 
 func ground_behavior(delta: float) -> void:
 	pass
@@ -32,8 +32,3 @@ func flip_direction() -> void:
 		if child is RayCast2D:
 			child.position.x = -child.position.x
 			child.target_position.x = -child.target_position.x
-
-	# VOLTEAR EL SPRITE SI EXISTE
-	if has_node("AnimatedSprite2D"):
-		var spr: AnimatedSprite2D = $AnimatedSprite2D
-		spr.flip_h = (direction == 1)

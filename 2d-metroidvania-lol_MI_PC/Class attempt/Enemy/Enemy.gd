@@ -11,6 +11,15 @@ var direction: int = -1  # -1 izquierda, 1 derecha
 
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var hitbox: Area2D = get_node_or_null("Hitbox")
+@export var sprite_faces_right: bool = true
+@onready var health_bar: ProgressBar = get_node_or_null("HealthBar")
+@onready var n_health_bar: Label = get_node_or_null("HealthBarNumber")
+
+
+
+func _process(delta: float) -> void:
+	if n_health_bar:
+		n_health_bar.text = str(health)
 
 func _ready() -> void:
 	health = max_health
@@ -31,10 +40,13 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	if is_dead:
 		return
-
+	if sprite_faces_right:
+		sprite.flip_h = (direction == -1)
+	else:
+		sprite.flip_h = (direction == 1)
+		
 	enemy_behavior(delta)
 	update_animation()
-
 
 # -------------------------
 #  Para que los hijos lo sobreescriban
@@ -51,21 +63,17 @@ func update_animation() -> void:
 		return
 
 	if is_dead:
-		if sprite.animation != "death":
-			sprite.play("death")
+		sprite.play("death")
 		return
 
 	if is_attacking:
-		if not sprite.animation.begins_with("attack"):
-			sprite.play("attack")
+		sprite.play("attack")
 		return
 
 	if is_moving:
-		if sprite.animation != "walk":
-			sprite.play("walk")
+		sprite.play("walk")  # <-- NO USAR CONDICIÓN
 	else:
-		if sprite.animation != "idle":
-			sprite.play("idle")
+		sprite.play("idle")
 
 
 func _on_animation_finished() -> void:
@@ -87,6 +95,10 @@ func take_damage(amount: int) -> void:
 		return
 
 	health -= amount
+	
+	_update_health_bar()
+
+	
 	if health <= 0:
 		die()
 	else:
@@ -106,7 +118,9 @@ func die() -> void:
 		sprite.play("death")
 	else:
 		queue_free()
-
+	
+	if health_bar:
+		health_bar.visible = false
 
 # -------------------------
 #  Hitbox genérico
@@ -126,3 +140,13 @@ func _on_hitbox_body_entered(body: Node2D) -> void:
 		# Ejemplo: el enemigo NO recibe daño, pero el player sí
 		if "take_damage" in body:
 			body.take_damage(10, global_position)
+
+func _update_health_bar():
+	if not health_bar:
+		return
+	
+	health_bar.max_value = max_health
+	health_bar.value = health
+
+	# PARA VER LA BARRA SIEMPRE:
+	health_bar.visible = true

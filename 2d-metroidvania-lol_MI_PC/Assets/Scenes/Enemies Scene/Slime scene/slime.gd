@@ -16,10 +16,3 @@ func ground_behavior(delta):
 
 	if floor_check and not floor_check.is_colliding() and is_on_floor():
 		flip_direction()
-
-
-func _on_area_2d_area_entered(area: Area2D) -> void:
-	modulate = Color(1,0,0)
-	take_damage(area.damage)
-	await get_tree().create_timer(damage_modulate_timer).timeout
-	modulate = Color(1,1,1)

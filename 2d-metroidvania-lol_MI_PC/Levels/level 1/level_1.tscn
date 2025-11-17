@@ -1,11 +1,10 @@
-[gd_scene load_steps=38 format=4 uid="uid://c6n7qrlau6b0k"]
+[gd_scene load_steps=36 format=4 uid="uid://c6n7qrlau6b0k"]
 
 [ext_resource type="PackedScene" uid="uid://braj8a8ooxs4t" path="res://Assets/Scenes/Player/player.tscn" id="1_n0qsc"]
 [ext_resource type="Script" uid="uid://by4hegpiwf1wp" path="res://Levels/level 1/level_1.gd" id="1_r7d4j"]
 [ext_resource type="PackedScene" uid="uid://d3evjk846bf1b" path="res://Assets/Scenes/Enemies Scene/Slime scene/slime.tscn" id="2_3mhv4"]
 [ext_resource type="Script" uid="uid://d4ra44v1qwfh" path="res://Levels/level 1/label.gd" id="2_rf6l5"]
 [ext_resource type="Texture2D" uid="uid://caqfa7afng3wv" path="res://Assets/images/Tile Maps/overworld/Tiles/Assets/Assets.png" id="3_3mhv4"]
-[ext_resource type="Script" uid="uid://bjdwt7h1y8ayq" path="res://Levels/level 1/label_slime.gd" id="4_syshm"]
 [ext_resource type="PackedScene" uid="uid://bjxvrrouvo5u3" path="res://Assets/Scenes/Map Borders/MapBorders_level1.tscn" id="5_gk84l"]
 [ext_resource type="Texture2D" uid="uid://cthieo60smtmm" path="res://Assets/images/Tile Maps/cave/background1.png" id="6_i6ka7"]
 [ext_resource type="Texture2D" uid="uid://dkwxdyofenfpa" path="res://Assets/images/Tile Maps/cave/background2.png" id="7_ib2b2"]
@@ -21,7 +20,6 @@
 [ext_resource type="PackedScene" uid="uid://gbohe3bsoon2" path="res://Assets/Scenes/Enemies Scene/PapaRoberto Scene/PapaRoberto.tscn" id="16_o7ywo"]
 [ext_resource type="PackedScene" uid="uid://xoxuswob6rae" path="res://Assets/Scenes/Enemies Scene/Bat Scene/Bat.tscn" id="17_4l21d"]
 [ext_resource type="PackedScene" uid="uid://rqnm23qh8syg" path="res://Assets/Scenes/Enemies Scene/Mago Scene/Mago.tscn" id="18_dke4e"]
-[ext_resource type="Script" uid="uid://dhymobvyqteow" path="res://Levels/level 1/mago_label.gd" id="19_uxjm4"]
 [ext_resource type="PackedScene" uid="uid://nfjhoahtx3yq" path="res://Assets/Scenes/Enemies Scene/Aspid Scene/PrimalAspid.tscn" id="21_bq83f"]
 [ext_resource type="Script" uid="uid://cwcojkfdk0uk6" path="res://Levels/level 1/aspid_vida.gd" id="23_xwobx"]
 [ext_resource type="PackedScene" uid="uid://ht1pv155sp5a" path="res://Assets/Scenes/EVENT ROULETTE/canvas_layer.tscn" id="24_vn1ki"]
@@ -5476,7 +5474,7 @@ tile_map_data = PackedByteArray("AADb//7/AQAMAAgAAADb////AQAMAAkAAADc//7/AQANAAg
 tile_set = SubResource("TileSet_rfktq")
 
 [node name="player" parent="." instance=ExtResource("1_n0qsc")]
-position = Vector2(-1770, -122)
+position = Vector2(-1675, -121)
 
 [node name="Camera2D" type="Camera2D" parent="player"]
 offset = Vector2(0, -25)
@@ -5577,54 +5575,22 @@ position = Vector2(1668, -717)
 [node name="Magos" type="Node2D" parent="enemies"]
 
 [node name="Mago" parent="enemies/Magos" instance=ExtResource("18_dke4e")]
-position = Vector2(2060, -327)
-
-[node name="Label" type="Label" parent="enemies/Magos/Mago"]
-offset_left = -21.0
-offset_top = -40.0
-offset_right = 19.0
-offset_bottom = -17.0
-script = ExtResource("19_uxjm4")
+position = Vector2(-1945, -130)
 
 [node name="Mago2" parent="enemies/Magos" instance=ExtResource("18_dke4e")]
-position = Vector2(1247, 37)
-
-[node name="Label" type="Label" parent="enemies/Magos/Mago2"]
-offset_left = -21.0
-offset_top = -40.0
-offset_right = 19.0
-offset_bottom = -17.0
-script = ExtResource("19_uxjm4")
+position = Vector2(1997, -328)
 
 [node name="Mago3" parent="enemies/Magos" instance=ExtResource("18_dke4e")]
-position = Vector2(-6, -3794)
-
-[node name="Label" type="Label" parent="enemies/Magos/Mago3"]
-offset_left = -21.0
-offset_top = -40.0
-offset_right = 19.0
-offset_bottom = -17.0
-script = ExtResource("19_uxjm4")
+position = Vector2(-1402, -4903)
 
 [node name="Mago4" parent="enemies/Magos" instance=ExtResource("18_dke4e")]
-position = Vector2(-345, -790)
-
-[node name="Label" type="Label" parent="enemies/Magos/Mago4"]
-offset_left = -21.0
-offset_top = -40.0
-offset_right = 19.0
-offset_bottom = -17.0
-script = ExtResource("19_uxjm4")
+position = Vector2(-11, -3866)
 
 [node name="Mago5" parent="enemies/Magos" instance=ExtResource("18_dke4e")]
-position = Vector2(-1436, -4869)
+position = Vector2(-188, -801)
 
-[node name="Label" type="Label" parent="enemies/Magos/Mago5"]
-offset_left = -21.0
-offset_top = -40.0
-offset_right = 19.0
-offset_bottom = -17.0
-script = ExtResource("19_uxjm4")
+[node name="Mago6" parent="enemies/Magos" instance=ExtResource("18_dke4e")]
+position = Vector2(1281, -5374)
 
 [node name="PrimalAspids" type="Node2D" parent="enemies"]
 
@@ -5728,92 +5694,25 @@ script = ExtResource("23_xwobx")
 [node name="Slimes" type="Node2D" parent="enemies"]
 
 [node name="Slime3" parent="enemies/Slimes" instance=ExtResource("2_3mhv4")]
-position = Vector2(-1882, -111)
-
-[node name="Control" type="Control" parent="enemies/Slimes/Slime3"]
-layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
-
-[node name="Label" type="Label" parent="enemies/Slimes/Slime3"]
-offset_left = -28.0
-offset_top = -42.0
-offset_right = 12.0
-offset_bottom = -19.0
-script = ExtResource("4_syshm")
+position = Vector2(-1443, -155)
 
 [node name="Slime2" parent="enemies/Slimes" instance=ExtResource("2_3mhv4")]
 position = Vector2(1897, -843)
 
-[node name="Control" type="Control" parent="enemies/Slimes/Slime2"]
-layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
-
-[node name="Label" type="Label" parent="enemies/Slimes/Slime2"]
-offset_left = -28.0
-offset_top = -42.0
-offset_right = 12.0
-offset_bottom = -19.0
-script = ExtResource("4_syshm")
-
 [node name="Slime4" parent="enemies/Slimes" instance=ExtResource("2_3mhv4")]
 position = Vector2(293, -3774)
-
-[node name="Label" type="Label" parent="enemies/Slimes/Slime4"]
-offset_left = -28.0
-offset_top = -42.0
-offset_right = 12.0
-offset_bottom = -19.0
-script = ExtResource("4_syshm")
 
 [node name="Slime5" parent="enemies/Slimes" instance=ExtResource("2_3mhv4")]
 position = Vector2(721, -3818)
 
-[node name="Label" type="Label" parent="enemies/Slimes/Slime5"]
-offset_left = -28.0
-offset_top = -42.0
-offset_right = 12.0
-offset_bottom = -19.0
-script = ExtResource("4_syshm")
-
 [node name="Slime6" parent="enemies/Slimes" instance=ExtResource("2_3mhv4")]
 position = Vector2(529, -3822)
-
-[node name="Label" type="Label" parent="enemies/Slimes/Slime6"]
-offset_left = -28.0
-offset_top = -42.0
-offset_right = 12.0
-offset_bottom = -19.0
-script = ExtResource("4_syshm")
 
 [node name="Slime7" parent="enemies/Slimes" instance=ExtResource("2_3mhv4")]
 position = Vector2(732, -3389)
 
-[node name="Label" type="Label" parent="enemies/Slimes/Slime7"]
-offset_left = -28.0
-offset_top = -42.0
-offset_right = 12.0
-offset_bottom = -19.0
-script = ExtResource("4_syshm")
-
 [node name="Slime8" parent="enemies/Slimes" instance=ExtResource("2_3mhv4")]
 position = Vector2(57, 193)
-
-[node name="Control" type="Control" parent="enemies/Slimes/Slime8"]
-layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
-
-[node name="Label" type="Label" parent="enemies/Slimes/Slime8"]
-offset_left = -28.0
-offset_top = -42.0
-offset_right = 12.0
-offset_bottom = -19.0
-script = ExtResource("4_syshm")
 
 [node name="PapaRoberto\'s" type="Node2D" parent="enemies"]
 

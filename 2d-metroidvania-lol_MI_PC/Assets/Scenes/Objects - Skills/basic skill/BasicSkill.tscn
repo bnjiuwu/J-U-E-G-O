@@ -21,10 +21,11 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bgd66"]
 size = Vector2(29, 70.5)
 
-[node name="BasicSkill" type="Area2D" groups=["Skills"]]
+[node name="BasicSkill" type="Area2D" groups=["projectile"]]
 collision_layer = 8
 collision_mask = 16
 script = ExtResource("1_bgd66")
+damage = 50
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(-39.000004, -7.0000005)

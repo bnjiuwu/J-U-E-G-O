@@ -1,4 +1,4 @@
-[gd_scene load_steps=49 format=3 uid="uid://rqnm23qh8syg"]
+[gd_scene load_steps=51 format=3 uid="uid://rqnm23qh8syg"]
 
 [ext_resource type="Script" uid="uid://cvldqbrwc1meo" path="res://Assets/Scenes/Enemies Scene/Mago Scene/mago.gd" id="1_qlsdm"]
 [ext_resource type="PackedScene" uid="uid://dvpo3lknsqtvo" path="res://Assets/Scenes/Enemies Scene/Mago Scene/Magic Ball/MagicBall.tscn" id="2_artgm"]
@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://dw0ku4x2jasbp" path="res://Assets/sprites/enemies/Mago/Idle.png" id="4_0lsyp"]
 [ext_resource type="Texture2D" uid="uid://bll3wvowd8im8" path="res://Assets/sprites/enemies/Mago/Death.png" id="5_pg5cv"]
 [ext_resource type="Texture2D" uid="uid://5bqa7b6imnlx" path="res://Assets/sprites/enemies/Mago/Run.png" id="7_qyjv3"]
+[ext_resource type="FontFile" uid="uid://dhhjcp1rxp6gj" path="res://Assets/Fonts/minecraft_font.ttf" id="8_jxp6p"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_dcoex"]
 atlas = ExtResource("2_jxp6p")
@@ -296,40 +297,39 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_top6t"]
-size = Vector2(20, 41)
+size = Vector2(12, 36)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jxp6p"]
-size = Vector2(26, 45)
+size = Vector2(16, 39)
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_jxp6p"]
-radius = 118.0
-height = 518.0
+radius = 135.0
+height = 486.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qlsdm"]
+bg_color = Color(0.8012637, 1.540184e-06, 6.738305e-07, 1)
 
 [node name="Mago" type="CharacterBody2D" groups=["enemy"]]
 collision_layer = 16
 collision_mask = 11
 script = ExtResource("1_qlsdm")
 magic_ball_scene = ExtResource("2_artgm")
+max_health = 200
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 scale = Vector2(0.5631579, 0.5631579)
 sprite_frames = SubResource("SpriteFrames_q8ne4")
 animation = &"walk"
+frame = 2
+frame_progress = 0.90165585
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(-3, 5.5)
+position = Vector2(-3, 6)
 shape = SubResource("RectangleShape2D_top6t")
 
-[node name="WallCheck" type="RayCast2D" parent="."]
-target_position = Vector2(20, 0)
-
-[node name="FloorCheck" type="RayCast2D" parent="."]
-position = Vector2(8, 15)
-target_position = Vector2(0, 30)
-
-[node name="Hitbox" type="Area2D" parent="." groups=["enemy"]]
+[node name="Hitbox" type="Area2D" parent="." groups=["enemy_hitbox"]]
 collision_layer = 16
-collision_mask = 11
+collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
 position = Vector2(-3, 4.5)
@@ -337,20 +337,43 @@ shape = SubResource("RectangleShape2D_jxp6p")
 debug_color = Color(1, 0.00999999, 0.059500158, 0.28627452)
 
 [node name="DetectionZone" type="Area2D" parent="."]
-collision_layer = 16
-collision_mask = 3
+collision_layer = 0
+collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionZone"]
 rotation = 1.5707964
 shape = SubResource("CapsuleShape2D_jxp6p")
 debug_color = Color(0.5764178, 0.0001845333, 0.5564465, 0.17254902)
 
+[node name="WallCheck" type="RayCast2D" parent="."]
+target_position = Vector2(17, 0)
+
+[node name="FloorCheck" type="RayCast2D" parent="."]
+target_position = Vector2(7, 27)
+
 [node name="MagicBallSpawnPoint" type="Node2D" parent="."]
-position = Vector2(45, -2)
+position = Vector2(31, 0)
 
 [node name="FireCooldown" type="Timer" parent="."]
 
-[connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_sprite_animation_finished"]
+[node name="HealthBar" type="ProgressBar" parent="."]
+offset_left = -17.0
+offset_top = -23.0
+offset_right = 17.0
+offset_bottom = -18.0
+theme_override_styles/fill = SubResource("StyleBoxFlat_qlsdm")
+max_value = 200.0
+value = 200.0
+show_percentage = false
+
+[node name="HealthBarNumber" type="Label" parent="."]
+offset_left = -16.0
+offset_top = -44.0
+offset_right = 24.0
+offset_bottom = -21.0
+theme_override_fonts/font = ExtResource("8_jxp6p")
+
+[connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animation_finished"]
 [connection signal="area_entered" from="Hitbox" to="." method="_on_hitbox_area_entered"]
 [connection signal="body_entered" from="DetectionZone" to="." method="_on_detection_zone_body_entered"]
 [connection signal="body_exited" from="DetectionZone" to="." method="_on_detection_zone_body_exited"]

@@ -108,12 +108,14 @@ size = Vector2(3.99998, 9.90626)
 collision_layer = 8
 collision_mask = 17
 script = ExtResource("1_p470f")
+damage = 2
 
-[node name="animatedsprite2d" type="AnimatedSprite2D" parent="."]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(2.3058, 0.0978567)
 rotation = 1.5708
 scale = Vector2(0.498273, 0.498272)
 sprite_frames = SubResource("SpriteFrames_bnaac")
+animation = &"contact"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(1.04688, -8.76188e-06)
