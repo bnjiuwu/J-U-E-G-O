@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cwbpjiwtx0yph"
-path="res://.godot/imported/IdleFlambo-removebg-preview_1.png-9457f4a9400e2e7a79bc2cd94ed4b687.ctex"
+uid="uid://cux1f88o4bmjp"
+path="res://.godot/imported/DeadFlambo-removebg-preview(1).png-a9d412a5fc061fed8815baa420074ae7.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/sprites/Flambo/IdleFlambo-removebg-preview_1.png"
-dest_files=["res://.godot/imported/IdleFlambo-removebg-preview_1.png-9457f4a9400e2e7a79bc2cd94ed4b687.ctex"]
+source_file="res://Assets/Scenes/Flambo/DeadFlambo-removebg-preview(1).png"
+dest_files=["res://.godot/imported/DeadFlambo-removebg-preview(1).png-a9d412a5fc061fed8815baa420074ae7.ctex"]
 
 [params]
 
