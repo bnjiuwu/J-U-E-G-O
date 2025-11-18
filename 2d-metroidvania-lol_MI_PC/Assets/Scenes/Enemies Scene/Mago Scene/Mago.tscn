@@ -297,10 +297,10 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_top6t"]
-size = Vector2(12, 36)
+size = Vector2(12, 38)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jxp6p"]
-size = Vector2(16, 39)
+size = Vector2(16, 41)
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_jxp6p"]
 radius = 135.0
@@ -332,7 +332,7 @@ sprite_frames = SubResource("SpriteFrames_q8ne4")
 animation = &"attack1"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(-3, 6)
+position = Vector2(-3, 7)
 shape = SubResource("RectangleShape2D_top6t")
 
 [node name="Hitbox" type="Area2D" parent="." groups=["enemy_hitbox"]]
@@ -340,7 +340,7 @@ collision_layer = 16
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
-position = Vector2(-3, 4.5)
+position = Vector2(-3, 5.5)
 shape = SubResource("RectangleShape2D_jxp6p")
 debug_color = Color(1, 0.00999999, 0.059500158, 0.28627452)
 
@@ -375,10 +375,10 @@ value = 200.0
 show_percentage = false
 
 [node name="HealthBarNumber" type="Label" parent="."]
-offset_left = -16.0
-offset_top = -44.0
-offset_right = 24.0
-offset_bottom = -21.0
+offset_left = -20.0
+offset_top = -48.0
+offset_right = 20.0
+offset_bottom = -25.0
 theme_override_fonts/font = ExtResource("8_jxp6p")
 
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animation_finished"]

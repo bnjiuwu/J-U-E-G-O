@@ -1,9 +1,26 @@
-[gd_scene load_steps=6 format=3 uid="uid://85sqmcso35sm"]
+[gd_scene load_steps=11 format=3 uid="uid://85sqmcso35sm"]
 
 [ext_resource type="Script" uid="uid://c8sbsf2gcrmns" path="res://Assets/Scenes/Objects - Skills/basic skill/basic_skill.gd" id="1_bgd66"]
+[ext_resource type="Texture2D" uid="uid://c11xwiorf8n6o" path="res://Assets/sprites/objects type shi/bullet/unnamed (1).png" id="2_bgd66"]
 [ext_resource type="Texture2D" uid="uid://c68xbx5tawd0w" path="res://Assets/sprites/objects type shi/big bullet (1).png" id="2_pyo1f"]
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_pyo1f"]
+atlas = ExtResource("2_bgd66")
+region = Rect2(512, 384, 32, 32)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_iu0wm"]
+atlas = ExtResource("2_bgd66")
+region = Rect2(544, 384, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ysul3"]
+atlas = ExtResource("2_bgd66")
+region = Rect2(576, 384, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bn3p2"]
+atlas = ExtResource("2_bgd66")
+region = Rect2(608, 384, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f2cv1"]
 atlas = ExtResource("2_pyo1f")
 region = Rect2(0, 0, 626, 462)
 
@@ -11,15 +28,32 @@ region = Rect2(0, 0, 626, 462)
 animations = [{
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_pyo1f")
+}, {
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_iu0wm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ysul3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bn3p2")
+}],
+"loop": false,
+"name": &"contact",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f2cv1")
 }],
 "loop": true,
 "name": &"default",
-"speed": 5.0
+"speed": 10.0
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bgd66"]
-size = Vector2(29, 70.5)
+size = Vector2(30, 66)
 
 [node name="BasicSkill" type="Area2D" groups=["projectile"]]
 collision_layer = 8
@@ -28,12 +62,13 @@ script = ExtResource("1_bgd66")
 damage = 50
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-position = Vector2(-39.000004, -7.0000005)
-scale = Vector2(0.49567097, 0.495671)
+position = Vector2(-43.999996, -5.9999995)
+scale = Vector2(0.5263461, 0.5263461)
 sprite_frames = SubResource("SpriteFrames_ysul3")
+frame_progress = 0.8711128
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(34.75, 1.5)
+position = Vector2(30, 4.000001)
 rotation = 1.5707964
 shape = SubResource("RectangleShape2D_bgd66")
 

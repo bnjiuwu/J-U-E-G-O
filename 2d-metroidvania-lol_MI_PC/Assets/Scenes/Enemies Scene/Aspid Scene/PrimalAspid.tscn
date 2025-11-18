@@ -127,7 +127,7 @@ radius = 19.0
 radius = 25.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_u1syw"]
-radius = 353.01276
+radius = 307.1319
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cagbd"]
 bg_color = Color(0.77, 0, 0.076999925, 1)
@@ -140,6 +140,7 @@ corner_radius_top_left = 2
 corner_radius_top_right = 2
 corner_radius_bottom_right = 2
 corner_radius_bottom_left = 2
+anti_aliasing = false
 
 [node name="PrimalAspid" type="CharacterBody2D" groups=["enemy"]]
 collision_layer = 16

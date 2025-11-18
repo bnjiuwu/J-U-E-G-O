@@ -2,7 +2,7 @@ extends EnemyGround
 class_name Mage
 
 @export var speed: float = 30.0
-@export var attack_range: float = 200.0
+@export var attack_range: float = 400.0
 @export var fire_rate: float = 1.5
 @export var magic_ball_scene: PackedScene
 @export var damage: int = 15

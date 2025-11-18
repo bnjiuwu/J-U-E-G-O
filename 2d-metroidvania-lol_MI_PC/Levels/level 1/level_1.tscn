@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=4 uid="uid://c6n7qrlau6b0k"]
+[gd_scene load_steps=32 format=4 uid="uid://c6n7qrlau6b0k"]
 
 [ext_resource type="PackedScene" uid="uid://braj8a8ooxs4t" path="res://Assets/Scenes/Player/player.tscn" id="1_n0qsc"]
 [ext_resource type="Script" uid="uid://by4hegpiwf1wp" path="res://Levels/level 1/level_1.gd" id="1_r7d4j"]
@@ -19,7 +19,6 @@
 [ext_resource type="PackedScene" uid="uid://xoxuswob6rae" path="res://Assets/Scenes/Enemies Scene/Bat Scene/Bat.tscn" id="17_4l21d"]
 [ext_resource type="PackedScene" uid="uid://rqnm23qh8syg" path="res://Assets/Scenes/Enemies Scene/Mago Scene/Mago.tscn" id="18_dke4e"]
 [ext_resource type="PackedScene" uid="uid://nfjhoahtx3yq" path="res://Assets/Scenes/Enemies Scene/Aspid Scene/PrimalAspid.tscn" id="21_bq83f"]
-[ext_resource type="PackedScene" uid="uid://ht1pv155sp5a" path="res://Assets/Scenes/EVENT ROULETTE/canvas_layer.tscn" id="24_vn1ki"]
 [ext_resource type="PackedScene" uid="uid://b1p4vte40g50f" path="res://Assets/Scenes/Map Help/Jump Pad/Jump_Pad.tscn" id="26_7ppep"]
 [ext_resource type="PackedScene" uid="uid://jm3orlf4lfkm" path="res://Assets/Scenes/Map Help/Health pack/health pack.tscn" id="26_s6fi1"]
 
@@ -5471,7 +5470,7 @@ tile_map_data = PackedByteArray("AADb//7/AQAMAAgAAADb////AQAMAAkAAADc//7/AQANAAg
 tile_set = SubResource("TileSet_rfktq")
 
 [node name="player" parent="." instance=ExtResource("1_n0qsc")]
-position = Vector2(-1309, -129)
+position = Vector2(1882, 85)
 
 [node name="Camera2D" type="Camera2D" parent="player"]
 offset = Vector2(0, -25)
@@ -5500,8 +5499,6 @@ root_node = NodePath("../../..")
 libraries = {
 &"": SubResource("AnimationLibrary_7ppep")
 }
-
-[node name="CanvasLayer" parent="player/Camera2D" instance=ExtResource("24_vn1ki")]
 
 [node name="Area efects" type="Node2D" parent="."]
 
@@ -5535,31 +5532,46 @@ visible = false
 [node name="Bats" type="Node2D" parent="enemies"]
 
 [node name="Bat" parent="enemies/Bats" instance=ExtResource("17_4l21d")]
-position = Vector2(-2294, -1390)
+position = Vector2(2174, 63)
 
 [node name="Bat2" parent="enemies/Bats" instance=ExtResource("17_4l21d")]
-position = Vector2(-2154, -1159)
+position = Vector2(-2248, -1441)
 
 [node name="Bat3" parent="enemies/Bats" instance=ExtResource("17_4l21d")]
-position = Vector2(-1984, -952)
+position = Vector2(-2325, -1070)
 
 [node name="Bat4" parent="enemies/Bats" instance=ExtResource("17_4l21d")]
-position = Vector2(-939, -4445)
+position = Vector2(-2065, -1187)
 
 [node name="Bat5" parent="enemies/Bats" instance=ExtResource("17_4l21d")]
-position = Vector2(-1246, -3980)
+position = Vector2(431, -2806)
 
 [node name="Bat6" parent="enemies/Bats" instance=ExtResource("17_4l21d")]
-position = Vector2(1584, -2442)
+position = Vector2(-1257, -5483)
 
 [node name="Bat7" parent="enemies/Bats" instance=ExtResource("17_4l21d")]
-position = Vector2(1305, -3414)
+position = Vector2(-1007, -5024)
 
 [node name="Bat8" parent="enemies/Bats" instance=ExtResource("17_4l21d")]
-position = Vector2(953, 191)
+position = Vector2(-749, -5881)
 
 [node name="Bat9" parent="enemies/Bats" instance=ExtResource("17_4l21d")]
-position = Vector2(1668, -717)
+position = Vector2(1642, -628)
+
+[node name="Bat10" parent="enemies/Bats" instance=ExtResource("17_4l21d")]
+position = Vector2(932, -757)
+
+[node name="Bat11" parent="enemies/Bats" instance=ExtResource("17_4l21d")]
+position = Vector2(1764, -3681)
+
+[node name="Bat12" parent="enemies/Bats" instance=ExtResource("17_4l21d")]
+position = Vector2(-1380, -4059)
+
+[node name="Bat13" parent="enemies/Bats" instance=ExtResource("17_4l21d")]
+position = Vector2(-988, -4456)
+
+[node name="Bat14" parent="enemies/Bats" instance=ExtResource("17_4l21d")]
+position = Vector2(1669, -5446)
 
 [node name="Magos" type="Node2D" parent="enemies"]
 
@@ -5581,44 +5593,37 @@ position = Vector2(-188, -801)
 [node name="Mago6" parent="enemies/Magos" instance=ExtResource("18_dke4e")]
 position = Vector2(1281, -5374)
 
+[node name="Mago7" parent="enemies/Magos" instance=ExtResource("18_dke4e")]
+position = Vector2(1267, -3254)
+
 [node name="PrimalAspids" type="Node2D" parent="enemies"]
 
 [node name="PrimalAspid" parent="enemies/PrimalAspids" instance=ExtResource("21_bq83f")]
-position = Vector2(2141, -995)
-patrol_range = 250.0
+position = Vector2(-1427, -461)
 
 [node name="PrimalAspid2" parent="enemies/PrimalAspids" instance=ExtResource("21_bq83f")]
-position = Vector2(2287, -439)
+position = Vector2(-754, -2795)
 
 [node name="PrimalAspid3" parent="enemies/PrimalAspids" instance=ExtResource("21_bq83f")]
-position = Vector2(2009, -5768)
+position = Vector2(2310, -443)
 
 [node name="PrimalAspid4" parent="enemies/PrimalAspids" instance=ExtResource("21_bq83f")]
-position = Vector2(1291, -5594)
+position = Vector2(84, -1027)
 
 [node name="PrimalAspid5" parent="enemies/PrimalAspids" instance=ExtResource("21_bq83f")]
-position = Vector2(1012, -5905)
+position = Vector2(2216, -1159)
 
 [node name="PrimalAspid6" parent="enemies/PrimalAspids" instance=ExtResource("21_bq83f")]
-position = Vector2(-510, -2538)
+position = Vector2(-1151, -1051)
 
 [node name="PrimalAspid7" parent="enemies/PrimalAspids" instance=ExtResource("21_bq83f")]
-position = Vector2(836, -2738)
+position = Vector2(-1140, -1773)
 
 [node name="PrimalAspid8" parent="enemies/PrimalAspids" instance=ExtResource("21_bq83f")]
-position = Vector2(746, -1611)
+position = Vector2(2044, -5700)
 
 [node name="PrimalAspid9" parent="enemies/PrimalAspids" instance=ExtResource("21_bq83f")]
-position = Vector2(-167, -5464)
-
-[node name="PrimalAspid10" parent="enemies/PrimalAspids" instance=ExtResource("21_bq83f")]
-position = Vector2(-1135, -464)
-
-[node name="PrimalAspid11" parent="enemies/PrimalAspids" instance=ExtResource("21_bq83f")]
-position = Vector2(-976, -5014)
-
-[node name="PrimalAspid12" parent="enemies/PrimalAspids" instance=ExtResource("21_bq83f")]
-position = Vector2(-1021, -5732)
+position = Vector2(1391, -5746)
 
 [node name="Slimes" type="Node2D" parent="enemies"]
 
@@ -5682,10 +5687,6 @@ scale = Vector2(0.4, 0.4)
 position = Vector2(1826.9999, -810)
 scale = Vector2(0.4, 0.4)
 
-[node name="JumpPad7" parent="Map/jump platforms" instance=ExtResource("26_7ppep")]
-position = Vector2(-1368, -94)
-scale = Vector2(0.4, 0.4)
-
 [node name="JumpPad8" parent="Map/jump platforms" instance=ExtResource("26_7ppep")]
 position = Vector2(-907, -4230)
 scale = Vector2(0.4, 0.4)
@@ -5696,6 +5697,14 @@ scale = Vector2(0.4, 0.4)
 
 [node name="JumpPad10" parent="Map/jump platforms" instance=ExtResource("26_7ppep")]
 position = Vector2(-596, -5677)
+scale = Vector2(0.4, 0.4)
+
+[node name="JumpPad11" parent="Map/jump platforms" instance=ExtResource("26_7ppep")]
+position = Vector2(1298, 152)
+scale = Vector2(0.4, 0.4)
+
+[node name="JumpPad12" parent="Map/jump platforms" instance=ExtResource("26_7ppep")]
+position = Vector2(-221.00006, -5158)
 scale = Vector2(0.4, 0.4)
 
 [node name="health packs" type="Node2D" parent="Map"]
@@ -5732,6 +5741,24 @@ position = Vector2(1744, -5906)
 
 [node name="HealthPack11" parent="Map/health packs" instance=ExtResource("26_s6fi1")]
 position = Vector2(-801, -4840)
+
+[node name="HealthPack12" parent="Map/health packs" instance=ExtResource("26_s6fi1")]
+position = Vector2(1458, -280)
+
+[node name="HealthPack13" parent="Map/health packs" instance=ExtResource("26_s6fi1")]
+position = Vector2(1467, -1373)
+
+[node name="HealthPack14" parent="Map/health packs" instance=ExtResource("26_s6fi1")]
+position = Vector2(251, -614)
+
+[node name="HealthPack15" parent="Map/health packs" instance=ExtResource("26_s6fi1")]
+position = Vector2(-2105, -797)
+
+[node name="HealthPack16" parent="Map/health packs" instance=ExtResource("26_s6fi1")]
+position = Vector2(783, -4505)
+
+[node name="HealthPack17" parent="Map/health packs" instance=ExtResource("26_s6fi1")]
+position = Vector2(178, -5509)
 
 [connection signal="body_entered" from="Area efects/trigger zoom camera" to="." method="_on_trigger_zoom_camera_body_entered"]
 [connection signal="body_exited" from="Area efects/trigger zoom camera" to="." method="_on_trigger_zoom_camera_body_exited"]

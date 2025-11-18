@@ -10,8 +10,7 @@ extends Node2D
 @onready var mago := $Mago2
 
 
-# ESTA ES LA RULETA REAL QUE YA EXISTE EN EL CANVAS
-@onready var ruleta := $player/Camera2D/CanvasLayer/Roulette
+
 
 
 func _physics_process(delta: float) -> void:
@@ -29,12 +28,11 @@ func _ready():
 
 	print("🟩 level_1 listo")
 	touch_controls.pause_pressed.connect(_on_pause_button_pressed)
-	ruleta.visible = false
+
 
 func _on_mago_test_case():
 	print("La señal del mago llegó. Activando ruleta...")
-	ruleta.visible = true
-	ruleta.start_spin()
+
 	
 	
 

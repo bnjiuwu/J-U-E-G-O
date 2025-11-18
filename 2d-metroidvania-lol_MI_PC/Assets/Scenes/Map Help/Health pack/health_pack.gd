@@ -24,6 +24,7 @@ func _on_area_2d_body_entered(body: Node2D) -> void:
 		body.health = 100
 		await body.get_tree().create_timer(health_timer).timeout
 		body.modulate = Color(1.0, 1.0, 1.0, 1.0)
+		body._update_health_bar()
 		ctn_health -= 1
 		
 	if body.health < 100 and body.health + 20 <= 100:
@@ -31,5 +32,6 @@ func _on_area_2d_body_entered(body: Node2D) -> void:
 		await body.get_tree().create_timer(health_timer).timeout
 		body.modulate = Color(1.0, 1.0, 1.0, 1.0)
 		ctn_health -= 1
+		body._update_health_bar()
 	body.modulate = Color(1.0, 1.0, 1.0, 1.0)
 	pass # Replace with function body.
