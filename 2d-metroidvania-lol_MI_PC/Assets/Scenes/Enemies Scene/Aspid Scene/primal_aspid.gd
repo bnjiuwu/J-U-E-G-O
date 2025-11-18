@@ -152,3 +152,11 @@ func die():
 	GlobalsSignals.enemy_defeated.emit()
 	# --------------------------------------------------
 	queue_free()
+# --- Función faltante para detección ---
+
+func _on_DetectionArea_body_exited(body: Node2D) -> void:
+	# Verifica si lo que salió fue el jugador
+	if body.is_in_group("player"):
+		print("El jugador escapó del área de detección")
+		# Aquí puedes poner lógica para que deje de perseguir
+		# Por ejemplo: velocity.x = 0 o volver a patrullar
