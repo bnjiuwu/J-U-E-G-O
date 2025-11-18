@@ -1,7 +1,8 @@
-[gd_scene load_steps=72 format=3 uid="uid://braj8a8ooxs4t"]
+[gd_scene load_steps=92 format=3 uid="uid://braj8a8ooxs4t"]
 
 [ext_resource type="Script" uid="uid://dw6uvcpocgnu6" path="res://Assets/Scenes/Player/player.gd" id="1_xpcdj"]
 [ext_resource type="PackedScene" uid="uid://bfjsyuqkbr65o" path="res://Assets/Scenes/Bullet Scene/Bullet.tscn" id="2_0u5uq"]
+[ext_resource type="Material" uid="uid://c40e3agpyc68u" path="res://Assets/Scenes/Player/material_personaje_rojo.tres" id="2_bjw0c"]
 [ext_resource type="PackedScene" uid="uid://85sqmcso35sm" path="res://Assets/Scenes/Objects - Skills/basic skill/BasicSkill.tscn" id="3_1fs6i"]
 [ext_resource type="Texture2D" uid="uid://ctqy6mx8012wk" path="res://Assets/sprites/roberto/dash_gun.png" id="3_gk6dx"]
 [ext_resource type="Texture2D" uid="uid://c6wcac5xj3vcq" path="res://Assets/sprites/roberto/roberto_jump.png" id="3_htcer"]
@@ -10,7 +11,12 @@
 [ext_resource type="Texture2D" uid="uid://bu62s307wao4b" path="res://Assets/sprites/roberto/walk_gun.png" id="5_0u5uq"]
 [ext_resource type="Texture2D" uid="uid://boivgusa31qm4" path="res://Assets/sprites/roberto/idle_lookin_up.png" id="5_jlvik"]
 [ext_resource type="Texture2D" uid="uid://c4d0er8pdloj7" path="res://Assets/sprites/roberto/rob_atk_up.png" id="6_gk6dx"]
+[ext_resource type="Texture2D" uid="uid://06d8p2es3ey0" path="res://Assets/sprites/roberto/explotion_death.png" id="6_s3f76"]
 [ext_resource type="Texture2D" uid="uid://bhpo5wktpe37e" path="res://Assets/sprites/roberto/peo_dash.png" id="10_jhyir"]
+[ext_resource type="Texture2D" uid="uid://b5tor0b0gr14s" path="res://Assets/sprites/Health Bar/health bar empty.png" id="14_0h5f3"]
+[ext_resource type="Texture2D" uid="uid://bc4nroe2f0on5" path="res://Assets/sprites/Health Bar/health bar full.png" id="15_dkee6"]
+[ext_resource type="Texture2D" uid="uid://bdjy131sdad40" path="res://Assets/sprites/Health Bar/health bar frame.png" id="16_meuei"]
+[ext_resource type="PackedScene" uid="uid://bgj1kec0hcvbb" path="res://Assets/Scenes/EVENT ROULETTE/Roulette.tscn" id="17_dkee6"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_rblve"]
 atlas = ExtResource("3_gk6dx")
@@ -47,6 +53,54 @@ region = Rect2(512, 0, 64, 64)
 [sub_resource type="AtlasTexture" id="AtlasTexture_grehw"]
 atlas = ExtResource("3_gk6dx")
 region = Rect2(640, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nl6ld"]
+atlas = ExtResource("6_s3f76")
+region = Rect2(0, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_41uic"]
+atlas = ExtResource("6_s3f76")
+region = Rect2(128, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0h5f3"]
+atlas = ExtResource("6_s3f76")
+region = Rect2(256, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dkee6"]
+atlas = ExtResource("6_s3f76")
+region = Rect2(384, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_meuei"]
+atlas = ExtResource("6_s3f76")
+region = Rect2(512, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rapfb"]
+atlas = ExtResource("6_s3f76")
+region = Rect2(640, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cywik"]
+atlas = ExtResource("6_s3f76")
+region = Rect2(768, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wjjqn"]
+atlas = ExtResource("6_s3f76")
+region = Rect2(896, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7hp74"]
+atlas = ExtResource("6_s3f76")
+region = Rect2(1024, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fx4s0"]
+atlas = ExtResource("6_s3f76")
+region = Rect2(1152, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d5wb6"]
+atlas = ExtResource("6_s3f76")
+region = Rect2(1280, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lmffl"]
+atlas = ExtResource("6_s3f76")
+region = Rect2(1408, 0, 128, 128)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_jlvik"]
 atlas = ExtResource("3_htcer")
@@ -262,10 +316,58 @@ animations = [{
 "name": &"dash",
 "speed": 15.0
 }, {
-"frames": [],
-"loop": true,
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nl6ld")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_41uic")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0h5f3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dkee6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_meuei")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rapfb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cywik")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wjjqn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7hp74")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fx4s0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_d5wb6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lmffl")
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}],
+"loop": false,
 "name": &"death",
-"speed": 5.0
+"speed": 20.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -498,16 +600,14 @@ animations = [{
 size = Vector2(4.56275, 23.6856)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dd0ac"]
-size = Vector2(12, 30)
+size = Vector2(12, 31)
 
 [node name="player" type="CharacterBody2D" groups=["player"]]
 collision_layer = 2
-collision_mask = 53
+collision_mask = 117
 script = ExtResource("1_xpcdj")
-move_speed = 150.0
-jump_speed = 450.0
-move_speed = 100.0
-jump_speed = 400.0
+material_personaje_rojo = ExtResource("2_bjw0c")
+jump_pad_height = 1800.0
 bullet_scene = ExtResource("2_0u5uq")
 big_bullet_scene = ExtResource("3_1fs6i")
 
@@ -515,8 +615,7 @@ big_bullet_scene = ExtResource("3_1fs6i")
 scale = Vector2(0.631472, 0.655599)
 sprite_frames = SubResource("SpriteFrames_bmb2s")
 animation = &"dash"
-frame = 5
-frame_progress = 0.002199473
+frame_progress = 0.7014954
 
 [node name="PEO" type="AnimatedSprite2D" parent="."]
 position = Vector2(-19, 6)
@@ -532,14 +631,27 @@ shape = SubResource("RectangleShape2D_htcer")
 [node name="muzzle" type="Node2D" parent="."]
 position = Vector2(20, 4)
 
-[node name="Hitbox" type="Area2D" parent="." groups=["player"]]
-collision_layer = 2
-collision_mask = 53
+[node name="Hitbox" type="Area2D" parent="." groups=["player_hitbox"]]
+collision_layer = 0
+collision_mask = 116
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
-position = Vector2(0, 4)
+position = Vector2(0, 4.5)
 shape = SubResource("RectangleShape2D_dd0ac")
 debug_color = Color(0.995169, 0, 0.209909, 0.42)
+
+[node name="HealthBar" type="TextureProgressBar" parent="."]
+offset_left = -46.0
+offset_top = -42.0
+offset_right = 54.0
+offset_bottom = -2.0
+value = 100.0
+texture_under = ExtResource("14_0h5f3")
+texture_over = ExtResource("16_meuei")
+texture_progress = ExtResource("15_dkee6")
+
+[node name="Roulette" parent="." instance=ExtResource("17_dkee6")]
+visible = false
 
 [connection signal="area_entered" from="Hitbox" to="." method="_on_hitbox_area_entered"]
 [connection signal="body_entered" from="Hitbox" to="." method="_on_hitbox_body_entered"]

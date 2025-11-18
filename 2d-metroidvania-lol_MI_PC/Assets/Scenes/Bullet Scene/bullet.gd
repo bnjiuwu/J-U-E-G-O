@@ -1,58 +1,100 @@
-extends Area2D
+extends PlayerProjectile
+class_name Bullet
 
-@export var speed: float = 400
-@export var max_distance: float = 600 # rango máximo de la bala
-@export var damage: int = 20
 
-var direction: Vector2 = Vector2.RIGHT
+@export var max_distance: float = 600
+
 var start_position: Vector2
+var has_hit: bool = false
+
 
 func _ready():
 	start_position = global_position
-	add_to_group("projectile")
-	connect("body_entered", Callable(self, "_on_body_entered"))
-	connect("area_entered", Callable(self, "_on_area_entered"))
+
+	# Aseguramos señales
+	if not body_entered.is_connected(_on_body_entered):
+		body_entered.connect(_on_body_entered)
+
+	if not area_entered.is_connected(_on_area_entered):
+		area_entered.connect(_on_area_entered)
+
+	sprite.play("default")
+
 
 func _physics_process(delta):
+	if has_hit:
+		return
+
 	position += direction * speed * delta
 	rotation = direction.angle()
 
-	# Si la bala viaja más de max_distance, desaparece
 	if global_position.distance_to(start_position) > max_distance:
 		queue_free()
-	
 
+
+# ----------------------------------------
+#   CUERPOS (Tilemap o enemigos CharacterBody2D)
+# ----------------------------------------
 func _on_body_entered(body: Node) -> void:
-	if _apply_damage(body):
+	if has_hit:
+		return
+
+	# Impacto con el mundo
+	if body.is_in_group("world colition") or body is TileMapLayer:
+		impact_effect()
+		return
+
+	# Impacto con enemigo (CUERPO)
+	if body.is_in_group("enemy"):
+		_apply_damage(body)
+		impact_effect()
+		return
+
+
+# ----------------------------------------
+#   ÁREAS (hitbox de enemigos con Area2D)
+# ----------------------------------------
+func _on_area_entered(area: Area2D) -> void:
+	if has_hit:
+		return
+
+	if area.is_in_group("enemy"):
+		_apply_damage(area)
+		impact_effect()
+
+# ----------------------------------------
+#   Daño corregido (soporta hitboxes)
+# ----------------------------------------
+func _apply_damage(target):
+	var receiver = target
+
+	# Si el hitbox pertenece a un enemigo…
+	if target is Area2D and target.get_parent().is_in_group("enemy"):
+		if target.get_parent().has_method("take_damage"):
+			receiver = target.get_parent()
+
+	# Finalmente dañamos
+	if receiver.has_method("take_damage"):
+		receiver.take_damage(damage)
+
+
+# ----------------------------------------
+#   EFECTO DE IMPACTO → animación contacto + esperar animación
+# ----------------------------------------
+func impact_effect():
+	has_hit = true
+	col.disabled = true
+	direction = Vector2.ZERO
+	speed = 0
+
+	if sprite and sprite.sprite_frames and sprite.sprite_frames.has_animation("contact"):
+		sprite.play("contact")
+	else:
+		# Si no existe la animación, simplemente destruye la bala
 		queue_free()
 		return
-	if body.is_in_group("world colition"):
-		queue_free()
 
-func _on_area_entered(area: Area2D) -> void:
-	if _apply_damage(area):
-		queue_free()
+	await get_tree().process_frame
+	await sprite.animation_finished
 
-func _apply_damage(target: Node) -> bool:
-	if target == null:
-		return false
-	if target == self:
-		return false
-
-	if target.is_in_group("enemy"):
-		if target.has_method("take_damage"):
-			target.take_damage(damage)
-			return true
-		var parent := target.get_parent()
-		if parent and parent.has_method("take_damage"):
-			parent.take_damage(damage)
-			return true
-	elif target.has_method("take_damage"):
-		target.take_damage(damage)
-		return true
-	elif target is Area2D:
-		var maybe_parent := target.get_parent()
-		if maybe_parent and maybe_parent.has_method("take_damage"):
-			maybe_parent.take_damage(damage)
-			return true
-	return false
+	queue_free()
