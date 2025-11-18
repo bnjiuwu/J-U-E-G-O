@@ -321,3 +321,20 @@ func _on_DetectionArea_body_exited(body: Node) -> void:
 	if body == player_target and current_state == State.PATROL:
 		player_target = null
 		print("[🦇] Jugador fuera de rango")
+
+
+# ============================================================
+#   CONEXIÓN CON FLAMBO (Sobreescritura)
+# ============================================================
+func die() -> void:
+	# 1. ¡Avisamos a Flambo para que cargue su ataque!
+	GlobalsSignals.enemy_defeated.emit()
+	print("[🦇] Bat eliminado -> Señal enviada a Flambo")
+
+	# 2. Llamamos a la función die() original de tus compañeros (EnemyFlying)
+	# Esto asegura que si ellos pusieron sonidos o loot, sigan funcionando.
+	if has_method("die"): # Verificación de seguridad
+		super.die()
+	else:
+		# Si el script padre no tiene die(), lo borramos nosotros
+		queue_free()
