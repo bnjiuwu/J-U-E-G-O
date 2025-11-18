@@ -161,8 +161,7 @@ func launch_insult():
 # --- Animaciones ---
 func update_animation():
 	if is_dead:
-		if animated_sprite.has_animation("death") and animated_sprite.animation != "death":
-			animated_sprite.play("death")
+		
 		return
 
 	if is_attacking:
@@ -194,12 +193,17 @@ func die():
 	is_dead = true
 	print("💀 Papa Roberto ha muerto")
 	
-	$CollisionShape2D.disabled = true
-	if animated_sprite.has_animation("death"):
-		animated_sprite.play("death")
+	# Desactivamos colisiones para que no siga molestando
+	$CollisionShape2D.set_deferred("disabled", true)
+	
+	# Detenemos la lógica física
 	set_physics_process(false)
-	if animated_sprite.has_animation("death"):
-		await animated_sprite.animation_finished
+
+	# --- ¡AQUÍ ESTÁ LA SEÑAL PARA FLAMBO! ---
+	GlobalsSignals.enemy_defeated.emit()
+	# ----------------------------------------
+
+	# Eliminamos al enemigo inmediatamente (ya que no hay animación de muerte)
 	queue_free()
 
 # --- Señales ---

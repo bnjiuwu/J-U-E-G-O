@@ -146,12 +146,9 @@ func _on_DetectionArea_body_entered(body: Node) -> void:
 		player_target = body
 		in_combat = true
 
-		# mirar al jugador una primera vez
-		var dx := player_target.global_position.x - global_position.x
-		sprite.flip_h = dx < 0.0
-
-
-func _on_DetectionArea_body_exited(body: Node) -> void:
-	if body == player_target:
-		player_target = null
-		in_combat = false
+func die():
+	print("💀 Aspid destruido")
+	# --- NUEVA LÍNEA: Avisamos a Flambo que ganamos ---
+	GlobalsSignals.enemy_defeated.emit()
+	# --------------------------------------------------
+	queue_free()

@@ -89,6 +89,34 @@ func _on_frame_changed() -> void:
 
 	if sprite.animation in ["attack1", "attack2"] and sprite.frame == 4:
 		fire_magic()
+# --- Daño ---
+# --- Daño y Muerte ---
+func take_damage(amount: int):
+	# Si ya está muerto, ignoramos daño extra
+	if is_dead:
+		return
+
+	health -= amount
+	
+	if health <= 0:
+		is_dead = true
+		
+		# 1. Detenemos la lógica del Mago (para que no se mueva mientras muere)
+		set_physics_process(false)
+		
+		# 2. Feedback visual
+		sprite.play("death")
+		print("💀 Mago eliminado")
+
+		# 3. --- ¡SEÑAL CRÍTICA PARA FLAMBO! ---
+		GlobalsSignals.enemy_defeated.emit()
+		# --------------------------------------
+
+		# 4. Esperamos la animación (si existe) y borramos
+		# Nota: Si el juego se crashea aquí, es porque no tienes animación "death".
+		# Si eso pasa, borra la línea 'await' y listo.
+		await sprite.animation_finished
+		queue_free()
 
 
 func fire_magic() -> void:
