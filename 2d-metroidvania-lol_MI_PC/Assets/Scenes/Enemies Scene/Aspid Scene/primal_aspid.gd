@@ -146,17 +146,12 @@ func _on_DetectionArea_body_entered(body: Node) -> void:
 		player_target = body
 		in_combat = true
 
-func die():
-	print("💀 Aspid destruido")
-	# --- NUEVA LÍNEA: Avisamos a Flambo que ganamos ---
-	GlobalsSignals.enemy_defeated.emit()
-	# --------------------------------------------------
-	queue_free()
-# --- Función faltante para detección ---
+		# mirar al jugador una primera vez
+		var dx := player_target.global_position.x - global_position.x
+		sprite.flip_h = dx < 0.0
 
-func _on_DetectionArea_body_exited(body: Node2D) -> void:
-	# Verifica si lo que salió fue el jugador
-	if body.is_in_group("player"):
-		print("El jugador escapó del área de detección")
-		# Aquí puedes poner lógica para que deje de perseguir
-		# Por ejemplo: velocity.x = 0 o volver a patrullar
+
+func _on_DetectionArea_body_exited(body: Node) -> void:
+	if body == player_target:
+		player_target = null
+		in_combat = false

@@ -106,7 +106,8 @@ func take_damage(amount: int):
 func die():
 	is_dead = true
 	velocity = Vector2.ZERO
-
+	
+	GlobalsSignals.enemy_defeated.emit()
 	if sprite.sprite_frames.has_animation("death"):
 		sprite.play("death")
 	else:

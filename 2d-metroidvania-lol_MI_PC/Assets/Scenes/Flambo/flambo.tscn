@@ -126,8 +126,8 @@ mini_flambo_scene = ExtResource("2_lyt4t")
 position = Vector2(-3, -7)
 scale = Vector2(0.23693429, 0.2215909)
 sprite_frames = SubResource("SpriteFrames_0gel8")
-animation = &"idle"
-frame_progress = 0.49014843
+animation = &"dead"
+frame_progress = 0.1729753
 
 [node name="TimerEnfado" type="Timer" parent="."]
 

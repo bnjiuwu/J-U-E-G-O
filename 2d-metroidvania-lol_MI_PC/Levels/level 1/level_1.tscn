@@ -5471,7 +5471,7 @@ tile_map_data = PackedByteArray("AADb//7/AQAMAAgAAADb////AQAMAAkAAADc//7/AQANAAg
 tile_set = SubResource("TileSet_rfktq")
 
 [node name="player" parent="." instance=ExtResource("1_n0qsc")]
-position = Vector2(1882, 85)
+position = Vector2(-613, -2498)
 
 [node name="Camera2D" type="Camera2D" parent="player"]
 offset = Vector2(0, -25)
@@ -5500,6 +5500,10 @@ root_node = NodePath("../../..")
 libraries = {
 &"": SubResource("AnimationLibrary_7ppep")
 }
+
+[node name="Flambo" parent="player" node_paths=PackedStringArray("mondongo") instance=ExtResource("23_xwobx")]
+position = Vector2(34, -31)
+mondongo = NodePath("..")
 
 [node name="Area efects" type="Node2D" parent="."]
 
@@ -5649,6 +5653,15 @@ position = Vector2(732, -3389)
 [node name="Slime8" parent="enemies/Slimes" instance=ExtResource("2_3mhv4")]
 position = Vector2(57, 193)
 
+[node name="Slime9" parent="enemies/Slimes" instance=ExtResource("2_3mhv4")]
+position = Vector2(-420, -2423)
+
+[node name="Slime10" parent="enemies/Slimes" instance=ExtResource("2_3mhv4")]
+position = Vector2(-801, -2449)
+
+[node name="Slime11" parent="enemies/Slimes" instance=ExtResource("2_3mhv4")]
+position = Vector2(-683, -2371)
+
 [node name="PapaRoberto\'s" type="Node2D" parent="enemies"]
 
 [node name="PapaRoberto" parent="enemies/PapaRoberto\'s" instance=ExtResource("16_o7ywo")]
@@ -5760,12 +5773,6 @@ position = Vector2(783, -4505)
 
 [node name="HealthPack17" parent="Map/health packs" instance=ExtResource("26_s6fi1")]
 position = Vector2(178, -5509)
-
-[node name="jump platforms" type="Node2D" parent="."]
-
-[node name="Flambo" parent="." node_paths=PackedStringArray("mondongo") instance=ExtResource("23_xwobx")]
-position = Vector2(1860, 72)
-mondongo = NodePath("../player")
 
 [connection signal="body_entered" from="Area efects/trigger zoom camera" to="." method="_on_trigger_zoom_camera_body_entered"]
 [connection signal="body_exited" from="Area efects/trigger zoom camera" to="." method="_on_trigger_zoom_camera_body_exited"]

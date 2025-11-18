@@ -10,7 +10,7 @@ extends CharacterBody2D
 @export_group("Comportamiento")
 @export var offset_seguimiento: Vector2 = Vector2(45, -40) 
 @export var velocidad_seguimiento: float = 5.0 
-@export var meta_carga: int = 5
+@export var meta_carga: int = 1
 
 # --- Variables Internas ---
 var enemigos_derrotados: int = 0

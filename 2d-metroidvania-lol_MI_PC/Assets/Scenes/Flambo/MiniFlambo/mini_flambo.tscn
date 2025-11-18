@@ -49,15 +49,16 @@ animations = [{
 [sub_resource type="CircleShape2D" id="CircleShape2D_bf5is"]
 radius = 12.0415945
 
-[node name="MiniFlambo" type="Area2D" groups=["Skills", "projectile"]]
+[node name="MiniFlambo" type="Area2D" groups=["projectile"]]
+collision_layer = 8
+collision_mask = 16
 script = ExtResource("1_fx4er")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(-44, -4)
 scale = Vector2(0.24, 0.25609756)
 sprite_frames = SubResource("SpriteFrames_vuuq5")
-frame = 3
-frame_progress = 0.5126718
+frame_progress = 0.9411327
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_bf5is")
