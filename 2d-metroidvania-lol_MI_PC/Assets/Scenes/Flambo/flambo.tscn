@@ -138,6 +138,7 @@ position = Vector2(0, 1)
 shape = SubResource("RectangleShape2D_k787g")
 
 [node name="RangoAtaque" type="Area2D" parent="."]
+collision_mask = 255
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="RangoAtaque"]
 shape = SubResource("CircleShape2D_i7tig")
