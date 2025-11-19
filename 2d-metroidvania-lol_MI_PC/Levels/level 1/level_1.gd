@@ -1,15 +1,17 @@
 extends Node2D
+class_name level1
 
 @onready var touch_controls = $Controles/touch_controls
 
-@export var player: CharacterBody2D
 @export var pause_menu: CanvasLayer
 @export var death_menu: CanvasLayer
 
 @onready var animation_player: AnimationPlayer = $player/Camera2D/AnimationPlayer
-@onready var mago := $Mago2
 
+@onready var boss_walls: TileMapLayer = $TileMaps/BossWalls
 
+@onready var player: CharacterBody2D = $player
+@onready var mini_map: CanvasLayer = $MiniMap
 
 
 
@@ -18,7 +20,9 @@ func _physics_process(delta: float) -> void:
 	
 	pass
 func _ready():
-#	mago.connect("test_case", Callable(self, "_on_mago_test_case"))
+
+	boss_walls.visible = false
+	boss_walls.collision_enabled = false
 
 	if player and death_menu:
 		player.died.connect(_on_player_died)
@@ -28,19 +32,15 @@ func _ready():
 
 	print("🟩 level_1 listo")
 	touch_controls.pause_pressed.connect(_on_pause_button_pressed)
-
-
-func _on_mago_test_case():
-	print("La señal del mago llegó. Activando ruleta...")
-
 	
+	if mini_map and player:
+		mini_map.player_node = player
+		pass
 	
-
 
 func _on_player_died() -> void:
 	print("💀 Jugador murió - Mostrando death menu")
 	death_menu.show_death("¡HAS MUERTO!")
-
 
 func _on_pause_button_pressed():
 	print("🟢 Señal recibida en level_1 → abrir menú")
