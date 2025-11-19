@@ -2,13 +2,13 @@ extends EnemyFlying
 class_name Bat
 
 # --- Propiedades específicas del murciélago ---
-@export var patrol_speed: float = 40.0
+@export var patrol_speed: float = 60.0
 @export var dive_speed: float = 260.0
 @export var retreat_speed: float = 180.0
 @export var attack_cooldown: float = 1.5
 @export var charge_time: float = 0.5
 @export var flip_cooldown: float = 0.4
-@export var dive_duration: float = 1.5
+@export var dive_duration: float = 2.0
 @export var wave_amp: float = 40.0          # amplitud de la onda EXTRA (además del hover)
 @export var wave_freq_ms: float = 400.0     # periodo de la onda (ms)
 @export var kick_strength: float = 180.0    # fuerza del impulso vertical
