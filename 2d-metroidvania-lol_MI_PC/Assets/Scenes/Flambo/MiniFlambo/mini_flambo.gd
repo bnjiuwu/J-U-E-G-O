@@ -1,45 +1,23 @@
-extends PlayerProjectile
-class_name MiniFlambo
+extends Area2D
 
-@export var max_distance: float = 600
-var start_position: Vector2
+@export var speed: float = 600.0
+@export var damage: int = 50 # ¡Hace bastante daño!
+
+var direction: Vector2 = Vector2.RIGHT
 
 func _ready():
-	start_position = global_position
-
-	if sprite:
-		sprite.play("default")
-
-	if not body_entered.is_connected(_on_body_entered):
-		body_entered.connect(_on_body_entered)
-	if not area_entered.is_connected(_on_area_entered):
-		area_entered.connect(_on_area_entered)
-
+	# Si la bala sale de la pantalla, se autodestruye
+	$VisibleOnScreenNotifier2D.screen_exited.connect(queue_free)
+	
+	# Por seguridad, se destruye sola a los 5 segundos si no salió de pantalla
+	await get_tree().create_timer(5.0).timeout
+	queue_free()
 
 func _physics_process(delta):
 	position += direction * speed * delta
-	rotation = direction.angle()
 
-	if global_position.distance_to(start_position) > max_distance:
-		queue_free()
-
-
-# ----------------------------
-# SOLO usar body_entered para detectar mapa, NO enemigos
-# ----------------------------
-func _on_body_entered(body: Node) -> void:
-	# Si toca mundo, no muere (porque skill atraviesa)
-	if body.is_in_group("world colition") or body is TileMapLayer:
-		return
-
-	# Si toca CUERPO de enemigo → ignorar (para evitar daño doble)
-	if body.is_in_group("enemy"):
-		return
-
-
-# ----------------------------
-# Hacer daño SOLO desde area_entered
-# ----------------------------
-func _on_area_entered(area: Area2D) -> void:
-	if area.get_parent().is_in_group("enemy"):
-		_apply_damage(area.get_parent())
+func set_direction(new_dir: Vector2):
+	direction = new_dir
+	# Girar el sprite según el ángulo
+	rotation = direction.angle() 
+	# O usa flip_h si prefieres no rotar el sprite completo

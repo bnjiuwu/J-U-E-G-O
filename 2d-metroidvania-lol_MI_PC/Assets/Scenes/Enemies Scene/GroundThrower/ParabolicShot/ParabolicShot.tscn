@@ -107,15 +107,13 @@ radius = 8.0
 collision_layer = 32
 collision_mask = 3
 script = ExtResource("1_sjlgd")
-damage = 34
+damage = 30
 lifetime = 3.0
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 scale = Vector2(1.2954546, 1.2954546)
 sprite_frames = SubResource("SpriteFrames_do1jg")
-animation = &"contact"
-frame = 3
-frame_progress = 1.0
+frame_progress = 0.8835953
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 rotation = 1.5707964

@@ -160,7 +160,7 @@ anti_aliasing = false
 
 [node name="GroundThrower" type="CharacterBody2D"]
 collision_layer = 16
-collision_mask = 9
+collision_mask = 11
 script = ExtResource("1_meoom")
 projectile_scene = ExtResource("2_m7s3h")
 max_health = 120
