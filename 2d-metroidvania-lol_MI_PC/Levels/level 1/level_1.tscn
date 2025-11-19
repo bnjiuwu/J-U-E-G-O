@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=4 uid="uid://c6n7qrlau6b0k"]
+[gd_scene load_steps=36 format=4 uid="uid://c6n7qrlau6b0k"]
 
 [ext_resource type="PackedScene" uid="uid://braj8a8ooxs4t" path="res://Assets/Scenes/Player/player.tscn" id="1_n0qsc"]
 [ext_resource type="Script" uid="uid://by4hegpiwf1wp" path="res://Levels/level 1/level_1.gd" id="1_r7d4j"]
@@ -19,10 +19,12 @@
 [ext_resource type="PackedScene" uid="uid://xoxuswob6rae" path="res://Assets/Scenes/Enemies Scene/Bat Scene/Bat.tscn" id="17_4l21d"]
 [ext_resource type="PackedScene" uid="uid://rqnm23qh8syg" path="res://Assets/Scenes/Enemies Scene/Mago Scene/Mago.tscn" id="18_dke4e"]
 [ext_resource type="PackedScene" uid="uid://nfjhoahtx3yq" path="res://Assets/Scenes/Enemies Scene/Aspid Scene/PrimalAspid.tscn" id="21_bq83f"]
-[ext_resource type="PackedScene" uid="uid://0mamhsycg67r" path="res://Assets/Scenes/Enemies Scene/GroundThrower/GroundThrower.tscn" id="21_xwobx"]
 [ext_resource type="PackedScene" uid="uid://6povpxr3u3k1" path="res://Assets/Scenes/Flambo/flambo.tscn" id="23_xwobx"]
+[ext_resource type="PackedScene" uid="uid://r6of1qds6lyu" path="res://Assets/Scenes/Enemies Scene/Golem Scene/golem.tscn" id="24_vn1ki"]
 [ext_resource type="PackedScene" uid="uid://b1p4vte40g50f" path="res://Assets/Scenes/Map Help/Jump Pad/Jump_Pad.tscn" id="26_7ppep"]
 [ext_resource type="PackedScene" uid="uid://jm3orlf4lfkm" path="res://Assets/Scenes/Map Help/Health pack/health pack.tscn" id="26_s6fi1"]
+[ext_resource type="Script" uid="uid://d1vbrfcgnb2xq" path="res://Assets/Scenes/Player/camera_shake.gd" id="27_cshak"]
+[ext_resource type="Script" uid="uid://dd5cwrve73mjs" path="res://Assets/Scenes/UI/boss_health_ui.gd" id="31_bossui"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_r7d4j"]
 texture = ExtResource("9_ib2b2")
@@ -5422,8 +5424,6 @@ script = ExtResource("1_r7d4j")
 player = NodePath("player")
 pause_menu = NodePath("PauseMenu")
 death_menu = NodePath("DeathMenu")
-[node name="level_1" type="Node2D"]
-script = ExtResource("1_gk84l")
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
 scroll_base_scale = Vector2(1.5, 1.5)
@@ -5474,7 +5474,7 @@ tile_map_data = PackedByteArray("AADb//7/AQAMAAgAAADb////AQAMAAkAAADc//7/AQANAAg
 tile_set = SubResource("TileSet_rfktq")
 
 [node name="player" parent="." instance=ExtResource("1_n0qsc")]
-position = Vector2(487, -6432)
+position = Vector2(-451, -6384)
 
 [node name="Camera2D" type="Camera2D" parent="player"]
 offset = Vector2(0, -25)
@@ -5483,6 +5483,7 @@ limit_enabled = false
 limit_smoothed = true
 position_smoothing_enabled = true
 rotation_smoothing_enabled = true
+script = ExtResource("27_cshak")
 
 [node name="Label2" type="Label" parent="player/Camera2D"]
 offset_left = -259.0
@@ -5534,6 +5535,42 @@ visible = false
 
 [node name="DeathMenu" parent="." instance=ExtResource("15_gdql1")]
 visible = false
+
+[node name="BossHUD" type="CanvasLayer" parent="."]
+
+[node name="BossHealthUI" type="Control" parent="BossHUD"]
+layout_mode = 3
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -240.0
+offset_top = 32.0
+offset_right = 240.0
+offset_bottom = 92.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("31_bossui")
+boss_path = NodePath("../../enemies/Golems/Golem")
+
+[node name="ValueLabel" type="Label" parent="BossHUD/BossHealthUI"]
+unique_name_in_owner = true
+layout_mode = 0
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -160.0
+offset_top = -20.0
+offset_right = 160.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("11_tetkf")
+theme_override_font_sizes/font_size = 28
+text = "0 / 0"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="enemies" type="Node2D" parent="."]
 
@@ -5597,9 +5634,6 @@ position = Vector2(-11, -3866)
 
 [node name="Mago5" parent="enemies/Magos" instance=ExtResource("18_dke4e")]
 position = Vector2(-188, -801)
-
-[node name="Mago6" parent="enemies/Magos" instance=ExtResource("18_dke4e")]
-position = Vector2(928, -6411)
 
 [node name="Mago7" parent="enemies/Magos" instance=ExtResource("18_dke4e")]
 position = Vector2(1267, -3254)
@@ -5678,8 +5712,13 @@ position = Vector2(-184, -1442)
 
 [node name="GroundThrower" type="Node2D" parent="enemies"]
 
-[node name="GroundThrower" parent="enemies/GroundThrower" instance=ExtResource("21_xwobx")]
-position = Vector2(-20, -6433)
+[node name="Golems" type="Node2D" parent="enemies"]
+
+[node name="Golem" parent="enemies/Golems" instance=ExtResource("24_vn1ki")]
+position = Vector2(1013, -6525)
+scale = Vector2(1.25, 1.25)
+max_health = 500
+contact_damage = 30
 
 [node name="Map" type="Node2D" parent="."]
 
@@ -5784,9 +5823,3 @@ position = Vector2(178, -5509)
 
 [connection signal="body_entered" from="Area efects/trigger zoom camera" to="." method="_on_trigger_zoom_camera_body_entered"]
 [connection signal="body_exited" from="Area efects/trigger zoom camera" to="." method="_on_trigger_zoom_camera_body_exited"]
-[node name="KintamaOwl" parent="." instance=ExtResource("22_xwobx")]
-position = Vector2(-362, 353)
-fly_speed = 90.0
-
-[node name="Golem" parent="." instance=ExtResource("23_xwobx")]
-position = Vector2(1235, 111)
