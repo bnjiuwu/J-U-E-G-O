@@ -2,10 +2,12 @@ extends EnemyGround
 class_name GroundThrower
 
 @export var speed: float = 40.0
-@export var attack_range: float = 300.0
-@export var fire_rate: float = 1.5
+@export var attack_range: float = 800.0
+@export var fire_rate: float = 0.7
 @export var projectile_scene: PackedScene
 
+@onready var floor_check: RayCast2D = $FloorCheck
+@onready var wall_check: RayCast2D = $WallCheck
 @onready var detection_zone: Area2D = $DetectionZone
 @onready var spawn_point: Node2D = $ProjectileSpawnPoint
 @onready var fire_cooldown: Timer = $FireCooldown
@@ -41,6 +43,7 @@ func ground_behavior(delta: float) -> void:
 	else:
 		patrol_behavior()
 
+	_update_directional_nodes()
 
 # ============================================================
 #   PATRULLA
@@ -48,8 +51,12 @@ func ground_behavior(delta: float) -> void:
 func patrol_behavior() -> void:
 	velocity.x = direction * speed
 
-	# Rebote simple contra paredes
-	if is_on_wall():
+	# Choca con pared → darse vuelta
+	if wall_check and wall_check.is_colliding():
+		flip_direction()
+
+	# Llega al borde de la plataforma → darse vuelta
+	if floor_check and is_on_floor() and not floor_check.is_colliding():
 		flip_direction()
 
 	is_attacking = false
@@ -100,6 +107,34 @@ func _fire_parabolic_shot() -> void:
 		proj.setup_parabola(player_target.global_position)
 
 	get_tree().current_scene.add_child(proj)
+
+func _update_directional_nodes() -> void:
+	var s :float= sign(direction)
+
+	# Raycast de pared
+	if wall_check:
+		wall_check.position.x = s * abs(wall_check.position.x)
+		wall_check.target_position.x = s * abs(wall_check.target_position.x)
+
+	# Raycast de piso
+	if floor_check:
+		floor_check.position.x = s * abs(floor_check.position.x)
+		# si FloorCheck también usa target_position:
+		if floor_check.target_position.x != 0.0:
+			floor_check.target_position.x = s * abs(floor_check.target_position.x)
+
+	# Punto de disparo
+	if spawn_point:
+		spawn_point.position.x = s * abs(spawn_point.position.x)
+
+	# Zona de detección
+	if detection_zone:
+		detection_zone.position.x = s * abs(detection_zone.position.x)
+		var shape := detection_zone.get_node_or_null("CollisionShape2D")
+		if shape:
+			shape.position.x = s * abs(shape.position.x)
+
+
 
 
 func _on_fire_cooldown_timeout() -> void:

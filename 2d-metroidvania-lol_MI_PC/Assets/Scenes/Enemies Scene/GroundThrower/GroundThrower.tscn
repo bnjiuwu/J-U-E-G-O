@@ -1,7 +1,8 @@
-[gd_scene load_steps=25 format=3 uid="uid://0mamhsycg67r"]
+[gd_scene load_steps=26 format=3 uid="uid://0mamhsycg67r"]
 
 [ext_resource type="Script" uid="uid://cn47r30wgldk0" path="res://Assets/Scenes/Enemies Scene/GroundThrower/ground_thrower.gd" id="1_meoom"]
 [ext_resource type="Texture2D" uid="uid://cvjcnx3hgfxyg" path="res://Assets/sprites/objects type shi/Explotions/explotion-f.png" id="2_cg88j"]
+[ext_resource type="PackedScene" uid="uid://b2megm18b2uj3" path="res://Assets/Scenes/Enemies Scene/GroundThrower/ParabolicShot/ParabolicShot.tscn" id="2_m7s3h"]
 [ext_resource type="Texture2D" uid="uid://cnf2n3ev2g2g" path="res://Assets/sprites/objects type shi/bullet/bullet.png" id="3_m7s3h"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_3jh8a"]
@@ -141,8 +142,8 @@ size = Vector2(20, 42.5)
 size = Vector2(30, 51)
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_8abki"]
-radius = 116.0
-height = 560.0
+radius = 208.0
+height = 876.0
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kfrfa"]
 bg_color = Color(0.83571845, 1.732707e-06, 4.813075e-07, 1)
@@ -161,11 +162,13 @@ anti_aliasing = false
 collision_layer = 16
 collision_mask = 11
 script = ExtResource("1_meoom")
+projectile_scene = ExtResource("2_m7s3h")
+max_health = 120
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 scale = Vector2(4.3769526, 2.205286)
 sprite_frames = SubResource("SpriteFrames_cg88j")
-animation = &"death"
+animation = &"idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 4.25)
@@ -192,7 +195,14 @@ debug_color = Color(0.57061076, 0.38975906, 1, 0.41960785)
 [node name="ProjectileSpawnPoint" type="Node2D" parent="."]
 position = Vector2(21, -14)
 
-[node name="Timer" type="Timer" parent="."]
+[node name="WallCheck" type="RayCast2D" parent="."]
+target_position = Vector2(16, 0)
+
+[node name="FloorCheck" type="RayCast2D" parent="."]
+target_position = Vector2(16, 30)
+
+[node name="FireCooldown" type="Timer" parent="."]
+wait_time = 0.7
 
 [node name="HealthBar" type="ProgressBar" parent="."]
 offset_left = -18.0
@@ -216,3 +226,4 @@ vertical_alignment = 1
 [connection signal="body_entered" from="Hitbox" to="." method="_on_hitbox_body_entered"]
 [connection signal="body_entered" from="DetectionZone" to="." method="_on_detection_zone_body_entered"]
 [connection signal="body_exited" from="DetectionZone" to="." method="_on_detection_zone_body_exited"]
+[connection signal="timeout" from="FireCooldown" to="." method="_on_fire_cooldown_timeout"]

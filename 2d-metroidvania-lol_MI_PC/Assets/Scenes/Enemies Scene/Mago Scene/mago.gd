@@ -98,7 +98,7 @@ func fire_magic() -> void:
 	var b = magic_ball_scene.instantiate()
 	b.global_position = spawn_point.global_position
 
-	var dir := (player_target.global_position - global_position).normalized()
+	var dir = (player_target.global_position - global_position).normalized()
 	b.set_direction(dir)
 
 	get_tree().current_scene.add_child(b)
