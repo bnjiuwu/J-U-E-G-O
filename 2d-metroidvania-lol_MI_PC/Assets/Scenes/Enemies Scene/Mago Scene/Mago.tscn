@@ -321,7 +321,7 @@ anti_aliasing = false
 
 [node name="Mago" type="CharacterBody2D" groups=["enemy"]]
 collision_layer = 16
-collision_mask = 11
+collision_mask = 9
 script = ExtResource("1_qlsdm")
 magic_ball_scene = ExtResource("2_artgm")
 max_health = 200

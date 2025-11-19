@@ -43,9 +43,17 @@ func _physics_process(delta: float) -> void:
 	if is_dead:
 		return
 
+	# 🔁 ORIENTAR SPRITE SEGÚN direction
+	if sprite:
+		if sprite_faces_right:
+			# El sprite original mira a la derecha en el editor
+			sprite.flip_h = (direction == -1)
+		else:
+			# El sprite original mira a la izquierda en el editor
+			sprite.flip_h = (direction == 1)
+
 	enemy_behavior(delta)
 	update_animation()
-
 
 # =====================================================
 #          PARA SOBRESCRIBIR EN HIJOS
@@ -95,6 +103,7 @@ func take_damage(amount: int):
 	_update_health_bar()
 
 	if health <= 0:
+		health = 0
 		die()
 		return
 
@@ -107,12 +116,15 @@ func die():
 	is_dead = true
 	velocity = Vector2.ZERO
 	
-	GlobalsSignals.enemy_defeated.emit()
 	if sprite.sprite_frames.has_animation("death"):
 		sprite.play("death")
+
 	else:
 		queue_free()
-
+		
+	await sprite.animation_finished
+	GlobalsSignals.enemy_defeated.emit()
+	
 	if health_bar:
 		health_bar.visible = false
 

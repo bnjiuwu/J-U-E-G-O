@@ -1,31 +1,63 @@
-[gd_scene load_steps=10 format=3 uid="uid://c5rhhi5dbb2e8"]
+[gd_scene load_steps=13 format=3 uid="uid://c5rhhi5dbb2e8"]
 
 [ext_resource type="Script" uid="uid://bnhlaqbsi8rxt" path="res://Assets/Scenes/Flambo/MiniFlambo/mini_flambo.gd" id="1_fx4er"]
-[ext_resource type="Texture2D" uid="uid://bqn57k4iq3sxg" path="res://Assets/sprites/Flambo/MiniFlambo/MiniFlambo-removebg-preview (1).png" id="2_b1qkc"]
+[ext_resource type="Texture2D" uid="uid://c11xwiorf8n6o" path="res://Assets/sprites/objects type shi/bullet/unnamed (1).png" id="2_fx4er"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_kcl8l"]
-atlas = ExtResource("2_b1qkc")
-region = Rect2(0, 0, 140, 166)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_il5ke"]
-atlas = ExtResource("2_b1qkc")
-region = Rect2(140, 0, 140, 166)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_p6u8w"]
-atlas = ExtResource("2_b1qkc")
-region = Rect2(268, 3, 232, 174)
+[sub_resource type="AtlasTexture" id="AtlasTexture_fx4er"]
+atlas = ExtResource("2_fx4er")
+region = Rect2(512, 384, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_e6pp5"]
-atlas = ExtResource("2_b1qkc")
-region = Rect2(0, 164, 500, 164)
+atlas = ExtResource("2_fx4er")
+region = Rect2(544, 384, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_xktdo"]
-atlas = ExtResource("2_b1qkc")
-region = Rect2(0, 328, 500, 164)
+atlas = ExtResource("2_fx4er")
+region = Rect2(576, 384, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vuuq5"]
+atlas = ExtResource("2_fx4er")
+region = Rect2(608, 384, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b1qkc"]
+atlas = ExtResource("2_fx4er")
+region = Rect2(352, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kcl8l"]
+atlas = ExtResource("2_fx4er")
+region = Rect2(384, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_il5ke"]
+atlas = ExtResource("2_fx4er")
+region = Rect2(416, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_p6u8w"]
+atlas = ExtResource("2_fx4er")
+region = Rect2(448, 0, 32, 32)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_vuuq5"]
 animations = [{
 "frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fx4er")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_e6pp5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xktdo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vuuq5")
+}],
+"loop": false,
+"name": &"contact",
+"speed": 14.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b1qkc")
+}, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_kcl8l")
 }, {
@@ -34,33 +66,34 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_p6u8w")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_e6pp5")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_xktdo")
 }],
 "loop": true,
 "name": &"default",
-"speed": 5.0
+"speed": 13.0
 }]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_bf5is"]
 radius = 12.0415945
 
-[node name="MiniFlambo" type="Area2D" groups=["projectile"]]
+[node name="MiniFlambo" type="Area2D" groups=["Skills", "projectile"]]
 collision_layer = 8
 collision_mask = 16
 script = ExtResource("1_fx4er")
+speed = 450.0
+damage = 40
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-position = Vector2(-44, -4)
-scale = Vector2(0.24, 0.25609756)
+scale = Vector2(1.4350002, 1.5312502)
 sprite_frames = SubResource("SpriteFrames_vuuq5")
-frame_progress = 0.9411327
+animation = &"contact"
+frame = 3
+frame_progress = 1.0
+flip_h = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_bf5is")
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
