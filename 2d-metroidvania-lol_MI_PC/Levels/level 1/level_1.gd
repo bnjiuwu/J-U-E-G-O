@@ -3,13 +3,15 @@ class_name level1
 
 @onready var touch_controls = $Controles/touch_controls
 
-@export var player: CharacterBody2D
 @export var pause_menu: CanvasLayer
 @export var death_menu: CanvasLayer
 
 @onready var animation_player: AnimationPlayer = $player/Camera2D/AnimationPlayer
 
-@onready var boss_walls: TileMapLayer = $BossWalls # o TileMapLayer
+@onready var boss_walls: TileMapLayer = $TileMaps/BossWalls
+
+@onready var player: CharacterBody2D = $player
+@onready var mini_map: CanvasLayer = $MiniMap
 
 
 
@@ -30,7 +32,11 @@ func _ready():
 
 	print("🟩 level_1 listo")
 	touch_controls.pause_pressed.connect(_on_pause_button_pressed)
-
+	
+	if mini_map and player:
+		mini_map.player_node = player
+		pass
+	
 
 func _on_player_died() -> void:
 	print("💀 Jugador murió - Mostrando death menu")
