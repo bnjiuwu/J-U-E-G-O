@@ -69,12 +69,14 @@ script = ExtResource("1_4w3qo")
 
 [node name="Panel" type="ColorRect" parent="."]
 modulate = Color(1, 1, 1, 0)
+z_index = 16
 offset_right = 960.0
 offset_bottom = 480.0
 color = Color(0, 0, 0, 0.7019608)
 
 [node name="VBox" type="VBoxContainer" parent="."]
 modulate = Color(1, 1, 1, 0)
+z_index = 16
 offset_left = 340.0
 offset_top = 116.0
 offset_right = 640.0
