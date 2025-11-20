@@ -1,4 +1,4 @@
-[gd_scene load_steps=44 format=4 uid="uid://c6n7qrlau6b0k"]
+[gd_scene load_steps=43 format=4 uid="uid://c6n7qrlau6b0k"]
 
 [ext_resource type="PackedScene" uid="uid://braj8a8ooxs4t" path="res://Assets/Scenes/Player/player.tscn" id="1_n0qsc"]
 [ext_resource type="Script" uid="uid://by4hegpiwf1wp" path="res://Levels/level 1/level_1.gd" id="1_r7d4j"]
@@ -11402,33 +11402,6 @@ physics_layer_1/collision_mask = 3
 sources/1 = SubResource("TileSetAtlasSource_rf6l5")
 sources/0 = SubResource("TileSetAtlasSource_vumwe")
 
-[sub_resource type="Animation" id="Animation_tetkf"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("player/Camera2D/Label2:theme_override_colors/font_color")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(1, 1, 1, 0)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("player/Camera2D/Label2:theme_override_colors/font_shadow_color")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(0, 0, 0, 0)]
-}
-
 [sub_resource type="Animation" id="Animation_vn1ki"]
 resource_name = "fade"
 length = 5.0
@@ -11460,7 +11433,6 @@ tracks/1/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_7ppep"]
 _data = {
-&"RESET": SubResource("Animation_tetkf"),
 &"fade": SubResource("Animation_vn1ki")
 }
 
@@ -11576,7 +11548,6 @@ offset_right = 40.0
 offset_bottom = 40.0
 
 [node name="touch_controls" parent="Controles" instance=ExtResource("12_cq012")]
-visible = false
 
 [node name="Area efects" type="Node2D" parent="."]
 
@@ -11732,14 +11703,8 @@ position = Vector2(732, -3389)
 [node name="Slime8" parent="enemies/Slimes" instance=ExtResource("2_3mhv4")]
 position = Vector2(57, 193)
 
-[node name="Slime9" parent="enemies/Slimes" instance=ExtResource("2_3mhv4")]
-position = Vector2(-420, -2423)
-
 [node name="Slime10" parent="enemies/Slimes" instance=ExtResource("2_3mhv4")]
 position = Vector2(-801, -2449)
-
-[node name="Slime11" parent="enemies/Slimes" instance=ExtResource("2_3mhv4")]
-position = Vector2(-683, -2371)
 
 [node name="PapaRoberto\'s" type="Node2D" parent="enemies"]
 
@@ -11759,6 +11724,9 @@ position = Vector2(167, -5562)
 
 [node name="GroundThrower2" parent="enemies/GroundThrower" instance=ExtResource("21_xwobx")]
 position = Vector2(-1136, -933)
+
+[node name="GroundThrower3" parent="enemies/GroundThrower" instance=ExtResource("21_xwobx")]
+position = Vector2(-382, -2376)
 
 [node name="Map Interactives" type="Node2D" parent="."]
 
@@ -11901,6 +11869,7 @@ visible = false
 [node name="DeathMenu" parent="." instance=ExtResource("15_gdql1")]
 visible = false
 
+[connection signal="animation_finished" from="player/Camera2D/AnimationPlayer" to="." method="_on_animation_finished"]
 [connection signal="body_entered" from="Area efects/trigger zoom camera" to="." method="_on_trigger_zoom_camera_body_entered"]
 [connection signal="body_exited" from="Area efects/trigger zoom camera" to="." method="_on_trigger_zoom_camera_body_exited"]
 [connection signal="body_entered" from="Area efects/BossRoomTrigger" to="Area efects/BossRoomTrigger" method="_on_body_entered"]
