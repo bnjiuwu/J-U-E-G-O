@@ -1,7 +1,7 @@
 [gd_scene load_steps=8 format=3 uid="uid://b1p4vte40g50f"]
 
 [ext_resource type="Script" uid="uid://ywvu2d0e3f0l" path="res://Assets/Scenes/Map Help/Jump Pad/jump_pad.gd" id="1_e3ewh"]
-[ext_resource type="Texture2D" uid="uid://dpky1jqrvodoy" path="res://icon.svg" id="2_gx632"]
+[ext_resource type="Texture2D" uid="uid://71wg4ncdwi3o" path="res://Assets/sprites/objects type shi/cow (1).png" id="2_gx632"]
 
 [sub_resource type="Animation" id="Animation_qk5kq"]
 length = 0.001
@@ -31,7 +31,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.1, 0.3, 0.4),
 "transitions": PackedFloat32Array(0.5, 2, 0.5, 2),
 "update": 0,
-"values": [Vector2(1, 1), Vector2(1, 0.625), Vector2(1, 1.15625), Vector2(1, 1)]
+"values": [Vector2(1, 1), Vector2(1, 0.625), Vector2(1, 1.155), Vector2(1, 1)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_diin2"]
@@ -41,15 +41,17 @@ _data = {
 }
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_l1k4n"]
-size = Vector2(122, 118)
+size = Vector2(350.00012, 230.00009)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3oko6"]
-size = Vector2(122, 27.5)
+size = Vector2(352.50006, 55.00003)
 
 [node name="JumpPad" type="Node2D" groups=["world colition"]]
+scale = Vector2(0.4, 0.4)
 script = ExtResource("1_e3ewh")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, -12)
 texture = ExtResource("2_gx632")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Sprite2D"]
@@ -60,16 +62,21 @@ libraries = {
 speed_scale = 1.5
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
+collision_layer = 0
+collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(2.4999995, 29.999996)
+scale = Vector2(0.99999946, 0.99999946)
 shape = SubResource("RectangleShape2D_l1k4n")
 
 [node name="Area2D" type="Area2D" parent="."]
-collision_layer = 64
+collision_layer = 0
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-position = Vector2(0, -58)
+position = Vector2(1.2499945, -69.99999)
+scale = Vector2(0.99999946, 0.99999946)
 shape = SubResource("RectangleShape2D_3oko6")
 debug_color = Color(1, 0, 0, 0.52156866)
 
