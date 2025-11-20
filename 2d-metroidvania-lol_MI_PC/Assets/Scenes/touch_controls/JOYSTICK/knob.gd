@@ -77,7 +77,7 @@ func calculateVector() -> void:
 		parent.posVector.y = 0.0
 
 	# ====== TUS INPUTS DISCRETOS (movimiento + mirar arriba) ======
-
+	"""
 	# Movimiento horizontal
 	if parent.posVector.x < -0.2:
 		Input.action_press("move_left")
@@ -94,7 +94,7 @@ func calculateVector() -> void:
 		Input.action_press("look_up")
 	else:
 		Input.action_release("look_up")
-
+"""
 
 func _on_button_button_down() -> void:
 	# Puedes dejarlo vacío si quieres, ya no es necesario

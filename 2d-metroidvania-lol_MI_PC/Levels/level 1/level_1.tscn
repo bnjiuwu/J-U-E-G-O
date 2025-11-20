@@ -11507,7 +11507,7 @@ position = Vector2(157, -77)
 mondongo = NodePath("../player")
 
 [node name="player" parent="." instance=ExtResource("1_n0qsc")]
-position = Vector2(-3, 11)
+position = Vector2(7, 13)
 
 [node name="Camera2D" type="Camera2D" parent="player"]
 offset = Vector2(0, -25)
@@ -11548,12 +11548,13 @@ offset_right = 40.0
 offset_bottom = 40.0
 
 [node name="touch_controls" parent="Controles" instance=ExtResource("12_cq012")]
+visible = false
 
 [node name="Area efects" type="Node2D" parent="."]
 
 [node name="trigger zoom camera" type="Area2D" parent="Area efects"]
 position = Vector2(-1519, -117)
-collision_layer = 128
+collision_layer = 0
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area efects/trigger zoom camera"]
@@ -11733,80 +11734,80 @@ position = Vector2(-382, -2376)
 [node name="jump platforms" type="Node2D" parent="Map Interactives"]
 
 [node name="JumpPad" parent="Map Interactives/jump platforms" instance=ExtResource("26_7ppep")]
-position = Vector2(-727, -4800)
-scale = Vector2(0.4, 0.4)
+position = Vector2(-726, -4814)
+scale = Vector2(0.1, 0.1)
 
 [node name="JumpPad2" parent="Map Interactives/jump platforms" instance=ExtResource("26_7ppep")]
-position = Vector2(580, -4619)
-scale = Vector2(0.4, 0.4)
+position = Vector2(574, -4638)
+scale = Vector2(0.1, 0.1)
 
 [node name="JumpPad3" parent="Map Interactives/jump platforms" instance=ExtResource("26_7ppep")]
-position = Vector2(-559, -2332)
-scale = Vector2(0.4, 0.4)
+position = Vector2(-559, -2350)
+scale = Vector2(0.1, 0.1)
 
 [node name="JumpPad4" parent="Map Interactives/jump platforms" instance=ExtResource("26_7ppep")]
-position = Vector2(226, -1285)
-scale = Vector2(0.4, 0.4)
+position = Vector2(221, -1294)
+scale = Vector2(0.1, 0.1)
 
 [node name="JumpPad5" parent="Map Interactives/jump platforms" instance=ExtResource("26_7ppep")]
-position = Vector2(1848.9999, -2882)
-scale = Vector2(0.4, 0.4)
+position = Vector2(1848.9999, -2894)
+scale = Vector2(0.1, 0.1)
 
 [node name="JumpPad6" parent="Map Interactives/jump platforms" instance=ExtResource("26_7ppep")]
-position = Vector2(1826.9999, -810)
-scale = Vector2(0.4, 0.4)
+position = Vector2(1823.9999, -830)
+scale = Vector2(0.1, 0.1)
 
 [node name="JumpPad8" parent="Map Interactives/jump platforms" instance=ExtResource("26_7ppep")]
-position = Vector2(-907, -4230)
-scale = Vector2(0.4, 0.4)
+position = Vector2(-907, -4238)
+scale = Vector2(0.1, 0.1)
 
 [node name="JumpPad9" parent="Map Interactives/jump platforms" instance=ExtResource("26_7ppep")]
 position = Vector2(-911, -5293)
-scale = Vector2(0.4, 0.4)
+scale = Vector2(0.1, 0.1)
 
 [node name="JumpPad10" parent="Map Interactives/jump platforms" instance=ExtResource("26_7ppep")]
 position = Vector2(-596, -5677)
-scale = Vector2(0.4, 0.4)
+scale = Vector2(0.1, 0.1)
 
 [node name="JumpPad11" parent="Map Interactives/jump platforms" instance=ExtResource("26_7ppep")]
-position = Vector2(1298, 152)
-scale = Vector2(0.4, 0.4)
+position = Vector2(1305, 137)
+scale = Vector2(0.1, 0.1)
 
 [node name="JumpPad12" parent="Map Interactives/jump platforms" instance=ExtResource("26_7ppep")]
-position = Vector2(-221.00006, -5158)
-scale = Vector2(0.4, 0.4)
+position = Vector2(-221, -5166)
+scale = Vector2(0.1, 0.1)
 
 [node name="JumpPad7" parent="Map Interactives/jump platforms" instance=ExtResource("26_7ppep")]
-position = Vector2(-1623, -322)
-scale = Vector2(0.4, 0.4)
+position = Vector2(-1623, -334)
+scale = Vector2(0.1, 0.1)
 
 [node name="JumpPad13" parent="Map Interactives/jump platforms" instance=ExtResource("26_7ppep")]
-position = Vector2(1679.0001, -2278)
-scale = Vector2(0.4, 0.4)
+position = Vector2(1679, -2302)
+scale = Vector2(0.1, 0.1)
 
 [node name="JumpPad14" parent="Map Interactives/jump platforms" instance=ExtResource("26_7ppep")]
-position = Vector2(1292.9999, -1194)
-scale = Vector2(0.4, 0.4)
+position = Vector2(1293, -1198)
+scale = Vector2(0.1, 0.1)
 
 [node name="JumpPad15" parent="Map Interactives/jump platforms" instance=ExtResource("26_7ppep")]
-position = Vector2(-124.00012, -3104)
-scale = Vector2(0.4, 0.4)
+position = Vector2(-135, -3118)
+scale = Vector2(0.1, 0.1)
 
 [node name="JumpPad16" parent="Map Interactives/jump platforms" instance=ExtResource("26_7ppep")]
-position = Vector2(1476, -3185)
-scale = Vector2(0.4, 0.4)
+position = Vector2(1468, -3182)
+scale = Vector2(0.1, 0.1)
 
 [node name="JumpPad17" parent="Map Interactives/jump platforms" instance=ExtResource("26_7ppep")]
-position = Vector2(1283, -3752)
-scale = Vector2(0.4, 0.4)
+position = Vector2(1294, -3774)
+scale = Vector2(0.1, 0.1)
 
 [node name="JumpPad18" parent="Map Interactives/jump platforms" instance=ExtResource("26_7ppep")]
-position = Vector2(-435, -6324)
-scale = Vector2(0.4, 0.4)
+position = Vector2(-443, -6351)
+scale = Vector2(0.1, 0.1)
 
 [node name="JumpPad19" parent="Map Interactives/jump platforms" instance=ExtResource("26_7ppep")]
-position = Vector2(1292, -6324)
-scale = Vector2(0.4, 0.4)
+position = Vector2(1292, -6349)
+scale = Vector2(0.1, 0.1)
 
 [node name="health packs" type="Node2D" parent="Map Interactives"]
 
@@ -11860,6 +11861,12 @@ position = Vector2(783, -4505)
 
 [node name="HealthPack17" parent="Map Interactives/health packs" instance=ExtResource("26_s6fi1")]
 position = Vector2(178, -5509)
+
+[node name="HealthPack18" parent="Map Interactives/health packs" instance=ExtResource("26_s6fi1")]
+position = Vector2(-222, -6552)
+
+[node name="HealthPack19" parent="Map Interactives/health packs" instance=ExtResource("26_s6fi1")]
+position = Vector2(1075, -6577)
 
 [node name="MiniMap" parent="." instance=ExtResource("26_vumwe")]
 

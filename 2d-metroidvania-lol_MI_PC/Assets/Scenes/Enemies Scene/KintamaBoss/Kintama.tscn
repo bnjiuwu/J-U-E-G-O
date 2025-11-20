@@ -188,7 +188,7 @@ animations = [{
 radius = 41.231056
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ojd21"]
-radius = 52.0
+radius = 49.010204
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_an5kn"]
 radius = 498.40146
@@ -213,6 +213,8 @@ script = ExtResource("1_uv04w")
 fly_speed = 300.0
 attack_duration = 1.5
 attack_cooldown = 3.0
+stalk_height = -180.0
+stalk_side_distance = 90.0
 max_health = 400
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
@@ -225,6 +227,7 @@ position = Vector2(0, 7)
 shape = SubResource("CircleShape2D_go24e")
 
 [node name="Hitbox" type="Area2D" parent="." groups=["enemy_hitbox"]]
+position = Vector2(0, 3)
 collision_layer = 16
 collision_mask = 2
 

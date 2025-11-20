@@ -1,6 +1,7 @@
 extends Area2D
 class_name BossRoomTrigger
 
+@onready var camera_2d: Camera2D = $"../../player/Camera2D"
 
 @export var boss_walls: TileMapLayer
 
@@ -24,6 +25,7 @@ func _on_body_entered(body: Node2D) -> void:
 	if not body.is_in_group("player"):
 		return
 
+	camera_2d.set_zoom(Vector2(1.0,1.0))
 	activated = true
 	print("🔥 BossRoomTrigger activado")
 
