@@ -60,6 +60,8 @@ collision_layer = 8
 collision_mask = 16
 script = ExtResource("1_bgd66")
 damage = 50
+hit_on_contact = false
+destroy_after_contact = false
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(-43.999996, -5.9999995)
