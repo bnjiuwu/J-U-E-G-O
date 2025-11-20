@@ -1,7 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://dtnijel5sygcw"]
+[gd_scene load_steps=8 format=3 uid="uid://dtnijel5sygcw"]
 
 [ext_resource type="Script" uid="uid://dd1vxc5v1n5oh" path="res://Assets/Scenes/Menu/menu.gd" id="1_3ymnh"]
 [ext_resource type="Texture2D" uid="uid://cjp40lu2vkmr4" path="res://Assets/images/menus/roberto_lol.png" id="2_bk0jr"]
+[ext_resource type="FontFile" uid="uid://dhhjcp1rxp6gj" path="res://Assets/Fonts/minecraft_font.ttf" id="3_2ytjf"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3ymnh"]
 bg_color = Color(0.609435, 0.593739, 0.578541, 0.454902)
@@ -54,25 +55,28 @@ theme_override_constants/separation = 13
 
 [node name="play" type="Button" parent="ColorRect/VBoxContainer"]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("3_2ytjf")
 theme_override_font_sizes/font_size = 50
 theme_override_styles/normal = SubResource("StyleBoxFlat_3ymnh")
 text = "JUGAR"
 
 [node name="options" type="Button" parent="ColorRect/VBoxContainer"]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("3_2ytjf")
 theme_override_font_sizes/font_size = 50
 theme_override_styles/normal = SubResource("StyleBoxFlat_3qr6s")
-text = "OPTIONS"
+text = " OPTIONS"
 
 [node name="multi" type="Button" parent="ColorRect/VBoxContainer"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 32
+theme_override_fonts/font = ExtResource("3_2ytjf")
+theme_override_font_sizes/font_size = 50
 theme_override_styles/normal = SubResource("StyleBoxFlat_bk0jr")
-text = "MULTIJUGADOR
-"
+text = "ONLINE"
 
 [node name="quit" type="Button" parent="ColorRect/VBoxContainer"]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("3_2ytjf")
 theme_override_font_sizes/font_size = 50
 theme_override_styles/normal = SubResource("StyleBoxFlat_j7r1e")
 text = "QUIT"

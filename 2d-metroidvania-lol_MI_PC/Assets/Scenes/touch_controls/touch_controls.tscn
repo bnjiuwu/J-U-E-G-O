@@ -33,28 +33,28 @@ position = Vector2(163, 368)
 [node name="Control" type="Node2D" parent="."]
 
 [node name="FIRE" type="TouchScreenButton" parent="Control"]
-position = Vector2(798, 318)
+position = Vector2(814, 319.00003)
 scale = Vector2(0.30232584, 0.23953493)
 texture_normal = ExtResource("3_165yt")
 shape = SubResource("CapsuleShape2D_v3deu")
 action = "attack"
 
 [node name="DASH" type="TouchScreenButton" parent="Control"]
-position = Vector2(688.00006, 410)
+position = Vector2(557.00006, 338.99997)
 scale = Vector2(0.73684204, 1.0166672)
 texture_normal = ExtResource("4_v3deu")
 shape = SubResource("RectangleShape2D_v3deu")
 action = "dash"
 
 [node name="JUMP" type="TouchScreenButton" parent="Control"]
-position = Vector2(669, 271)
+position = Vector2(677.00006, 268)
 scale = Vector2(0.25873014, 0.12063491)
 texture_normal = ExtResource("5_nytqx")
 shape = SubResource("CircleShape2D_nytqx")
 action = "jump"
 
 [node name="SKILL" type="TouchScreenButton" parent="Control"]
-position = Vector2(583, 327.00003)
+position = Vector2(700, 392)
 scale = Vector2(0.21666671, 0.15370373)
 texture_normal = ExtResource("6_nytqx")
 shape = SubResource("CircleShape2D_77qbl")
