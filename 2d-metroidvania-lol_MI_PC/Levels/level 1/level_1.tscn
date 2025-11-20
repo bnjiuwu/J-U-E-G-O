@@ -14,7 +14,7 @@
 [ext_resource type="FontFile" uid="uid://dhhjcp1rxp6gj" path="res://Assets/Fonts/minecraft_font.ttf" id="11_tetkf"]
 [ext_resource type="PackedScene" uid="uid://b2lni2j37kwvl" path="res://Assets/Scenes/touch_controls/touch_controls.tscn" id="12_cq012"]
 [ext_resource type="PackedScene" uid="uid://bu5ef6314c7ik" path="res://Assets/Scenes/Menu/PauseMenu/PauseMenu.tscn" id="12_hao24"]
-[ext_resource type="Script" uid="uid://dmqie6p017uf5" path="res://Levels/level 1/boss_room_trigger.gd" id="13_tetkf"]
+[ext_resource type="Script" uid="uid://ceepuvci2an32" path="res://Levels/level 1/boss_room_trigger.gd" id="13_tetkf"]
 [ext_resource type="PackedScene" uid="uid://ljb2k5q033bq" path="res://Assets/Scenes/Menu/Death Menu/DeathMenu.tscn" id="15_gdql1"]
 [ext_resource type="PackedScene" uid="uid://gbohe3bsoon2" path="res://Assets/Scenes/Enemies Scene/PapaRoberto Scene/PapaRoberto.tscn" id="16_o7ywo"]
 [ext_resource type="PackedScene" uid="uid://bbvjvjd6c7l7f" path="res://Assets/Scenes/Enemies Scene/KintamaBoss/Kintama.tscn" id="16_vn1ki"]
@@ -11541,14 +11541,12 @@ libraries = {
 }
 
 [node name="Controles" type="Control" parent="."]
-visible = false
 layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
 [node name="touch_controls" parent="Controles" instance=ExtResource("12_cq012")]
-visible = false
 
 [node name="Area efects" type="Node2D" parent="."]
 
