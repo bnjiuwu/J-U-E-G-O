@@ -1,0 +1,345 @@
+[gd_scene load_steps=45 format=3 uid="uid://b2wq6npi7xnw"]
+
+[ext_resource type="Script" uid="uid://cebed4p4g1njh" path="res://Assets/Scenes/Enemies Scene/Cangri Scene/cangri.gd" id="1_msuco"]
+[ext_resource type="Texture2D" uid="uid://doengv1oqh2d4" path="res://Assets/sprites/enemies/Cangri/idle cangri.png" id="2_idle"]
+[ext_resource type="Texture2D" uid="uid://dnyphufo72swa" path="res://Assets/sprites/enemies/Cangri/walk cangri.png" id="3_walk"]
+[ext_resource type="Texture2D" uid="uid://b6us15dwwjofb" path="res://Assets/sprites/enemies/Cangri/attack cangri.png" id="4_attack"]
+[ext_resource type="Texture2D" uid="uid://cw3ad082rw1bh" path="res://Assets/sprites/enemies/Cangri/death cangri.png" id="5_death"]
+[ext_resource type="Texture2D" uid="uid://bla412rqvl314" path="res://Assets/sprites/enemies/Cangri/Cangri proyectile/mitad.png" id="7_book_mid"]
+[ext_resource type="Texture2D" uid="uid://dlouoe8fn6qd3" path="res://Assets/sprites/enemies/Cangri/Cangri proyectile/final.png" id="8_book_end"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dsh4x"]
+atlas = ExtResource("4_attack")
+region = Rect2(26, 0, 158, 177)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hh7fo"]
+atlas = ExtResource("4_attack")
+region = Rect2(184, 0, 158, 177)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0n7xd"]
+atlas = ExtResource("4_attack")
+region = Rect2(342, 0, 158, 177)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5oogb"]
+atlas = ExtResource("4_attack")
+region = Rect2(26, 177, 158, 177)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xahwm"]
+atlas = ExtResource("4_attack")
+region = Rect2(184, 177, 158, 177)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dbvi5"]
+atlas = ExtResource("8_book_end")
+region = Rect2(0, 0, 169, 184)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vo5ug"]
+atlas = ExtResource("8_book_end")
+region = Rect2(169, 0, 169, 184)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hnite"]
+atlas = ExtResource("8_book_end")
+region = Rect2(338, 0, 169, 184)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8rbg4"]
+atlas = ExtResource("8_book_end")
+region = Rect2(507, 0, 169, 184)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7pw3k"]
+atlas = ExtResource("7_book_mid")
+region = Rect2(0, 0, 215, 184)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_a4kdd"]
+atlas = ExtResource("7_book_mid")
+region = Rect2(215, 0, 215, 184)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vewvi"]
+atlas = ExtResource("7_book_mid")
+region = Rect2(430, 0, 215, 184)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_auhyc"]
+atlas = ExtResource("8_book_end")
+region = Rect2(507, 0, 169, 184)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3gf8c"]
+atlas = ExtResource("8_book_end")
+region = Rect2(0, 184, 169, 184)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d878s"]
+atlas = ExtResource("8_book_end")
+region = Rect2(169, 184, 169, 184)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5g2af"]
+atlas = ExtResource("8_book_end")
+region = Rect2(338, 184, 169, 184)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wghlx"]
+atlas = ExtResource("8_book_end")
+region = Rect2(507, 184, 169, 184)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cangri_death_0"]
+atlas = ExtResource("5_death")
+region = Rect2(0, 0, 169, 184)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cangri_death_1"]
+atlas = ExtResource("5_death")
+region = Rect2(169, 0, 169, 184)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cangri_death_2"]
+atlas = ExtResource("5_death")
+region = Rect2(338, 0, 169, 184)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cangri_death_3"]
+atlas = ExtResource("5_death")
+region = Rect2(507, 0, 169, 184)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cangri_death_4"]
+atlas = ExtResource("5_death")
+region = Rect2(0, 184, 169, 184)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cangri_death_5"]
+atlas = ExtResource("5_death")
+region = Rect2(169, 184, 169, 184)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cangri_death_6"]
+atlas = ExtResource("5_death")
+region = Rect2(338, 184, 169, 184)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cangri_death_7"]
+atlas = ExtResource("5_death")
+region = Rect2(507, 184, 169, 184)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_q7jeo"]
+atlas = ExtResource("2_idle")
+region = Rect2(338, 125, 169, 132)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_do3nw"]
+atlas = ExtResource("2_idle")
+region = Rect2(0, 125, 169, 132)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dyxkb"]
+atlas = ExtResource("2_idle")
+region = Rect2(169, 125, 169, 132)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mpxkq"]
+atlas = ExtResource("3_walk")
+region = Rect2(20, 175, 213, 175)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_s28bu"]
+atlas = ExtResource("3_walk")
+region = Rect2(446, 0, 213, 175)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_m283n"]
+atlas = ExtResource("3_walk")
+region = Rect2(233, 0, 213, 175)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2m5h7"]
+atlas = ExtResource("3_walk")
+region = Rect2(446, 175, 213, 175)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_cangri"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dsh4x")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hh7fo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0n7xd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5oogb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xahwm")
+}],
+"loop": true,
+"name": &"attack",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dbvi5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vo5ug")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hnite")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8rbg4")
+}],
+"loop": true,
+"name": &"book",
+"speed": 4.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7pw3k")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_a4kdd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vewvi")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dbvi5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vo5ug")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hnite")
+}],
+"loop": true,
+"name": &"book_transform",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_auhyc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3gf8c")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_d878s")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5g2af")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wghlx")
+}],
+"loop": true,
+"name": &"contact",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cangri_death_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cangri_death_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cangri_death_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cangri_death_3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cangri_death_4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cangri_death_5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cangri_death_6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cangri_death_7")
+}],
+"loop": false,
+"name": &"death",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_q7jeo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_do3nw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dyxkb")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mpxkq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s28bu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_m283n")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2m5h7")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 8.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_0n7xd"]
+radius = 75.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_book"]
+size = Vector2(150, 70)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_detection"]
+radius = 520.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_8s4t4"]
+radius = 78.00641
+
+[node name="Cangri" type="CharacterBody2D" groups=["enemy"]]
+collision_layer = 16
+collision_mask = 11
+script = ExtResource("1_msuco")
+max_health = 600
+book_trigger_distance = 560.0
+book_speed = 520.0
+health_label_offset = Vector2(0, -220)
+
+[node name="Sprite" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, 10)
+scale = Vector2(0.85, 0.85)
+sprite_frames = SubResource("SpriteFrames_cangri")
+animation = &"death"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(1, 1)
+shape = SubResource("CircleShape2D_0n7xd")
+
+[node name="BookCollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(1, 1)
+shape = SubResource("RectangleShape2D_book")
+disabled = true
+
+[node name="DetectionZone" type="Area2D" parent="."]
+collision_layer = 16
+collision_mask = 11
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionZone"]
+position = Vector2(1, 1)
+shape = SubResource("CircleShape2D_detection")
+
+[node name="Hitbox" type="Area2D" parent="." groups=["enemy"]]
+collision_layer = 16
+collision_mask = 11
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+position = Vector2(1, 1)
+shape = SubResource("CircleShape2D_8s4t4")
+
+[node name="HealthLabel" type="Label" parent="."]
+unique_name_in_owner = true
+offset_top = -220.0
+offset_bottom = -220.0
+theme_override_font_sizes/font_size = 32
+text = "0 / 0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="VisibilityNotifier" type="VisibleOnScreenNotifier2D" parent="."]
+position = Vector2(-78, 102)
+rect = Rect2(-59, -240, 279, 197)
