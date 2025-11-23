@@ -1,4 +1,4 @@
-[gd_scene load_steps=44 format=4 uid="uid://c6n7qrlau6b0k"]
+[gd_scene load_steps=43 format=4 uid="uid://c6n7qrlau6b0k"]
 
 [ext_resource type="PackedScene" uid="uid://braj8a8ooxs4t" path="res://Assets/Scenes/Player/player.tscn" id="1_n0qsc"]
 [ext_resource type="Script" uid="uid://by4hegpiwf1wp" path="res://Levels/level 1/level_1.gd" id="1_r7d4j"]
@@ -26,7 +26,6 @@
 [ext_resource type="PackedScene" uid="uid://b1p4vte40g50f" path="res://Assets/Scenes/Map Help/Jump Pad/Jump_Pad.tscn" id="26_7ppep"]
 [ext_resource type="PackedScene" uid="uid://jm3orlf4lfkm" path="res://Assets/Scenes/Map Help/Health pack/health pack.tscn" id="26_s6fi1"]
 [ext_resource type="PackedScene" uid="uid://cov1bwx3ogxc6" path="res://Assets/Scenes/MiniMap/MiniMap.tscn" id="26_vumwe"]
-[ext_resource type="PackedScene" uid="uid://b60n4gdtp0md8" path="res://Assets/Scenes/Enemies Scene/Gude/Gude.tscn" id="27_s6fi1"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_r7d4j"]
 texture = ExtResource("9_ib2b2")
@@ -11878,9 +11877,6 @@ visible = false
 
 [node name="DeathMenu" parent="." instance=ExtResource("15_gdql1")]
 visible = false
-
-[node name="Gude" parent="." instance=ExtResource("27_s6fi1")]
-position = Vector2(-527, -59)
 
 [connection signal="animation_finished" from="player/Camera2D/AnimationPlayer" to="." method="_on_animation_finished"]
 [connection signal="body_entered" from="Area efects/trigger zoom camera" to="." method="_on_trigger_zoom_camera_body_entered"]
