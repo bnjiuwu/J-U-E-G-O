@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cdltfeauoa2ag"
-path="res://.godot/imported/flamo.png-92404fc44aceab091e175e830a6a6ef4.ctex"
+uid="uid://bghyunoh8hjjv"
+path="res://.godot/imported/Especial.png-93443a1d271504a40ee7d3ef925506a5.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/sprites/objects type shi/flamo.png"
-dest_files=["res://.godot/imported/flamo.png-92404fc44aceab091e175e830a6a6ef4.ctex"]
+source_file="res://Assets/sprites/objects type shi/Formal Controls/Especial.png"
+dest_files=["res://.godot/imported/Especial.png-93443a1d271504a40ee7d3ef925506a5.ctex"]
 
 [params]
 

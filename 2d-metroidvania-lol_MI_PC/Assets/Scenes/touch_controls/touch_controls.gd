@@ -5,16 +5,37 @@ signal pause_pressed
 const SETTINGS_PATH := "user://settings.cfg"
 const SECTION_GAMEPLAY := "gameplay"
 
+const FORMAL_SKINS := {
+	"jump": preload("res://Assets/sprites/objects type shi/Formal Controls/Salto.png"),
+	"fire": preload("res://Assets/sprites/objects type shi/Formal Controls/Disparo.png"),
+	"dash": preload("res://Assets/sprites/objects type shi/Formal Controls/Dash.png"),
+	"skill": preload("res://Assets/sprites/objects type shi/Formal Controls/Especial.png"),
+	"pause": preload("res://Assets/sprites/objects type shi/Formal Controls/Pause formal.png"),
+	"joystick_knob": preload("res://Assets/sprites/objects type shi/Formal Controls/Joistyck.png"),
+}
+
+const MEME_SKINS := {
+	"jump": preload("res://Assets/sprites/objects type shi/saltoBoton.png"),
+	"fire": preload("res://Assets/sprites/objects type shi/fireBoton.png"),
+	"dash": preload("res://Assets/sprites/objects type shi/dashBoton.png"),
+	"skill": preload("res://Assets/sprites/objects type shi/SkillButton.png"),
+	"pause": preload("res://Assets/sprites/objects type shi/pause boton.png"),
+	"joystick_knob": preload("res://Assets/sprites/objects type shi/palta.png"),
+}
+
 @onready var button_pause: TouchScreenButton = $pause_button
 @onready var joystick: Node2D = $Joystick
-@onready var fire_button: TouchScreenButton = $Control/FIRE
-@onready var dash_button: TouchScreenButton = $Control/DASH
-@onready var jump_button: TouchScreenButton = $Control/JUMP
-@onready var skill_button: TouchScreenButton = $Control/SKILL
+@onready var joystick_knob: Sprite2D = $Joystick/Knob
+@onready var fire_button: TouchScreenButton = $Control/FireButton
+@onready var dash_button: TouchScreenButton = $Control/DashButton
+@onready var jump_button: TouchScreenButton = $Control/JumpButton
+@onready var skill_button: TouchScreenButton = $Control/SkillButton
 
 var _default_positions: Dictionary = {}
 var _mirrored_positions: Dictionary = {}
 var _left_handed: bool = false
+var _skin_is_meme: bool = false
+var _force_visible_on_desktop: bool = false
 
 func _ready() -> void:
 	add_to_group("touch_controls_ui")
@@ -23,6 +44,8 @@ func _ready() -> void:
 	_cache_positions()
 	_load_layout_setting()
 	_apply_layout(_left_handed)
+	_set_initial_skin()
+	_set_initial_visibility()
 
 func _on_pause_button_pressed() -> void:
 	print("🟡 Pausa tocada")
@@ -32,13 +55,21 @@ func set_left_handed(enabled: bool) -> void:
 	_left_handed = enabled
 	_apply_layout(_left_handed)
 
+func set_skin_mode(use_meme_mode: bool) -> void:
+	_skin_is_meme = use_meme_mode
+	_apply_button_skins()
+
+func set_force_visible_on_desktop(enabled: bool) -> void:
+	_force_visible_on_desktop = enabled
+	_apply_visibility()
+
 func _cache_positions() -> void:
 	_default_positions = {
 		"Joystick": joystick.position,
-		"FIRE": fire_button.position,
-		"DASH": dash_button.position,
-		"JUMP": jump_button.position,
-		"SKILL": skill_button.position,
+		"FireButton": fire_button.position,
+		"DashButton": dash_button.position,
+		"JumpButton": jump_button.position,
+		"SkillButton": skill_button.position,
 	}
 	_cache_mirrored_positions()
 
@@ -58,10 +89,10 @@ func _apply_layout(use_left_handed: bool) -> void:
 	if source.is_empty():
 		return
 	joystick.position = source.get("Joystick", joystick.position)
-	fire_button.position = source.get("FIRE", fire_button.position)
-	dash_button.position = source.get("DASH", dash_button.position)
-	jump_button.position = source.get("JUMP", jump_button.position)
-	skill_button.position = source.get("SKILL", skill_button.position)
+	fire_button.position = source.get("FireButton", fire_button.position)
+	dash_button.position = source.get("DashButton", dash_button.position)
+	jump_button.position = source.get("JumpButton", jump_button.position)
+	skill_button.position = source.get("SkillButton", skill_button.position)
 
 func _load_layout_setting() -> void:
 	var cfg := ConfigFile.new()
@@ -71,3 +102,39 @@ func _load_layout_setting() -> void:
 func _on_viewport_size_changed() -> void:
 	_cache_mirrored_positions()
 	_apply_layout(_left_handed)
+
+func _set_initial_skin() -> void:
+	var meme_enabled := GlobalsSignals.get_meme_mode()
+	if not GlobalsSignals.meme_mode_changed.is_connected(_on_meme_mode_changed):
+		GlobalsSignals.meme_mode_changed.connect(_on_meme_mode_changed)
+	set_skin_mode(meme_enabled)
+
+func _set_initial_visibility() -> void:
+	var forced_desktop := GlobalsSignals.get_touch_controls_on_desktop()
+	if not GlobalsSignals.touch_controls_visibility_changed.is_connected(_on_touch_controls_visibility_changed):
+		GlobalsSignals.touch_controls_visibility_changed.connect(_on_touch_controls_visibility_changed)
+	set_force_visible_on_desktop(forced_desktop)
+
+func _apply_button_skins() -> void:
+	var atlas := MEME_SKINS if _skin_is_meme else FORMAL_SKINS
+	jump_button.texture_normal = atlas["jump"]
+	jump_button.texture_pressed = atlas["jump"]
+	fire_button.texture_normal = atlas["fire"]
+	fire_button.texture_pressed = atlas["fire"]
+	dash_button.texture_normal = atlas["dash"]
+	dash_button.texture_pressed = atlas["dash"]
+	skill_button.texture_normal = atlas["skill"]
+	skill_button.texture_pressed = atlas["skill"]
+	button_pause.texture_normal = atlas["pause"]
+	button_pause.texture_pressed = atlas["pause"]
+	if is_instance_valid(joystick_knob):
+		joystick_knob.texture = atlas["joystick_knob"]
+
+func _apply_visibility() -> void:
+	visible = _force_visible_on_desktop or OS.has_feature("mobile")
+
+func _on_meme_mode_changed(enabled: bool) -> void:
+	set_skin_mode(enabled)
+
+func _on_touch_controls_visibility_changed(enabled: bool) -> void:
+	set_force_visible_on_desktop(enabled)

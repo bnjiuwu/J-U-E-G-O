@@ -11543,14 +11543,12 @@ libraries = {
 }
 
 [node name="Controles" type="Control" parent="."]
-visible = false
 layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
 [node name="touch_controls" parent="Controles" instance=ExtResource("12_cq012")]
-visible = false
 
 [node name="Area efects" type="Node2D" parent="."]
 
