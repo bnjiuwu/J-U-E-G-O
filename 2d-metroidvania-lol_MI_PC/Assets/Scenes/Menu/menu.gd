@@ -1,21 +1,40 @@
 extends Control
 
+const MENU_MUSIC: AudioStream = preload("res://Assets/Scenes/Menu/audio/Las Aventuras de Roberto Mondongo.mp3")
+
+@onready var _music_player: AudioStreamPlayer = $MusicPlayer
+
+func _ready() -> void:
+	_play_menu_music()
+
 #=== jugar ===
 func _on_play_pressed() -> void:
+	_stop_menu_music()
 	get_tree().change_scene_to_file("res://Levels/level 1/level_1.tscn")
-	pass # Replace with function body.
 
 #==== options ====
 func _on_options_pressed() -> void:
+	_stop_menu_music()
 	get_tree().change_scene_to_file("res://Assets/Scenes/Menu/opciones/options.tscn")
-	pass # Replace with function body.
 
 #==== Q U I T ======
 func _on_quit_pressed() -> void:
+	_stop_menu_music()
 	get_tree().quit()
-	pass # Replace with function body.
 
 
 func _on_multi_pressed() -> void:
+	_stop_menu_music()
 	get_tree().change_scene_to_file("res://Multijugador/Escenas/Multijugador.tscn")
-	pass # Replace with function body.
+
+func _play_menu_music() -> void:
+	if not _music_player:
+		return
+	if _music_player.stream != MENU_MUSIC:
+		_music_player.stream = MENU_MUSIC
+	if not _music_player.playing:
+		_music_player.play()
+
+func _stop_menu_music() -> void:
+	if _music_player and _music_player.playing:
+		_music_player.stop()

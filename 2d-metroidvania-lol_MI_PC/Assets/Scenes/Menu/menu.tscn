@@ -26,6 +26,9 @@ grow_vertical = 2
 focus_mode = 2
 script = ExtResource("1_3ymnh")
 
+[node name="MusicPlayer" type="AudioStreamPlayer" parent="." ]
+bus = "Music"
+
 [node name="ColorRect" type="ColorRect" parent="."]
 layout_mode = 0
 offset_right = 958.0
