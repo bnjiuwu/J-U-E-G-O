@@ -11508,10 +11508,10 @@ position = Vector2(157, -77)
 mondongo = NodePath("../player")
 
 [node name="player" parent="." instance=ExtResource("1_n0qsc")]
-position = Vector2(3, 33)
+position = Vector2(-29, -43)
 
 [node name="Camera2D" type="Camera2D" parent="player"]
-position = Vector2(-8, 6)
+position = Vector2(-2, 0)
 rotation = 0.7853982
 offset = Vector2(0, -25)
 zoom = Vector2(1.5, 1.5)
@@ -11606,7 +11606,7 @@ position = Vector2(-1257, -5483)
 position = Vector2(-1007, -5024)
 
 [node name="Bat8" parent="enemies/Bats" instance=ExtResource("17_4l21d")]
-position = Vector2(-749, -5881)
+position = Vector2(-842, -5824)
 
 [node name="Bat9" parent="enemies/Bats" instance=ExtResource("17_4l21d")]
 position = Vector2(1642, -628)

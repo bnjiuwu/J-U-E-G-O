@@ -47,7 +47,7 @@ func _on_area_entered(area: Area2D) -> void:
 	if has_hit:
 		return
 
-	if area.is_in_group("enemy") and _apply_damage(area):
+	if _is_enemy_area(area) and _apply_damage(area):
 		impact_effect()
 
 # --- Daño genérico ---
@@ -70,6 +70,9 @@ func _apply_damage(target: Node) -> bool:
 		return true
 
 	return false
+
+func _is_enemy_area(area: Area2D) -> bool:
+	return area.is_in_group("enemy") or area.is_in_group("enemy_hitbox")
 
 # --- Efecto de impacto ---
 func impact_effect() -> void:

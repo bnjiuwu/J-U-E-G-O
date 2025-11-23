@@ -1,19 +1,42 @@
-[gd_scene load_steps=36 format=3 uid="uid://b60n4gdtp0md8"]
+[gd_scene load_steps=42 format=3 uid="uid://b60n4gdtp0md8"]
 
 [ext_resource type="Script" uid="uid://cs0mia65okmoj" path="res://Assets/Scenes/Enemies Scene/Gude/gude.gd" id="1_v4eh7"]
 [ext_resource type="Texture2D" uid="uid://nrth2hkfambo" path="res://Assets/sprites/enemies/Gude/Attack.png" id="2_5efl1"]
+[ext_resource type="Texture2D" uid="uid://dmuwvd52fcw3e" path="res://Assets/sprites/enemies/Gude/Attack_Two.png" id="2_e3km5"]
+[ext_resource type="Texture2D" uid="uid://usis3mt81w2y" path="res://Assets/sprites/enemies/Gude/Explosion.png" id="3_10khh"]
 [ext_resource type="Texture2D" uid="uid://cspeskbe1tihf" path="res://Assets/sprites/enemies/Gude/Death.png" id="3_e3km5"]
+[ext_resource type="Texture2D" uid="uid://bmbr6o4v4sqne" path="res://Assets/sprites/enemies/Gude/Reload.png" id="4_4p1gg"]
 [ext_resource type="Texture2D" uid="uid://cppsqieoc6qtd" path="res://Assets/sprites/enemies/Gude/GUDE_IDLE.png" id="4_10khh"]
 [ext_resource type="Texture2D" uid="uid://cqwvqydli0t5o" path="res://Assets/sprites/enemies/Gude/Gude_Walk.png" id="5_4p1gg"]
 [ext_resource type="FontFile" uid="uid://dhhjcp1rxp6gj" path="res://Assets/Fonts/minecraft_font.ttf" id="6_5efl1"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_3k4ij"]
-atlas = ExtResource("2_5efl1")
-region = Rect2(0, 0, 166, 153)
+[sub_resource type="AtlasTexture" id="AtlasTexture_0tvb1"]
+atlas = ExtResource("2_e3km5")
+region = Rect2(0, 151, 166, 151)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_8t11t"]
-atlas = ExtResource("2_5efl1")
-region = Rect2(166, 0, 166, 153)
+[sub_resource type="AtlasTexture" id="AtlasTexture_mcqc5"]
+atlas = ExtResource("2_e3km5")
+region = Rect2(166, 151, 166, 151)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e041v"]
+atlas = ExtResource("3_10khh")
+region = Rect2(0, 166, 250, 166)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3k4ij"]
+atlas = ExtResource("4_4p1gg")
+region = Rect2(1, 10, 250, 159)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7jios"]
+atlas = ExtResource("4_4p1gg")
+region = Rect2(250, 0, 250, 166)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vapnw"]
+atlas = ExtResource("4_4p1gg")
+region = Rect2(0, 331, 250, 147)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0ip1i"]
+atlas = ExtResource("4_4p1gg")
+region = Rect2(250, 331, 250, 147)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_f43j5"]
 atlas = ExtResource("2_5efl1")
@@ -23,17 +46,9 @@ region = Rect2(332, 0, 166, 153)
 atlas = ExtResource("2_5efl1")
 region = Rect2(0, 153, 166, 153)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_gop8f"]
-atlas = ExtResource("2_5efl1")
-region = Rect2(166, 153, 166, 153)
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_d53hf"]
 atlas = ExtResource("2_5efl1")
 region = Rect2(332, 153, 166, 153)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_qvtth"]
-atlas = ExtResource("2_5efl1")
-region = Rect2(0, 320, 166, 160)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_v4eh7"]
 atlas = ExtResource("3_e3km5")
@@ -107,11 +122,41 @@ region = Rect2(332, 163, 166, 163)
 animations = [{
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_0tvb1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mcqc5")
+}],
+"loop": true,
+"name": &"ATTACK",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_e041v")
+}],
+"loop": false,
+"name": &"Bum",
+"speed": 7.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_3k4ij")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_8t11t")
+"texture": SubResource("AtlasTexture_7jios")
 }, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vapnw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0ip1i")
+}],
+"loop": false,
+"name": &"Reload",
+"speed": 7.0
+}, {
+"frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_f43j5")
 }, {
@@ -119,17 +164,11 @@ animations = [{
 "texture": SubResource("AtlasTexture_no6if")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_gop8f")
-}, {
-"duration": 1.0,
 "texture": SubResource("AtlasTexture_d53hf")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_qvtth")
 }],
 "loop": false,
 "name": &"attack",
-"speed": 15.0
+"speed": 8.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -202,7 +241,7 @@ animations = [{
 size = Vector2(60, 84.5)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_5m4qq"]
-radius = 113.03097
+radius = 30.149628
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_e3km5"]
 bg_color = Color(0.83571845, 1.732707e-06, 4.813075e-07, 1)
@@ -218,27 +257,29 @@ corner_radius_bottom_left = 2
 anti_aliasing = false
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5efl1"]
-size = Vector2(438, 42)
+size = Vector2(438, 84)
 
-[node name="Gude" type="CharacterBody2D"]
+[node name="Gude" type="CharacterBody2D" groups=["enemy"]]
 script = ExtResource("1_v4eh7")
-max_health = 30
+max_health = 300
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(-1.9073486e-06, 9.536743e-07)
 scale = Vector2(0.5512048, 0.54545456)
 sprite_frames = SubResource("SpriteFrames_51nig")
 animation = &"attack"
-frame = 6
-frame_progress = 0.58002037
+frame = 2
+frame_progress = 1.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 0.75)
 shape = SubResource("RectangleShape2D_v4eh7")
 
-[node name="HitBox" type="Area2D" parent="."]
+[node name="Hitbox" type="Area2D" parent="." groups=["enemy_hitbox"]]
+collision_layer = 16
+collision_mask = 2
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
 shape = SubResource("CircleShape2D_5m4qq")
 debug_color = Color(0.83314943, 0.37929574, 0.2595622, 0.41960785)
 
@@ -272,6 +313,6 @@ collision_layer = 0
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionZone"]
-position = Vector2(247, 0)
+position = Vector2(2, 0)
 shape = SubResource("RectangleShape2D_5efl1")
 debug_color = Color(0.6205848, 0.37470156, 0.96057934, 0.41960785)
