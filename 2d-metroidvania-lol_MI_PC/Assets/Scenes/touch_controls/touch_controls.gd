@@ -5,23 +5,20 @@ signal pause_pressed
 const SETTINGS_PATH := "user://settings.cfg"
 const SECTION_GAMEPLAY := "gameplay"
 
-const FORMAL_SKINS := {
-	"jump": preload("res://Assets/sprites/objects type shi/Formal Controls/Salto.png"),
-	"fire": preload("res://Assets/sprites/objects type shi/Formal Controls/Disparo.png"),
-	"dash": preload("res://Assets/sprites/objects type shi/Formal Controls/Dash.png"),
-	"skill": preload("res://Assets/sprites/objects type shi/Formal Controls/Especial.png"),
-	"pause": preload("res://Assets/sprites/objects type shi/Formal Controls/Pause formal.png"),
-	"joystick_knob": preload("res://Assets/sprites/objects type shi/Formal Controls/Joistyck.png"),
-}
+const FORMAL_JUMP_TEXTURE: Texture2D = preload("res://Assets/sprites/objects type shi/Formal Controls/Salto.png")
+const FORMAL_FIRE_TEXTURE: Texture2D = preload("res://Assets/sprites/objects type shi/Formal Controls/Disparo.png")
+const FORMAL_DASH_TEXTURE: Texture2D = preload("res://Assets/sprites/objects type shi/Formal Controls/Dash.png")
+const FORMAL_SKILL_TEXTURE: Texture2D = preload("res://Assets/sprites/objects type shi/Formal Controls/Especial.png")
+const FORMAL_PAUSE_TEXTURE: Texture2D = preload("res://Assets/sprites/objects type shi/Formal Controls/Pause formal.png")
+const FORMAL_JOYSTICK_TEXTURE: Texture2D = preload("res://Assets/sprites/objects type shi/Formal Controls/Joistyck.png")
 
-const MEME_SKINS := {
-	"jump": preload("res://Assets/sprites/objects type shi/saltoBoton.png"),
-	"fire": preload("res://Assets/sprites/objects type shi/fireBoton.png"),
-	"dash": preload("res://Assets/sprites/objects type shi/dashBoton.png"),
-	"skill": preload("res://Assets/sprites/objects type shi/SkillButton.png"),
-	"pause": preload("res://Assets/sprites/objects type shi/pause boton.png"),
-	"joystick_knob": preload("res://Assets/sprites/objects type shi/palta.png"),
-}
+const MEME_JUMP_TEXTURE: Texture2D = preload("res://Assets/sprites/objects type shi/saltoBoton.png")
+const MEME_FIRE_TEXTURE: Texture2D = preload("res://Assets/sprites/objects type shi/fireBoton.png")
+const MEME_DASH_TEXTURE: Texture2D = preload("res://Assets/sprites/objects type shi/dashBoton.png")
+const MEME_SKILL_TEXTURE: Texture2D = preload("res://Assets/sprites/objects type shi/SkillButton.png")
+const MEME_PAUSE_TEXTURE: Texture2D = preload("res://Assets/sprites/objects type shi/pause boton.png")
+const MEME_JOYSTICK_TEXTURE: Texture2D = preload("res://Assets/sprites/objects type shi/palta.png")
+
 
 @onready var button_pause: TouchScreenButton = $pause_button
 @onready var joystick: Node2D = $Joystick
@@ -116,19 +113,39 @@ func _set_initial_visibility() -> void:
 	set_force_visible_on_desktop(forced_desktop)
 
 func _apply_button_skins() -> void:
-	var atlas := MEME_SKINS if _skin_is_meme else FORMAL_SKINS
-	jump_button.texture_normal = atlas["jump"]
-	jump_button.texture_pressed = atlas["jump"]
-	fire_button.texture_normal = atlas["fire"]
-	fire_button.texture_pressed = atlas["fire"]
-	dash_button.texture_normal = atlas["dash"]
-	dash_button.texture_pressed = atlas["dash"]
-	skill_button.texture_normal = atlas["skill"]
-	skill_button.texture_pressed = atlas["skill"]
-	button_pause.texture_normal = atlas["pause"]
-	button_pause.texture_pressed = atlas["pause"]
+	var jump_texture: Texture2D
+	var fire_texture: Texture2D
+	var dash_texture: Texture2D
+	var skill_texture: Texture2D
+	var pause_texture: Texture2D
+	var joystick_texture: Texture2D
+	if _skin_is_meme:
+		jump_texture = MEME_JUMP_TEXTURE
+		fire_texture = MEME_FIRE_TEXTURE
+		dash_texture = MEME_DASH_TEXTURE
+		skill_texture = MEME_SKILL_TEXTURE
+		pause_texture = MEME_PAUSE_TEXTURE
+		joystick_texture = MEME_JOYSTICK_TEXTURE
+	else:
+		jump_texture = FORMAL_JUMP_TEXTURE
+		fire_texture = FORMAL_FIRE_TEXTURE
+		dash_texture = FORMAL_DASH_TEXTURE
+		skill_texture = FORMAL_SKILL_TEXTURE
+		pause_texture = FORMAL_PAUSE_TEXTURE
+		joystick_texture = FORMAL_JOYSTICK_TEXTURE
+	_set_button_visuals(jump_button, jump_texture)
+	_set_button_visuals(fire_button, fire_texture)
+	_set_button_visuals(dash_button, dash_texture)
+	_set_button_visuals(skill_button, skill_texture)
+	button_pause.texture_normal = pause_texture
+	button_pause.texture_pressed = pause_texture
 	if is_instance_valid(joystick_knob):
-		joystick_knob.texture = atlas["joystick_knob"]
+		joystick_knob.texture = joystick_texture
+
+func _set_button_visuals(button: TouchScreenButton, texture: Texture2D) -> void:
+	button.texture_normal = texture
+	button.texture_pressed = texture
+	# Scales remain defined in the scene so layout stays consistent across skins.
 
 func _apply_visibility() -> void:
 	visible = _force_visible_on_desktop or OS.has_feature("mobile")
