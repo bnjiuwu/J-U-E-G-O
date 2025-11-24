@@ -18,6 +18,8 @@ const MEME_DASH_TEXTURE: Texture2D = preload("res://Assets/sprites/objects type 
 const MEME_SKILL_TEXTURE: Texture2D = preload("res://Assets/sprites/objects type shi/SkillButton.png")
 const MEME_PAUSE_TEXTURE: Texture2D = preload("res://Assets/sprites/objects type shi/pause boton.png")
 const MEME_JOYSTICK_TEXTURE: Texture2D = preload("res://Assets/sprites/objects type shi/palta.png")
+const MEME_DASH_OFFSET := Vector2(0.0, 32.0)
+const MEME_PAUSE_POSITION := Vector2(60.0, 20.0)
 
 
 @onready var button_pause: TouchScreenButton = $pause_button
@@ -28,8 +30,11 @@ const MEME_JOYSTICK_TEXTURE: Texture2D = preload("res://Assets/sprites/objects t
 @onready var jump_button: TouchScreenButton = $Control/JumpButton
 @onready var skill_button: TouchScreenButton = $Control/SkillButton
 
-var _default_positions: Dictionary = {}
-var _mirrored_positions: Dictionary = {}
+var _default_positions: Dictionary[String, Vector2] = {}
+var _mirrored_positions: Dictionary[String, Vector2] = {}
+var _button_default_scales: Dictionary[StringName, Vector2] = {}
+var _formal_button_sizes: Dictionary[StringName, Vector2] = {}
+var _pause_default_position: Vector2 = Vector2.ZERO
 var _left_handed: bool = false
 var _skin_is_meme: bool = false
 var _force_visible_on_desktop: bool = false
@@ -39,6 +44,7 @@ func _ready() -> void:
 	button_pause.pressed.connect(_on_pause_button_pressed)
 	get_viewport().size_changed.connect(_on_viewport_size_changed)
 	_cache_positions()
+	_pause_default_position = button_pause.position
 	_load_layout_setting()
 	_apply_layout(_left_handed)
 	_set_initial_skin()
@@ -55,6 +61,7 @@ func set_left_handed(enabled: bool) -> void:
 func set_skin_mode(use_meme_mode: bool) -> void:
 	_skin_is_meme = use_meme_mode
 	_apply_button_skins()
+	_apply_layout(_left_handed)
 
 func set_force_visible_on_desktop(enabled: bool) -> void:
 	_force_visible_on_desktop = enabled
@@ -68,7 +75,31 @@ func _cache_positions() -> void:
 		"JumpButton": jump_button.position,
 		"SkillButton": skill_button.position,
 	}
+	_cache_default_scales()
 	_cache_mirrored_positions()
+
+func _cache_default_scales() -> void:
+	_button_default_scales.clear()
+	_button_default_scales[fire_button.name] = fire_button.scale
+	_button_default_scales[dash_button.name] = dash_button.scale
+	_button_default_scales[jump_button.name] = jump_button.scale
+	_button_default_scales[skill_button.name] = skill_button.scale
+	_button_default_scales[button_pause.name] = button_pause.scale
+	_cache_formal_target_sizes()
+
+func _cache_formal_target_sizes() -> void:
+	_formal_button_sizes.clear()
+	_formal_button_sizes[fire_button.name] = _compute_target_size(FORMAL_FIRE_TEXTURE, fire_button.name)
+	_formal_button_sizes[dash_button.name] = _compute_target_size(FORMAL_DASH_TEXTURE, dash_button.name)
+	_formal_button_sizes[jump_button.name] = _compute_target_size(FORMAL_JUMP_TEXTURE, jump_button.name)
+	_formal_button_sizes[skill_button.name] = _compute_target_size(FORMAL_SKILL_TEXTURE, skill_button.name)
+	_formal_button_sizes[button_pause.name] = _compute_target_size(FORMAL_PAUSE_TEXTURE, button_pause.name)
+
+func _compute_target_size(texture: Texture2D, button_name: StringName) -> Vector2:
+	if not texture:
+		return Vector2.ONE
+	var default_scale: Vector2 = _button_default_scales.get(button_name, Vector2.ONE)
+	return texture.get_size() * default_scale
 
 func _cache_mirrored_positions() -> void:
 	var viewport_width: float = float(get_viewport().size.x)
@@ -87,9 +118,13 @@ func _apply_layout(use_left_handed: bool) -> void:
 		return
 	joystick.position = source.get("Joystick", joystick.position)
 	fire_button.position = source.get("FireButton", fire_button.position)
-	dash_button.position = source.get("DashButton", dash_button.position)
+	var dash_position: Vector2 = source.get("DashButton", dash_button.position)
+	if _skin_is_meme:
+		dash_position += MEME_DASH_OFFSET
+	dash_button.position = dash_position
 	jump_button.position = source.get("JumpButton", jump_button.position)
 	skill_button.position = source.get("SkillButton", skill_button.position)
+	button_pause.position = MEME_PAUSE_POSITION if _skin_is_meme else _pause_default_position
 
 func _load_layout_setting() -> void:
 	var cfg := ConfigFile.new()
@@ -137,15 +172,35 @@ func _apply_button_skins() -> void:
 	_set_button_visuals(fire_button, fire_texture)
 	_set_button_visuals(dash_button, dash_texture)
 	_set_button_visuals(skill_button, skill_texture)
-	button_pause.texture_normal = pause_texture
-	button_pause.texture_pressed = pause_texture
+	_set_button_visuals(button_pause, pause_texture)
 	if is_instance_valid(joystick_knob):
 		joystick_knob.texture = joystick_texture
 
 func _set_button_visuals(button: TouchScreenButton, texture: Texture2D) -> void:
 	button.texture_normal = texture
 	button.texture_pressed = texture
-	# Scales remain defined in the scene so layout stays consistent across skins.
+	if not texture:
+		return
+	if _skin_is_meme:
+		var target_size: Vector2 = _formal_button_sizes.get(
+			button.name,
+			texture.get_size() * _button_default_scales.get(button.name, button.scale)
+		)
+		var uniform_target_side: float = min(target_size.x, target_size.y)
+		var uniform_target: Vector2 = Vector2(uniform_target_side, uniform_target_side)
+		button.scale = _compute_uniform_scale(texture, uniform_target)
+	else:
+		var default_scale: Vector2 = _button_default_scales.get(button.name, button.scale)
+		button.scale = default_scale
+
+func _compute_uniform_scale(texture: Texture2D, target_size: Vector2) -> Vector2:
+	if target_size == Vector2.ZERO:
+		return Vector2.ONE
+	var texture_size := texture.get_size()
+	if texture_size == Vector2.ZERO:
+		return Vector2.ONE
+	var factor: float = min(target_size.x / texture_size.x, target_size.y / texture_size.y)
+	return Vector2(factor, factor)
 
 func _apply_visibility() -> void:
 	visible = _force_visible_on_desktop or OS.has_feature("mobile")

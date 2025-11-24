@@ -26,8 +26,6 @@ position = Vector2(175, 367)
 [node name="Control" type="Node2D" parent="."]
 
 [node name="FireButton" type="TouchScreenButton" parent="Control"]
-
-[node name="FIRE" type="TouchScreenButton" parent="Control"]
 position = Vector2(770, 300)
 scale = Vector2(0.32, 0.32)
 texture_normal = ExtResource("3_165yt")
