@@ -1,4 +1,4 @@
-[gd_scene load_steps=45 format=3 uid="uid://b2wq6npi7xnw"]
+[gd_scene load_steps=46 format=3 uid="uid://b2wq6npi7xnw"]
 
 [ext_resource type="Script" uid="uid://cebed4p4g1njh" path="res://Assets/Scenes/Enemies Scene/Cangri Scene/cangri.gd" id="1_msuco"]
 [ext_resource type="Texture2D" uid="uid://doengv1oqh2d4" path="res://Assets/sprites/enemies/Cangri/idle cangri.png" id="2_idle"]
@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://cw3ad082rw1bh" path="res://Assets/sprites/enemies/Cangri/death cangri.png" id="5_death"]
 [ext_resource type="Texture2D" uid="uid://bla412rqvl314" path="res://Assets/sprites/enemies/Cangri/Cangri proyectile/mitad.png" id="7_book_mid"]
 [ext_resource type="Texture2D" uid="uid://dlouoe8fn6qd3" path="res://Assets/sprites/enemies/Cangri/Cangri proyectile/final.png" id="8_book_end"]
+[ext_resource type="PackedScene" uid="uid://bhrv71mk66cyf" path="res://Assets/Scenes/Enemies Scene/Cangri Scene/BookProjectile/BookProjectile.tscn" id="9_book_projectile"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_dsh4x"]
 atlas = ExtResource("4_attack")
@@ -154,7 +155,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_xahwm")
 }],
-"loop": true,
+"loop": false,
 "name": &"attack",
 "speed": 10.0
 }, {
@@ -171,7 +172,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_8rbg4")
 }],
-"loop": true,
+"loop": false,
 "name": &"book",
 "speed": 4.0
 }, {
@@ -194,7 +195,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_hnite")
 }],
-"loop": true,
+"loop": false,
 "name": &"book_transform",
 "speed": 8.0
 }, {
@@ -214,7 +215,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_wghlx")
 }],
-"loop": true,
+"loop": false,
 "name": &"contact",
 "speed": 5.0
 }, {
@@ -257,7 +258,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_dyxkb")
 }],
-"loop": true,
+"loop": false,
 "name": &"idle",
 "speed": 10.0
 }, {
@@ -274,7 +275,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_2m5h7")
 }],
-"loop": true,
+"loop": false,
 "name": &"walk",
 "speed": 12.0
 }]
@@ -301,14 +302,13 @@ chase_speed = 200.0
 book_trigger_distance = 560.0
 book_speed = 750.0
 health_label_offset = Vector2(0, -220)
+homing_book_scene = ExtResource("9_book_projectile")
 
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
 position = Vector2(0, 10)
 scale = Vector2(0.85, 0.85)
 sprite_frames = SubResource("SpriteFrames_cangri")
-animation = &"death"
-frame = 7
-frame_progress = 1.0
+animation = &"walk"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(1, 1)

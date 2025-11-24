@@ -6,7 +6,9 @@ signal boss_health_changed(current: int, max: int, boss_name: String)
 signal boss_died(boss_name: String)
 signal boss_visibility_changed(is_visible: bool)
 
-enum State { IDLE, WALK, BOOK_TRANSFORM, BOOK_CHARGE, BOOK_IMPACT, RECOVER, DEATH }
+enum State { IDLE, WALK, BOOK_TRANSFORM, BOOK_CHARGE, BOOK_IMPACT, BOOK_SUMMON, RECOVER, DEATH }
+
+const HOMING_BOOK_COUNT := 2
 
 @export var boss_name: String = "CANGRI"
 @export var player_group: StringName = &"player"
@@ -32,6 +34,15 @@ enum State { IDLE, WALK, BOOK_TRANSFORM, BOOK_CHARGE, BOOK_IMPACT, RECOVER, DEAT
 @export var ghost_on_death: bool = true
 @export var death_float_height: float = -24.0
 @export var death_float_speed: float = 12.0
+@export var homing_book_scene: PackedScene
+@export var homing_book_trigger_distance: float = 900.0
+@export var homing_book_min_distance: float = 260.0
+@export var homing_book_cooldown: float = 6.0
+@export var homing_book_windup: float = 0.35
+@export var homing_book_pair_gap: float = 0.08
+@export var homing_book_recover: float = 0.6
+@export var homing_book_spawn_offset: Vector2 = Vector2(80, -40)
+@export var homing_book_vertical_spacing: float = 24.0
 
 var _state: State = State.IDLE
 var _direction: int = 1
@@ -43,6 +54,10 @@ var _book_cooldown_timer: float = 0.0
 var _is_dying: bool = false
 var _boss_visible: bool = false
 var _book_form_active: bool = false
+var _homing_cooldown_timer: float = 0.0
+var _next_homing_spawn_time: float = 0.0
+var _homing_books_spawned: int = 0
+var _summon_recover_time: float = -1.0
 
 @onready var _sprite: AnimatedSprite2D = $Sprite if has_node("Sprite") else null
 @onready var _detection: Area2D = $DetectionZone if has_node("DetectionZone") else null
@@ -83,6 +98,7 @@ func _physics_process(delta: float) -> void:
 	var is_dead := _state == State.DEATH
 	if not is_dead:
 		_book_cooldown_timer = max(0.0, _book_cooldown_timer - delta)
+		_homing_cooldown_timer = max(0.0, _homing_cooldown_timer - delta)
 		_apply_gravity(delta)
 		_state_time += delta
 		_update_target_reference()
@@ -97,6 +113,8 @@ func _physics_process(delta: float) -> void:
 				_process_book_charge(delta)
 			State.BOOK_IMPACT:
 				_process_book_impact(delta)
+			State.BOOK_SUMMON:
+				_process_book_summon(delta)
 			State.RECOVER:
 				_process_recover(delta)
 	else:
@@ -118,6 +136,9 @@ func _apply_gravity(delta: float) -> void:
 func _process_idle(delta: float) -> void:
 	velocity.x = 0.0
 	_wander_timer -= delta
+	if _target and _can_launch_homing_books():
+		_enter_state(State.BOOK_SUMMON)
+		return
 	if _target and _can_start_book_attack():
 		_enter_state(State.BOOK_TRANSFORM)
 		return
@@ -140,6 +161,9 @@ func _process_walk(delta: float) -> void:
 			freeze_for_target = true
 		else:
 			_update_direction_towards_target()
+		if _can_launch_homing_books():
+			_enter_state(State.BOOK_SUMMON)
+			return
 		if _can_start_book_attack():
 			_enter_state(State.BOOK_TRANSFORM)
 			return
@@ -168,6 +192,31 @@ func _process_book_charge(delta: float) -> void:
 func _process_book_impact(delta: float) -> void:
 	velocity = Vector2.ZERO
 	if _state_time >= contact_recovery_delay:
+		_enter_state(State.RECOVER)
+
+func _process_book_summon(delta: float) -> void:
+	velocity = Vector2.ZERO
+	if _target == null or not is_instance_valid(_target):
+		_enter_state(State.RECOVER)
+		return
+	var pair_gap := maxf(homing_book_pair_gap, 0.0)
+	var min_gap := pair_gap if pair_gap > 0.0 else 0.0001
+	while _homing_books_spawned < HOMING_BOOK_COUNT and _state_time >= _next_homing_spawn_time:
+		var spawn_index := _homing_books_spawned
+		var side := -1 if spawn_index == 0 else 1
+		var vertical_sign := -1 if spawn_index == 0 else 1
+		var spawned := _spawn_homing_book(side, vertical_sign)
+		if spawned:
+			_homing_books_spawned += 1
+			if _homing_books_spawned >= HOMING_BOOK_COUNT:
+				_summon_recover_time = _state_time + homing_book_recover
+			else:
+				_next_homing_spawn_time += min_gap
+		else:
+			_homing_books_spawned = HOMING_BOOK_COUNT
+			_summon_recover_time = _state_time + homing_book_recover
+	var finished := _summon_recover_time > 0.0 and _state_time >= _summon_recover_time
+	if finished:
 		_enter_state(State.RECOVER)
 
 func _process_recover(delta: float) -> void:
@@ -206,6 +255,16 @@ func _enter_state(new_state: State) -> void:
 			_book_form_active = false
 			_set_book_collision(false)
 			_play_anim("idle")
+		State.BOOK_SUMMON:
+			velocity = Vector2.ZERO
+			_book_form_active = false
+			_set_book_collision(false)
+			_face_target()
+			_homing_books_spawned = 0
+			_next_homing_spawn_time = homing_book_windup
+			_homing_cooldown_timer = homing_book_cooldown
+			_summon_recover_time = -1.0
+			_play_anim("attack", false)
 		State.DEATH:
 			velocity = Vector2.ZERO
 			_set_book_collision(false)
@@ -245,6 +304,16 @@ func _can_start_book_attack() -> bool:
 		return false
 	var dist := global_position.distance_to(_target.global_position)
 	return dist <= book_trigger_distance and is_on_floor()
+
+func _can_launch_homing_books() -> bool:
+	if homing_book_scene == null:
+		return false
+	if _homing_cooldown_timer > 0.0:
+		return false
+	if _target == null or not is_instance_valid(_target):
+		return false
+	var dist := global_position.distance_to(_target.global_position)
+	return dist >= homing_book_min_distance and dist <= homing_book_trigger_distance and is_on_floor()
 
 func _face_target() -> void:
 	if _target:
@@ -388,3 +457,33 @@ func _set_book_collision(active: bool) -> void:
 		_body_collision.set_deferred("disabled", active)
 	if _book_collision:
 		_book_collision.set_deferred("disabled", not active)
+
+func _spawn_homing_book(side_multiplier: int, vertical_multiplier: int = 0) -> bool:
+	if homing_book_scene == null:
+		return false
+	var projectile_instance := homing_book_scene.instantiate()
+	if projectile_instance == null:
+		return false
+	var parent := get_parent()
+	if parent == null:
+		return false
+	var facing := _direction if _direction != 0 else 1
+	var offset := Vector2(
+		homing_book_spawn_offset.x * side_multiplier * facing,
+		homing_book_spawn_offset.y + homing_book_vertical_spacing * vertical_multiplier
+	)
+	var spawn_position := global_position + offset
+	parent.add_child(projectile_instance)
+	if projectile_instance is Node2D:
+		(projectile_instance as Node2D).global_position = spawn_position
+	var has_valid_target := _target != null and is_instance_valid(_target)
+	if projectile_instance.has_method("set_target") and has_valid_target:
+		projectile_instance.set_target(_target)
+	var target_vector := Vector2(facing, 0)
+	if has_valid_target:
+		target_vector = _target.global_position - spawn_position
+	if target_vector.length_squared() <= 0.01:
+		target_vector = Vector2(facing, 0)
+	if projectile_instance.has_method("set_direction"):
+		projectile_instance.set_direction(target_vector.normalized())
+	return true
