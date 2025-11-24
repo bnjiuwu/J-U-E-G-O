@@ -225,6 +225,36 @@ theme_override_font_sizes/font_size = 34
 layout_mode = 2
 text = "ON"
 
+[node name="TouchRow" type="HBoxContainer" parent="ColorRect/MainMargin/ContentScroll/Content/GameplayCard/GameplayVBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 16
+
+[node name="TouchLabel" type="Label" parent="ColorRect/MainMargin/ContentScroll/Content/GameplayCard/GameplayVBox/TouchRow"]
+layout_mode = 2
+size_flags_horizontal = 1
+text = "Botones táctiles en PC"
+theme_override_font_sizes/font_size = 34
+
+[node name="TouchToggle" type="CheckButton" parent="ColorRect/MainMargin/ContentScroll/Content/GameplayCard/GameplayVBox/TouchRow"]
+layout_mode = 2
+text = "Mostrar"
+
+[node name="SkinModeRow" type="HBoxContainer" parent="ColorRect/MainMargin/ContentScroll/Content/GameplayCard/GameplayVBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 16
+
+[node name="SkinModeLabel" type="Label" parent="ColorRect/MainMargin/ContentScroll/Content/GameplayCard/GameplayVBox/SkinModeRow"]
+layout_mode = 2
+size_flags_horizontal = 1
+text = "Modo Meme"
+theme_override_font_sizes/font_size = 34
+
+[node name="MemeModeToggle" type="CheckButton" parent="ColorRect/MainMargin/ContentScroll/Content/GameplayCard/GameplayVBox/SkinModeRow"]
+layout_mode = 2
+text = "MEME"
+
 [node name="ButtonsRow" type="HBoxContainer" parent="ColorRect/MainMargin/ContentScroll/Content"]
 layout_mode = 2
 size_flags_horizontal = 3
@@ -254,5 +284,7 @@ theme_override_font_sizes/font_size = 36
 [connection signal="value_changed" from="ColorRect/MainMargin/ContentScroll/Content/AudioCard/AudioVBox/SfxRow/SfxSlider" to="." method="_on_sfx_slider_value_changed"]
 [connection signal="toggled" from="ColorRect/MainMargin/ContentScroll/Content/GameplayCard/GameplayVBox/VibrationRow/VibrationToggle" to="." method="_on_vibration_toggle_toggled"]
 [connection signal="toggled" from="ColorRect/MainMargin/ContentScroll/Content/GameplayCard/GameplayVBox/LeftHandRow/LeftHandToggle" to="." method="_on_left_handed_toggle_toggled"]
+[connection signal="toggled" from="ColorRect/MainMargin/ContentScroll/Content/GameplayCard/GameplayVBox/TouchRow/TouchToggle" to="." method="_on_touch_toggle_toggled"]
+[connection signal="toggled" from="ColorRect/MainMargin/ContentScroll/Content/GameplayCard/GameplayVBox/SkinModeRow/MemeModeToggle" to="." method="_on_meme_mode_toggle_toggled"]
 [connection signal="pressed" from="ColorRect/MainMargin/ContentScroll/Content/ButtonsRow/ResetButton" to="." method="_on_reset_button_pressed"]
 [connection signal="pressed" from="ColorRect/MainMargin/ContentScroll/Content/ButtonsRow/BackButton" to="." method="_on_back_pressed"]

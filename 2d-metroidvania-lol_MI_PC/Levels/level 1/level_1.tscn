@@ -17,13 +17,13 @@
 [ext_resource type="Script" uid="uid://ceepuvci2an32" path="res://Levels/level 1/boss_room_trigger.gd" id="13_tetkf"]
 [ext_resource type="PackedScene" uid="uid://ljb2k5q033bq" path="res://Assets/Scenes/Menu/Death Menu/DeathMenu.tscn" id="15_gdql1"]
 [ext_resource type="PackedScene" uid="uid://gbohe3bsoon2" path="res://Assets/Scenes/Enemies Scene/PapaRoberto Scene/PapaRoberto.tscn" id="16_o7ywo"]
+[ext_resource type="PackedScene" uid="uid://bbvjvjd6c7l7f" path="res://Assets/Scenes/Enemies Scene/KintamaBoss/Kintama.tscn" id="16_vn1ki"]
 [ext_resource type="PackedScene" uid="uid://xoxuswob6rae" path="res://Assets/Scenes/Enemies Scene/Bat Scene/Bat.tscn" id="17_4l21d"]
 [ext_resource type="PackedScene" uid="uid://rqnm23qh8syg" path="res://Assets/Scenes/Enemies Scene/Mago Scene/Mago.tscn" id="18_dke4e"]
 [ext_resource type="PackedScene" uid="uid://nfjhoahtx3yq" path="res://Assets/Scenes/Enemies Scene/Aspid Scene/PrimalAspid.tscn" id="21_bq83f"]
 [ext_resource type="PackedScene" uid="uid://0mamhsycg67r" path="res://Assets/Scenes/Enemies Scene/GroundThrower/GroundThrower.tscn" id="21_xwobx"]
 [ext_resource type="PackedScene" uid="uid://6povpxr3u3k1" path="res://Assets/Scenes/Flambo/flambo.tscn" id="23_xwobx"]
 [ext_resource type="PackedScene" uid="uid://b1p4vte40g50f" path="res://Assets/Scenes/Map Help/Jump Pad/Jump_Pad.tscn" id="26_7ppep"]
-[ext_resource type="PackedScene" uid="uid://b2wq6npi7xnw" path="res://Assets/Scenes/Enemies Scene/Cangri Scene/cangri.tscn" id="26_13ocu"]
 [ext_resource type="PackedScene" uid="uid://jm3orlf4lfkm" path="res://Assets/Scenes/Map Help/Health pack/health pack.tscn" id="26_s6fi1"]
 [ext_resource type="PackedScene" uid="uid://cov1bwx3ogxc6" path="res://Assets/Scenes/MiniMap/MiniMap.tscn" id="26_vumwe"]
 
@@ -11465,7 +11465,7 @@ motion_scale = Vector2(0.2, 0.2)
 motion_mirroring = Vector2(960, 480)
 
 [node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer5"]
-position = Vector2(0, 2)
+position = Vector2(-2, 0)
 texture = ExtResource("7_ib2b2")
 centered = false
 
@@ -11507,10 +11507,11 @@ position = Vector2(157, -77)
 mondongo = NodePath("../player")
 
 [node name="player" parent="." instance=ExtResource("1_n0qsc")]
-position = Vector2(-672, -6376)
+position = Vector2(-29, -43)
 
 [node name="Camera2D" type="Camera2D" parent="player"]
-position = Vector2(7, 5)
+position = Vector2(-2, 0)
+rotation = 0.7853982
 offset = Vector2(0, -25)
 zoom = Vector2(1.5, 1.5)
 limit_left = -2800
@@ -11542,14 +11543,12 @@ libraries = {
 }
 
 [node name="Controles" type="Control" parent="."]
-visible = false
 layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
 [node name="touch_controls" parent="Controles" instance=ExtResource("12_cq012")]
-visible = false
 
 [node name="Area efects" type="Node2D" parent="."]
 
@@ -11568,7 +11567,6 @@ collision_layer = 0
 collision_mask = 2
 script = ExtResource("13_tetkf")
 boss_walls = NodePath("../../TileMaps/BossWalls")
-boss_node = NodePath("../../enemies/Cangri")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area efects/BossRoomTrigger"]
 shape = SubResource("SegmentShape2D_81mij")
@@ -11576,6 +11574,10 @@ shape = SubResource("SegmentShape2D_81mij")
 [node name="enemies" type="Node2D" parent="."]
 
 [node name="Kintama" type="Node2D" parent="enemies"]
+
+[node name="Kintama" parent="enemies/Kintama" instance=ExtResource("16_vn1ki")]
+position = Vector2(331, -6572)
+attack_duration = 2.0
 
 [node name="Bats" type="Node2D" parent="enemies"]
 
@@ -11601,7 +11603,7 @@ position = Vector2(-1257, -5483)
 position = Vector2(-1007, -5024)
 
 [node name="Bat8" parent="enemies/Bats" instance=ExtResource("17_4l21d")]
-position = Vector2(-749, -5881)
+position = Vector2(-842, -5824)
 
 [node name="Bat9" parent="enemies/Bats" instance=ExtResource("17_4l21d")]
 position = Vector2(1642, -628)
@@ -11708,7 +11710,7 @@ position = Vector2(-801, -2449)
 [node name="PapaRoberto\'s" type="Node2D" parent="enemies"]
 
 [node name="PapaRoberto" parent="enemies/PapaRoberto\'s" instance=ExtResource("16_o7ywo")]
-position = Vector2(-483, -46)
+position = Vector2(491, 327)
 
 [node name="PapaRoberto2" parent="enemies/PapaRoberto\'s" instance=ExtResource("16_o7ywo")]
 position = Vector2(1143, -3809)
@@ -11726,9 +11728,6 @@ position = Vector2(-1136, -933)
 
 [node name="GroundThrower3" parent="enemies/GroundThrower" instance=ExtResource("21_xwobx")]
 position = Vector2(-382, -2376)
-
-[node name="Cangri" parent="enemies" instance=ExtResource("26_13ocu")]
-position = Vector2(188, -6464)
 
 [node name="Map Interactives" type="Node2D" parent="."]
 

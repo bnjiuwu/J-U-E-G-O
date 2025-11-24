@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cdltfeauoa2ag"
-path="res://.godot/imported/flamo.png-92404fc44aceab091e175e830a6a6ef4.ctex"
+uid="uid://b0lrgaqgsqbrq"
+path="res://.godot/imported/Aztik_Attack_DOS.png-35f57e09e0888c1b6ed35e43a1cb48cc.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/sprites/objects type shi/flamo.png"
-dest_files=["res://.godot/imported/flamo.png-92404fc44aceab091e175e830a6a6ef4.ctex"]
+source_file="res://Assets/sprites/enemies/Aztik/Aztik_Attack_DOS.png"
+dest_files=["res://.godot/imported/Aztik_Attack_DOS.png-35f57e09e0888c1b6ed35e43a1cb48cc.ctex"]
 
 [params]
 
