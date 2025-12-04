@@ -94,7 +94,7 @@ func calculateVector() -> void:
 		Input.action_press("look_up")
 	else:
 		Input.action_release("look_up")
-"""
+	"""
 
 func _on_button_button_down() -> void:
 	# Puedes dejarlo vacío si quieres, ya no es necesario

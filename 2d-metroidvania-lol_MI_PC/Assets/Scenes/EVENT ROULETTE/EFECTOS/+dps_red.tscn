@@ -3,3 +3,5 @@
 [node name="+dpsRed" type="Node2D"]
 
 [node name="Timer" type="Timer" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
