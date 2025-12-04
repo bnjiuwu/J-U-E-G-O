@@ -5,7 +5,7 @@ var conectado := false
 var ping_timer := 0.0
 const PING_INTERVAL := 10.0
 
-var match_id := ""
+var matchId := ""
 
 var player_name := ""
 var game_id := ""

@@ -10,7 +10,7 @@ extends Control
 @onready var lobby: Panel = $Panel/Lobby
 
 # === CONFIGURACIÓN DEL JUEGO ===
-const MY_PLAYER_NAME := "bnjiuwu"      # cambia esto en cada instancia
+const MY_PLAYER_NAME := "movil_del_uwu"      # cambia esto en cada instancia
 const MY_GAME_ID := "E"
 const MY_GAME_KEY := "FIBE9DV0C3"
 const MY_GAME_NAME := "Roberto Mondongo y su pistolita"
@@ -484,7 +484,7 @@ func _evaluar_listos_y_arrancar():
 		print("🎲 Nivel elegido:", Globals.multiplayer_level_random)
 		"""
 		
-		Network.match_id = match_id
+		Network.matchId = match_id
 		# 2. Cargar escena contenedora del multijugador
 		get_tree().change_scene_to_file("res://Levels/LEVEL MANAGER/level_manager.tscn")
 
@@ -739,7 +739,7 @@ func _on_volver_pressed():
 		if Network.ws and conectado:
 			Network.apagar()
 		_limpiar_todo()
-		get_tree().change_scene_to_file("res://Assets/Escenas/Menues/Main menu.tscn")
+		get_tree().change_scene_to_file("res://Assets/Scenes/Menu/menu.tscn")
 	else:
 		scroll.visible = false
 		btn_enviar.visible = true
