@@ -267,15 +267,17 @@ max_health = 300
 position = Vector2(-1.9073486e-06, 9.536743e-07)
 scale = Vector2(0.5512048, 0.54545456)
 sprite_frames = SubResource("SpriteFrames_51nig")
-animation = &"attack"
-frame = 2
-frame_progress = 1.0
+animation = &"ATTACK"
+frame = 1
+frame_progress = 0.5783561
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
 position = Vector2(0, 0.75)
 shape = SubResource("RectangleShape2D_v4eh7")
 
 [node name="Hitbox" type="Area2D" parent="." groups=["enemy_hitbox"]]
+visible = false
 collision_layer = 16
 collision_mask = 2
 
@@ -284,14 +286,17 @@ shape = SubResource("CircleShape2D_5m4qq")
 debug_color = Color(0.83314943, 0.37929574, 0.2595622, 0.41960785)
 
 [node name="FloorDetector" type="RayCast2D" parent="."]
+visible = false
 target_position = Vector2(30, 44)
 collision_mask = 71
 
 [node name="WallDetector" type="RayCast2D" parent="."]
+visible = false
 target_position = Vector2(46, 0)
 collision_mask = 69
 
 [node name="HealthBar" type="ProgressBar" parent="."]
+visible = false
 offset_left = -27.0
 offset_top = -42.0
 offset_right = 27.0
@@ -302,6 +307,7 @@ value = 80.0
 show_percentage = false
 
 [node name="HealthBarNumber" type="Label" parent="."]
+visible = false
 offset_left = -20.0
 offset_top = -69.0
 offset_right = 20.0
@@ -309,6 +315,7 @@ offset_bottom = -46.0
 theme_override_fonts/font = ExtResource("6_5efl1")
 
 [node name="DetectionZone" type="Area2D" parent="."]
+visible = false
 collision_layer = 0
 collision_mask = 2
 

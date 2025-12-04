@@ -1,5 +1,13 @@
 extends Control
 
+
+
+
+var options_music = preload("res://Assets/AUDIOS/kevin_macleod-elevator.mp3")
+
+@onready var _mixer := $AudioStreamPlayer
+
+
 const SETTINGS_PATH := "user://settings.cfg"
 const SECTION_AUDIO := "audio"
 const SECTION_GAMEPLAY := "gameplay"
@@ -41,6 +49,21 @@ func _ready() -> void:
 	update_touch_controls_layout()
 	update_touch_controls_visibility()
 	update_touch_controls_skin()
+	
+	_play_menu_music()
+	
+func _play_menu_music() -> void:
+	if not _mixer:
+		return
+	if _mixer.stream != options_music:
+		_mixer.stream = options_music
+	if not _mixer.playing:
+		_mixer.play()
+
+func _stop_menu_music() -> void:
+	if _mixer and _mixer.playing:
+		_mixer.stop()
+
 
 func _on_master_slider_value_changed(value: float) -> void:
 	if _updating_ui:

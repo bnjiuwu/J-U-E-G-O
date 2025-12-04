@@ -5,90 +5,89 @@
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_card"]
 bg_color = Color(0.505882, 0.494118, 0.482353, 0.843137)
-corner_radius_bottom_left = 20
-corner_radius_bottom_right = 20
 corner_radius_top_left = 20
 corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_button"]
 bg_color = Color(0.623529, 0.411765, 0.270588, 0.878431)
-corner_radius_bottom_left = 16
-corner_radius_bottom_right = 16
 corner_radius_top_left = 16
 corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
 
 [node name="Options" type="Control"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 script = ExtResource("1_c4plk")
 
 [node name="ColorRect" type="ColorRect" parent="."]
 layout_mode = 0
 offset_right = 960.0
 offset_bottom = 480.0
-color = Color(0.435294, 0.415686, 0.403922, 1)
+color = Color(0.44, 0.42049333, 0.4092, 0.31764707)
 
 [node name="TextureRect" type="TextureRect" parent="ColorRect"]
+modulate = Color(0.59, 0.59, 0.59, 1)
 layout_mode = 0
 offset_right = 960.0
 offset_bottom = 480.0
 texture = ExtResource("2_c4plk")
-expand_mode = 1
-stretch_mode = 3
-modulate = Color(0.588235, 0.588235, 0.588235, 0.431373)
+expand_mode = 2
 
 [node name="MainMargin" type="MarginContainer" parent="ColorRect"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 24.0
-offset_top = 24.0
-offset_right = -24.0
-offset_bottom = -24.0
+offset_left = 37.0
+offset_top = 9.0
+offset_right = -11.0
+offset_bottom = -39.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.9467639, 0.9467639)
 
 [node name="ContentScroll" type="ScrollContainer" parent="ColorRect/MainMargin"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-scroll_horizontal = false
 
 [node name="Content" type="VBoxContainer" parent="ColorRect/MainMargin/ContentScroll"]
+custom_minimum_size = Vector2(0, 420)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-custom_minimum_size = Vector2(0, 420)
 theme_override_constants/separation = 28
 
 [node name="HeaderLabel" type="Label" parent="ColorRect/MainMargin/ContentScroll/Content"]
 layout_mode = 2
 size_flags_horizontal = 3
-horizontal_alignment = 1
+theme_override_font_sizes/font_size = 48
 text = "OPCIONES"
-theme_override_font_sizes/font_size = 58
+horizontal_alignment = 1
 
 [node name="AudioCard" type="PanelContainer" parent="ColorRect/MainMargin/ContentScroll/Content"]
+custom_minimum_size = Vector2(0, 220)
 layout_mode = 2
 size_flags_horizontal = 3
-custom_minimum_size = Vector2(0, 220)
 theme_override_styles/panel = SubResource("StyleBoxFlat_card")
 
 [node name="AudioVBox" type="VBoxContainer" parent="ColorRect/MainMargin/ContentScroll/Content/AudioCard"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-margin_left = 32
-margin_top = 24
-margin_right = 32
-margin_bottom = 24
 theme_override_constants/separation = 18
 
 [node name="AudioTitle" type="Label" parent="ColorRect/MainMargin/ContentScroll/Content/AudioCard/AudioVBox"]
 layout_mode = 2
-text = "Audio"
 theme_override_font_sizes/font_size = 44
+text = "Audio"
 
 [node name="AudioSeparator" type="HSeparator" parent="ColorRect/MainMargin/ContentScroll/Content/AudioCard/AudioVBox"]
 layout_mode = 2
@@ -100,24 +99,22 @@ theme_override_constants/separation = 16
 
 [node name="MasterLabel" type="Label" parent="ColorRect/MainMargin/ContentScroll/Content/AudioCard/AudioVBox/MasterRow"]
 layout_mode = 2
-size_flags_horizontal = 1
-text = "Volumen general"
 theme_override_font_sizes/font_size = 34
+text = "Volumen general"
 
 [node name="MasterSlider" type="HSlider" parent="ColorRect/MainMargin/ContentScroll/Content/AudioCard/AudioVBox/MasterRow"]
 layout_mode = 2
 size_flags_horizontal = 3
-min_value = 0.0
 max_value = 1.0
 step = 0.01
 value = 1.0
 
 [node name="MasterValue" type="Label" parent="ColorRect/MainMargin/ContentScroll/Content/AudioCard/AudioVBox/MasterRow"]
-layout_mode = 2
 custom_minimum_size = Vector2(96, 0)
-horizontal_alignment = 2
-text = "100%"
+layout_mode = 2
 theme_override_font_sizes/font_size = 30
+text = "100%"
+horizontal_alignment = 2
 
 [node name="MusicRow" type="HBoxContainer" parent="ColorRect/MainMargin/ContentScroll/Content/AudioCard/AudioVBox"]
 layout_mode = 2
@@ -126,24 +123,22 @@ theme_override_constants/separation = 16
 
 [node name="MusicLabel" type="Label" parent="ColorRect/MainMargin/ContentScroll/Content/AudioCard/AudioVBox/MusicRow"]
 layout_mode = 2
-size_flags_horizontal = 1
-text = "Música"
 theme_override_font_sizes/font_size = 34
+text = "Música"
 
 [node name="MusicSlider" type="HSlider" parent="ColorRect/MainMargin/ContentScroll/Content/AudioCard/AudioVBox/MusicRow"]
 layout_mode = 2
 size_flags_horizontal = 3
-min_value = 0.0
 max_value = 1.0
 step = 0.01
 value = 1.0
 
 [node name="MusicValue" type="Label" parent="ColorRect/MainMargin/ContentScroll/Content/AudioCard/AudioVBox/MusicRow"]
-layout_mode = 2
 custom_minimum_size = Vector2(96, 0)
-horizontal_alignment = 2
-text = "100%"
+layout_mode = 2
 theme_override_font_sizes/font_size = 30
+text = "100%"
+horizontal_alignment = 2
 
 [node name="SfxRow" type="HBoxContainer" parent="ColorRect/MainMargin/ContentScroll/Content/AudioCard/AudioVBox"]
 layout_mode = 2
@@ -152,45 +147,39 @@ theme_override_constants/separation = 16
 
 [node name="SfxLabel" type="Label" parent="ColorRect/MainMargin/ContentScroll/Content/AudioCard/AudioVBox/SfxRow"]
 layout_mode = 2
-size_flags_horizontal = 1
-text = "Efectos"
 theme_override_font_sizes/font_size = 34
+text = "Efectos"
 
 [node name="SfxSlider" type="HSlider" parent="ColorRect/MainMargin/ContentScroll/Content/AudioCard/AudioVBox/SfxRow"]
 layout_mode = 2
 size_flags_horizontal = 3
-min_value = 0.0
 max_value = 1.0
 step = 0.01
 value = 1.0
 
 [node name="SfxValue" type="Label" parent="ColorRect/MainMargin/ContentScroll/Content/AudioCard/AudioVBox/SfxRow"]
-layout_mode = 2
 custom_minimum_size = Vector2(96, 0)
-horizontal_alignment = 2
-text = "100%"
+layout_mode = 2
 theme_override_font_sizes/font_size = 30
+text = "100%"
+horizontal_alignment = 2
 
 [node name="GameplayCard" type="PanelContainer" parent="ColorRect/MainMargin/ContentScroll/Content"]
+custom_minimum_size = Vector2(0, 210)
 layout_mode = 2
 size_flags_horizontal = 3
-custom_minimum_size = Vector2(0, 210)
 theme_override_styles/panel = SubResource("StyleBoxFlat_card")
 
 [node name="GameplayVBox" type="VBoxContainer" parent="ColorRect/MainMargin/ContentScroll/Content/GameplayCard"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-margin_left = 32
-margin_top = 24
-margin_right = 32
-margin_bottom = 24
 theme_override_constants/separation = 18
 
 [node name="GameplayTitle" type="Label" parent="ColorRect/MainMargin/ContentScroll/Content/GameplayCard/GameplayVBox"]
 layout_mode = 2
-text = "Juego"
 theme_override_font_sizes/font_size = 44
+text = "Juego"
 
 [node name="GameplaySeparator" type="HSeparator" parent="ColorRect/MainMargin/ContentScroll/Content/GameplayCard/GameplayVBox"]
 layout_mode = 2
@@ -202,9 +191,8 @@ theme_override_constants/separation = 16
 
 [node name="VibrationLabel" type="Label" parent="ColorRect/MainMargin/ContentScroll/Content/GameplayCard/GameplayVBox/VibrationRow"]
 layout_mode = 2
-size_flags_horizontal = 1
-text = "Vibración"
 theme_override_font_sizes/font_size = 34
+text = "Vibración"
 
 [node name="VibrationToggle" type="CheckButton" parent="ColorRect/MainMargin/ContentScroll/Content/GameplayCard/GameplayVBox/VibrationRow"]
 layout_mode = 2
@@ -217,9 +205,8 @@ theme_override_constants/separation = 16
 
 [node name="LeftHandLabel" type="Label" parent="ColorRect/MainMargin/ContentScroll/Content/GameplayCard/GameplayVBox/LeftHandRow"]
 layout_mode = 2
-size_flags_horizontal = 1
-text = "Modo zurdo"
 theme_override_font_sizes/font_size = 34
+text = "Modo zurdo"
 
 [node name="LeftHandToggle" type="CheckButton" parent="ColorRect/MainMargin/ContentScroll/Content/GameplayCard/GameplayVBox/LeftHandRow"]
 layout_mode = 2
@@ -232,9 +219,8 @@ theme_override_constants/separation = 16
 
 [node name="TouchLabel" type="Label" parent="ColorRect/MainMargin/ContentScroll/Content/GameplayCard/GameplayVBox/TouchRow"]
 layout_mode = 2
-size_flags_horizontal = 1
-text = "Botones táctiles en PC"
 theme_override_font_sizes/font_size = 34
+text = "Botones táctiles en PC"
 
 [node name="TouchToggle" type="CheckButton" parent="ColorRect/MainMargin/ContentScroll/Content/GameplayCard/GameplayVBox/TouchRow"]
 layout_mode = 2
@@ -247,37 +233,42 @@ theme_override_constants/separation = 16
 
 [node name="SkinModeLabel" type="Label" parent="ColorRect/MainMargin/ContentScroll/Content/GameplayCard/GameplayVBox/SkinModeRow"]
 layout_mode = 2
-size_flags_horizontal = 1
-text = "Modo Meme"
 theme_override_font_sizes/font_size = 34
+text = "Modo Meme"
 
 [node name="MemeModeToggle" type="CheckButton" parent="ColorRect/MainMargin/ContentScroll/Content/GameplayCard/GameplayVBox/SkinModeRow"]
 layout_mode = 2
 text = "MEME"
 
-[node name="ButtonsRow" type="HBoxContainer" parent="ColorRect/MainMargin/ContentScroll/Content"]
-layout_mode = 2
-size_flags_horizontal = 3
+[node name="ButtonsRow" type="HBoxContainer" parent="ColorRect"]
+process_mode = 3
 custom_minimum_size = Vector2(0, 72)
+layout_mode = 0
+offset_left = 21.0
+offset_top = 400.0
+offset_right = 925.0
+offset_bottom = 472.0
+size_flags_horizontal = 3
 theme_override_constants/separation = 24
 
-[node name="ResetButton" type="Button" parent="ColorRect/MainMargin/ContentScroll/Content/ButtonsRow"]
+[node name="ResetButton" type="Button" parent="ColorRect/ButtonsRow"]
 layout_mode = 2
-size_flags_horizontal = 1
-text = "Restaurar"
-theme_override_styles/normal = SubResource("StyleBoxFlat_button")
 theme_override_font_sizes/font_size = 36
+theme_override_styles/normal = SubResource("StyleBoxFlat_button")
+text = "Restaurar"
 
-[node name="Spacer" type="Control" parent="ColorRect/MainMargin/ContentScroll/Content/ButtonsRow"]
+[node name="Spacer" type="Control" parent="ColorRect/ButtonsRow"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="BackButton" type="Button" parent="ColorRect/MainMargin/ContentScroll/Content/ButtonsRow"]
+[node name="BackButton" type="Button" parent="ColorRect/ButtonsRow"]
 layout_mode = 2
-size_flags_horizontal = 1
-text = "Volver"
-theme_override_styles/normal = SubResource("StyleBoxFlat_button")
 theme_override_font_sizes/font_size = 36
+theme_override_styles/normal = SubResource("StyleBoxFlat_button")
+text = "Volver"
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+volume_db = -10.0
 
 [connection signal="value_changed" from="ColorRect/MainMargin/ContentScroll/Content/AudioCard/AudioVBox/MasterRow/MasterSlider" to="." method="_on_master_slider_value_changed"]
 [connection signal="value_changed" from="ColorRect/MainMargin/ContentScroll/Content/AudioCard/AudioVBox/MusicRow/MusicSlider" to="." method="_on_music_slider_value_changed"]
@@ -286,5 +277,5 @@ theme_override_font_sizes/font_size = 36
 [connection signal="toggled" from="ColorRect/MainMargin/ContentScroll/Content/GameplayCard/GameplayVBox/LeftHandRow/LeftHandToggle" to="." method="_on_left_handed_toggle_toggled"]
 [connection signal="toggled" from="ColorRect/MainMargin/ContentScroll/Content/GameplayCard/GameplayVBox/TouchRow/TouchToggle" to="." method="_on_touch_toggle_toggled"]
 [connection signal="toggled" from="ColorRect/MainMargin/ContentScroll/Content/GameplayCard/GameplayVBox/SkinModeRow/MemeModeToggle" to="." method="_on_meme_mode_toggle_toggled"]
-[connection signal="pressed" from="ColorRect/MainMargin/ContentScroll/Content/ButtonsRow/ResetButton" to="." method="_on_reset_button_pressed"]
-[connection signal="pressed" from="ColorRect/MainMargin/ContentScroll/Content/ButtonsRow/BackButton" to="." method="_on_back_pressed"]
+[connection signal="pressed" from="ColorRect/ButtonsRow/ResetButton" to="." method="_on_reset_button_pressed"]
+[connection signal="pressed" from="ColorRect/ButtonsRow/BackButton" to="." method="_on_back_pressed"]

@@ -112,3 +112,6 @@ text = "💅Salir del juego"
 libraries = {
 &"": SubResource("AnimationLibrary_wbtaq")
 }
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+volume_db = -10.0

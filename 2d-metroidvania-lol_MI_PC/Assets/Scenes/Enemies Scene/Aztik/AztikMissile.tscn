@@ -130,7 +130,9 @@ lifetime = 10.0
 position = Vector2(-21, -3.8146973e-06)
 scale = Vector2(0.44354832, 0.452)
 sprite_frames = SubResource("SpriteFrames_q4lwr")
-frame_progress = 0.26452276
+animation = &"contact"
+frame = 5
+frame_progress = 1.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_7egqv")

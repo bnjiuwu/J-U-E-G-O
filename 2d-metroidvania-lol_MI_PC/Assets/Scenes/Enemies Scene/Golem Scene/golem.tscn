@@ -180,30 +180,37 @@ predictive_aim_time_cap = 0.75
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
 position = Vector2(0, -34)
 sprite_frames = SubResource("SpriteFrames_dxdwf")
-animation = &"death"
-frame_progress = 0.21339796
+animation = &"walk"
+frame = 2
+frame_progress = 0.09221349
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
 position = Vector2(0, -12)
 shape = SubResource("RectangleShape2D_body")
 
 [node name="DetectionZone" type="Area2D" parent="."]
+visible = false
 collision_layer = 16
 collision_mask = 11
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionZone"]
+visible = false
 position = Vector2(0, -20)
 shape = SubResource("CircleShape2D_r46aw")
 
 [node name="Hitbox" type="Area2D" parent="." groups=["enemy"]]
+visible = false
 collision_layer = 16
 collision_mask = 11
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+visible = false
 position = Vector2(0, -12)
 shape = SubResource("RectangleShape2D_hitbox")
 
 [node name="FloorCheck" type="RayCast2D" parent="."]
+visible = false
 position = Vector2(36, 40)
 exclude_parent = false
 target_position = Vector2(0, 64)
@@ -211,10 +218,12 @@ collision_mask = 7
 collide_with_areas = true
 
 [node name="WallCheck" type="RayCast2D" parent="."]
+visible = false
 position = Vector2(40, -10)
 exclude_parent = false
 target_position = Vector2(48, 0)
 collision_mask = 7
 
 [node name="VisibilityNotifier" type="VisibleOnScreenNotifier2D" parent="."]
+visible = false
 rect = Rect2(-120, -160, 240, 220)

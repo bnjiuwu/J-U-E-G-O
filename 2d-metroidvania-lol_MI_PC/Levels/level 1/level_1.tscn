@@ -11507,7 +11507,7 @@ position = Vector2(157, -77)
 mondongo = NodePath("../player")
 
 [node name="player" parent="." instance=ExtResource("1_n0qsc")]
-position = Vector2(-29, -43)
+position = Vector2(2, 35)
 
 [node name="Camera2D" type="Camera2D" parent="player"]
 position = Vector2(-2, 0)
@@ -11523,10 +11523,11 @@ position_smoothing_enabled = true
 rotation_smoothing_enabled = true
 
 [node name="Label2" type="Label" parent="player/Camera2D"]
-offset_left = -259.0
-offset_top = -116.0
-offset_right = 260.0
-offset_bottom = -78.0
+offset_left = -239.00208
+offset_top = 131.52184
+offset_right = 279.99792
+offset_bottom = 169.52184
+rotation = -0.7853982
 theme_override_colors/font_color = Color(1, 1, 1, 0)
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 0)
 theme_override_constants/line_spacing = 28

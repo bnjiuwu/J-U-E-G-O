@@ -53,7 +53,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"contact",
-"speed": 18.0
+"speed": 10.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -70,7 +70,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"default",
-"speed": 18.0
+"speed": 10.0
 }]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_xill4"]
@@ -88,7 +88,9 @@ lifetime = 5.0
 position = Vector2(1.0000038, -5)
 scale = Vector2(0.22390434, 0.20680934)
 sprite_frames = SubResource("SpriteFrames_ag5am")
+animation = &"contact"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
 position = Vector2(3, -2)
 shape = SubResource("CircleShape2D_xill4")
