@@ -19,6 +19,7 @@ config/icon="res://icon.svg"
 [autoload]
 
 GlobalsSignals="*res://GlobalsSignals.gd"
+Network="*res://Multijugador/Scripts/Network.gd"
 
 [display]
 
