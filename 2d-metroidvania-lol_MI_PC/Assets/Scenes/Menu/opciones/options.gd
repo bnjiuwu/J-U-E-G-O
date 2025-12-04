@@ -1,12 +1,8 @@
 extends Control
 
-
-
-
 var options_music = preload("res://Assets/AUDIOS/kevin_macleod-elevator.mp3")
 
 @onready var _mixer := $AudioStreamPlayer
-
 
 const SETTINGS_PATH := "user://settings.cfg"
 const SECTION_AUDIO := "audio"

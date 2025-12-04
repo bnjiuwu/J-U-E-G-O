@@ -190,8 +190,9 @@ radius = 41.231056
 [sub_resource type="CircleShape2D" id="CircleShape2D_ojd21"]
 radius = 49.010204
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_an5kn"]
-radius = 498.40146
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_dvsif"]
+radius = 381.0
+height = 2296.0
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tqsqa"]
 bg_color = Color(0.80784315, 0, 0, 1)
@@ -241,7 +242,8 @@ collision_layer = 0
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionZone"]
-shape = SubResource("CircleShape2D_an5kn")
+rotation = 1.5707964
+shape = SubResource("CapsuleShape2D_dvsif")
 debug_color = Color(0.6745098, 0, 0.54901963, 0.1764706)
 
 [node name="WallCheck" type="RayCast2D" parent="."]

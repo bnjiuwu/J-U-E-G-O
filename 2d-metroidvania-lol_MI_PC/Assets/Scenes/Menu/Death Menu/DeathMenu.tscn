@@ -1,6 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://ljb2k5q033bq"]
+[gd_scene load_steps=6 format=3 uid="uid://ljb2k5q033bq"]
 
 [ext_resource type="Script" uid="uid://b746mgntfmwdm" path="res://Assets/Scenes/Menu/Death Menu/death_menu.gd" id="1_4w3qo"]
+[ext_resource type="Texture2D" uid="uid://c8auhyifpgy7q" path="res://Assets/sprites/objects type shi/sad-spongebob.png" id="2_i5axi"]
 
 [sub_resource type="Animation" id="Animation_i5axi"]
 length = 0.001
@@ -73,6 +74,20 @@ z_index = 16
 offset_right = 960.0
 offset_bottom = 480.0
 color = Color(0, 0, 0, 0.7019608)
+
+[node name="SadSpongebob" type="Sprite2D" parent="Panel"]
+position = Vector2(176, 174)
+texture = ExtResource("2_i5axi")
+
+[node name="SadSpongebob2" type="Sprite2D" parent="Panel"]
+position = Vector2(768, 99.00001)
+scale = Vector2(1.2636361, 0.47247702)
+texture = ExtResource("2_i5axi")
+
+[node name="SadSpongebob3" type="Sprite2D" parent="Panel"]
+position = Vector2(490.00003, 389.00003)
+scale = Vector2(3.3, 0.33944955)
+texture = ExtResource("2_i5axi")
 
 [node name="VBox" type="VBoxContainer" parent="."]
 modulate = Color(1, 1, 1, 0)
