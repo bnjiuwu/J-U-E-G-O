@@ -10,7 +10,7 @@ extends CharacterBody2D
 @export_group("Comportamiento")
 @export var offset_seguimiento: Vector2 = Vector2(45, -40) 
 @export var velocidad_seguimiento: float = 5.0 
-@export var meta_carga: int = 1
+@export var meta_carga: int = 5
 
 # --- Variables Internas ---
 var enemigos_derrotados: int = 0
@@ -27,6 +27,7 @@ var estado_actual: Estado = Estado.QUIETO
 
 func _ready():
 	if not is_instance_valid(mondongo): return
+	meta_carga = max(1, meta_carga)
 	
 	# Señales de Roberto
 	if mondongo.has_signal("roberto_fue_golpeado"):
@@ -78,30 +79,38 @@ func cargar_habilidad():
 
 func _on_enemigo_entra_rango(body):
 	if body.is_in_group("enemy") and body != self:
-		enemigos_en_rango.append(body)
+		_clean_enemy_list()
+		if enemigos_en_rango.has(body):
+			return
+		if _is_valid_enemy(body):
+			enemigos_en_rango.append(body)
 		# Si entra un enemigo y ya estábamos cargados -> FUEGO
 		intentar_disparo_automatico()
 
 func _on_enemigo_sale_rango(body):
 	if body in enemigos_en_rango:
 		enemigos_en_rango.erase(body)
+	_clean_enemy_list()
 
 func intentar_disparo_automatico():
-	# Condiciones: Estar cargado Y tener al menos un enemigo cerca
-	if not esta_cargado or enemigos_en_rango.is_empty():
+	if not esta_cargado:
 		return
-	
-	# Validar que el enemigo sigue vivo (por si acaso)
-	var objetivo = enemigos_en_rango[0]
-	if not is_instance_valid(objetivo):
+	_clean_enemy_list()
+	if enemigos_en_rango.is_empty():
+		return
+	while not enemigos_en_rango.is_empty():
+		var objetivo = enemigos_en_rango[0]
+		if _is_valid_enemy(objetivo):
+			disparar_a(objetivo)
+			return
 		enemigos_en_rango.remove_at(0)
-		return
-
-	# --- ¡DISPARO! ---
-	disparar_a(objetivo)
 
 func disparar_a(target):
-	if not mini_flambo_scene: return
+	if not mini_flambo_scene:
+		return
+	if not _is_valid_enemy(target):
+		intentar_disparo_automatico()
+		return
 	
 	var bala = mini_flambo_scene.instantiate()
 	bala.global_position = global_position
@@ -111,12 +120,16 @@ func disparar_a(target):
 	bala.set_direction(direccion) # Asumiendo que tu bala tiene este método
 	
 	get_tree().current_scene.add_child(bala)
+	set_estado(Estado.ENOJADO)
+	if timer_enojo:
+		timer_enojo.start()
 	
 	# Resetear
 	esta_cargado = false
 	enemigos_derrotados = 0
 	modulate = Color(1, 1, 1, 1)
 	print("🚀 Flambo disparó automáticamente a un enemigo!")
+	_clean_enemy_list()
 
 # --- Estados (Sin cambios) ---
 func set_estado(nuevo):
@@ -133,3 +146,17 @@ func _on_roberto_fue_golpeado():
 
 func _on_roberto_murio(): set_estado(Estado.MUERTO)
 func _on_timer_enojo_timeout(): if estado_actual != Estado.MUERTO: set_estado(Estado.QUIETO)
+
+func _clean_enemy_list() -> void:
+	for i in range(enemigos_en_rango.size() - 1, -1, -1):
+		if not _is_valid_enemy(enemigos_en_rango[i]):
+			enemigos_en_rango.remove_at(i)
+
+func _is_valid_enemy(body: Node) -> bool:
+	if not is_instance_valid(body):
+		return false
+	if not body.is_in_group("enemy"):
+		return false
+	if "is_dead" in body and body.is_dead:
+		return false
+	return true
