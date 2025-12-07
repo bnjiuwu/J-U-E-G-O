@@ -1,0 +1,55 @@
+[gd_scene load_steps=8 format=3 uid="uid://d2texu1ylfow0"]
+
+[ext_resource type="Texture2D" uid="uid://dft1ys4ww55xj" path="res://Assets/images/Backgrounds/GOLEM/golem_bk1.png" id="1_ab74o"]
+[ext_resource type="PackedScene" uid="uid://d25prnku74qxe" path="res://Levels/level Golem/Aset_G.tscn" id="1_ppvya"]
+[ext_resource type="Texture2D" uid="uid://bilufbqv3wkir" path="res://Assets/images/Backgrounds/GOLEM/golem_bk6.png" id="3_jmkq2"]
+[ext_resource type="Texture2D" uid="uid://c2dg7csaiur20" path="res://Assets/images/Backgrounds/GOLEM/golem_bk7.png" id="4_jts62"]
+[ext_resource type="Texture2D" uid="uid://dwchplms8h1re" path="res://Assets/images/Backgrounds/GOLEM/golem_bk3.png" id="5_ct321"]
+[ext_resource type="Texture2D" uid="uid://cew8y585h0nql" path="res://Assets/images/Backgrounds/GOLEM/golem_bk4.png" id="6_u26w3"]
+[ext_resource type="Texture2D" uid="uid://li7v2e1i5hiv" path="res://Assets/images/Backgrounds/GOLEM/golem_bk5.png" id="7_vev6x"]
+
+[node name="LevelGolem" type="Node2D"]
+
+[node name="AsetG" parent="." instance=ExtResource("1_ppvya")]
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+
+[node name="cielo_parallax" type="Parallax2D" parent="ParallaxBackground"]
+repeat_size = Vector2(576, 0)
+
+[node name="cielo_sprite" type="Sprite2D" parent="ParallaxBackground/cielo_parallax"]
+texture = ExtResource("1_ab74o")
+
+[node name="sombra_parallax" type="Parallax2D" parent="ParallaxBackground"]
+repeat_size = Vector2(576, 0)
+
+[node name="sombra_sprite" type="Sprite2D" parent="ParallaxBackground/sombra_parallax"]
+texture = ExtResource("3_jmkq2")
+
+[node name="nube_parallax" type="Parallax2D" parent="ParallaxBackground"]
+repeat_size = Vector2(576, 0)
+
+[node name="nube_sprite" type="Sprite2D" parent="ParallaxBackground/nube_parallax"]
+position = Vector2(1, 0)
+texture = ExtResource("4_jts62")
+
+[node name="sueloA_parallax" type="Parallax2D" parent="ParallaxBackground"]
+repeat_size = Vector2(576, 0)
+
+[node name="sueloA_sprite" type="Sprite2D" parent="ParallaxBackground/sueloA_parallax"]
+texture = ExtResource("5_ct321")
+
+[node name="sueloB_parallax" type="Parallax2D" parent="ParallaxBackground"]
+
+[node name="sueloB_sprite" type="Sprite2D" parent="ParallaxBackground/sueloB_parallax"]
+
+[node name="columna_parallax" type="Parallax2D" parent="ParallaxBackground"]
+
+[node name="columna_sprite" type="Sprite2D" parent="ParallaxBackground/columna_parallax"]
+texture = ExtResource("6_u26w3")
+
+[node name="piramide_parallax" type="Parallax2D" parent="ParallaxBackground"]
+
+[node name="piramide_sprite" type="Sprite2D" parent="ParallaxBackground/piramide_parallax"]
+position = Vector2(576, 0)
+texture = ExtResource("7_vev6x")

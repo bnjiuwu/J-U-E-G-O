@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3 uid="uid://b2om4rnnraxaq"]
+[gd_scene load_steps=4 format=3 uid="uid://d25prnku74qxe"]
 
 [ext_resource type="Texture2D" uid="uid://ct4325nvrkmc" path="res://Assets/images/Backgrounds/GOLEM/ASgolem.png" id="1_uxo37"]
 
@@ -508,3 +508,7 @@ sources/0 = SubResource("TileSetAtlasSource_ud3mu")
 [node name="TileMap" type="TileMap" parent="."]
 tile_set = SubResource("TileSet_yr741")
 format = 2
+
+[node name="Layer0" type="TileMapLayer" parent="TileMap"]
+use_parent_material = true
+tile_set = SubResource("TileSet_yr741")
