@@ -1,6 +1,9 @@
 extends Sprite2D
 class_name Knob
 
+const H_THRESHOLD := 0.25
+const LOOK_THRESHOLD := -0.5
+
 @onready var parent: Node2D = $".."
 var pressing: bool = false
 var active_index: int = -1           # dedo que controla el joystick
@@ -19,6 +22,7 @@ func _process(_delta: float) -> void:
 	if not pressing:
 		global_position = parent.global_position
 		parent.posVector = Vector2.ZERO
+		parent.pressing = false
 
 	# Calcular vector SIEMPRE, incluso cuando no se está presionando
 	calculateVector()
@@ -31,13 +35,13 @@ func _input(event: InputEvent) -> void:
 			# Tomamos el dedo que empieza cerca del joystick
 			if event.position.distance_to(parent.global_position) <= maxLength * 1.3:
 				active_index = event.index
-				pressing = true
+				_update_pressing(true)
 				_move_knob_to(event.position)
 		else:
 			# Si se levantó el dedo que usábamos, lo liberamos
 			if event.index == active_index:
 				active_index = -1
-				pressing = false
+				_update_pressing(false)
 
 	elif event is InputEventScreenDrag:
 		# Solo seguimos al dedo que capturamos
@@ -77,30 +81,50 @@ func calculateVector() -> void:
 		parent.posVector.y = 0.0
 
 	# ====== TUS INPUTS DISCRETOS (movimiento + mirar arriba) ======
-	"""
-	# Movimiento horizontal
-	if parent.posVector.x < -0.2:
-		Input.action_press("move_left")
-		Input.action_release("move_right")
-	elif parent.posVector.x > 0.2:
-		Input.action_press("move_right")
-		Input.action_release("move_left")
-	else:
-		Input.action_release("move_left")
-		Input.action_release("move_right")
-
-	# Mirar arriba (con margen de error para diagonal)
-	if parent.posVector.y < -0.5:
-		Input.action_press("look_up")
-	else:
-		Input.action_release("look_up")
-	"""
+	_apply_discrete_inputs()
 
 func _on_button_button_down() -> void:
-	# Puedes dejarlo vacío si quieres, ya no es necesario
-	pressing = true
+	_update_pressing(true)
 
 
 func _on_button_button_up() -> void:
-	pressing = false
 	active_index = -1
+	_update_pressing(false)
+
+func _update_pressing(state: bool) -> void:
+	pressing = state
+	if parent:
+		parent.pressing = state
+	if not state:
+		_release_inputs()
+
+func _apply_discrete_inputs() -> void:
+	if not pressing:
+		return
+
+	var x: float = parent.posVector.x
+	var y: float = parent.posVector.y
+	if x < -H_THRESHOLD:
+		Input.action_press("move_left", clamp(-x, 0.0, 1.0))
+		Input.action_release("move_right")
+	elif x > H_THRESHOLD:
+		Input.action_press("move_right", clamp(x, 0.0, 1.0))
+		Input.action_release("move_left")
+	else:
+		_release_horizontal_inputs()
+
+	if y < LOOK_THRESHOLD:
+		Input.action_press("look_up", clamp(-y, 0.0, 1.0))
+	else:
+		Input.action_release("look_up")
+
+func _release_horizontal_inputs() -> void:
+	if Input.is_action_pressed("move_left"):
+		Input.action_release("move_left")
+	if Input.is_action_pressed("move_right"):
+		Input.action_release("move_right")
+
+func _release_inputs() -> void:
+	_release_horizontal_inputs()
+	if Input.is_action_pressed("look_up"):
+		Input.action_release("look_up")

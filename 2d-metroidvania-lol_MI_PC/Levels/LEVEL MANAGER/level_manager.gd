@@ -2,6 +2,7 @@
 extends Node2D
 
 @export var niveles: Array[PackedScene] = []
+@export_file("*.tscn") var fallback_scene: String = "res://Assets/Scenes/Menu/menu.tscn"
 
 var _nivel_actual: int = 1
 var _nivel_instanciado: Node = null
@@ -72,6 +73,8 @@ func _process(delta: float) -> void:
 func _cargar_nivel_async(numero_nivel: int) -> void:
 	if numero_nivel < 1 or numero_nivel > niveles.size():
 		push_error("Número de nivel fuera de rango: %d" % numero_nivel)
+		if numero_nivel > niveles.size():
+			_handle_all_levels_complete()
 		return
 
 	_nivel_actual = numero_nivel
@@ -97,6 +100,18 @@ func _cargar_nivel_async(numero_nivel: int) -> void:
 		push_error("No se pudo iniciar load_threaded_request: %s" % _nivel_path_cargando)
 		_cargando = false
 		_ocultar_pantalla_carga()
+
+
+func request_next_level() -> void:
+	var siguiente := _nivel_actual + 1
+	if siguiente > niveles.size():
+		_handle_all_levels_complete()
+		return
+	_cargar_nivel_async(siguiente)
+
+
+func request_level(index: int) -> void:
+	_cargar_nivel_async(index)
 
 
 func _instanciar_nivel(packed: PackedScene) -> void:
@@ -131,3 +146,12 @@ func _mostrar_pantalla_carga() -> void:
 func _ocultar_pantalla_carga() -> void:
 	if is_instance_valid(_loading_screen):
 		_loading_screen.visible = false
+
+
+func _handle_all_levels_complete() -> void:
+	print("✅ Todos los niveles han sido completados")
+	if fallback_scene.is_empty():
+		return
+	var tree := get_tree()
+	if tree:
+		tree.change_scene_to_file(fallback_scene)
