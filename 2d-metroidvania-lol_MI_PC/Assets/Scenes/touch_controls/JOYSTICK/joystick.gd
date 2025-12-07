@@ -1,7 +1,8 @@
 extends Node2D
 class_name Joystick
 
-var posVector: Vector2
+var posVector: Vector2 = Vector2.ZERO
+var pressing: bool = false
 
 
 # Called when the node enters the scene tree for the first time.

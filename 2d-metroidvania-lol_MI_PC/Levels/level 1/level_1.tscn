@@ -11507,7 +11507,7 @@ position = Vector2(157, -77)
 mondongo = NodePath("../player")
 
 [node name="player" parent="." instance=ExtResource("1_n0qsc")]
-position = Vector2(2, 35)
+position = Vector2(-107, 55)
 
 [node name="Camera2D" type="Camera2D" parent="player"]
 position = Vector2(-2, 0)
@@ -11876,6 +11876,22 @@ visible = false
 
 [node name="DeathMenu" parent="." instance=ExtResource("15_gdql1")]
 visible = false
+
+[node name="VictoryCanvas" type="CanvasLayer" parent="."]
+layer = 5
+
+[node name="VictoryLabel" type="Label" parent="VictoryCanvas"]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("11_tetkf")
+theme_override_font_sizes/font_size = 64
+text = "¡Felicidades!"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [connection signal="animation_finished" from="player/Camera2D/AnimationPlayer" to="." method="_on_animation_finished"]
 [connection signal="body_entered" from="Area efects/trigger zoom camera" to="." method="_on_trigger_zoom_camera_body_entered"]
