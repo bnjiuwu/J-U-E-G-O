@@ -13,11 +13,10 @@ var pink_range := range(85, 95)
 var red_range := range(95, 99)
 var special_range := range(99, 100)
 
-@export var blue_items: Array[Texture2D]
-@export var purple_items: Array[Texture2D]
-@export var pink_items: Array[Texture2D]
-@export var red_items: Array[Texture2D]
-@export var special_items: Array[Texture2D]
+@export var blue_items: Array[PackedScene]
+@export var purple_items: Array[PackedScene]
+@export var red_items: Array[PackedScene]
+@export var special_items: Array[PackedScene]
 
 var item_list: Dictionary = {}
 var texture_rects: Array[Sprite2D] = []
@@ -61,7 +60,6 @@ func _ready() -> void:
 	item_list = {
 		"blue_items": blue_items,
 		"purple_items": purple_items,
-		"pink_items": pink_items,
 		"red_items": red_items,
 		"special_items": special_items
 	}

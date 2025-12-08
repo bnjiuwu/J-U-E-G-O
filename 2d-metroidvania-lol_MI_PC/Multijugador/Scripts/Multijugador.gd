@@ -27,6 +27,7 @@ var jugadores_del_match: Array = []
 var invitador_id := ""
 
 
+
 # === READY ===
 func _ready():
 	label.text = "Modo Multijugador"
@@ -57,7 +58,7 @@ func _process(_delta):
 
 	Network.ws.poll()
 	while Network.ws.get_available_packet_count() > 0:
-		var msg = Network.ws.get_packet().get_string_from_utf8()
+		var msg := Network.ws.get_packet().get_string_from_utf8()
 		# print("📩 Recibido:", msg)    # Comentado para limpiar logs
 		_on_mensaje_recibido(msg)
 
@@ -66,7 +67,7 @@ func _process(_delta):
 func _conectar_servidor():
 	var url := "ws://cross-game-ucn.martux.cl:4010/?gameId=%s&playerName=%s" % [MY_GAME_ID, MY_PLAYER_NAME]
 	print("🌐 Conectando a:", url)
-	var err = Network.ws.connect_to_url(url)
+	var err := Network.ws.connect_to_url(url)
 	if err == OK:
 		conectado = true
 
@@ -130,7 +131,13 @@ func _on_mensaje_recibido(msg: String):
 		# === CONEXIÓN / LOGIN ===
 		"connected-to-server":
 			print("✅ Conectado. Enviando login…")
+
+			if data.has("data") and data["data"].has("playerId"):
+				Network.my_id = str(data["data"]["playerId"])
+				print("🆔 Mi ID asignado por el servidor:", Network.my_id)
+
 			_enviar({"event": "login", "data": {"gameKey": MY_GAME_KEY}})
+		
 
 		"login":
 			if data.get("status") == "OK":
@@ -241,29 +248,89 @@ func _on_mensaje_recibido(msg: String):
 				_actualizar_lista()
 
 
+#cambio
 		# === READY / LOBBY ===
 		"players-ready":
-			print("🟢 Ambos jugadores READY. Abriendo lobby…")
+			print("🟢 Ambos jugadores se conectaron al match. Abriendo lobby…")
 			match_status = "READY"
-			
-			# AUMENTO DE ESPERA: Dar tiempo a que la respuesta de 'online-players' se procese.
-			await get_tree().create_timer(0.8).timeout 
-			
 			_abrir_lobby()
-			await get_tree().create_timer(0.3).timeout
-			_enviar({"event": "ping-match", "data": {"matchId": match_id}})
 
+
+#Cambio
 		"ping-match":
-			print("📶 Ping-match OK.")
+			var raw = data.get("data", {})
+			var jugador_id = raw.get("playerId", "")
 
+			print("📶 ping-match recibido del ID:", jugador_id)
+
+			# 💚 Si el ID coincide con el mío → soy yo
+			if jugador_id == Network.my_id:
+				print("🟢 YO estoy listo")
+				_marcar_local_listo()
+				return
+
+			# 💙 Es el rival (por ID)
+			var rival_name = ""
+			for id in jugadores.keys():
+				if id == jugador_id:
+					rival_name = jugadores[id].get("name", "")
+					break
+
+			print("🟦 Rival listo:", rival_name)
+			_marcar_rival_listo()
+
+
+
+
+
+
+##Cambio
 		"match-start":
-			print("🚀 Partida iniciada.")
-			match_status = "PLAYING"
+			print("🚀 Ambos jugadores enviaron ping-match → iniciando partida")
+			
+			Network.matchId = match_id
+			await get_tree().process_frame
+			get_tree().change_scene_to_file("res://Levels/LEVEL MANAGER/level_manager.tscn")
 
+
+#cambio
 		# === CIERRE REMOTO (OTRO JUGADOR) ===
 		"close-match":
-			print("🚪 close-match recibido — rival salió.")
-			await _finalizar_partida_por_rival()
+			var raw = data.get("data", {})
+			var rival_name := str(raw.get("playerName", ""))
+
+			print("🚪 close-match recibido — rival abandonó el lobby. playerName:", rival_name)
+
+			# Si el servidor no manda playerName, intentamos con playerId → buscamos en `jugadores`
+			if rival_name == "" and raw.has("playerId"):
+				var pid := str(raw.get("playerId", ""))
+				if jugadores.has(pid):
+					rival_name = str(jugadores[pid].get("name", ""))
+
+			if rival_name == "":
+				print("⚠️ close-match sin nombre ni id reconocible → cierro lobby completo por seguridad.")
+				_finalizar_partida_por_rival()
+				return
+
+			# Si el que aparece como "rival" soy yo mismo, ignoro
+			if rival_name == MY_PLAYER_NAME:
+				print("➡️ close-match indica que YO abandoné (o eco del server), no hago nada extra.")
+				return
+
+			# Caso normal: el otro jugador se fue → lo saco del lobby
+			_eliminar_rival_de_lobby_por_nombre(rival_name)
+			return
+
+
+
+		#Cambio			
+		"quit-match":
+			print("📥 quit-match recibido (ACK de que yo abandoné el lobby)")
+			# Aquí no haces nada en UI, porque ya lo manejaste en _on_volver_pressed()
+			return
+
+
+
 
 		"game-ended":
 			print("🏁 game-ended recibido — partida terminó.")
@@ -274,21 +341,29 @@ func _on_mensaje_recibido(msg: String):
 			print("📨 Servidor ACK → send-game-data OK.")
 
 
+#cambio
 		"receive-game-data":
 			var payload = data.get("data", {}).get("payload", {})
-
-			# ✅ CUANDO EL OTRO JUGADOR APRIETA "LISTO"
-			if payload.has("ready"):
-				var jugador = str(payload["player"])
-				var listo = payload["ready"]
-				print("🔄 Estado recibido:", jugador, "→", listo)
-				_actualizar_ready_ui_de(jugador, listo)
-				_evaluar_listos_y_arrancar()
 
 			# ✅ CUANDO EL OTRO JUGADOR CIERRA LA PARTIDA
 			if payload.has("close") and payload["close"] == true:
 				print("🚪 rival envió close — cerrando partida por remoto.")
 				await _finalizar_partida_por_rival()
+				
+			# ======================================================
+			# ⚔️ ATAQUE RECIBIDO
+			# ======================================================
+			if payload.has("type") and payload["type"] == "attack":
+				var dmg = payload.get("damage", 5)
+
+				print("🔥 ATAQUE RECIBIDO → daño:", dmg)
+
+				# Obtener la escena del juego (donde está tu base)
+				var nivel = get_tree().current_scene
+
+				if nivel.has_method("recibir_ataque"):
+					nivel.recibir_ataque(dmg)
+
 
 		"finish-game":
 			print("📤 Respuesta a finish-game:", data)
@@ -301,38 +376,26 @@ func _on_mensaje_recibido(msg: String):
 			print("ℹ️ Evento no manejado:", evento)
 
 
+
 # === CUANDO EL RIVAL SALE DEL MATCH ===
 func _finalizar_partida_por_rival():
-	print("🧹 Cierre remoto REAL de la partida")
+	print("🧹 Rival abandonó — cerrando lobby/partida")
 
+	# limpiar variables
 	match_id = ""
 	match_status = "WAITING_PLAYERS"
 
-	# Cerrar lobby
+	# cerrar lobby si estaba abierto
 	if lobby.visible:
 		lobby.visible = false
-		var box: VBoxContainer = $Panel/Lobby/VBoxContainer
+		var box := $Panel/Lobby/VBoxContainer
 		for c in box.get_children():
 			c.queue_free()
 
+	# 🟩 CAMBIO — NO cierres WebSocket aquí si estás en el lobby
+	# El servidor ya marca "AVAILABLE", no es necesario cerrar forzado
 
-	# Cerrar WebSocket LOCAL para que el server me ponga AVAILABLE
-	if Network.ws and conectado:
-		print("🔌 Cerrando WebSocket local por cierre remoto…")
-		Network.ws.close()
-		conectado = false
-
-
-	# Reconectar y pedir lista actualizada
-	await get_tree().create_timer(0.5).timeout
-	_conectar_servidor()
-
-	await get_tree().create_timer(0.5).timeout
-	if conectado:
-		_enviar({"event": "online-players"})
-
-
-	# Restaurar UI base
+	# volver al menú multijugador
 	scroll.visible = false
 	btn_enviar.visible = true
 	btn_ver.visible = true
@@ -418,29 +481,18 @@ func _abrir_lobby():
 
 			btn_estado.pressed.connect(func():
 
-				var nuevo_estado := btn_estado.text == "❌ No listo"
+				btn_estado.text = "⏳ Esperando confirmación..."
 
-				if nuevo_estado:
-					btn_estado.text = "✅ Listo"
-				else:
-					btn_estado.text = "❌ No listo"
+				print("🟢 Enviando ping-match...")
 
-				print("🟢", MY_PLAYER_NAME, "-> ready =", nuevo_estado)
-
-				# enviar mensaje sin usar ?
+#Cambio
 				_enviar({
-					"event": "send-game-data",
-					"data": {
-						"matchId": match_id,
-						"payload": {
-							"type": "ready",
-							"player": MY_PLAYER_NAME,
-							"ready": nuevo_estado
-						}
-					}
+					"event": "ping-match",
+					"data": { "matchId": match_id }
 				})
 
-				_evaluar_listos_y_arrancar()
+				print("📡 Enviado ping-match (estoy listo)")
+
 			)
 
 		else:
@@ -450,6 +502,30 @@ func _abrir_lobby():
 		box.add_child(fila)
 
 	print("🎯 Lobby cargado con", lista_final.size(), "jugadores.")
+
+#cambio
+func _eliminar_rival_de_lobby_por_nombre(rival_name: String):
+	print("🗑️ Eliminando del lobby al rival:", rival_name)
+
+	var box: VBoxContainer = $Panel/Lobby/VBoxContainer
+
+	# Buscar fila que contiene ese nombre
+	for fila in box.get_children():
+		for sub in fila.get_children():
+			if sub is Label and sub.text.contains(rival_name):
+				print("✔️ Fila encontrada y eliminada:", rival_name)
+				fila.queue_free()
+				break
+
+	# Deshabilitar botón del jugador local
+	for fila in box.get_children():
+		for sub in fila.get_children():
+			if sub is Button:
+				sub.disabled = true
+				sub.text = "⏳ Rival desconectado"
+
+	label.text = "El rival abandonó la sala"
+
 
 # === ACTUALIZAR READY EN UI ===
 func _actualizar_ready_ui_de(jugador_ready: String, listo: bool):
@@ -463,30 +539,6 @@ func _actualizar_ready_ui_de(jugador_ready: String, listo: bool):
 				else:
 					sub.text = "❌ No listo"
 				return
-
-# === VER SI AMBOS ESTÁN LISTOS ===
-func _evaluar_listos_y_arrancar():
-	var box: VBoxContainer = $Panel/Lobby/VBoxContainer
-	var todos_listos := true
-
-	for c in box.get_children():
-		for sub in c.get_children():
-			if sub is Button:
-				if sub.text != "✅ Listo":
-					todos_listos = false
-
-	if todos_listos:
-		# Asume que Globals existe y contiene 'multiplayer_levels'
-		"""
-		var niveles = Globals.multiplayer_levels 
-		Globals.multiplayer_level_random = niveles.pick_random()
-
-		print("🎲 Nivel elegido:", Globals.multiplayer_level_random)
-		"""
-		
-		Network.matchId = match_id
-		# 2. Cargar escena contenedora del multijugador
-		get_tree().change_scene_to_file("res://Levels/LEVEL MANAGER/level_manager.tscn")
 
 
 # === GESTIÓN DE JUGADORES ===
@@ -706,40 +758,65 @@ func _actualizar_lista_invitaciones():
 		lista.add_child(panel)
 
 
+#cambio
 # === VOLVER ===
 func _on_volver_pressed():
+
+	# 🟩 CAMBIO 1 — Si estoy en el LOBBY (ANTES de match-start)
 	if lobby.visible:
 		print("🚪 Saliendo del lobby manualmente…")
 
-		# 1. terminar partida local (finish-game + quit-match + aviso close)
-		await _salir_partida_completa()
+		if match_id != "":
+			print("📤 quit-match enviado (abandono del lobby)")
+			_enviar({
+				"event": "quit-match",
+				"data": {"matchId": match_id}
+			})
+			await get_tree().create_timer(0.25).timeout
 
-		# 2. cerrar WebSocket local
+		match_id = ""
+		match_status = "WAITING_PLAYERS"
+
+		lobby.visible = false
+		print("🔌 Forzando actualización del estado → cerrando WebSocket…")
+
 		if Network.ws and conectado:
-			print("🔌 Cerrando WebSocket local (VOLVER)…")
-			# Asumiendo que Network.apagar() cierra el WS
-			Network.apagar() 
+			Network.apagar()
 			conectado = false
 
-		# 3. reconectar
-		await get_tree().create_timer(0.5).timeout
+		await get_tree().create_timer(0.4).timeout
+
+		print("🌐 Re-conectando para quedar AVAILABLE…")
 		_conectar_servidor()
 
-		# 4. pedir lista nueva
 		await get_tree().create_timer(0.5).timeout
+
 		if conectado:
 			_enviar({"event": "online-players"})
+			
+		var box := $Panel/Lobby/VBoxContainer
+		for c in box.get_children():
+			c.queue_free()
 
-		# 5. limpiar UI
-		_finalizar_match_desde_servidor()
+		scroll.visible = false
+		btn_enviar.visible = true
+		btn_ver.visible = true
+		label.text = "Modo Multijugador"
+		posicion_menu = 0
+
 		return
+
 
 	# === VOLVER NORMAL ===
 	if posicion_menu == 0:
+		# 🔴 IMPORTANTE: cerrar WebSocket ANTES de cambiar de escena
 		if Network.ws and conectado:
+			print("🔌 Cerrando WebSocket al salir del modo multijugador…")
 			Network.apagar()
+			conectado = false
+
 		_limpiar_todo()
-		get_tree().change_scene_to_file("res://Assets/Scenes/Menu/menu.tscn")
+		get_tree().change_scene_to_file("res://Assets/Escenas/Menues/Main menu.tscn")
 	else:
 		scroll.visible = false
 		btn_enviar.visible = true
@@ -747,32 +824,6 @@ func _on_volver_pressed():
 		posicion_menu = 0
 		label.text = "Modo Multijugador"
 
-
-# === TERMINAR PARTIDA LOCAL (finish + quit + aviso close) ===
-func _salir_partida_completa():
-	if match_id == "":
-		return
-
-	print("🏁 [EXIT] Enviando finish-game…")
-	_enviar({
-		"event": "finish-game",
-		"data": {"matchId": match_id, "winner": MY_PLAYER_NAME}
-	})
-	await get_tree().create_timer(0.3).timeout
-
-	print("📤 [EXIT] Enviando quit-match…")
-	_enviar({
-		"event": "quit-match",
-		"data": {"matchId": match_id}
-	})
-	await get_tree().create_timer(0.2).timeout
-
-	print("📡 [EXIT] Enviando payload close:true para rival…")
-	_enviar({
-		"event": "send-game-data",
-		"data": {"matchId": match_id, "payload": {"close": true}}
-	})
-	await get_tree().create_timer(0.2).timeout
 
 # === LIMPIEZA GENERAL ===
 func _finalizar_match_desde_servidor():
@@ -795,3 +846,23 @@ func _finalizar_match_desde_servidor():
 
 	if conectado:
 		_enviar({"event": "online-players"})
+
+func _marcar_rival_listo():
+	var box = $Panel/Lobby/VBoxContainer
+
+	if box.get_child_count() >= 3:
+		var fila_rival = box.get_child(2)
+		for sub in fila_rival.get_children():
+			if sub is Button:
+				sub.text = "✅ Listo"
+
+
+
+func _marcar_local_listo():
+	var box = $Panel/Lobby/VBoxContainer
+	if box.get_child_count() >= 2:
+		var fila_local = box.get_child(1)
+		for sub in fila_local.get_children():
+			if sub is Button:
+				sub.text = "🏁 Confirmado"
+				sub.disabled = true

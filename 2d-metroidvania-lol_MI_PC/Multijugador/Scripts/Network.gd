@@ -10,10 +10,11 @@ var matchId := ""
 var player_name := ""
 var game_id := ""
 var game_key := ""
+var my_id := ""
 
 signal mensaje_recibido(msg)
 signal conectado_servidor()
-
+ 
 func iniciar(nombre, gameId, gameKey):
 	player_name = nombre
 	game_id = gameId
