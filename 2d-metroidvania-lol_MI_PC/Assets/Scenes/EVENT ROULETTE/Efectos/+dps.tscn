@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://de3ikwot1xhu8"]
+
+[ext_resource type="Script" uid="uid://bbhrgvhft7ooy" path="res://Assets/Scenes/EVENT ROULETTE/Efectos/+dps.gd" id="1_v6p6k"]
+[ext_resource type="Texture2D" uid="uid://c0u85xhoxaenp" path="res://Assets/sprites/EVENT ROULETTE/efects/more fire_rate (1).png" id="2_a5e41"]
+
+[node name="+dps" type="Node2D"]
+script = ExtResource("1_v6p6k")
+duration = 20.0
+
+[node name="Timer" type="Timer" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_a5e41")

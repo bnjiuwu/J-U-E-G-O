@@ -1,7 +1,13 @@
-[gd_scene format=3 uid="uid://ndngja66m3kp"]
+[gd_scene load_steps=3 format=3 uid="uid://ndngja66m3kp"]
+
+[ext_resource type="Texture2D" uid="uid://bc57rujlg01nt" path="res://Assets/sprites/EVENT ROULETTE/efects/no d_jump (1).png" id="1_1mioq"]
+[ext_resource type="Script" uid="uid://bwcjfomdas7vk" path="res://Assets/Scenes/EVENT ROULETTE/Efectos/no_2_jump.gd" id="1_h3wbw"]
 
 [node name="No2Jump" type="Node2D"]
+script = ExtResource("1_h3wbw")
+duration = 15.0
 
 [node name="Timer" type="Timer" parent="."]
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_1mioq")

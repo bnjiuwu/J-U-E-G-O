@@ -1,7 +1,13 @@
-[gd_scene format=3 uid="uid://bijhpxp7hnifn"]
+[gd_scene load_steps=3 format=3 uid="uid://bijhpxp7hnifn"]
+
+[ext_resource type="Texture2D" uid="uid://dnt2ae71wh5e3" path="res://Assets/sprites/EVENT ROULETTE/efects/minus speed.png" id="1_41ju7"]
+[ext_resource type="Script" uid="uid://dao2nlji4so1n" path="res://Assets/Scenes/EVENT ROULETTE/Efectos/speed_reducer.gd" id="1_yfpev"]
 
 [node name="SpeedReducer" type="Node2D"]
+script = ExtResource("1_yfpev")
+duration = 20.0
 
 [node name="Timer" type="Timer" parent="."]
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_41ju7")

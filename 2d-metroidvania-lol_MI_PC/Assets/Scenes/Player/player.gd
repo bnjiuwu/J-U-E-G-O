@@ -72,6 +72,15 @@ var knockback_timer: float = 0.0
 var knockback_duration: float = 0.2 # cuánto dura el retroceso
 var is_invulnerable: bool = false
 
+#==== case bonuses ===========
+var spd_buff: int
+var spd_debuff: int
+
+var no_dash: bool
+var no_d_jump: int
+
+
+
 
 func _update_health_bar():
 	if not health_bar:
