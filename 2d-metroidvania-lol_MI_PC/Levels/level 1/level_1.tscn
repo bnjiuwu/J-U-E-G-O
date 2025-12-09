@@ -1,4 +1,4 @@
-[gd_scene load_steps=43 format=4 uid="uid://c6n7qrlau6b0k"]
+[gd_scene load_steps=44 format=4 uid="uid://c6n7qrlau6b0k"]
 
 [ext_resource type="PackedScene" uid="uid://braj8a8ooxs4t" path="res://Assets/Scenes/Player/player.tscn" id="1_n0qsc"]
 [ext_resource type="Script" uid="uid://by4hegpiwf1wp" path="res://Levels/level 1/level_1.gd" id="1_r7d4j"]
@@ -23,6 +23,7 @@
 [ext_resource type="PackedScene" uid="uid://nfjhoahtx3yq" path="res://Assets/Scenes/Enemies Scene/Aspid Scene/PrimalAspid.tscn" id="21_bq83f"]
 [ext_resource type="PackedScene" uid="uid://0mamhsycg67r" path="res://Assets/Scenes/Enemies Scene/GroundThrower/GroundThrower.tscn" id="21_xwobx"]
 [ext_resource type="PackedScene" uid="uid://6povpxr3u3k1" path="res://Assets/Scenes/Flambo/flambo.tscn" id="23_xwobx"]
+[ext_resource type="PackedScene" uid="uid://chnd2crcxdcmg" path="res://Assets/Scenes/EVENT ROULETTE/case_map_item.tscn" id="24_s6fi1"]
 [ext_resource type="PackedScene" uid="uid://b1p4vte40g50f" path="res://Assets/Scenes/Map Help/Jump Pad/Jump_Pad.tscn" id="26_7ppep"]
 [ext_resource type="PackedScene" uid="uid://jm3orlf4lfkm" path="res://Assets/Scenes/Map Help/Health pack/health pack.tscn" id="26_s6fi1"]
 [ext_resource type="PackedScene" uid="uid://cov1bwx3ogxc6" path="res://Assets/Scenes/MiniMap/MiniMap.tscn" id="26_vumwe"]
@@ -11868,6 +11869,11 @@ position = Vector2(-222, -6552)
 
 [node name="HealthPack19" parent="Map Interactives/health packs" instance=ExtResource("26_s6fi1")]
 position = Vector2(1075, -6577)
+
+[node name="Node2D" type="Node2D" parent="."]
+
+[node name="MapItem" parent="Node2D" instance=ExtResource("24_s6fi1")]
+position = Vector2(-434, -37)
 
 [node name="MiniMap" parent="." instance=ExtResource("26_vumwe")]
 

@@ -13,6 +13,7 @@
 [ext_resource type="FontFile" uid="uid://dhhjcp1rxp6gj" path="res://Assets/Fonts/minecraft_font.ttf" id="11_qicsw"]
 
 [node name="Roulette" type="Node2D"]
+z_index = 20
 script = ExtResource("1_805u6")
 blue_items = Array[PackedScene]([ExtResource("2_m1frc"), ExtResource("3_qicsw"), ExtResource("4_vnebj")])
 purple_items = Array[PackedScene]([ExtResource("5_7kjpa"), ExtResource("6_k5dsb")])
@@ -22,7 +23,6 @@ special_items = Array[PackedScene]([ExtResource("9_kc7tb")])
 [node name="RainbowPanel" type="ColorRect" parent="."]
 offset_right = 960.0
 offset_bottom = 480.0
-color = Color(1, 1, 1, 0.50980395)
 
 [node name="Scroll" type="Node2D" parent="."]
 

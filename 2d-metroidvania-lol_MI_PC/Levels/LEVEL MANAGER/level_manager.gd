@@ -3,8 +3,13 @@ extends Node2D
 class_name LevelManager
 
 const ROULETTE_COOLDOWN := 30.0
+const ATTACK_COUNTDOWN := 3
+
 var _roulette_active: bool = false
+var _roulette_pending: bool = false
 var _roulette_cooldown_timer: float = 0.0
+
+@onready var _attack_notice: Label = $CanvasLayer/AttackNotice
 
 @export var niveles: Array[PackedScene] = []
 @export_file("*.tscn") var fallback_scene: String = "res://Assets/Scenes/Menu/menu.tscn"
@@ -25,6 +30,11 @@ var _progreso := [0.0]
 
 var _min_display_time := 0.5
 var _display_time := 0.0
+
+# --- FREEZE ---
+var _frozen_player: Node = null
+var _prev_player_process: bool = false
+var _prev_player_physics: bool = false
 
 func _ready() -> void:
 	if Network and not Network.mensaje_recibido.is_connected(_on_network_message):
@@ -50,10 +60,11 @@ func _ready() -> void:
 
 
 func _process(delta: float) -> void:
-		# --- cooldown de ruleta SIEMPRE ---
+	# --- cooldown de ruleta SIEMPRE ---
 	if _roulette_cooldown_timer > 0.0:
 		_roulette_cooldown_timer = max(0.0, _roulette_cooldown_timer - delta)
-		
+
+	# --- tu lógica de carga ---
 	if not _cargando:
 		return
 
@@ -69,12 +80,10 @@ func _process(delta: float) -> void:
 	match status:
 		ResourceLoader.ThreadLoadStatus.THREAD_LOAD_IN_PROGRESS:
 			pass
-
 		ResourceLoader.ThreadLoadStatus.THREAD_LOAD_FAILED:
 			push_error("Falló la carga del nivel: %s" % _nivel_path_cargando)
 			_cargando = false
 			_ocultar_pantalla_carga()
-
 		ResourceLoader.ThreadLoadStatus.THREAD_LOAD_LOADED:
 			if _display_time < _min_display_time:
 				return
@@ -88,6 +97,18 @@ func _process(delta: float) -> void:
 			_cargando = false
 			_nivel_path_cargando = ""
 			_ocultar_pantalla_carga()
+
+func _show_attack_countdown() -> void:
+	if not is_instance_valid(_attack_notice):
+		return
+
+	_attack_notice.visible = true
+
+	for i in range(ATTACK_COUNTDOWN, 0, -1):
+		_attack_notice.text = "ATAQUE RECIBIDO\nRuleta en %d..." % i
+		await get_tree().create_timer(1.0).timeout
+
+	_attack_notice.visible = false
 
 
 func _cargar_nivel_async(numero_nivel: int) -> void:
@@ -138,16 +159,22 @@ func _instanciar_nivel(packed: PackedScene) -> void:
 	_nivel_instanciado = packed.instantiate()
 	add_child(_nivel_instanciado)
 
+	# ✅ importante: esperar 1 frame para que el player se registre en grupos
+	await get_tree().process_frame
+
 	# buscar player
-	var players := get_tree().get_nodes_in_group("player")
-	if players.is_empty():
+	var player := get_tree().get_first_node_in_group("player")
+	if player == null:
 		push_warning("No se encontró ningún nodo en el grupo 'player'.")
 		return
 
-	var player: Node = players[0]
+	# ✅ conectar muerte seguro (si agregaste esta función)
+	if has_method("_connect_player_signals"):
+		_connect_player_signals(player)
 
-	# conectar fuentes de ruleta del nivel
-	_wire_roulette_sources(player)
+	# conectar fuentes de ruleta del nivel (si aún las usas)
+	if has_method("_wire_roulette_sources"):
+		_wire_roulette_sources(player)
 
 
 func _eliminar_nivel() -> void:
@@ -183,27 +210,26 @@ func _handle_all_levels_complete() -> void:
 # ===================== RULETA API ========================
 # =========================================================
 func _on_source_request_roulette(tipo: String, player: Node) -> void:
-	show_roulette(player, tipo)
-
+	# no uses el player directo, deja que el gateway valide todo
+	trigger_roulette(tipo, 0, false)
 
 func request_roulette(tipo: String = "") -> void:
-	var player := get_tree().get_first_node_in_group("player")
-	if player:
-		show_roulette(player, tipo)
-	else:
-		push_warning("No hay player para abrir ruleta.")
+	trigger_roulette(tipo, 0, false)
 
 func show_roulette(player: Node, tipo: String = "") -> void:
 	if roulette_scene == null:
 		push_warning("roulette_scene no asignada en LevelManager.")
 		return
 
-	# --- BLOQUEO anti-spam ---
-	if _roulette_active or _roulette_cooldown_timer > 0.0:
-		print("⏳ Ruleta ignorada (active/cooldown): ", _roulette_cooldown_timer, "s")
+	# Evitar abrir ruleta durante carga de nivel
+	if _cargando:
 		return
 
-	# marcar estado + iniciar cooldown desde el INICIO del spin
+	# --- BLOQUEO anti-spam ---
+	if _roulette_active or _roulette_pending or _roulette_cooldown_timer > 0.0:
+		print("⏳ Ruleta ignorada (active/pending/cooldown): ", _roulette_cooldown_timer, "s")
+		return
+
 	_roulette_active = true
 	_roulette_cooldown_timer = ROULETTE_COOLDOWN
 
@@ -216,20 +242,29 @@ func show_roulette(player: Node, tipo: String = "") -> void:
 	var parent_node: Node = _roulette_layer if is_instance_valid(_roulette_layer) else $CanvasLayer
 	parent_node.add_child(_roulette_instance)
 
-	# asignar player si existe esa propiedad
+	# asignar player
 	if "player" in _roulette_instance:
 		_roulette_instance.player = player
 
-	# (opcional) pasar tipo, no molesta aunque no segmentes
+	# pasar tipo si lo soporta (aunque no segmentes)
 	if _roulette_instance.has_method("set_trigger"):
 		_roulette_instance.set_trigger(tipo)
 	elif "trigger_type" in _roulette_instance:
 		_roulette_instance.trigger_type = tipo
 
-	# cuando se cierre/destruya la ruleta
+	# ✅ UI viva en pausa
+	if is_instance_valid(_roulette_layer):
+		_roulette_layer.process_mode = Node.PROCESS_MODE_WHEN_PAUSED
+	_roulette_instance.process_mode = Node.PROCESS_MODE_WHEN_PAUSED
+
+	# ✅ congelar juego ya
+	_set_game_frozen(true)
+
+	# cuando se cierre/destruya la ruleta → liberar pausa
 	_roulette_instance.tree_exited.connect(func():
 		_roulette_instance = null
 		_roulette_active = false
+		_set_game_frozen(false)
 	, CONNECT_ONE_SHOT)
 
 	# iniciar spin
@@ -237,14 +272,9 @@ func show_roulette(player: Node, tipo: String = "") -> void:
 		_roulette_instance.start_spin()
 
 
-func recibir_ataque(dmg: int) -> void:
-	var player := get_tree().get_first_node_in_group("player")
-	#if player and player.has_method("take_damage"):
-	#	player.take_damage(dmg)
 
-	# activar ruleta con contexto "ataque"
-	if player:
-		show_roulette(player, "ataque")
+func recibir_ataque(dmg: int) -> void:
+	trigger_roulette("ataque", dmg, true)
 		
 func _wire_roulette_sources(player: Node) -> void:
 	var sources := get_tree().get_nodes_in_group("roulette_source")
@@ -268,25 +298,98 @@ func _on_network_message(msg: String) -> void:
 	if typeof(data) != TYPE_DICTIONARY:
 		return
 
-	var evento := str(data.get("event", ""))
-
-	# Nos interesa solo data de partida
-	if evento != "receive-game-data":
+	if str(data.get("event", "")) != "receive-game-data":
 		return
 
 	var payload = data.get("data", {}).get("payload", {})
 	if typeof(payload) != TYPE_DICTIONARY:
 		return
 
-	# ======================================================
-	# ⚔️ ATAQUE RECIBIDO → abrir ruleta con tipo "ataque"
-	# ======================================================
 	if payload.get("type", "") == "attack":
-		#var dmg := int(payload.get("damage", 5))
+		var dmg := int(payload.get("damage", 5))
+		trigger_roulette("ataque", dmg, true)  # ✅ countdown + daño
 
-		var player := get_tree().get_first_node_in_group("player")
-		#if player and player.has_method("take_damage"):
-		#	player.take_damage(dmg)
+func _set_game_frozen(freeze: bool) -> void:
+	var player := get_tree().get_first_node_in_group("player")
 
-		if player:
-			show_roulette(player, "ataque")
+	if freeze:
+		# Pausa global
+		get_tree().paused = true
+
+		# Apagado manual del player (backup por si algo está en Always)
+		if is_instance_valid(player):
+			_frozen_player = player
+			_prev_player_process = player.is_processing()
+			_prev_player_physics = player.is_physics_processing()
+
+			player.set_process(false)
+			player.set_physics_process(false)
+			player.set_process_input(false)
+
+	else:
+		get_tree().paused = false
+
+		if is_instance_valid(_frozen_player):
+			_frozen_player.set_process(_prev_player_process)
+			_frozen_player.set_physics_process(_prev_player_physics)
+			_frozen_player.set_process_input(true)
+
+		_frozen_player = null
+func _connect_player_signals(player: Node) -> void:
+	if not player.has_signal("died"):
+		return
+
+	var cb := Callable(self, "_on_player_died")
+	if player.died.is_connected(cb):
+		player.died.disconnect(cb)
+
+	player.died.connect(cb)
+
+
+func _on_player_died() -> void:
+	# prevenir caos si muere mientras ruleta está activa o mientras cargamos
+	_force_cleanup_roulette()
+
+	if _cargando:
+		return
+
+	# reinicio seguro fuera del frame actual
+	call_deferred("_reiniciar_nivel")
+
+
+func _force_cleanup_roulette() -> void:
+	# Quita pausa siempre
+	_set_game_frozen(false)
+
+	_roulette_active = false
+	_roulette_pending = false
+
+	if is_instance_valid(_roulette_instance):
+		_roulette_instance.queue_free()
+		_roulette_instance = null
+func trigger_roulette(tipo: String = "", dmg: int = 0, use_countdown: bool = false) -> void:
+	# buscar player
+	var player := get_tree().get_first_node_in_group("player")
+	if player == null:
+		push_warning("No hay player para activar ruleta.")
+		return
+
+	# aplicar daño si corresponde
+	#if dmg > 0 and player.has_method("take_damage"):
+	#	player.take_damage(dmg)
+
+	# bloquear spam
+	if _roulette_active or _roulette_pending or _roulette_cooldown_timer > 0.0:
+		print("⏳ Ruleta bloqueada (active/pending/cooldown).")
+		return
+
+	_roulette_pending = true
+
+	# countdown opcional
+	if use_countdown:
+		await _show_attack_countdown()
+
+	_roulette_pending = false
+
+	# ✅ único lugar que llama show_roulette
+	show_roulette(player, tipo)

@@ -16,16 +16,13 @@ roulette_scene = ExtResource("7_mr4tj")
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="AttackNotice" type="Label" parent="CanvasLayer"]
-offset_left = 313.0
-offset_top = 127.0
-offset_right = 641.0
-offset_bottom = 164.0
+offset_left = 451.0
+offset_top = 118.0
+offset_right = 491.0
+offset_bottom = 141.0
 theme_override_fonts/font = ExtResource("4_n1ogb")
-theme_override_font_sizes/font_size = 29
-horizontal_alignment = 1
 
-[node name="RouletteLayer" type="CanvasLayer" parent="CanvasLayer"]
-layer = 100
+[node name="RouletteLayer" type="Node2D" parent="CanvasLayer"]
 
 [node name="LoadingScreen" type="Control" parent="CanvasLayer"]
 layout_mode = 3
