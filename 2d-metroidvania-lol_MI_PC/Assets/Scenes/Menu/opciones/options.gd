@@ -1,5 +1,9 @@
 extends Control
 
+var options_music = preload("res://Assets/AUDIOS/kevin_macleod-elevator.mp3")
+
+@onready var _mixer := $AudioStreamPlayer
+
 const SETTINGS_PATH := "user://settings.cfg"
 const SECTION_AUDIO := "audio"
 const SECTION_GAMEPLAY := "gameplay"
@@ -17,12 +21,16 @@ const SFX_BUS := "SFX"
 @onready var sfx_row: Control = $ColorRect/MainMargin/ContentScroll/Content/AudioCard/AudioVBox/SfxRow
 @onready var vibration_toggle: CheckButton = $ColorRect/MainMargin/ContentScroll/Content/GameplayCard/GameplayVBox/VibrationRow/VibrationToggle
 @onready var left_handed_toggle: CheckButton = $ColorRect/MainMargin/ContentScroll/Content/GameplayCard/GameplayVBox/LeftHandRow/LeftHandToggle
+@onready var touch_toggle: CheckButton = $ColorRect/MainMargin/ContentScroll/Content/GameplayCard/GameplayVBox/TouchRow/TouchToggle
+@onready var meme_mode_toggle: CheckButton = $ColorRect/MainMargin/ContentScroll/Content/GameplayCard/GameplayVBox/SkinModeRow/MemeModeToggle
 
 var master_volume: float = 1.0
 var music_volume: float = 1.0
 var sfx_volume: float = 1.0
 var vibration_enabled: bool = true
 var left_handed_mode: bool = false
+var touch_controls_on_pc: bool = false
+var meme_mode_enabled: bool = false
 
 var _updating_ui: bool = false
 var _master_bus_available: bool = true
@@ -35,6 +43,23 @@ func _ready() -> void:
 	_update_audio_labels()
 	apply_vibration_preview()
 	update_touch_controls_layout()
+	update_touch_controls_visibility()
+	update_touch_controls_skin()
+	
+	_play_menu_music()
+	
+func _play_menu_music() -> void:
+	if not _mixer:
+		return
+	if _mixer.stream != options_music:
+		_mixer.stream = options_music
+	if not _mixer.playing:
+		_mixer.play()
+
+func _stop_menu_music() -> void:
+	if _mixer and _mixer.playing:
+		_mixer.stop()
+
 
 func _on_master_slider_value_changed(value: float) -> void:
 	if _updating_ui:
@@ -77,6 +102,21 @@ func _on_left_handed_toggle_toggled(pressed: bool) -> void:
 	update_touch_controls_layout()
 	_save_settings()
 
+func _on_touch_toggle_toggled(pressed: bool) -> void:
+	if _updating_ui:
+		return
+	touch_controls_on_pc = pressed
+	update_touch_controls_visibility()
+	_save_settings()
+
+func _on_meme_mode_toggle_toggled(pressed: bool) -> void:
+	if _updating_ui:
+		return
+	meme_mode_enabled = pressed
+	GlobalsSignals.set_meme_mode(meme_mode_enabled, false)
+	update_touch_controls_skin()
+	_save_settings()
+
 func _on_reset_button_pressed() -> void:
 	set_defaults()
 	_save_settings()
@@ -91,6 +131,8 @@ func set_defaults() -> void:
 	sfx_volume = 1.0
 	vibration_enabled = true
 	left_handed_mode = false
+	touch_controls_on_pc = false
+	meme_mode_enabled = false
 
 	_updating_ui = true
 	master_slider.value = master_volume
@@ -98,12 +140,17 @@ func set_defaults() -> void:
 	sfx_slider.value = sfx_volume
 	vibration_toggle.button_pressed = vibration_enabled
 	left_handed_toggle.button_pressed = left_handed_mode
+	touch_toggle.button_pressed = touch_controls_on_pc
+	meme_mode_toggle.button_pressed = meme_mode_enabled
 	_updating_ui = false
 
 	_apply_audio_volumes()
 	_update_audio_labels()
 	apply_vibration_preview()
 	update_touch_controls_layout()
+	GlobalsSignals.set_meme_mode(meme_mode_enabled, false)
+	update_touch_controls_visibility()
+	update_touch_controls_skin()
 
 func _load_settings() -> void:
 	var cfg := ConfigFile.new()
@@ -117,6 +164,8 @@ func _load_settings() -> void:
 	sfx_volume = clamp(cfg.get_value(SECTION_AUDIO, "sfx", _get_bus_linear(SFX_BUS)), 0.0, 1.0)
 	vibration_enabled = cfg.get_value(SECTION_GAMEPLAY, "vibration", true)
 	left_handed_mode = cfg.get_value(SECTION_GAMEPLAY, "left_handed", false)
+	meme_mode_enabled = cfg.get_value(SECTION_GAMEPLAY, "meme_mode", GlobalsSignals.get_meme_mode())
+	touch_controls_on_pc = cfg.get_value(SECTION_GAMEPLAY, "show_touch_controls_desktop", GlobalsSignals.get_touch_controls_on_desktop())
 
 	_updating_ui = true
 	master_slider.editable = _master_bus_available
@@ -129,7 +178,12 @@ func _load_settings() -> void:
 	sfx_slider.value = sfx_volume
 	vibration_toggle.button_pressed = vibration_enabled
 	left_handed_toggle.button_pressed = left_handed_mode
+	touch_toggle.button_pressed = touch_controls_on_pc
+	meme_mode_toggle.button_pressed = meme_mode_enabled
 	_updating_ui = false
+	GlobalsSignals.set_meme_mode(meme_mode_enabled, false)
+	update_touch_controls_visibility()
+	update_touch_controls_skin()
 
 func _save_settings() -> void:
 	var cfg := ConfigFile.new()
@@ -139,6 +193,8 @@ func _save_settings() -> void:
 	cfg.set_value(SECTION_AUDIO, "sfx", sfx_volume)
 	cfg.set_value(SECTION_GAMEPLAY, "vibration", vibration_enabled)
 	cfg.set_value(SECTION_GAMEPLAY, "left_handed", left_handed_mode)
+	cfg.set_value(SECTION_GAMEPLAY, "show_touch_controls_desktop", touch_controls_on_pc)
+	cfg.set_value(SECTION_GAMEPLAY, "meme_mode", meme_mode_enabled)
 	cfg.save(SETTINGS_PATH)
 
 func _apply_audio_volumes() -> void:
@@ -173,6 +229,14 @@ func update_touch_controls_layout() -> void:
 	var controls := _find_touch_controls()
 	if controls and controls.has_method("set_left_handed"):
 		controls.set_left_handed(left_handed_mode)
+
+func update_touch_controls_visibility() -> void:
+	GlobalsSignals.set_touch_controls_on_desktop(touch_controls_on_pc, false)
+
+func update_touch_controls_skin() -> void:
+	var controls := _find_touch_controls()
+	if controls and controls.has_method("set_skin_mode"):
+		controls.set_skin_mode(meme_mode_enabled)
 
 func _find_touch_controls() -> Node:
 	var node := get_tree().get_first_node_in_group("touch_controls_ui")

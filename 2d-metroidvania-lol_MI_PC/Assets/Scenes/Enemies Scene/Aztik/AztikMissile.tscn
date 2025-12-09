@@ -1,0 +1,141 @@
+[gd_scene load_steps=20 format=3 uid="uid://k0rmqb40y1cq"]
+
+[ext_resource type="Script" uid="uid://dtivm1fejktcs" path="res://Assets/Scenes/Enemies Scene/Aztik/aztik_missile.gd" id="1_75vy3"]
+[ext_resource type="Texture2D" uid="uid://c68af7mtb6jux" path="res://Assets/sprites/enemies/Aztik/Aztik_misil/Aztik_Misil.png" id="2_f89ra"]
+[ext_resource type="Texture2D" uid="uid://dkeq5l6j58fpu" path="res://Assets/sprites/enemies/Aztik/Aztik_misil/Aztik_misilContacto.png" id="2_ohace"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_euhb6"]
+atlas = ExtResource("2_ohace")
+region = Rect2(0, 0, 248, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fppl3"]
+atlas = ExtResource("2_ohace")
+region = Rect2(248, 0, 248, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_teqbu"]
+atlas = ExtResource("2_ohace")
+region = Rect2(0, 154, 248, 142)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ikhwn"]
+atlas = ExtResource("2_ohace")
+region = Rect2(248, 154, 248, 142)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kpun1"]
+atlas = ExtResource("2_ohace")
+region = Rect2(0, 324, 248, 162)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w8b06"]
+atlas = ExtResource("2_ohace")
+region = Rect2(248, 324, 248, 162)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fea37"]
+atlas = ExtResource("2_f89ra")
+region = Rect2(0, 0, 248, 125)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_o1bgk"]
+atlas = ExtResource("2_f89ra")
+region = Rect2(248, 0, 248, 125)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_piknk"]
+atlas = ExtResource("2_f89ra")
+region = Rect2(0, 125, 248, 125)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rc6is"]
+atlas = ExtResource("2_f89ra")
+region = Rect2(248, 125, 248, 125)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ty3pc"]
+atlas = ExtResource("2_f89ra")
+region = Rect2(0, 250, 248, 125)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jwfdy"]
+atlas = ExtResource("2_f89ra")
+region = Rect2(248, 250, 248, 125)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tqdww"]
+atlas = ExtResource("2_f89ra")
+region = Rect2(0, 375, 248, 125)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1nuod"]
+atlas = ExtResource("2_f89ra")
+region = Rect2(248, 375, 248, 125)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_q4lwr"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_euhb6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fppl3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_teqbu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ikhwn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kpun1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_w8b06")
+}],
+"loop": false,
+"name": &"contact",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fea37")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_o1bgk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_piknk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rc6is")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ty3pc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jwfdy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tqdww")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1nuod")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_7egqv"]
+radius = 20.0
+
+[node name="AztikMissile" type="Area2D" groups=["enemy proyectile"]]
+collision_layer = 32
+collision_mask = 3
+script = ExtResource("1_75vy3")
+speed = 320.0
+damage = 35
+lifetime = 10.0
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(-21, -3.8146973e-06)
+scale = Vector2(0.44354832, 0.452)
+sprite_frames = SubResource("SpriteFrames_q4lwr")
+animation = &"contact"
+frame = 5
+frame_progress = 1.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_7egqv")
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

@@ -1,0 +1,94 @@
+[gd_scene load_steps=14 format=3 uid="uid://bhrv71mk66cyf"]
+
+[ext_resource type="Script" uid="uid://b0bbugy5no83k" path="res://Assets/Scenes/Enemies Scene/Cangri Scene/BookProjectile/book_projectile.gd" id="1_xv4qr"]
+[ext_resource type="Texture2D" uid="uid://bla412rqvl314" path="res://Assets/sprites/enemies/Cangri/Cangri proyectile/mitad.png" id="3_9scme"]
+[ext_resource type="Texture2D" uid="uid://dlouoe8fn6qd3" path="res://Assets/sprites/enemies/Cangri/Cangri proyectile/final.png" id="4_vxvby"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mfml0"]
+atlas = ExtResource("4_vxvby")
+region = Rect2(540, 0, 108, 148)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3qi37"]
+atlas = ExtResource("4_vxvby")
+region = Rect2(49, 155, 135, 155)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ppmax"]
+atlas = ExtResource("4_vxvby")
+region = Rect2(209, 155, 135, 155)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xjji1"]
+atlas = ExtResource("4_vxvby")
+region = Rect2(374, 155, 150, 155)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5pixe"]
+atlas = ExtResource("4_vxvby")
+region = Rect2(524, 155, 150, 155)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cb7ma"]
+atlas = ExtResource("3_9scme")
+region = Rect2(206, 0, 206, 137)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qp43i"]
+atlas = ExtResource("3_9scme")
+region = Rect2(442, 0, 221, 136)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vpwlh"]
+atlas = ExtResource("3_9scme")
+region = Rect2(381, 155, 269, 155)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_g92fh"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mfml0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3qi37")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ppmax")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xjji1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5pixe")
+}],
+"loop": false,
+"name": &"contact",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cb7ma")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qp43i")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vpwlh")
+}],
+"loop": true,
+"name": &"default",
+"speed": 6.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3g6qu"]
+size = Vector2(60, 38)
+
+[node name="BookProjectile" type="Area2D" groups=["enemy proyectile"]]
+collision_layer = 32
+collision_mask = 3
+script = ExtResource("1_xv4qr")
+speed = 460.0
+damage = 45
+lifetime = 6.0
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(0.35, 0.35)
+sprite_frames = SubResource("SpriteFrames_g92fh")
+frame_progress = 0.18817401
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -2)
+shape = SubResource("RectangleShape2D_3g6qu")

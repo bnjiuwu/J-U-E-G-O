@@ -1,0 +1,68 @@
+[gd_scene load_steps=10 format=3 uid="uid://cvq3dubddexyn"]
+
+[ext_resource type="Script" uid="uid://csjxq0vru7b0f" path="res://Assets/Scenes/Enemies Scene/Magic book/pencil_rain.gd" id="1_yirt2"]
+[ext_resource type="Texture2D" uid="uid://c358of0vsudt5" path="res://Assets/sprites/enemies/Magic book/Attack_lluvia_de lapides.png" id="2_m4ov6"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ojbg1"]
+atlas = ExtResource("2_m4ov6")
+region = Rect2(0, 0, 225, 184)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0w6ll"]
+atlas = ExtResource("2_m4ov6")
+region = Rect2(225, 0, 225, 184)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kixlv"]
+atlas = ExtResource("2_m4ov6")
+region = Rect2(450, 0, 225, 184)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e55rc"]
+atlas = ExtResource("2_m4ov6")
+region = Rect2(0, 184, 225, 184)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_y186j"]
+atlas = ExtResource("2_m4ov6")
+region = Rect2(225, 184, 225, 184)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_zp2jg"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ojbg1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0w6ll")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kixlv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_e55rc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_y186j")
+}],
+"loop": false,
+"name": &"rain",
+"speed": 6.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_j8w2c"]
+size = Vector2(80, 130)
+
+[node name="PencilRain" type="Area2D" groups=["enemy_projectile"]]
+collision_layer = 16
+collision_mask = 2
+script = ExtResource("1_yirt2")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(0.7, 0.7)
+sprite_frames = SubResource("SpriteFrames_zp2jg")
+animation = &"rain"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 16)
+shape = SubResource("RectangleShape2D_j8w2c")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 1.0
+one_shot = true

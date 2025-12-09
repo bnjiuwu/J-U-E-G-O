@@ -81,6 +81,8 @@ theme_override_font_sizes/font_size = 50
 theme_override_styles/normal = SubResource("StyleBoxFlat_j7r1e")
 text = "QUIT"
 
+[node name="MusicPlayer" type="AudioStreamPlayer" parent="."]
+
 [connection signal="pressed" from="ColorRect/VBoxContainer/play" to="." method="_on_play_pressed"]
 [connection signal="pressed" from="ColorRect/VBoxContainer/options" to="." method="_on_options_pressed"]
 [connection signal="pressed" from="ColorRect/VBoxContainer/multi" to="." method="_on_multi_pressed"]

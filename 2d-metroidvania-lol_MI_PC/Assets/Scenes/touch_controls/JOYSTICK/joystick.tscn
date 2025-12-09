@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://cquqiv0wxrsdy" path="res://Assets/Scenes/touch_controls/JOYSTICK/joystick.gd" id="1_abr7k"]
 [ext_resource type="Texture2D" uid="uid://bxhgkdm10w2c2" path="res://Assets/sprites/objects type shi/anillo.png" id="2_6q3qv"]
-[ext_resource type="Texture2D" uid="uid://b4b86xenusyvg" path="res://Assets/sprites/objects type shi/palta.png" id="3_ivi8f"]
+[ext_resource type="Texture2D" uid="uid://cwgducocy400e" path="res://Assets/sprites/objects type shi/Formal Controls/Joistyck.png" id="3_ivi8f"]
 [ext_resource type="Script" uid="uid://d067o2puc6rvs" path="res://Assets/Scenes/touch_controls/JOYSTICK/knob.gd" id="4_558cc"]
 
 [node name="Joystick" type="Node2D"]
@@ -13,17 +13,16 @@ scale = Vector2(0.505, 0.505)
 texture = ExtResource("2_6q3qv")
 
 [node name="Knob" type="Sprite2D" parent="."]
-position = Vector2(3.9999998, -1.9999998)
-scale = Vector2(0.5703703, 0.49629623)
+scale = Vector2(0.41288218, 0.37881663)
 texture = ExtResource("3_ivi8f")
 script = ExtResource("4_558cc")
 
 [node name="Button" type="Button" parent="."]
 self_modulate = Color(1, 1, 1, 0)
-offset_left = -111.0
-offset_top = -109.0
-offset_right = 110.0
-offset_bottom = 109.0
+offset_left = -116.0
+offset_top = -104.0
+offset_right = 112.0
+offset_bottom = 106.0
+mouse_behavior_recursive = 2
 
-[connection signal="button_down" from="Button" to="Knob" method="_on_button_button_down"]
-[connection signal="button_up" from="Button" to="Knob" method="_on_button_button_up"]
+[connection signal="pressed" from="Button" to="Knob" method="_on_button_button_down"]

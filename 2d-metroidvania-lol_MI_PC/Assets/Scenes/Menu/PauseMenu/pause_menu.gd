@@ -1,5 +1,8 @@
 extends CanvasLayer
 
+
+@export var options : PackedScene
+
 @onready var btn_resume = $VBoxContainer/reanudar
 @onready var btn_restart = $VBoxContainer/reiniciar
 @onready var btn_quit = $VBoxContainer/salir_a_menu
@@ -35,3 +38,4 @@ func _on_restart_pressed():
 func _on_quit_pressed():
 	get_tree().paused = false
 	get_tree().change_scene_to_file("res://Assets/Scenes/Menu/menu.tscn")
+	

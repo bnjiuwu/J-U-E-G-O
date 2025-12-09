@@ -1,6 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://bu5ef6314c7ik"]
+[gd_scene load_steps=6 format=3 uid="uid://bu5ef6314c7ik"]
 
 [ext_resource type="Script" uid="uid://cwj5nl4qyktps" path="res://Assets/Scenes/Menu/PauseMenu/pause_menu.gd" id="1_o2l1m"]
+[ext_resource type="PackedScene" uid="uid://bklv4hrgtjjcc" path="res://Assets/Scenes/Menu/opciones/options.tscn" id="2_culc7"]
 [ext_resource type="Texture2D" uid="uid://c3i56v4uby2j7" path="res://Assets/images/menus/PAUSED/waiting.png" id="2_lcq84"]
 [ext_resource type="FontFile" uid="uid://cntibmnp43iod" path="res://Assets/Fonts/Brotheric Regular Demo.otf" id="3_culc7"]
 
@@ -11,6 +12,7 @@ font_size = 50
 [node name="PauseMenu" type="CanvasLayer"]
 process_mode = 3
 script = ExtResource("1_o2l1m")
+options = ExtResource("2_culc7")
 
 [node name="ColorRect" type="ColorRect" parent="."]
 anchors_preset = 15

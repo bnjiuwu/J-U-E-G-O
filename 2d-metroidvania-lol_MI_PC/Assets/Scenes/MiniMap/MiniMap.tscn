@@ -55,7 +55,7 @@ rotation_smoothing_enabled = true
 rotation_smoothing_speed = 12.0
 
 [node name="PlayerMarker" type="ColorRect" parent="UI/MarginContainer/SubViewportContainer/SubViewport"]
-z_index = 15
+z_index = 10
 offset_right = 9.0
 offset_bottom = 18.0
 mouse_filter = 2
