@@ -135,11 +135,6 @@ func _instanciar_nivel(packed: PackedScene) -> void:
 
 	var player: Node = players[0]
 
-	# opcional: reiniciar nivel cuando el player muere
-	if player.has_signal("died"):
-		if not player.died.is_connected(_reiniciar_nivel):
-			player.died.connect(_reiniciar_nivel)
-
 	# conectar fuentes de ruleta del nivel
 	_wire_roulette_sources(player)
 

@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://ljb2k5q033bq"]
+[gd_scene load_steps=7 format=3 uid="uid://ljb2k5q033bq"]
 
 [ext_resource type="Script" uid="uid://b746mgntfmwdm" path="res://Assets/Scenes/Menu/Death Menu/death_menu.gd" id="1_4w3qo"]
 [ext_resource type="Texture2D" uid="uid://c8auhyifpgy7q" path="res://Assets/sprites/objects type shi/sad-spongebob.png" id="2_i5axi"]
+[ext_resource type="FontFile" uid="uid://dhhjcp1rxp6gj" path="res://Assets/Fonts/minecraft_font.ttf" id="3_wbtaq"]
 
 [sub_resource type="Animation" id="Animation_i5axi"]
 length = 0.001
@@ -100,12 +101,14 @@ offset_bottom = 272.0
 [node name="Title" type="Label" parent="VBox"]
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_wbtaq")
 text = "HAS MUERTO"
 horizontal_alignment = 1
 
 [node name="options" type="Label" parent="VBox"]
 layout_mode = 2
-text = "¿Qué deseas hacer?"
+theme_override_fonts/font = ExtResource("3_wbtaq")
+text = "¿Que deseas hacer?"
 horizontal_alignment = 1
 
 [node name="Buttons" type="VBoxContainer" parent="VBox"]
@@ -113,14 +116,17 @@ layout_mode = 2
 
 [node name="Retry" type="Button" parent="VBox/Buttons"]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("3_wbtaq")
 text = " 🥶Reintentar"
 
 [node name="MainMenu" type="Button" parent="VBox/Buttons"]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("3_wbtaq")
 text = "😭Menu Principal"
 
 [node name="Quit" type="Button" parent="VBox/Buttons"]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("3_wbtaq")
 text = "💅Salir del juego"
 
 [node name="Fade" type="AnimationPlayer" parent="."]

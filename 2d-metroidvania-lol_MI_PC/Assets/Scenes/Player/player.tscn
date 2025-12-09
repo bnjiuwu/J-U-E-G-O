@@ -1,4 +1,4 @@
-[gd_scene load_steps=92 format=3 uid="uid://braj8a8ooxs4t"]
+[gd_scene load_steps=91 format=3 uid="uid://braj8a8ooxs4t"]
 
 [ext_resource type="Script" uid="uid://dw6uvcpocgnu6" path="res://Assets/Scenes/Player/player.gd" id="1_xpcdj"]
 [ext_resource type="PackedScene" uid="uid://bfjsyuqkbr65o" path="res://Assets/Scenes/Bullet Scene/Bullet.tscn" id="2_0u5uq"]
@@ -16,7 +16,6 @@
 [ext_resource type="Texture2D" uid="uid://b5tor0b0gr14s" path="res://Assets/sprites/Health Bar/health bar empty.png" id="14_0h5f3"]
 [ext_resource type="Texture2D" uid="uid://bc4nroe2f0on5" path="res://Assets/sprites/Health Bar/health bar full.png" id="15_dkee6"]
 [ext_resource type="Texture2D" uid="uid://bdjy131sdad40" path="res://Assets/sprites/Health Bar/health bar frame.png" id="16_meuei"]
-[ext_resource type="PackedScene" uid="uid://bgj1kec0hcvbb" path="res://Assets/Scenes/EVENT ROULETTE/Roulette.tscn" id="17_dkee6"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_rblve"]
 atlas = ExtResource("3_gk6dx")
@@ -649,9 +648,6 @@ value = 100.0
 texture_under = ExtResource("14_0h5f3")
 texture_over = ExtResource("16_meuei")
 texture_progress = ExtResource("15_dkee6")
-
-[node name="Roulette" parent="." instance=ExtResource("17_dkee6")]
-visible = false
 
 [connection signal="area_entered" from="Hitbox" to="." method="_on_hitbox_area_entered"]
 [connection signal="body_entered" from="Hitbox" to="." method="_on_hitbox_body_entered"]

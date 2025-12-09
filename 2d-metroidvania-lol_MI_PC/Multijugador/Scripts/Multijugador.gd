@@ -279,11 +279,6 @@ func _on_mensaje_recibido(msg: String):
 			print("🟦 Rival listo:", rival_name)
 			_marcar_rival_listo()
 
-
-
-
-
-
 ##Cambio
 		"match-start":
 			print("🚀 Ambos jugadores enviaron ping-match → iniciando partida")

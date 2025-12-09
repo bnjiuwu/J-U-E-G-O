@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://bklv4hrgtjjcc"]
+[gd_scene load_steps=6 format=3 uid="uid://bklv4hrgtjjcc"]
 
 [ext_resource type="Script" uid="uid://br6oo1s4rqkns" path="res://Assets/Scenes/Menu/opciones/options.gd" id="1_c4plk"]
 [ext_resource type="Texture2D" uid="uid://dkqia2mxr4bnf" path="res://Assets/images/menus/sopaipilla.png" id="2_c4plk"]
+[ext_resource type="FontFile" uid="uid://dhhjcp1rxp6gj" path="res://Assets/Fonts/minecraft_font.ttf" id="3_yg6yp"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_card"]
 bg_color = Color(0.505882, 0.494118, 0.482353, 0.843137)
@@ -69,6 +70,7 @@ theme_override_constants/separation = 28
 [node name="HeaderLabel" type="Label" parent="ColorRect/MainMargin/ContentScroll/Content"]
 layout_mode = 2
 size_flags_horizontal = 3
+theme_override_fonts/font = ExtResource("3_yg6yp")
 theme_override_font_sizes/font_size = 48
 text = "OPCIONES"
 horizontal_alignment = 1
@@ -93,8 +95,9 @@ theme_override_constants/separation = 18
 [node name="AudioTitle" type="Label" parent="ColorRect/MainMargin/ContentScroll/Content/AudioCard/AudioVBox"]
 layout_mode = 2
 mouse_filter = 1
+theme_override_fonts/font = ExtResource("3_yg6yp")
 theme_override_font_sizes/font_size = 44
-text = "Audio"
+text = "  Audio"
 
 [node name="AudioSeparator" type="HSeparator" parent="ColorRect/MainMargin/ContentScroll/Content/AudioCard/AudioVBox"]
 layout_mode = 2
@@ -106,8 +109,9 @@ theme_override_constants/separation = 16
 
 [node name="MasterLabel" type="Label" parent="ColorRect/MainMargin/ContentScroll/Content/AudioCard/AudioVBox/MasterRow"]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("3_yg6yp")
 theme_override_font_sizes/font_size = 34
-text = "Volumen general"
+text = " Volumen general"
 
 [node name="MasterSlider" type="HSlider" parent="ColorRect/MainMargin/ContentScroll/Content/AudioCard/AudioVBox/MasterRow"]
 layout_mode = 2
@@ -190,8 +194,9 @@ theme_override_constants/separation = 18
 
 [node name="GameplayTitle" type="Label" parent="ColorRect/MainMargin/ContentScroll/Content/GameplayCard/GameplayVBox"]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("3_yg6yp")
 theme_override_font_sizes/font_size = 44
-text = "Juego"
+text = "  Juego"
 
 [node name="GameplaySeparator" type="HSeparator" parent="ColorRect/MainMargin/ContentScroll/Content/GameplayCard/GameplayVBox"]
 layout_mode = 2
@@ -203,11 +208,13 @@ theme_override_constants/separation = 16
 
 [node name="VibrationLabel" type="Label" parent="ColorRect/MainMargin/ContentScroll/Content/GameplayCard/GameplayVBox/VibrationRow"]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("3_yg6yp")
 theme_override_font_sizes/font_size = 34
-text = "Vibración"
+text = "  Vibracion"
 
 [node name="VibrationToggle" type="CheckButton" parent="ColorRect/MainMargin/ContentScroll/Content/GameplayCard/GameplayVBox/VibrationRow"]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("3_yg6yp")
 text = "ON"
 
 [node name="LeftHandRow" type="HBoxContainer" parent="ColorRect/MainMargin/ContentScroll/Content/GameplayCard/GameplayVBox"]
@@ -217,11 +224,13 @@ theme_override_constants/separation = 16
 
 [node name="LeftHandLabel" type="Label" parent="ColorRect/MainMargin/ContentScroll/Content/GameplayCard/GameplayVBox/LeftHandRow"]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("3_yg6yp")
 theme_override_font_sizes/font_size = 34
-text = "Modo zurdo"
+text = "  Modo zurdo"
 
 [node name="LeftHandToggle" type="CheckButton" parent="ColorRect/MainMargin/ContentScroll/Content/GameplayCard/GameplayVBox/LeftHandRow"]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("3_yg6yp")
 text = "ON"
 
 [node name="TouchRow" type="HBoxContainer" parent="ColorRect/MainMargin/ContentScroll/Content/GameplayCard/GameplayVBox"]
@@ -231,11 +240,13 @@ theme_override_constants/separation = 16
 
 [node name="TouchLabel" type="Label" parent="ColorRect/MainMargin/ContentScroll/Content/GameplayCard/GameplayVBox/TouchRow"]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("3_yg6yp")
 theme_override_font_sizes/font_size = 34
-text = "Botones táctiles en PC"
+text = "  Botones tactiles en PC"
 
 [node name="TouchToggle" type="CheckButton" parent="ColorRect/MainMargin/ContentScroll/Content/GameplayCard/GameplayVBox/TouchRow"]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("3_yg6yp")
 text = "Mostrar"
 
 [node name="SkinModeRow" type="HBoxContainer" parent="ColorRect/MainMargin/ContentScroll/Content/GameplayCard/GameplayVBox"]
@@ -245,11 +256,13 @@ theme_override_constants/separation = 16
 
 [node name="SkinModeLabel" type="Label" parent="ColorRect/MainMargin/ContentScroll/Content/GameplayCard/GameplayVBox/SkinModeRow"]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("3_yg6yp")
 theme_override_font_sizes/font_size = 34
-text = "Modo Meme"
+text = "  Modo Meme"
 
 [node name="MemeModeToggle" type="CheckButton" parent="ColorRect/MainMargin/ContentScroll/Content/GameplayCard/GameplayVBox/SkinModeRow"]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("3_yg6yp")
 text = "MEME"
 
 [node name="ButtonsRow" type="HBoxContainer" parent="ColorRect"]
