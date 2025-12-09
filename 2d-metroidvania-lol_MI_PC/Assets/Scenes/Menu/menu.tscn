@@ -11,7 +11,7 @@ bg_color = Color(0.609435, 0.593739, 0.578541, 0.454902)
 bg_color = Color(0.6, 0.6, 0.6, 0.482353)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bk0jr"]
-bg_color = Color(0.025840001, 0.66066414, 0.90532964, 0.312)
+bg_color = Color(0.02584, 0.660664, 0.90533, 0.312)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_j7r1e"]
 bg_color = Color(1, 0, 0, 0.517647)
@@ -31,7 +31,7 @@ layout_mode = 0
 offset_right = 958.0
 offset_bottom = 480.0
 mouse_filter = 2
-color = Color(0.07284268, 0.072842605, 0.072842576, 1)
+color = Color(0.0728427, 0.0728426, 0.0728426, 1)
 
 [node name="TextureRect" type="TextureRect" parent="ColorRect"]
 layout_mode = 0

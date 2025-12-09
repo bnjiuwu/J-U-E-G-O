@@ -1,7 +1,7 @@
 [gd_resource type="VisualShader" load_steps=2 format=3 uid="uid://c66u0ecrvyecw"]
 
 [sub_resource type="VisualShaderNodeColorConstant" id="VisualShaderNodeColorConstant_trmnr"]
-constant = Color(18.892157, 0, 0, 1)
+constant = Color(18.8922, 0, 0, 1)
 
 [resource]
 code = "shader_type canvas_item;
@@ -12,7 +12,7 @@ render_mode blend_mix;
 
 void vertex() {
 // ColorConstant:2
-	vec4 n_out2p0 = vec4(18.892157, 0.000000, 0.000000, 1.000000);
+	vec4 n_out2p0 = vec4(18.892200, 0.000000, 0.000000, 1.000000);
 
 
 // Output:0

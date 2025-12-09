@@ -13,7 +13,7 @@ config_version=5
 config/name="2d metroidvania lol"
 config/tags=PackedStringArray("default_proyect_roberto_(mi_rama)")
 run/main_scene="uid://dtnijel5sygcw"
-config/features=PackedStringArray("4.5", "Forward Plus")
+config/features=PackedStringArray("4.4", "Forward Plus")
 config/icon="res://icon.svg"
 
 [autoload]
