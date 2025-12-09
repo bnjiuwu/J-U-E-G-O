@@ -1,8 +1,9 @@
-[gd_scene load_steps=44 format=4 uid="uid://c6n7qrlau6b0k"]
+[gd_scene load_steps=45 format=4 uid="uid://c6n7qrlau6b0k"]
 
 [ext_resource type="PackedScene" uid="uid://braj8a8ooxs4t" path="res://Assets/Scenes/Player/player.tscn" id="1_n0qsc"]
 [ext_resource type="Script" uid="uid://by4hegpiwf1wp" path="res://Levels/level 1/level_1.gd" id="1_r7d4j"]
 [ext_resource type="PackedScene" uid="uid://d3evjk846bf1b" path="res://Assets/Scenes/Enemies Scene/Slime scene/slime.tscn" id="2_3mhv4"]
+[ext_resource type="Script" uid="uid://cr4b4an4vhhvv" path="res://Levels/level 1/world_audio_manager.gd" id="2_vumwe"]
 [ext_resource type="Texture2D" uid="uid://caqfa7afng3wv" path="res://Assets/images/Tile Maps/overworld/Tiles/Assets/Assets.png" id="3_3mhv4"]
 [ext_resource type="PackedScene" uid="uid://bjxvrrouvo5u3" path="res://Assets/Scenes/Map Borders/MapBorders_level1.tscn" id="5_gk84l"]
 [ext_resource type="Texture2D" uid="uid://cthieo60smtmm" path="res://Assets/images/Tile Maps/cave/background1.png" id="6_i6ka7"]
@@ -11448,6 +11449,9 @@ b = Vector2(-165, 30)
 script = ExtResource("1_r7d4j")
 pause_menu = NodePath("PauseMenu")
 death_menu = NodePath("DeathMenu")
+
+[node name="WorldAudioManager" type="Node" parent="."]
+script = ExtResource("2_vumwe")
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
 scroll_base_scale = Vector2(1.5, 1.5)
