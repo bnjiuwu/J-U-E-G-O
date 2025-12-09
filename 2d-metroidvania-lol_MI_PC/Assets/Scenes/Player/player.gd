@@ -97,9 +97,10 @@ func _ready() -> void:
 	
 
 func _process(_delta):
+	var delata2 = _delta
 	if shoot_timer > 0:
 		skill_timer -= _delta
-		shoot_timer -= _delta
+		shoot_timer -= delata2
 	if Input.is_action_pressed("attack") and shoot_timer <= 0:
 		fire_bullet()
 		shoot_timer = shoot_delay * fire_rate_mult
