@@ -1,8 +1,14 @@
 # res://Scripts/level_manager.gd
 extends Node2D
+class_name LevelManager
 
 @export var niveles: Array[PackedScene] = []
 @export_file("*.tscn") var fallback_scene: String = "res://Assets/Scenes/Menu/menu.tscn"
+
+# --- RUULETA ---
+@export var roulette_scene: PackedScene
+var _roulette_instance: Node = null
+@onready var _roulette_layer: Node = $CanvasLayer/RouletteLayer
 
 var _nivel_actual: int = 1
 var _nivel_instanciado: Node = null
@@ -18,6 +24,8 @@ var _display_time := 0.0
 
 func _ready() -> void:
 	print("level_manager listo")
+	add_to_group("level_manager") # útil por si quieres llamarlo por grupo
+
 	if niveles.is_empty():
 		push_error("No hay niveles asignados en 'niveles'.")
 		return
@@ -26,6 +34,10 @@ func _ready() -> void:
 		push_error("No encontré CanvasLayer/LoadingScreen.")
 	else:
 		_loading_screen.visible = false
+
+	# Si no existe RouletteLayer, no crashea, pero avisa
+	if _roulette_layer == null:
+		push_warning("No encontré CanvasLayer/RouletteLayer. La ruleta se agregará al CanvasLayer.")
 
 	_cargar_nivel_async(_nivel_actual)
 
@@ -38,8 +50,6 @@ func _process(delta: float) -> void:
 
 	var status := ResourceLoader.load_threaded_get_status(_nivel_path_cargando, _progreso)
 
-	# DEBUG: ver el progreso en la consola
-	# (deberías ver números entre 0 y 1)
 	print("progreso carga: ", _progreso[0])
 
 	if is_instance_valid(_loading_screen):
@@ -55,7 +65,6 @@ func _process(delta: float) -> void:
 			_ocultar_pantalla_carga()
 
 		ResourceLoader.ThreadLoadStatus.THREAD_LOAD_LOADED:
-			# Esperar al menos un ratito para poder VER la barra
 			if _display_time < _min_display_time:
 				return
 
@@ -118,13 +127,21 @@ func _instanciar_nivel(packed: PackedScene) -> void:
 	_nivel_instanciado = packed.instantiate()
 	add_child(_nivel_instanciado)
 
+	# buscar player
 	var players := get_tree().get_nodes_in_group("player")
 	if players.is_empty():
 		push_warning("No se encontró ningún nodo en el grupo 'player'.")
 		return
 
-	var player = players[0]
+	var player: Node = players[0]
 
+	# opcional: reiniciar nivel cuando el player muere
+	if player.has_signal("died"):
+		if not player.died.is_connected(_reiniciar_nivel):
+			player.died.connect(_reiniciar_nivel)
+
+	# conectar fuentes de ruleta del nivel
+	_wire_roulette_sources(player)
 
 
 func _eliminar_nivel() -> void:
@@ -155,3 +172,62 @@ func _handle_all_levels_complete() -> void:
 	var tree := get_tree()
 	if tree:
 		tree.change_scene_to_file(fallback_scene)
+
+# =========================================================
+# ===================== RULETA API ========================
+# =========================================================
+
+# Llamada directa desde cualquier trigger:
+# get_tree().get_first_node_in_group("level_manager").request_roulette()
+func request_roulette() -> void:
+	var player := get_tree().get_first_node_in_group("player")
+	if player:
+		show_roulette(player)
+	else:
+		push_warning("No hay player para abrir ruleta.")
+
+func show_roulette(player: Node) -> void:
+	if roulette_scene == null:
+		push_warning("roulette_scene no asignada en LevelManager.")
+		return
+
+	# eliminar instancia anterior si existe
+	if is_instance_valid(_roulette_instance):
+		_roulette_instance.queue_free()
+
+	_roulette_instance = roulette_scene.instantiate()
+
+	var parent_node: Node = _roulette_layer if is_instance_valid(_roulette_layer) else $CanvasLayer
+	parent_node.add_child(_roulette_instance)
+
+	# asignar player al script de la ruleta si existe esa propiedad
+	if "player" in _roulette_instance:
+		_roulette_instance.player = player
+
+	# limpiar puntero cuando se cierre sola
+	_roulette_instance.tree_exited.connect(func():
+		_roulette_instance = null
+	, CONNECT_ONE_SHOT)
+
+	# iniciar spin si tiene el método
+	if _roulette_instance.has_method("start_spin"):
+		_roulette_instance.start_spin()
+
+# Busca nodos del nivel que pidan la ruleta mediante señal.
+# Tu nivel/boss/cofre puede tener una señal: signal request_roulette
+# y estar en grupo "roulette_source".
+func _wire_roulette_sources(player: Node) -> void:
+	var sources := get_tree().get_nodes_in_group("roulette_source")
+	for s in sources:
+		if not is_instance_valid(s):
+			continue
+		# asegurar que pertenecen al nivel actual
+		if _nivel_instanciado and not _nivel_instanciado.is_ancestor_of(s):
+			continue
+
+		if s.has_signal("request_roulette"):
+			# conectar sin duplicar
+			if not s.request_roulette.is_connected(func(): show_roulette(player)):
+				s.request_roulette.connect(func():
+					show_roulette(player)
+				)
