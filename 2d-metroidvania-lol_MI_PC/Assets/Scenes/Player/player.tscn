@@ -1,4 +1,4 @@
-[gd_scene load_steps=91 format=3 uid="uid://braj8a8ooxs4t"]
+[gd_scene load_steps=98 format=3 uid="uid://braj8a8ooxs4t"]
 
 [ext_resource type="Script" uid="uid://dw6uvcpocgnu6" path="res://Assets/Scenes/Player/player.gd" id="1_xpcdj"]
 [ext_resource type="PackedScene" uid="uid://bfjsyuqkbr65o" path="res://Assets/Scenes/Bullet Scene/Bullet.tscn" id="2_0u5uq"]
@@ -16,6 +16,13 @@
 [ext_resource type="Texture2D" uid="uid://b5tor0b0gr14s" path="res://Assets/sprites/Health Bar/health bar empty.png" id="14_0h5f3"]
 [ext_resource type="Texture2D" uid="uid://bc4nroe2f0on5" path="res://Assets/sprites/Health Bar/health bar full.png" id="15_dkee6"]
 [ext_resource type="Texture2D" uid="uid://bdjy131sdad40" path="res://Assets/sprites/Health Bar/health bar frame.png" id="16_meuei"]
+[ext_resource type="PackedScene" uid="uid://bgj1kec0hcvbb" path="res://Assets/Scenes/EVENT ROULETTE/Roulette.tscn" id="17_dkee6"]
+[ext_resource type="AudioStream" path="res://Assets/Audios/Game_Audios/pixel-jump-319167.mp3" id="18_jump"]
+[ext_resource type="AudioStream" path="res://Assets/Audios/Game_Audios/fart-83471.mp3" id="19_dash"]
+[ext_resource type="AudioStream" path="res://Assets/Audios/Game_Audios/8-bit-explosion-3-340456.mp3" id="20_shoot"]
+[ext_resource type="AudioStream" path="res://Assets/Audios/Game_Audios/retro-explode-2-236688.mp3" id="21_skill"]
+[ext_resource type="AudioStream" path="res://Assets/Audios/Game_Audios/retro-hurt-1-236672.mp3" id="22_hurt"]
+[ext_resource type="AudioStream" path="res://Assets/Audios/Game_Audios/videogame-death-sound-43894.mp3" id="23_death"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_rblve"]
 atlas = ExtResource("3_gk6dx")
@@ -648,6 +655,29 @@ value = 100.0
 texture_under = ExtResource("14_0h5f3")
 texture_over = ExtResource("16_meuei")
 texture_progress = ExtResource("15_dkee6")
+
+[node name="Roulette" parent="." instance=ExtResource("17_dkee6")]
+visible = false
+
+[node name="Audio" type="Node2D" parent="."]
+
+[node name="JumpSfx" type="AudioStreamPlayer2D" parent="Audio"]
+stream = ExtResource("18_jump")
+
+[node name="DashSfx" type="AudioStreamPlayer2D" parent="Audio"]
+stream = ExtResource("19_dash")
+
+[node name="ShootSfx" type="AudioStreamPlayer2D" parent="Audio"]
+stream = ExtResource("20_shoot")
+
+[node name="SkillSfx" type="AudioStreamPlayer2D" parent="Audio"]
+stream = ExtResource("21_skill")
+
+[node name="HurtSfx" type="AudioStreamPlayer2D" parent="Audio"]
+stream = ExtResource("22_hurt")
+
+[node name="DeathSfx" type="AudioStreamPlayer2D" parent="Audio"]
+stream = ExtResource("23_death")
 
 [connection signal="area_entered" from="Hitbox" to="." method="_on_hitbox_area_entered"]
 [connection signal="body_entered" from="Hitbox" to="." method="_on_hitbox_body_entered"]
