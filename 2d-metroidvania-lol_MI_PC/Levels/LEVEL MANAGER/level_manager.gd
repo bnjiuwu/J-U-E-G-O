@@ -2,6 +2,10 @@
 extends Node2D
 class_name LevelManager
 
+const ROULETTE_COOLDOWN := 30.0
+var _roulette_active: bool = false
+var _roulette_cooldown_timer: float = 0.0
+
 @export var niveles: Array[PackedScene] = []
 @export_file("*.tscn") var fallback_scene: String = "res://Assets/Scenes/Menu/menu.tscn"
 
@@ -23,6 +27,9 @@ var _min_display_time := 0.5
 var _display_time := 0.0
 
 func _ready() -> void:
+	if Network and not Network.mensaje_recibido.is_connected(_on_network_message):
+		Network.mensaje_recibido.connect(_on_network_message)
+		
 	print("level_manager listo")
 	add_to_group("level_manager") # útil por si quieres llamarlo por grupo
 
@@ -43,6 +50,10 @@ func _ready() -> void:
 
 
 func _process(delta: float) -> void:
+		# --- cooldown de ruleta SIEMPRE ---
+	if _roulette_cooldown_timer > 0.0:
+		_roulette_cooldown_timer = max(0.0, _roulette_cooldown_timer - delta)
+		
 	if not _cargando:
 		return
 
@@ -171,20 +182,30 @@ func _handle_all_levels_complete() -> void:
 # =========================================================
 # ===================== RULETA API ========================
 # =========================================================
+func _on_source_request_roulette(tipo: String, player: Node) -> void:
+	show_roulette(player, tipo)
 
-# Llamada directa desde cualquier trigger:
-# get_tree().get_first_node_in_group("level_manager").request_roulette()
-func request_roulette() -> void:
+
+func request_roulette(tipo: String = "") -> void:
 	var player := get_tree().get_first_node_in_group("player")
 	if player:
-		show_roulette(player)
+		show_roulette(player, tipo)
 	else:
 		push_warning("No hay player para abrir ruleta.")
 
-func show_roulette(player: Node) -> void:
+func show_roulette(player: Node, tipo: String = "") -> void:
 	if roulette_scene == null:
 		push_warning("roulette_scene no asignada en LevelManager.")
 		return
+
+	# --- BLOQUEO anti-spam ---
+	if _roulette_active or _roulette_cooldown_timer > 0.0:
+		print("⏳ Ruleta ignorada (active/cooldown): ", _roulette_cooldown_timer, "s")
+		return
+
+	# marcar estado + iniciar cooldown desde el INICIO del spin
+	_roulette_active = true
+	_roulette_cooldown_timer = ROULETTE_COOLDOWN
 
 	# eliminar instancia anterior si existe
 	if is_instance_valid(_roulette_instance):
@@ -195,34 +216,77 @@ func show_roulette(player: Node) -> void:
 	var parent_node: Node = _roulette_layer if is_instance_valid(_roulette_layer) else $CanvasLayer
 	parent_node.add_child(_roulette_instance)
 
-	# asignar player al script de la ruleta si existe esa propiedad
+	# asignar player si existe esa propiedad
 	if "player" in _roulette_instance:
 		_roulette_instance.player = player
 
-	# limpiar puntero cuando se cierre sola
+	# (opcional) pasar tipo, no molesta aunque no segmentes
+	if _roulette_instance.has_method("set_trigger"):
+		_roulette_instance.set_trigger(tipo)
+	elif "trigger_type" in _roulette_instance:
+		_roulette_instance.trigger_type = tipo
+
+	# cuando se cierre/destruya la ruleta
 	_roulette_instance.tree_exited.connect(func():
 		_roulette_instance = null
+		_roulette_active = false
 	, CONNECT_ONE_SHOT)
 
-	# iniciar spin si tiene el método
+	# iniciar spin
 	if _roulette_instance.has_method("start_spin"):
 		_roulette_instance.start_spin()
 
-# Busca nodos del nivel que pidan la ruleta mediante señal.
-# Tu nivel/boss/cofre puede tener una señal: signal request_roulette
-# y estar en grupo "roulette_source".
+
+func recibir_ataque(dmg: int) -> void:
+	var player := get_tree().get_first_node_in_group("player")
+	#if player and player.has_method("take_damage"):
+	#	player.take_damage(dmg)
+
+	# activar ruleta con contexto "ataque"
+	if player:
+		show_roulette(player, "ataque")
+		
 func _wire_roulette_sources(player: Node) -> void:
 	var sources := get_tree().get_nodes_in_group("roulette_source")
 	for s in sources:
 		if not is_instance_valid(s):
 			continue
+
 		# asegurar que pertenecen al nivel actual
 		if _nivel_instanciado and not _nivel_instanciado.is_ancestor_of(s):
 			continue
 
 		if s.has_signal("request_roulette"):
-			# conectar sin duplicar
-			if not s.request_roulette.is_connected(func(): show_roulette(player)):
-				s.request_roulette.connect(func():
-					show_roulette(player)
-				)
+			# conecta señal con tipo
+			var cb := Callable(self, "_on_source_request_roulette").bind(player)
+
+			if not s.request_roulette.is_connected(cb):
+				s.request_roulette.connect(cb)
+				
+func _on_network_message(msg: String) -> void:
+	var data = JSON.parse_string(msg)
+	if typeof(data) != TYPE_DICTIONARY:
+		return
+
+	var evento := str(data.get("event", ""))
+
+	# Nos interesa solo data de partida
+	if evento != "receive-game-data":
+		return
+
+	var payload = data.get("data", {}).get("payload", {})
+	if typeof(payload) != TYPE_DICTIONARY:
+		return
+
+	# ======================================================
+	# ⚔️ ATAQUE RECIBIDO → abrir ruleta con tipo "ataque"
+	# ======================================================
+	if payload.get("type", "") == "attack":
+		#var dmg := int(payload.get("damage", 5))
+
+		var player := get_tree().get_first_node_in_group("player")
+		#if player and player.has_method("take_damage"):
+		#	player.take_damage(dmg)
+
+		if player:
+			show_roulette(player, "ataque")
