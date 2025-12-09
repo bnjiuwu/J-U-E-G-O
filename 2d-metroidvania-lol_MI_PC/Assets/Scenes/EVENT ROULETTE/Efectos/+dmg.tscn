@@ -5,7 +5,6 @@
 
 [node name="+DMG" type="Node2D"]
 script = ExtResource("1_l2jwi")
-duration = 20.0
 
 [node name="Timer" type="Timer" parent="."]
 

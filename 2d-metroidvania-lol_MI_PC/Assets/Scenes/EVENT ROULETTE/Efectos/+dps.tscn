@@ -5,7 +5,6 @@
 
 [node name="+dps" type="Node2D"]
 script = ExtResource("1_v6p6k")
-duration = 20.0
 
 [node name="Timer" type="Timer" parent="."]
 

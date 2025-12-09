@@ -2,6 +2,7 @@ extends Projectile
 class_name PlayerProjectile
 
 
+
 func _apply_damage(target):
 	var receiver = target
 
@@ -11,3 +12,4 @@ func _apply_damage(target):
 	
 	if receiver.has_method("take_damage"):
 		receiver.take_damage(damage)
+		

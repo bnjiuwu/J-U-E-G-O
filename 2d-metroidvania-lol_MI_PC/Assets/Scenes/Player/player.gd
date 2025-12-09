@@ -13,10 +13,12 @@ var dead: bool = false
 var is_dashing: bool = false
 var dash_timer: float = 0.0
 var dash_cooldown_timer: float = 0.0
+var dash_enable: bool = true
 
 #===== jump ===
 var jump_count = 0
 var max_jumps = 2
+var double_jump_enable: bool = true
 #==== coyote jump ===== 
 var coyote_time := 0.20
 var coyote_timer := 0.0
@@ -29,6 +31,7 @@ var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 @export var move_speed: float = 150
 @export var jump_speed: float = 450
 @export var jump_pad_height: float = jump_speed * 2
+var move_speed_bonus: float = 0.0  # puede ser negativo
 
 
 #=== sprites ====
@@ -59,6 +62,11 @@ var shoot_timer := 0.0
 @export var skill_delay := 1.5
 var skill_timer:= 0.0
 
+var fire_rate_mult: float = 1.0  # 1.0 normal, 0.7 más rápido, 1.3 más lento
+
+var projectile_damage_bonus: int = 0
+var projectile_instakill: bool = false
+
 
 #==== joystick =======
 @onready var joystick := get_node_or_null("/root/level_1/Control/touch_controls/Joystick")
@@ -71,15 +79,6 @@ var is_knockback: bool = false
 var knockback_timer: float = 0.0
 var knockback_duration: float = 0.2 # cuánto dura el retroceso
 var is_invulnerable: bool = false
-
-#==== case bonuses ===========
-var spd_buff: int
-var spd_debuff: int
-
-var no_dash: bool
-var no_d_jump: int
-
-
 
 
 func _update_health_bar():
@@ -101,15 +100,16 @@ func _process(_delta):
 	if shoot_timer > 0:
 		skill_timer -= _delta
 		shoot_timer -= _delta
-	if Input.is_action_pressed("attack") and shoot_timer <= 0 :
+	if Input.is_action_pressed("attack") and shoot_timer <= 0:
 		fire_bullet()
-		shoot_timer = shoot_delay
+		shoot_timer = shoot_delay * fire_rate_mult
+
 		
-	if Input.is_action_pressed("skill") and shoot_timer <= 0 :
+	if Input.is_action_pressed("skill") and shoot_timer <= 0:
 		activate_skill()
-		shoot_timer = skill_delay
-		
-		
+		shoot_timer = skill_delay * fire_rate_mult
+
+			
 
 func _physics_process(delta):
 
@@ -238,9 +238,11 @@ func jump(delta: float) -> void:
 	# must be airborne AND after the first real jump
 	# NOT during coyote
 	if wants_to_jump \
+	and double_jump_enable \
 	and not is_on_floor() \
 	and coyote_timer <= 0 \
 	and jump_count < max_jumps:
+
 
 		velocity.y = -jump_speed
 		jump_count += 1
@@ -275,13 +277,14 @@ func flip():
 		animated_sprite.flip_h = true	
 func move_x():
 	var input_axis = Input.get_axis("move_left","move_right")
-	velocity.x = input_axis * move_speed
+	velocity.x = input_axis * (move_speed + move_speed_bonus)
 	
 #==== fire bullet ===
 func fire_bullet():
 	var bullet = bullet_scene.instantiate()
 	var dir = Vector2.ZERO
-	
+# simple y efectivo
+
 	# Obtener vector del joystick
 	if joystick and joystick.pressing:
 		var joy = joystick.posVector
@@ -310,6 +313,12 @@ func fire_bullet():
 	# Configurar muzzle según dirección
 	$muzzle.position = dir * 14  # distancia base del muzzle
 	$muzzle.rotation = dir.angle()
+	
+	if bullet is Projectile:
+		bullet.damage += projectile_damage_bonus
+		if projectile_instakill:
+			bullet.damage = 999999
+	
 	
 	# Disparar bala
 	bullet.direction = dir
@@ -364,6 +373,8 @@ func activate_skill():
 
 #=== dash =====
 func dash(delta):
+	if not dash_enable:
+		return
 	# Si ya está en cooldown, lo contamos
 	if dash_cooldown_timer > 0:
 		dash_cooldown_timer -= delta
@@ -448,3 +459,27 @@ func _on_hitbox_body_entered(body: Node2D) -> void:
 		modulate = Color(1.0, 0.0, 0.0, 1.0)
 		die()
 	pass # Replace with function body.
+
+#======== metodos de buff y debuff ===========
+func set_dash_enabled(value: bool) -> void:
+	dash_enable = value
+
+func set_double_jump_enabled(value: bool) -> void:
+	double_jump_enable = value
+
+func add_move_speed_bonus(value: float) -> void:
+	move_speed_bonus += value
+
+func set_fire_rate_mult(value: float) -> void:
+	fire_rate_mult = max(0.1, value)  # evita cosas raras
+func add_projectile_damage_bonus(value: int) -> void:
+	projectile_damage_bonus += value
+
+func set_projectile_instakill(value: bool) -> void:
+	projectile_instakill = value
+
+func increase_max_health(amount: int) -> void:
+	max_health += amount
+	health += amount
+	health = min(health, max_health)
+	_update_health_bar()

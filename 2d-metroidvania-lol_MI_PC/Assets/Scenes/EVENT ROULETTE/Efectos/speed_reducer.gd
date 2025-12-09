@@ -1,11 +1,15 @@
 extends CaseItem
+class_name ItemMoveSpeedDown
 
+@export var penalty: float = 60.0
 
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	pass # Replace with function body.
+func _ready():
+	duration = 20.0
 
+func _on_apply(player):
+	if player.has_method("add_move_speed_bonus"):
+		player.add_move_speed_bonus(-penalty)
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
+func _on_expire(player):
+	if player.has_method("add_move_speed_bonus"):
+		player.add_move_speed_bonus(penalty)

@@ -1,11 +1,13 @@
 extends CaseItem
+class_name ItemNoDoubleJump
 
+func _ready():
+	duration = 20.0
 
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	pass # Replace with function body.
+func _on_apply(player):
+	if player.has_method("set_double_jump_enabled"):
+		player.set_double_jump_enabled(false)
 
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
+func _on_expire(player):
+	if player.has_method("set_double_jump_enabled"):
+		player.set_double_jump_enabled(true)
