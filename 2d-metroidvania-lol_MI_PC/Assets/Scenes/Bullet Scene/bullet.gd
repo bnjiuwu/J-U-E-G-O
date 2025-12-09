@@ -6,7 +6,6 @@ class_name Bullet
 var start_position: Vector2
 var has_hit := false
 
-
 func _ready() -> void:
 	start_position = global_position
 
@@ -21,7 +20,6 @@ func _ready() -> void:
 
 	add_to_group("projectile")
 
-
 func _physics_process(delta: float) -> void:
 	if has_hit:
 		return
@@ -32,10 +30,6 @@ func _physics_process(delta: float) -> void:
 	if global_position.distance_to(start_position) > max_distance:
 		queue_free()
 
-
-# ----------------------------------------
-#   CUERPOS (TileMap u otros CharacterBody2D)
-# ----------------------------------------
 func _on_body_entered(body: Node) -> void:
 	if has_hit:
 		return
@@ -44,49 +38,17 @@ func _on_body_entered(body: Node) -> void:
 		impact_effect()
 		return
 
-	if body.is_in_group("enemy") and _apply_damage(body):
+	if body.is_in_group("enemy") and apply_damage(body):
 		impact_effect()
 
-
-# ----------------------------------------
-#   ÁREAS (hitbox de enemigos con Area2D)
-# ----------------------------------------
 func _on_area_entered(area: Area2D) -> void:
 	if has_hit:
 		return
 
-	if area.is_in_group("enemy") and _apply_damage(area):
+	# Si el hitbox pertenece a enemigo, igual funcionará
+	if area.is_in_group("enemy") and apply_damage(area):
 		impact_effect()
 
-
-# ----------------------------------------
-#   Daño genérico (soporta cuerpos y hitboxes)
-# ----------------------------------------
-func _apply_damage(target: Node) -> bool:
-	if target == null or target == self:
-		return false
-
-	var receiver: Node = target
-
-	if target is Area2D:
-		var parent := target.get_parent()
-		if parent and parent.is_in_group("enemy"):
-			receiver = parent
-
-	if receiver.is_in_group("enemy") and receiver.has_method("take_damage"):
-		receiver.take_damage(damage)
-		return true
-
-	if receiver.has_method("take_damage"):
-		receiver.take_damage(damage)
-		return true
-
-	return false
-
-
-# ----------------------------------------
-#   EFECTO DE IMPACTO
-# ----------------------------------------
 func impact_effect() -> void:
 	has_hit = true
 	col.disabled = true

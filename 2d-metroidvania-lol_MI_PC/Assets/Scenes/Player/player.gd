@@ -92,26 +92,23 @@ var is_invulnerable: bool = false
 @export var meter_gain_per_damage: float = 1.0
 @export var meter_skill_mult: float = 1.5
 @export var meter_gain_cap_per_hit: float = 40.0  # evita llenar infinito con instakill
-
 @export var attack_damage_to_send: int = 5  # daño que mandarás al rival
-var attack_meter: float = 0.0
 
+var attack_meter: float = 0.0
+var _auto_attack_lock := false
 
 @onready var attack_layer: CanvasLayer = $CanvasLayer
-@onready var attack_bar: ProgressBar = $CanvasLayer/AttackBar
+@onready var attack_bar: Range = $CanvasLayer/AttackBar
 
 # ======= EFFECT UI =======
 var active_effects: Dictionary = {}  # effect_name -> end_time_sec
 var effect_label: Label = null
 
 func _match_active() -> bool:
-	return Network and Network.matchId != ""
-
-func _should_show_attack_bar() -> bool:
-	return Network and Network.matchId != ""
+	return Network and str(Network.matchId) != ""
 
 func _update_attack_bar() -> void:
-	if not attack_bar:
+	if attack_bar == null:
 		return
 
 	if not _match_active():
@@ -122,11 +119,10 @@ func _update_attack_bar() -> void:
 	attack_bar.value = attack_meter
 	attack_bar.visible = true
 
-func _gain_attack_meter(dmg: int, is_skill: bool) -> void:
-	var _auto_attack_lock := false
 
-	# Si no hay match activo, no acumules
-	if not Network or Network.matchId == "":
+func _gain_attack_meter(dmg: int, is_skill: bool) -> void:
+	# Si no hay match activo, no acumules ni muestres
+	if not _match_active():
 		return
 
 	var gain := float(dmg) * meter_gain_per_damage
@@ -138,7 +134,6 @@ func _gain_attack_meter(dmg: int, is_skill: bool) -> void:
 	attack_meter = clamp(attack_meter + gain, 0.0, attack_meter_max)
 	_update_attack_bar()
 
-	# ✅ auto-enviar al llenarse
 	if attack_meter >= attack_meter_max and not _auto_attack_lock:
 		_auto_attack_lock = true
 		try_send_attack()
@@ -181,32 +176,34 @@ func _update_health_bar():
 	health_bar.visible = true
 
 func _ready() -> void:
+	add_to_group("player")
 	effect_label = get_tree().get_first_node_in_group("effect_ui")
 	_update_effect_label()
 	health = max_health
-	add_to_group("player")
-
 	_update_health_bar()
-	_update_attack_bar()
 	
+	_update_attack_bar()
 	call_deferred("_update_attack_bar")
 
 func _process(_delta):
-	var delata2 = _delta
-	if shoot_timer > 0:
-		skill_timer -= _delta
-		shoot_timer -= delata2
+	var delta2 = _delta
+	if shoot_timer > 0: 
+		shoot_timer -= _delta
+	
+	if skill_timer > 0:
+		skill_timer -= delta2
 	if Input.is_action_pressed("attack") and shoot_timer <= 0:
 		fire_bullet()
 		shoot_timer = shoot_delay * fire_rate_mult
 
-		
 	if Input.is_action_pressed("skill") and skill_timer <= 0:
 		activate_skill()
 		skill_timer = skill_delay * fire_rate_mult
 
 	_update_attack_bar()
 	_update_effect_label()
+	if Engine.get_frames_drawn() % 60 == 0:
+		print("matchId:", Network.matchId, " | bar visible:", attack_bar.visible)
 
 func register_effect(effect_name: String, duration: float) -> void:
 	if duration <= 0:

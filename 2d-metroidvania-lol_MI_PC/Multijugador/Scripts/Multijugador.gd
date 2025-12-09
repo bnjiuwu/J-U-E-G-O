@@ -12,7 +12,7 @@ var multi_music = preload("res://Assets/AUDIOS/elevator-bossa-nova_1.mp3")
 @onready var lobby: Panel = $Panel/Lobby
 
 # === CONFIGURACIÓN DEL JUEGO ===
-const MY_PLAYER_NAME := "el_uwu"      # cambia esto en cada instancia
+const MY_PLAYER_NAME := "pc_el_uwu"      # cambia esto en cada instancia
 const MY_GAME_ID := "E"
 const MY_GAME_KEY := "FIBE9DV0C3"
 const MY_GAME_NAME := "Roberto Mondongo y su pistolita"
@@ -251,7 +251,10 @@ func _on_mensaje_recibido(msg: String):
 			if data.get("status") == "OK":
 				match_id = data["data"].get("matchId", "")
 				match_status = "CONNECTED"
-
+				# ✅ respaldo temprano
+				if match_id != "":
+					Network.matchId = match_id
+					
 				print("🔗 Match conectado:", match_id)
 				print("👥 Jugadores del match (ya guardados):", jugadores_del_match)
 
@@ -292,8 +295,16 @@ func _on_mensaje_recibido(msg: String):
 
 ##Cambio
 		"match-start":
-			print("🚀 Ambos jugadores enviaron ping-match → iniciando partida")
+			print("🚀 match-start recibido")
 
+			# ✅ asegurar match_id local
+			if match_id == "":
+				match_id = str(data.get("data", {}).get("matchId", ""))
+
+			# ✅ guardar SIEMPRE en Network antes de cambiar escena
+			Network.matchId = match_id
+
+			print("✅ Network.matchId seteado:", Network.matchId)
 
 			await get_tree().process_frame
 			get_tree().change_scene_to_file("res://Levels/LEVEL MANAGER/level_manager.tscn")

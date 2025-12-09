@@ -1,19 +1,23 @@
 extends Projectile
 class_name PlayerProjectile
 
-signal hit_enemy(damage_amount: int)
+signal hit_enemy(dmg: int)
 
-func _apply_damage(target):
-	var receiver = target
+func apply_damage(target: Node) -> bool:
+	if target == null or target == self:
+		return false
 
-	# si el área que tocamos pertenece a un enemigo
-	if target is Area2D and target.get_parent() and target.get_parent().has_method("take_damage"):
-		receiver = target.get_parent()
+	var receiver: Node = target
+
+	# Si tocamos un hitbox Area2D de enemigo
+	if target is Area2D:
+		var parent := target.get_parent()
+		if parent and parent.is_in_group("enemy"):
+			receiver = parent
 
 	if receiver and receiver.has_method("take_damage"):
 		receiver.take_damage(damage)
+		hit_enemy.emit(damage)
+		return true
 
-		# ✅ cuenta impacto si el receptor es enemigo
-		#    o si pegaste a hitbox enemiga
-		if receiver.is_in_group("enemy") or (target is Area2D and target.is_in_group("enemy_hitbox")):
-			hit_enemy.emit(damage)
+	return false

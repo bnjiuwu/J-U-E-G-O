@@ -673,7 +673,6 @@ texture_over = ExtResource("16_meuei")
 texture_progress = ExtResource("15_dkee6")
 
 [node name="AttackBar" type="ProgressBar" parent="CanvasLayer"]
-visible = false
 offset_left = 159.0
 offset_top = 67.0
 offset_right = 412.0
