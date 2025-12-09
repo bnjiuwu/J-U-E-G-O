@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://dy8tbp8utavsj"
+path="res://.godot/imported/Las Aventuras de Roberto Mondongo.mp3-c0312204e27542783c18ddd39a63d329.mp3str"
+
+[deps]
+
+source_file="res://Assets/Scenes/Menu/audio/Las Aventuras de Roberto Mondongo.mp3"
+dest_files=["res://.godot/imported/Las Aventuras de Roberto Mondongo.mp3-c0312204e27542783c18ddd39a63d329.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

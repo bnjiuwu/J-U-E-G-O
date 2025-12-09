@@ -1,0 +1,31 @@
+[gd_scene load_steps=6 format=3 uid="uid://4oey0atca4as"]
+
+[ext_resource type="Script" uid="uid://cquqiv0wxrsdy" path="res://Assets/Scenes/touch_controls/JOYSTICK/joystick.gd" id="1_abr7k"]
+[ext_resource type="Texture2D" uid="uid://bxhgkdm10w2c2" path="res://Assets/sprites/objects type shi/anillo.png" id="2_6q3qv"]
+[ext_resource type="Texture2D" uid="uid://cwgducocy400e" path="res://Assets/sprites/objects type shi/Formal Controls/Joistyck.png" id="3_ivi8f"]
+[ext_resource type="Script" uid="uid://d067o2puc6rvs" path="res://Assets/Scenes/touch_controls/JOYSTICK/knob.gd" id="4_558cc"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_joystick_button"]
+radius = 125.0
+
+[node name="Joystick" type="Node2D"]
+script = ExtResource("1_abr7k")
+
+[node name="Ring" type="Sprite2D" parent="."]
+scale = Vector2(0.5241667, 0.48500004)
+texture = ExtResource("2_6q3qv")
+
+[node name="Knob" type="Sprite2D" parent="."]
+scale = Vector2(0.57174355, 0.5245709)
+texture = ExtResource("3_ivi8f")
+script = ExtResource("4_558cc")
+
+[node name="Button" type="TouchScreenButton" parent="."]
+self_modulate = Color(1, 1, 1, 0)
+shape = SubResource("CircleShape2D_joystick_button")
+shape_centered = true
+action = ""
+passby_press = true
+
+[connection signal="pressed" from="Button" to="Knob" method="_on_button_button_down"]
+[connection signal="released" from="Button" to="Knob" method="_on_button_button_up"]
