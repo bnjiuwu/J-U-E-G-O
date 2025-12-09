@@ -105,9 +105,9 @@ func _process(_delta):
 		shoot_timer = shoot_delay * fire_rate_mult
 
 		
-	if Input.is_action_pressed("skill") and shoot_timer <= 0:
+	if Input.is_action_pressed("skill") and skill_timer <= 0:
 		activate_skill()
-		shoot_timer = skill_delay * fire_rate_mult
+		skill_timer = skill_delay * fire_rate_mult
 
 			
 

@@ -18,9 +18,11 @@ radius = 156.06
 radius = 149.77
 
 [node name="touch_controls" type="CanvasLayer"]
+process_mode = 3
 script = ExtResource("1_ex53c")
 
 [node name="Joystick" parent="." instance=ExtResource("6_165yt")]
+process_mode = 3
 position = Vector2(175, 367)
 
 [node name="Control" type="Node2D" parent="."]
