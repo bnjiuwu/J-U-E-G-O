@@ -34,6 +34,12 @@ var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 #=== sprites ====
 @onready var animated_sprite:AnimatedSprite2D = $AnimatedSprite2D
 @onready var peo_effect: AnimatedSprite2D = $PEO
+@onready var _jump_sfx: AudioStreamPlayer2D = $Audio/JumpSfx if has_node("Audio/JumpSfx") else null
+@onready var _dash_sfx: AudioStreamPlayer2D = $Audio/DashSfx if has_node("Audio/DashSfx") else null
+@onready var _shoot_sfx: AudioStreamPlayer2D = $Audio/ShootSfx if has_node("Audio/ShootSfx") else null
+@onready var _skill_sfx: AudioStreamPlayer2D = $Audio/SkillSfx if has_node("Audio/SkillSfx") else null
+@onready var _hurt_sfx: AudioStreamPlayer2D = $Audio/HurtSfx if has_node("Audio/HurtSfx") else null
+@onready var _death_sfx: AudioStreamPlayer2D = $Audio/DeathSfx if has_node("Audio/DeathSfx") else null
 
 #== vars ===
 var is_facing_right = true
@@ -219,6 +225,7 @@ func jump(delta: float) -> void:
 		has_left_ground = true           # airborn
 		coyote_timer = 0                 # consume coyote
 		jump_buffer_timer = 0
+		_play_sfx(_jump_sfx)
 		return
 
 
@@ -237,6 +244,7 @@ func jump(delta: float) -> void:
 		jump_count += 1
 		has_left_ground = true
 		jump_buffer_timer = 0
+		_play_sfx(_jump_sfx)
 		print("DOUBLE JUMP")
 		return
 
@@ -307,6 +315,7 @@ func fire_bullet():
 	bullet.global_position = $muzzle.global_position
 	bullet.rotation = dir.angle()
 	get_tree().current_scene.add_child(bullet)
+	_play_sfx(_shoot_sfx)
 
 	#print("🔫 Bullet fired in direction:", dir)
 
@@ -350,6 +359,7 @@ func activate_skill():
 	get_tree().current_scene.add_child(basic_skill)
 
 	print("WEON DISPARO ABILIDAD LOOL:", dir)
+	_play_sfx(_skill_sfx)
 	pass
 
 
@@ -363,6 +373,7 @@ func dash(delta):
 		is_dashing = true
 		dash_timer = dash_time
 		dash_cooldown_timer = dash_cooldown
+		_play_sfx(_dash_sfx)
 
 	# Mientras dura el dash
 	if is_dashing:
@@ -398,6 +409,7 @@ func take_damage(amount: int, attacker_pos: Vector2 = global_position) -> void:
 	health -= amount
 	_update_health_bar()
 	print("⚠️ Player recibió", amount, "daño | HP:", health)
+	_play_sfx(_hurt_sfx)
 	
 	if health < 0:
 		health = 0
@@ -428,6 +440,7 @@ func die() -> void:
 	if frames and frames.has_animation("death"):
 		animated_sprite.play("death")
 		
+	_play_sfx(_death_sfx)
 	modulate = Color(1.0, 1.0, 1.0, 1.0)
 	
 	await animated_sprite.animation_finished
@@ -439,3 +452,9 @@ func _on_hitbox_body_entered(body: Node2D) -> void:
 		modulate = Color(1.0, 0.0, 0.0, 1.0)
 		die()
 	pass # Replace with function body.
+
+func _play_sfx(player: AudioStreamPlayer2D) -> void:
+	if player == null:
+		return
+	player.stop()
+	player.play()
