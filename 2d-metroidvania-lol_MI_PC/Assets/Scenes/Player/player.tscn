@@ -1,4 +1,4 @@
-[gd_scene load_steps=98 format=3 uid="uid://braj8a8ooxs4t"]
+[gd_scene load_steps=99 format=3 uid="uid://braj8a8ooxs4t"]
 
 [ext_resource type="Script" uid="uid://dw6uvcpocgnu6" path="res://Assets/Scenes/Player/player.gd" id="1_xpcdj"]
 [ext_resource type="PackedScene" uid="uid://bfjsyuqkbr65o" path="res://Assets/Scenes/Bullet Scene/Bullet.tscn" id="2_0u5uq"]
@@ -16,13 +16,13 @@
 [ext_resource type="Texture2D" uid="uid://b5tor0b0gr14s" path="res://Assets/sprites/Health Bar/health bar empty.png" id="14_0h5f3"]
 [ext_resource type="Texture2D" uid="uid://bc4nroe2f0on5" path="res://Assets/sprites/Health Bar/health bar full.png" id="15_dkee6"]
 [ext_resource type="Texture2D" uid="uid://bdjy131sdad40" path="res://Assets/sprites/Health Bar/health bar frame.png" id="16_meuei"]
-[ext_resource type="PackedScene" uid="uid://bgj1kec0hcvbb" path="res://Assets/Scenes/EVENT ROULETTE/Roulette.tscn" id="17_dkee6"]
-[ext_resource type="AudioStream" path="res://Assets/Audios/Game_Audios/pixel-jump-319167.mp3" id="18_jump"]
-[ext_resource type="AudioStream" path="res://Assets/Audios/Game_Audios/fart-83471.mp3" id="19_dash"]
-[ext_resource type="AudioStream" path="res://Assets/Audios/Game_Audios/8-bit-explosion-3-340456.mp3" id="20_shoot"]
-[ext_resource type="AudioStream" path="res://Assets/Audios/Game_Audios/retro-explode-2-236688.mp3" id="21_skill"]
-[ext_resource type="AudioStream" path="res://Assets/Audios/Game_Audios/retro-hurt-1-236672.mp3" id="22_hurt"]
-[ext_resource type="AudioStream" path="res://Assets/Audios/Game_Audios/videogame-death-sound-43894.mp3" id="23_death"]
+[ext_resource type="FontFile" uid="uid://dhhjcp1rxp6gj" path="res://Assets/Fonts/minecraft_font.ttf" id="17_fx4s0"]
+[ext_resource type="AudioStream" uid="uid://bqltvun5h2i7g" path="res://Assets/Audios/Game_Audios/pixel-jump-319167.mp3" id="18_jump"]
+[ext_resource type="AudioStream" uid="uid://3dq4m0ppfxok" path="res://Assets/Audios/Game_Audios/fart-83471.mp3" id="19_dash"]
+[ext_resource type="AudioStream" uid="uid://c3y0gx4l8s4em" path="res://Assets/Audios/Game_Audios/8-bit-explosion-3-340456.mp3" id="20_shoot"]
+[ext_resource type="AudioStream" uid="uid://y8akocp7gx2r" path="res://Assets/Audios/Game_Audios/retro-explode-2-236688.mp3" id="21_skill"]
+[ext_resource type="AudioStream" uid="uid://di7p7edrb63rp" path="res://Assets/Audios/Game_Audios/retro-hurt-1-236672.mp3" id="22_hurt"]
+[ext_resource type="AudioStream" uid="uid://bl3a2cs22jhu5" path="res://Assets/Audios/Game_Audios/videogame-death-sound-43894.mp3" id="23_death"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_rblve"]
 atlas = ExtResource("3_gk6dx")
@@ -608,6 +608,19 @@ size = Vector2(4.56275, 23.6856)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dd0ac"]
 size = Vector2(14, 32)
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7hp74"]
+bg_color = Color(1, 0.7372549, 0, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+anti_aliasing = false
+
 [node name="player" type="CharacterBody2D" groups=["player"]]
 collision_layer = 2
 collision_mask = 117
@@ -646,23 +659,33 @@ position = Vector2(0, 4)
 shape = SubResource("RectangleShape2D_dd0ac")
 debug_color = Color(0.995169, 0, 0.209909, 0.42)
 
-[node name="HealthBar" type="TextureProgressBar" parent="."]
-offset_left = -46.0
-offset_top = -42.0
-offset_right = 54.0
-offset_bottom = -2.0
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="HealthBar" type="TextureProgressBar" parent="CanvasLayer"]
+offset_left = 139.0
+offset_top = 4.0
+offset_right = 239.0
+offset_bottom = 44.0
+scale = Vector2(3, 3)
 value = 100.0
 texture_under = ExtResource("14_0h5f3")
 texture_over = ExtResource("16_meuei")
 texture_progress = ExtResource("15_dkee6")
 
-[node name="Roulette" parent="." instance=ExtResource("17_dkee6")]
+[node name="AttackBar" type="ProgressBar" parent="CanvasLayer"]
 visible = false
+offset_left = 159.0
+offset_top = 67.0
+offset_right = 412.0
+offset_bottom = 91.0
+theme_override_fonts/font = ExtResource("17_fx4s0")
+theme_override_styles/fill = SubResource("StyleBoxFlat_7hp74")
 
 [node name="Audio" type="Node2D" parent="."]
 
 [node name="JumpSfx" type="AudioStreamPlayer2D" parent="Audio"]
 stream = ExtResource("18_jump")
+volume_db = -10.0
 
 [node name="DashSfx" type="AudioStreamPlayer2D" parent="Audio"]
 stream = ExtResource("19_dash")

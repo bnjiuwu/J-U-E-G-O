@@ -1,13 +1,15 @@
+# res://Scripts/CaseNoDash.gd
 extends CaseItem
-class_name ItemNoDash
+class_name CaseNoDash
 
-func _ready():
+func _init():
+	effect_name = "No Dash"
 	duration = 20.0
 
-func _on_apply(player):
-	if player.has_method("set_dash_enabled"):
-		player.set_dash_enabled(false)
+func _apply(player):
+	player.set_dash_enabled(false)
 
-func _on_expire(player):
-	if player.has_method("set_dash_enabled"):
-		player.set_dash_enabled(true)
+func _get_revert_callables(player):
+	return [
+		Callable(player, "set_dash_enabled").bind(true)
+	]

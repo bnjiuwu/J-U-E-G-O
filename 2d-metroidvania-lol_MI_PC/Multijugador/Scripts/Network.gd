@@ -15,6 +15,21 @@ var my_id := ""
 signal mensaje_recibido(msg)
 signal conectado_servidor()
  
+func send_game_payload(payload: Dictionary) -> void:
+	if not conectado:
+		return
+	if matchId == "":
+		push_warning("No hay matchId para enviar game-data.")
+		return
+
+	_enviar({
+		"event": "send-game-data",
+		"data": {
+			"matchId": matchId,
+			"payload": payload
+		}
+	})
+
 func iniciar(nombre, gameId, gameKey):
 	player_name = nombre
 	game_id = gameId

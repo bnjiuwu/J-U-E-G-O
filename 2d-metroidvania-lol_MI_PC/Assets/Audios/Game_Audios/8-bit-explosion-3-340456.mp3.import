@@ -3,12 +3,12 @@
 importer="mp3"
 type="AudioStreamMP3"
 uid="uid://c3y0gx4l8s4em"
-path="res://.godot/imported/8-bit-explosion-3-340456.mp3-7aba828aa6c4f1c6a3de6e49f294da16.mp3str"
+path="res://.godot/imported/8-bit-explosion-3-340456.mp3-afc4f56f5603d0e73b748a48b9809b00.mp3str"
 
 [deps]
 
-source_file="res://Assets/Audios/Game_Audios/8-bit-explosion-3-340456.mp3"
-dest_files=["res://.godot/imported/8-bit-explosion-3-340456.mp3-7aba828aa6c4f1c6a3de6e49f294da16.mp3str"]
+source_file="res://Assets/AUDIOS/Game_Audios/8-bit-explosion-3-340456.mp3"
+dest_files=["res://.godot/imported/8-bit-explosion-3-340456.mp3-afc4f56f5603d0e73b748a48b9809b00.mp3str"]
 
 [params]
 

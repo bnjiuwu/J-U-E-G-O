@@ -12,7 +12,7 @@ var multi_music = preload("res://Assets/AUDIOS/elevator-bossa-nova_1.mp3")
 @onready var lobby: Panel = $Panel/Lobby
 
 # === CONFIGURACIÓN DEL JUEGO ===
-const MY_PLAYER_NAME := "movil_del_uwu"      # cambia esto en cada instancia
+const MY_PLAYER_NAME := "el_uwu"      # cambia esto en cada instancia
 const MY_GAME_ID := "E"
 const MY_GAME_KEY := "FIBE9DV0C3"
 const MY_GAME_NAME := "Roberto Mondongo y su pistolita"

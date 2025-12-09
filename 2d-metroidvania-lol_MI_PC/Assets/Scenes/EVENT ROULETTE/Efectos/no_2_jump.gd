@@ -1,13 +1,15 @@
+# res://Scripts/CaseNoDoubleJump.gd
 extends CaseItem
-class_name ItemNoDoubleJump
+class_name CaseNoDoubleJump
 
-func _ready():
+func _init():
+	effect_name = "No 2nd Jump"
 	duration = 20.0
 
-func _on_apply(player):
-	if player.has_method("set_double_jump_enabled"):
-		player.set_double_jump_enabled(false)
+func _apply(player):
+	player.set_double_jump_enabled(false)
 
-func _on_expire(player):
-	if player.has_method("set_double_jump_enabled"):
-		player.set_double_jump_enabled(true)
+func _get_revert_callables(player):
+	return [
+		Callable(player, "set_double_jump_enabled").bind(true)
+	]

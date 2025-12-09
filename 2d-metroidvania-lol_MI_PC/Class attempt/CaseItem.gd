@@ -1,27 +1,41 @@
+# res://Scripts/CaseItem.gd
 extends Node2D
 class_name CaseItem
 
-@export var duration: float 
-@onready var timer: Timer = $Timer
+@export var effect_name: String = "Efecto"
+@export var duration: float = 20.0
 
 func apply_to(player: Node) -> void:
-	if not timer:
+	if player == null:
 		return
 
-	timer.one_shot = true
-	timer.wait_time = duration
+	_apply(player)
 
-	_on_apply(player)
+	# UI
+	if player.has_method("register_effect"):
+		player.register_effect(effect_name, duration)
 
-	timer.timeout.connect(func():
-		if is_instance_valid(player):
-			_on_expire(player)
-	, CONNECT_ONE_SHOT)
+	# ✅ Timer seguro aunque el item de la ruleta se destruya
+	if duration > 0:
+		var t := get_tree().create_timer(duration, true)
 
-	timer.start()
+		# Revertir usando callables ligados al PLAYER
+		var revert_cbs := _get_revert_callables(player)
+		for cb in revert_cbs:
+			if cb is Callable and cb.is_valid():
+				t.timeout.connect(cb, CONNECT_ONE_SHOT)
 
-func _on_apply(player: Node) -> void:
+
+		# Limpiar UI al final
+		if player.has_method("unregister_effect"):
+			t.timeout.connect(
+				Callable(player, "unregister_effect").bind(effect_name),
+				CONNECT_ONE_SHOT
+			)
+
+func _apply(player: Node) -> void:
 	pass
 
-func _on_expire(player: Node) -> void:
-	pass
+# ✅ Cada hijo devuelve callables hacia métodos del Player
+func _get_revert_callables(player: Node) -> Array:
+	return []

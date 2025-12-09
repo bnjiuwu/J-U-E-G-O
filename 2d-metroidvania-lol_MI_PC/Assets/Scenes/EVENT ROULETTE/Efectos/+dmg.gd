@@ -1,15 +1,17 @@
+# res://Scripts/CaseProjectileDamageUp.gd
 extends CaseItem
-class_name ItemProjectileDamageUp
+class_name CaseProjectileDamageUp
 
 @export var bonus: int = 2
 
-func _ready():
+func _init():
+	effect_name = "+ DMG Bullet"
 	duration = 20.0
 
-func _on_apply(player):
-	if player.has_method("add_projectile_damage_bonus"):
-		player.add_projectile_damage_bonus(bonus)
+func _apply(player):
+	player.add_projectile_damage_bonus(bonus)
 
-func _on_expire(player):
-	if player.has_method("add_projectile_damage_bonus"):
-		player.add_projectile_damage_bonus(-bonus)
+func _get_revert_callables(player):
+	return [
+		Callable(player, "add_projectile_damage_bonus").bind(-bonus)
+	]

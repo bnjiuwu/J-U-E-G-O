@@ -55,7 +55,7 @@ var facing_direction: Vector2 = Vector2.RIGHT
 #==== health ======
 @export var max_health: int = 100
 var health: int
-@onready var health_bar: TextureProgressBar = $HealthBar
+@onready var health_bar: TextureProgressBar = $CanvasLayer/HealthBar
 
 #============== bullet ===========
 @export var bullet_scene: PackedScene
@@ -87,6 +87,91 @@ var knockback_duration: float = 0.2 # cuánto dura el retroceso
 var is_invulnerable: bool = false
 
 
+# ====== ATTACK METER ======
+@export var attack_meter_max: float = 100.0
+@export var meter_gain_per_damage: float = 1.0
+@export var meter_skill_mult: float = 1.5
+@export var meter_gain_cap_per_hit: float = 40.0  # evita llenar infinito con instakill
+
+@export var attack_damage_to_send: int = 5  # daño que mandarás al rival
+var attack_meter: float = 0.0
+
+
+@onready var attack_layer: CanvasLayer = $CanvasLayer
+@onready var attack_bar: ProgressBar = $CanvasLayer/AttackBar
+
+# ======= EFFECT UI =======
+var active_effects: Dictionary = {}  # effect_name -> end_time_sec
+var effect_label: Label = null
+
+func _match_active() -> bool:
+	return Network and Network.matchId != ""
+
+func _should_show_attack_bar() -> bool:
+	return Network and Network.matchId != ""
+
+func _update_attack_bar() -> void:
+	if not attack_bar:
+		return
+
+	if not _match_active():
+		attack_bar.visible = false
+		return
+
+	attack_bar.max_value = attack_meter_max
+	attack_bar.value = attack_meter
+	attack_bar.visible = true
+
+func _gain_attack_meter(dmg: int, is_skill: bool) -> void:
+	var _auto_attack_lock := false
+
+	# Si no hay match activo, no acumules
+	if not Network or Network.matchId == "":
+		return
+
+	var gain := float(dmg) * meter_gain_per_damage
+	if is_skill:
+		gain *= meter_skill_mult
+
+	gain = min(gain, meter_gain_cap_per_hit)
+
+	attack_meter = clamp(attack_meter + gain, 0.0, attack_meter_max)
+	_update_attack_bar()
+
+	# ✅ auto-enviar al llenarse
+	if attack_meter >= attack_meter_max and not _auto_attack_lock:
+		_auto_attack_lock = true
+		try_send_attack()
+		await get_tree().process_frame
+		_auto_attack_lock = false
+
+
+
+func _connect_projectile_meter(proj: Node, is_skill: bool) -> void:
+	if proj == null:
+		return
+	# ✅ no depender del type
+	if proj.has_signal("hit_enemy"):
+		proj.hit_enemy.connect(func(dmg: int):
+			_gain_attack_meter(dmg, is_skill)
+		, CONNECT_ONE_SHOT)
+
+
+func try_send_attack() -> void:
+	# Solo en match
+	if not Network or Network.matchId == "":
+		return
+
+	Network.send_game_payload({
+		"type": "attack",
+		"damage": attack_damage_to_send
+	})
+
+	attack_meter = 0.0
+	_update_attack_bar()
+	print("📤 Ataque enviado al rival (auto)")
+
+
 func _update_health_bar():
 	if not health_bar:
 		return
@@ -96,11 +181,15 @@ func _update_health_bar():
 	health_bar.visible = true
 
 func _ready() -> void:
+	effect_label = get_tree().get_first_node_in_group("effect_ui")
+	_update_effect_label()
 	health = max_health
 	add_to_group("player")
-	print("Player HP ready:",health)
+
 	_update_health_bar()
+	_update_attack_bar()
 	
+	call_deferred("_update_attack_bar")
 
 func _process(_delta):
 	var delata2 = _delta
@@ -116,7 +205,50 @@ func _process(_delta):
 		activate_skill()
 		skill_timer = skill_delay * fire_rate_mult
 
-			
+	_update_attack_bar()
+	_update_effect_label()
+
+func register_effect(effect_name: String, duration: float) -> void:
+	if duration <= 0:
+		return
+
+	var now := Time.get_ticks_msec() / 1000.0
+	active_effects[effect_name] = now + duration
+	_update_effect_label()
+
+
+func unregister_effect(effect_name: String) -> void:
+	if active_effects.has(effect_name):
+		active_effects.erase(effect_name)
+	_update_effect_label()
+
+
+func _update_effect_label() -> void:
+	if effect_label == null:
+		return
+
+	if active_effects.is_empty():
+		effect_label.visible = false
+		return
+
+	var now := Time.get_ticks_msec() / 1000.0
+	var keys := active_effects.keys()
+
+	var lines: Array[String] = []
+	for k in keys:
+		var remaining := float(active_effects[k]) - now
+		if remaining <= 0.0:
+			active_effects.erase(k)
+			continue
+		lines.append("%s: %ds" % [str(k), int(ceil(remaining))])
+
+	if lines.is_empty():
+		effect_label.visible = false
+		return
+
+	effect_label.visible = true
+	effect_label.text = "\n".join(lines)
+
 
 func _physics_process(delta):
 
@@ -291,6 +423,8 @@ func move_x():
 #==== fire bullet ===
 func fire_bullet():
 	var bullet = bullet_scene.instantiate()
+	# ✅ conectar barra
+	_connect_projectile_meter(bullet, false)
 	var dir = Vector2.ZERO
 # simple y efectivo
 
@@ -340,6 +474,7 @@ func fire_bullet():
 
 func activate_skill():
 	var basic_skill = big_bullet_scene.instantiate()
+	_connect_projectile_meter(basic_skill, true)
 	var dir = Vector2.ZERO
 	
 	# Obtener vector del joystick

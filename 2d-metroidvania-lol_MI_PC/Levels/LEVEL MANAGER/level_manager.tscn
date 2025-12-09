@@ -62,3 +62,11 @@ offset_bottom = 389.0
 theme_override_fonts/font = ExtResource("4_n1ogb")
 theme_override_font_sizes/font_size = 28
 text = "UN MEMORIAL A LA SERIE DE ROBERTO MANFINFLA"
+
+[node name="EffectLabel" type="Label" parent="CanvasLayer" groups=["effect_ui"]]
+offset_left = 708.0
+offset_top = 158.0
+offset_right = 899.0
+offset_bottom = 191.0
+theme_override_fonts/font = ExtResource("4_n1ogb")
+theme_override_font_sizes/font_size = 25

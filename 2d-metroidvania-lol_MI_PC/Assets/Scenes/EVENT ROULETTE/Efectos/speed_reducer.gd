@@ -1,15 +1,17 @@
+# res://Scripts/CaseSpeedDown.gd
 extends CaseItem
-class_name ItemMoveSpeedDown
+class_name CaseSpeedDown
 
-@export var penalty: float = 60.0
+@export var bonus: float = -60.0
 
-func _ready():
+func _init():
+	effect_name = "- Speed"
 	duration = 20.0
 
-func _on_apply(player):
-	if player.has_method("add_move_speed_bonus"):
-		player.add_move_speed_bonus(-penalty)
+func _apply(player):
+	player.add_move_speed_bonus(bonus)
 
-func _on_expire(player):
-	if player.has_method("add_move_speed_bonus"):
-		player.add_move_speed_bonus(penalty)
+func _get_revert_callables(player):
+	return [
+		Callable(player, "add_move_speed_bonus").bind(-bonus)
+	]
