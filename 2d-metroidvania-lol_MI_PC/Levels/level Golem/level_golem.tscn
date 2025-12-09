@@ -11,11 +11,8 @@
 [ext_resource type="Texture2D" uid="uid://ct4325nvrkmc" path="res://Assets/images/Backgrounds/GOLEM/ASgolem.png" id="7_jmkq2"]
 [ext_resource type="Texture2D" uid="uid://li7v2e1i5hiv" path="res://Assets/images/Backgrounds/GOLEM/golem_bk5.png" id="7_vev6x"]
 [ext_resource type="Texture2D" uid="uid://gqndl1smwbwj" path="res://Assets/images/Backgrounds/GOLEM/golem_BK2.png" id="8_jts62"]
-<<<<<<< HEAD
-[ext_resource type="PackedScene" uid="uid://braj8a8ooxs4t" path="res://Levels/level Golem/player.tscn" id="12_vev6x"]
-=======
+
 [ext_resource type="PackedScene" uid="uid://braj8a8ooxs4t" path="res://Assets/Scenes/Player/player.tscn" id="12_vev6x"]
->>>>>>> f85178ffcc97227b61aac886c9a2660f0f85f9b2
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ct321"]
 texture = ExtResource("7_jmkq2")
