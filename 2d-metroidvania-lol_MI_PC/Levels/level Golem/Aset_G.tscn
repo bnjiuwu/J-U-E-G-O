@@ -483,11 +483,11 @@ sources/0 = SubResource("TileSetAtlasSource_ud3mu")
 
 [node name="AsetG" type="Node2D"]
 
-[node name="TileMap" type="TileMap" parent="."]
+[node name="TileMapGolem" type="TileMap" parent="."]
 tile_set = SubResource("TileSet_yr741")
 format = 2
 
-[node name="Layer1" type="TileMapLayer" parent="TileMap"]
+[node name="laierGOLEM" type="TileMapLayer" parent="TileMapGolem"]
 use_parent_material = true
 position = Vector2(2, 0)
 tile_set = SubResource("TileSet_yr741")
