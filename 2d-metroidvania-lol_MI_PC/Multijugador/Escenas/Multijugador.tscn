@@ -147,5 +147,46 @@ theme_override_font_sizes/font_size = 25
 theme_override_styles/normal = SubResource("StyleBoxFlat_ni7w4")
 text = "Volver"
 
+[node name="Panel2" type="Panel" parent="."]
+layout_mode = 0
+offset_left = 201.0
+offset_top = 99.0
+offset_right = 779.0
+offset_bottom = 479.0
+
+[node name="ColorRect" type="ColorRect" parent="Panel2"]
+layout_mode = 0
+offset_right = 582.0
+offset_bottom = 378.0
+color = Color(0.27997673, 0.00020823769, 0.34445924, 1)
+
+[node name="Label" type="Label" parent="Panel2"]
+layout_mode = 0
+offset_left = 30.0
+offset_top = 20.0
+offset_right = 541.0
+offset_bottom = 75.0
+theme_override_fonts/font = ExtResource("2_h81ph")
+theme_override_font_sizes/font_size = 28
+text = "Ingrese un Nombre de Usuario"
+
+[node name="NameInput" type="LineEdit" parent="Panel2"]
+layout_mode = 0
+offset_left = 91.0
+offset_top = 72.0
+offset_right = 475.0
+offset_bottom = 131.0
+theme_override_fonts/font = ExtResource("2_h81ph")
+
+[node name="BtnConectar" type="Button" parent="Panel2"]
+layout_mode = 0
+offset_left = 186.0
+offset_top = 169.0
+offset_right = 367.0
+offset_bottom = 256.0
+theme_override_fonts/font = ExtResource("2_h81ph")
+theme_override_font_sizes/font_size = 30
+text = "Conectar"
+
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 volume_db = -10.0
