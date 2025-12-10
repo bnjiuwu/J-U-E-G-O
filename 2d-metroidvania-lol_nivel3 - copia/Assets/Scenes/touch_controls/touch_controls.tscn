@@ -1,0 +1,63 @@
+[gd_scene load_steps=11 format=3 uid="uid://b2lni2j37kwvl"]
+
+[ext_resource type="Script" uid="uid://bhkt88s7hsmc8" path="res://Assets/Scenes/touch_controls/touch_controls.gd" id="1_ex53c"]
+[ext_resource type="Texture2D" uid="uid://cusahr2qj7hfd" path="res://Assets/sprites/objects type shi/Formal Controls/Disparo.png" id="3_165yt"]
+[ext_resource type="Texture2D" uid="uid://hfem8dcsw303" path="res://Assets/sprites/objects type shi/Formal Controls/Dash.png" id="4_v3deu"]
+[ext_resource type="Texture2D" uid="uid://bmux7yu66so76" path="res://Assets/sprites/objects type shi/Formal Controls/Salto.png" id="5_nytqx"]
+[ext_resource type="PackedScene" uid="uid://4oey0atca4as" path="res://Assets/Scenes/touch_controls/JOYSTICK/joystick.tscn" id="6_165yt"]
+[ext_resource type="Texture2D" uid="uid://bghyunoh8hjjv" path="res://Assets/sprites/objects type shi/Formal Controls/Especial.png" id="6_nytqx"]
+[ext_resource type="Texture2D" uid="uid://k8j528elgaxe" path="res://Assets/sprites/objects type shi/Formal Controls/Pause formal.png" id="6_v3deu"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_control"]
+radius = 148.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_v3deu"]
+radius = 148.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_165yt"]
+radius = 115.92
+
+[node name="touch_controls" type="CanvasLayer"]
+script = ExtResource("1_ex53c")
+
+[node name="Joystick" parent="." instance=ExtResource("6_165yt")]
+position = Vector2(175, 367)
+
+[node name="Control" type="Node2D" parent="."]
+
+[node name="FireButton" type="TouchScreenButton" parent="Control"]
+position = Vector2(770, 300)
+scale = Vector2(0.32, 0.32)
+texture_normal = ExtResource("3_165yt")
+shape = SubResource("CircleShape2D_control")
+action = "attack"
+
+[node name="DashButton" type="TouchScreenButton" parent="Control"]
+position = Vector2(560, 308)
+scale = Vector2(0.32, 0.32)
+texture_normal = ExtResource("4_v3deu")
+shape = SubResource("CircleShape2D_v3deu")
+action = "dash"
+
+[node name="JumpButton" type="TouchScreenButton" parent="Control"]
+position = Vector2(670, 248)
+scale = Vector2(0.32, 0.32)
+texture_normal = ExtResource("5_nytqx")
+shape = SubResource("CircleShape2D_control")
+action = "jump"
+
+[node name="SkillButton" type="TouchScreenButton" parent="Control"]
+position = Vector2(675, 375)
+scale = Vector2(0.32, 0.32)
+texture_normal = ExtResource("6_nytqx")
+shape = SubResource("CircleShape2D_control")
+action = "skill"
+
+[node name="pause_button" type="TouchScreenButton" parent="."]
+position = Vector2(-25, 3)
+scale = Vector2(0.236337, 0.230352)
+texture_normal = ExtResource("6_v3deu")
+shape = SubResource("CircleShape2D_165yt")
+action = "pause"
+
+[connection signal="pressed" from="pause_button" to="." method="_on_pause_button_pressed"]
