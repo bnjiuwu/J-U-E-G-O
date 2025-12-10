@@ -19,7 +19,7 @@ const MEME_SKILL_TEXTURE: Texture2D = preload("res://Assets/sprites/objects type
 const MEME_PAUSE_TEXTURE: Texture2D = preload("res://Assets/sprites/objects type shi/pause boton.png")
 const MEME_JOYSTICK_TEXTURE: Texture2D = preload("res://Assets/sprites/objects type shi/palta.png")
 const MEME_DASH_OFFSET := Vector2(0.0, 32.0)
-const MEME_PAUSE_POSITION := Vector2(60.0, 20.0)
+const MEME_PAUSE_POSITION := Vector2(30.0, 20.0)
 
 
 @onready var button_pause: TouchScreenButton = $pause_button

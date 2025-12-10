@@ -37,7 +37,6 @@ var _prev_player_process: bool = false
 var _prev_player_physics: bool = false
 
 func _ready() -> void:
-	print("🧪 LevelManager ve matchId:", Network.matchId)
 
 	if Network and not Network.mensaje_recibido.is_connected(_on_network_message):
 		Network.mensaje_recibido.connect(_on_network_message)
