@@ -9,10 +9,10 @@
 [ext_resource type="Texture2D" uid="uid://k8j528elgaxe" path="res://Assets/sprites/objects type shi/Formal Controls/Pause formal.png" id="6_v3deu"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_control"]
-radius = 139.94
+radius = 180.25
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_v3deu"]
-radius = 156.06
+radius = 180.25
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_165yt"]
 radius = 149.77
