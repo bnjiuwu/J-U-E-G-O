@@ -23,6 +23,7 @@ special_items = Array[PackedScene]([ExtResource("9_kc7tb")])
 [node name="RainbowPanel" type="ColorRect" parent="."]
 offset_right = 960.0
 offset_bottom = 480.0
+color = Color(1, 1, 1, 0.509804)
 
 [node name="Scroll" type="Node2D" parent="."]
 
@@ -32,7 +33,7 @@ offset_bottom = 480.0
 
 [node name="Indicator" type="Sprite2D" parent="."]
 z_index = 100
-scale = Vector2(1, 1.0983334)
+scale = Vector2(1, 1.09833)
 texture = ExtResource("7_805u6")
 
 [node name="ResultPanel" type="Panel" parent="."]
