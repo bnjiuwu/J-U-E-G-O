@@ -34,12 +34,16 @@ var case_stopped: bool = false
 # Ruta nueva y correcta del Panel (lo crearás tú abajo)
 @onready var panel: Control = $ResultPanel
 @onready var rainbow_panel: CanvasItem = $RainbowPanel
+@onready var spin_sfx: AudioStreamPlayer = $SpinSfx if has_node("SpinSfx") else null
+@onready var result_sfx: AudioStreamPlayer = $ResultSfx if has_node("ResultSfx") else null
 
 @export var rainbow_speed: float = 0.8  # velocidad del arcoiris
 var rainbow_t: float = 0.0
 
 @export var start_speed: float = 40.0
 @export var decel: float = 12.0  # mientras más bajo, más largo el spin
+@export var result_sfx_offset: float = 0.0  # segundo dentro del audio para arrancar el golpe final
+@export var use_result_sfx: bool = false
 
 var item_nodes: Array[CaseItem] = []
 
@@ -64,6 +68,7 @@ func start_spin():
 	rainbow_t = 0.0
 	if rainbow_panel:
 		rainbow_panel.visible = true
+	_play_spin_sfx()
 
 func _ready() -> void:
 	indicator.position = get_local_view_center()
@@ -160,6 +165,8 @@ func _show_result():
 		return
 
 	var winner_item: CaseItem = item_nodes[index_number]
+	_stop_spin_sfx()
+	_play_result_sfx()
 
 	# Mostrar imagen en panel
 	var winner_sprite := _get_item_sprite(winner_item)
@@ -178,6 +185,9 @@ func _show_result():
 
 
 func _on_CloseButton_pressed() -> void:
+	_stop_spin_sfx()
+	if result_sfx and result_sfx.playing:
+		result_sfx.stop()
 	queue_free()
 	
 func _get_item_sprite(node: Node) -> Sprite2D:
@@ -193,3 +203,20 @@ func _get_item_sprite(node: Node) -> Sprite2D:
 			return child
 
 	return null
+
+func _play_spin_sfx() -> void:
+	if spin_sfx == null:
+		return
+	spin_sfx.stop()
+	spin_sfx.play()
+
+func _stop_spin_sfx() -> void:
+	if spin_sfx and spin_sfx.playing:
+		spin_sfx.stop()
+
+func _play_result_sfx() -> void:
+	if not use_result_sfx or result_sfx == null:
+		return
+	result_sfx.stop()
+	var offset: float = max(result_sfx_offset, 0.0)
+	result_sfx.play(offset)

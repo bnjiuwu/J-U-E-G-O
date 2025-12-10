@@ -3,12 +3,12 @@
 importer="mp3"
 type="AudioStreamMP3"
 uid="uid://y8akocp7gx2r"
-path="res://.godot/imported/retro-explode-2-236688.mp3-e43098d04b35b72b5203096df4486b46.mp3str"
+path="res://.godot/imported/retro-explode-2-236688.mp3-ffebe012216f4b9cc07f7099f9e38041.mp3str"
 
 [deps]
 
-source_file="res://Assets/AUDIOS/Game_Audios/retro-explode-2-236688.mp3"
-dest_files=["res://.godot/imported/retro-explode-2-236688.mp3-e43098d04b35b72b5203096df4486b46.mp3str"]
+source_file="res://Assets/Audios/Game_Audios/retro-explode-2-236688.mp3"
+dest_files=["res://.godot/imported/retro-explode-2-236688.mp3-ffebe012216f4b9cc07f7099f9e38041.mp3str"]
 
 [params]
 
