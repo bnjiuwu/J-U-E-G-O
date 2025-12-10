@@ -1,6 +1,6 @@
-[gd_scene load_steps=45 format=4 uid="uid://c6n7qrlau6b0k"]
+[gd_scene load_steps=46 format=4 uid="uid://c6n7qrlau6b0k"]
 
-[ext_resource type="PackedScene" uid="uid://braj8a8ooxs4t" path="res://Levels/level Golem/player.tscn" id="1_n0qsc"]
+[ext_resource type="PackedScene" uid="uid://braj8a8ooxs4t" path="res://Levels/level 2/player.tscn" id="1_n0qsc"]
 [ext_resource type="Script" uid="uid://by4hegpiwf1wp" path="res://Levels/level 1/level_1.gd" id="1_r7d4j"]
 [ext_resource type="PackedScene" uid="uid://d3evjk846bf1b" path="res://Assets/Scenes/Enemies Scene/Slime scene/slime.tscn" id="2_3mhv4"]
 [ext_resource type="Script" uid="uid://cr4b4an4vhhvv" path="res://Levels/level 1/world_audio_manager.gd" id="2_vumwe"]
@@ -28,6 +28,7 @@
 [ext_resource type="PackedScene" uid="uid://b1p4vte40g50f" path="res://Assets/Scenes/Map Help/Jump Pad/Jump_Pad.tscn" id="26_7ppep"]
 [ext_resource type="PackedScene" uid="uid://jm3orlf4lfkm" path="res://Assets/Scenes/Map Help/Health pack/health pack.tscn" id="26_s6fi1"]
 [ext_resource type="PackedScene" uid="uid://cov1bwx3ogxc6" path="res://Assets/Scenes/MiniMap/MiniMap.tscn" id="26_vumwe"]
+[ext_resource type="AudioStream" uid="uid://dumvd65uwah8p" path="res://Assets/Audios/Background_music/Eric Skiff - Underclocked  NO COPYRIGHT 8-bit Music  Background.mp3" id="27_bgmkd"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_r7d4j"]
 texture = ExtResource("9_ib2b2")
@@ -11452,6 +11453,7 @@ death_menu = NodePath("DeathMenu")
 
 [node name="WorldAudioManager" type="Node" parent="."]
 script = ExtResource("2_vumwe")
+music_stream = ExtResource("27_bgmkd")
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
 scroll_base_scale = Vector2(1.5, 1.5)
@@ -11512,7 +11514,7 @@ position = Vector2(157, -77)
 mondongo = NodePath("../player")
 
 [node name="player" parent="." instance=ExtResource("1_n0qsc")]
-position = Vector2(-107, 55)
+position = Vector2(-632, -6188)
 
 [node name="Camera2D" type="Camera2D" parent="player"]
 position = Vector2(-2, 0)

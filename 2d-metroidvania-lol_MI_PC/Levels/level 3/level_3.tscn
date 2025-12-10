@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://c6kipeputwxl"]
+[gd_scene load_steps=31 format=3 uid="uid://c6kipeputwxl"]
 
 [ext_resource type="PackedScene" uid="uid://braj8a8ooxs4t" path="res://Assets/Scenes/Player/player.tscn" id="1_78j0p"]
 [ext_resource type="Texture2D" uid="uid://b2gps0kqvxav5" path="res://Assets/images/Backgrounds/BIBLIOTECA/ParedBiblioteca0.png" id="1_y81ld"]
@@ -13,6 +13,8 @@
 [ext_resource type="Texture2D" uid="uid://5e23h1k83sn1" path="res://Assets/images/Backgrounds/BIBLIOTECA/Escritorio1.png" id="9_ros7g"]
 [ext_resource type="Texture2D" uid="uid://7m7ll842sdew" path="res://Assets/images/Backgrounds/BIBLIOTECA/LibreriaBiblioteca1.png" id="10_vucfw"]
 [ext_resource type="Texture2D" uid="uid://c0y4nb82ea08b" path="res://Assets/images/Backgrounds/BIBLIOTECA/PlataformaBiblioteca0.png" id="11_ros7g"]
+[ext_resource type="Script" uid="uid://cr4b4an4vhhvv" path="res://Levels/level 1/world_audio_manager.gd" id="12_wamgr"]
+[ext_resource type="AudioStream" path="res://Assets/Audios/Background_music/William Rosati - Floating Also  NO COPYRIGHT 8-bit Music.mp3" id="13_bgmlb"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_fijtx"]
 texture = ExtResource("1_y81ld")
@@ -1274,6 +1276,10 @@ _data = {
 }
 
 [node name="Level3" type="Node2D"]
+
+[node name="WorldAudioManager" type="Node" parent="."]
+script = ExtResource("12_wamgr")
+music_stream = ExtResource("13_bgmlb")
 
 [node name="Tilemaps" type="Node2D" parent="."]
 

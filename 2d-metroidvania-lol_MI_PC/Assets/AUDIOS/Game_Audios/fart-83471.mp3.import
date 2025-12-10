@@ -3,12 +3,12 @@
 importer="mp3"
 type="AudioStreamMP3"
 uid="uid://3dq4m0ppfxok"
-path="res://.godot/imported/fart-83471.mp3-dfae70c0e30d9b75b90ff73678c96179.mp3str"
+path="res://.godot/imported/fart-83471.mp3-d370b348bc69b12b31c05015ea44cbcf.mp3str"
 
 [deps]
 
-source_file="res://Assets/AUDIOS/Game_Audios/fart-83471.mp3"
-dest_files=["res://.godot/imported/fart-83471.mp3-dfae70c0e30d9b75b90ff73678c96179.mp3str"]
+source_file="res://Assets/Audios/Game_Audios/fart-83471.mp3"
+dest_files=["res://.godot/imported/fart-83471.mp3-d370b348bc69b12b31c05015ea44cbcf.mp3str"]
 
 [params]
 
