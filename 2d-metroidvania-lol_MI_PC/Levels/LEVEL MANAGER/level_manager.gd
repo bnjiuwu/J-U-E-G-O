@@ -2,7 +2,7 @@
 extends Node2D
 class_name LevelManager
 
-const ROULETTE_COOLDOWN := 30.0
+const ROULETTE_COOLDOWN := 20.0
 const ATTACK_COUNTDOWN := 3
 
 var _roulette_active: bool = false

@@ -516,27 +516,28 @@ func activate_skill():
 
 #=== dash =====
 func dash(delta):
+	# ✅ si algo lo deshabilita a mitad de dash
 	if not dash_enable:
+		_cancel_dash()
 		return
-	# Si ya está en cooldown, lo contamos
+
 	if dash_cooldown_timer > 0:
 		dash_cooldown_timer -= delta
-	# Iniciar dash
+
 	if Input.is_action_just_pressed("dash") and dash_cooldown_timer <= 0 and not is_dashing:
 		is_dashing = true
 		dash_timer = dash_time
 		dash_cooldown_timer = dash_cooldown
 		_play_sfx(_dash_sfx)
 
-	# Mientras dura el dash
 	if is_dashing:
-		print("dash")
 		dash_timer -= delta
 		var dir = Vector2.RIGHT if is_facing_right else Vector2.LEFT
 		velocity = dir * dash_speed
-		# terminar dash
+
 		if dash_timer <= 0:
 			is_dashing = false
+
 
 func _on_hitbox_area_entered(area: Area2D) -> void:
 	print("⚠️ Player detectó un área:", area.name)
@@ -607,8 +608,22 @@ func _on_hitbox_body_entered(body: Node2D) -> void:
 	pass # Replace with function body.
 
 #======== metodos de buff y debuff ===========
+func _cancel_dash() -> void:
+	if not is_dashing:
+		return
+
+	is_dashing = false
+	dash_timer = 0.0
+	velocity.x = 0.0  # opcional, evita arrastre raro
+	if peo_effect:
+		peo_effect.visible = false
+		
 func set_dash_enabled(value: bool) -> void:
 	dash_enable = value
+
+	# ✅ si la ruleta lo desactiva en medio del dash
+	if not dash_enable:
+		_cancel_dash()
 
 func set_double_jump_enabled(value: bool) -> void:
 	double_jump_enable = value

@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://bpn8bdiiua2dl"]
 
 [ext_resource type="Texture2D" uid="uid://knaf23kwf1c2" path="res://Assets/sprites/EVENT ROULETTE/efects/instakill (1).png" id="1_2yjhx"]
-[ext_resource type="Script" uid="uid://ddpqja14ojc4c" path="res://Assets/Scenes/EVENT ROULETTE/Efectos/instakill.gd" id="1_pchhf"]
+[ext_resource type="Script" uid="uid://ddpqja14ojc4c" path="res://Assets/Scenes/EVENT ROULETTE/EFECTOS/instakill.gd" id="1_pchhf"]
 
 [node name="Instakill" type="Node2D"]
 script = ExtResource("1_pchhf")
