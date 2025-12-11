@@ -66,6 +66,8 @@ var _summon_recover_time: float = -1.0
 @onready var _visibility_notifier: VisibleOnScreenNotifier2D = $VisibilityNotifier if has_node("VisibilityNotifier") else null
 @onready var _body_collision: CollisionShape2D = $CollisionShape2D if has_node("CollisionShape2D") else null
 @onready var _book_collision: CollisionShape2D = $BookCollisionShape2D if has_node("BookCollisionShape2D") else null
+@onready var _left_ledge_check: RayCast2D = $LeftLedgeCheck if has_node("LeftLedgeCheck") else null
+@onready var _right_ledge_check: RayCast2D = $RightLedgeCheck if has_node("RightLedgeCheck") else null
 
 func _ready() -> void:
 	randomize()
@@ -168,6 +170,10 @@ func _process_walk(delta: float) -> void:
 			_enter_state(State.BOOK_TRANSFORM)
 			return
 	velocity.x = _direction * speed
+	if is_on_floor() and not _has_floor_ahead(_direction):
+		_set_direction(-_direction)
+		velocity.x = 0.0
+		return
 	if freeze_for_target:
 		velocity.x = lerpf(velocity.x, 0.0, delta * 6.0)
 	if _state_time >= _wander_timer and not _target:
@@ -184,6 +190,10 @@ func _process_book_transform() -> void:
 func _process_book_charge(delta: float) -> void:
 	velocity.x = _direction * book_speed
 	velocity.y = 0.0
+	if is_on_floor() and not _has_floor_ahead(_direction):
+		_book_form_active = false
+		_enter_state(State.RECOVER)
+		return
 	if _state_time >= book_dash_duration:
 		_book_cooldown_timer = book_cooldown
 		_book_form_active = false
@@ -457,6 +467,15 @@ func _set_book_collision(active: bool) -> void:
 		_body_collision.set_deferred("disabled", active)
 	if _book_collision:
 		_book_collision.set_deferred("disabled", not active)
+
+func _has_floor_ahead(dir: int) -> bool:
+	if dir == 0:
+		return true
+	var check := _left_ledge_check if dir < 0 else _right_ledge_check
+	if check == null:
+		return true
+	check.force_raycast_update()
+	return check.is_colliding()
 
 func _spawn_homing_book(side_multiplier: int, vertical_multiplier: int = 0) -> bool:
 	if homing_book_scene == null:
