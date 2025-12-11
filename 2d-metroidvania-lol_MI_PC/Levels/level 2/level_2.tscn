@@ -16,7 +16,7 @@
 [ext_resource type="Script" uid="uid://6g8cldxctbls" path="res://Levels/level 2/level_2.gd" id="14_es23n"]
 [ext_resource type="FontFile" uid="uid://dhhjcp1rxp6gj" path="res://Assets/Fonts/minecraft_font.ttf" id="15_uiuqv"]
 [ext_resource type="Script" uid="uid://cr4b4an4vhhvv" path="res://Levels/level 1/world_audio_manager.gd" id="16_x9h3n"]
-[ext_resource type="AudioStream" uid="uid://cpbnyagxyxx7n" path="res://Assets/AUDIOS/Background_music/Eric Skiff - A Night Of Dizzy Spells  NO COPYRIGHT 8-bit Music  Background.mp3" id="17_dzmuz"]
+[ext_resource type="AudioStream" uid="uid://cpbnyagxyxx7n" path="res://Assets/Audios/Background_music/Eric Skiff - A Night Of Dizzy Spells  NO COPYRIGHT 8-bit Music  Background.mp3" id="17_dzmuz"]
 [ext_resource type="PackedScene" uid="uid://d3ny8k7ukl4lw" path="res://Assets/Scenes/Enemies Scene/Aztik/Aztik.tscn" id="18_mq0sc"]
 [ext_resource type="PackedScene" uid="uid://b60n4gdtp0md8" path="res://Assets/Scenes/Enemies Scene/Gude/Gude.tscn" id="19_ej3on"]
 [ext_resource type="PackedScene" uid="uid://0mamhsycg67r" path="res://Assets/Scenes/Enemies Scene/GroundThrower/GroundThrower.tscn" id="20_4ry38"]
@@ -1257,6 +1257,7 @@ zoom = Vector2(1.3, 1.3)
 
 [node name="Golem" parent="." instance=ExtResource("13_oxq0s")]
 position = Vector2(151, -1963)
+max_health = 500
 
 [node name="Aztik" parent="." instance=ExtResource("18_mq0sc")]
 position = Vector2(1299, 298)
