@@ -20,20 +20,32 @@ var opponent_name: String = ""
 var opponent_game_name: String = ""
 var my_game_name: String = ""
 
-func leave_match(reason: String = "user_exit") -> void:
-	if matchId != "":
-		# 1) Avisar al rival (ruta estándar que ya manejas)
-		send_game_payload({"close": true, "reason": reason})
+# Network.gd
+# Reemplazar COMPLETA la función leave_match
 
-		# 2) Pedir al servidor cerrar la instancia del match
-		_enviar({
-			"event": "finish-game",
-			"data": {"matchId": matchId}
-		})
+func leave_match(reason: String = "user_exit") -> void:
+	if matchId == "" or not conectado:
+		reset_match_state()
+		apagar()
+		return
+
+	# Aviso opcional al rival vía payload de juego
+	send_game_payload({
+		"type": "quit-match",
+		"reason": reason
+	})
+
+	_enviar({
+		"event": "quit-match",
+		"data": {"matchId": matchId}
+	})
 
 	reset_match_state()
+	apagar()
 	opponent_name = ""
 	opponent_game_name = ""
+
+
 
 # ✅ NUEVO: rendición explícita (no usa close=true para evitar doble mensaje)
 func surrender_match(reason: String = "pause_exit") -> void:
@@ -146,10 +158,15 @@ func _reconectar():
 func _enviar(dic: Dictionary):
 	# Solo enviar si está OPEN
 	if ws == null:
+		print("⚠️ [NETWORK] _enviar llamado pero ws es null. Dic:", dic)
 		return
 	if ws.get_ready_state() != WebSocketPeer.STATE_OPEN:
+		print("⚠️ [NETWORK] _enviar llamado pero WebSocket no está OPEN. Estado:", ws.get_ready_state(), " Dic:", dic)
 		return
+
+	print("📡 [NETWORK] _enviar ->", dic)
 	ws.send_text(JSON.stringify(dic))
+
 
 func apagar():
 	print("🛑 [NETWORK] Apagando conexión…")
@@ -165,8 +182,6 @@ func apagar():
 	ws = WebSocketPeer.new()
 # ✅ API pública para enviar payload de partida (ataques, etc.)
 
-
-
 func reset_match_state() -> void:
 	matchId = ""
 	death_count = 0
@@ -180,6 +195,9 @@ func reset_death_counter() -> void:
 # signal mensaje_recibido(msg)
 
 func send_game_payload(payload: Dictionary) -> void:
+	# 🔎 DEBUG: payload que intentamos enviar
+	print("📤 [NETWORK] send_game_payload() llamado con payload:", payload)
+
 	if not conectado:
 		print("⚠️ [NETWORK] No conectado, no envío payload.")
 		return
@@ -188,10 +206,15 @@ func send_game_payload(payload: Dictionary) -> void:
 		print("⚠️ [NETWORK] matchId vacío, no envío payload:", payload)
 		return
 
-	_enviar({
+	var packet := {
 		"event": "send-game-data",
 		"data": {
 			"matchId": matchId,
 			"payload": payload
 		}
-	})
+	}
+
+	# 🔎 DEBUG: paquete final que va al servidor
+	print("📤 [NETWORK] Enviando paquete de partida:", packet)
+
+	_enviar(packet)

@@ -53,22 +53,23 @@ func _notify_close_if_needed() -> void:
 	if not _is_multiplayer_now():
 		return
 
-	# 1) Avisar cierre de partida al rival/servidor
+	# Preferir flujo unificado
+	if Network and Network.has_method("leave_match"):
+		Network.leave_match("leave_from_death_menu")
+		return
+
+	# Fallback (tu implementación actual)
 	if Network and Network.has_method("send_game_payload"):
 		Network.send_game_payload({
 			"close": true,
 			"reason": "leave_from_death_menu"
 		})
 
-	# 2) Limpiar estado local de match
 	if Network and Network.has_method("reset_match_state"):
 		Network.reset_match_state()
 
-	# 3) Cerrar WebSocket para evitar "jugadores fantasma"
-	#    y detener el ping keep-alive en el menú principal
 	if Network and Network.has_method("apagar"):
 		Network.apagar()
-
 
 
 func _on_retry() -> void:

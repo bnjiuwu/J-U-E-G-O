@@ -278,7 +278,7 @@ func _on_mensaje_recibido(msg: String):
 
 
 		# === MATCHMAKING ===
-		"match-request-received":
+		"match-request-received", "match_request_received":
 			_recibir_invitacion(data)
 
 		"send-match-request":
@@ -320,7 +320,7 @@ func _on_mensaje_recibido(msg: String):
 			else:
 				print("❌ Error en accept-match:", data.get("msg", ""))
 
-
+		
 		"match-accepted":
 			match_id = data["data"].get("matchId", "")
 			print("🎮 El otro jugador aceptó la invitación. Match ID:", match_id)
@@ -352,7 +352,23 @@ func _on_mensaje_recibido(msg: String):
 
 			_enviar({"event": "connect-match", "data": {"matchId": match_id}})
 
+		"match-rejected":
+			print("❌ Tu solicitud de partida fue rechazada.")
+			if Engine.has_singleton("MatchNotificationss"):
+				MatchNotificationss.show_notification("El jugador rechazó tu solicitud.", 4.0)
+			match_id = ""
+			
+		"match-canceled-by-sender":
+			var mid = data.get("data", {}).get("matchId", "")
+			print("ℹ️ Invitación cancelada por el otro jugador. MatchId:", mid)
+			invitaciones = invitaciones.filter(
+				func(inv): return inv.get("matchId", "") != mid)
+			_actualizar_lista_invitaciones()
+			_update_invite_badge()
+			if Engine.has_singleton("MatchNotificationss"):
+				MatchNotificationss.show_notification("La invitación fue cancelada por el otro jugador.", 4.0)
 
+			
 		"connect-match":
 			if data.get("status") == "OK":
 				match_id = data["data"].get("matchId", "")
@@ -456,6 +472,19 @@ func _on_mensaje_recibido(msg: String):
 
 		"quit-match":
 			print("📥 quit-match recibido (ACK de que yo abandoné el lobby)")
+
+			# Notificación global (si estás todavía en alguna escena con el autoload activo)
+			if Engine.has_singleton("MatchNotificationss"):
+				MatchNotificationss.show_notification("La partida terminó (quit-match).", 5.0)
+
+			# Cortar estado de match y WebSocket
+			if Network:
+				if Network.has_method("reset_match_state"):
+					Network.reset_match_state()
+				if Network.has_method("apagar"):
+					Network.apagar()
+			await get_tree().process_frame
+			get_tree().change_scene_to_file("res://Assets/Scenes/Menu/menu.tscn")
 			return
 
 
@@ -469,27 +498,50 @@ func _on_mensaje_recibido(msg: String):
 
 
 		"receive-game-data":
-			var payload = data.get("data", {}).get("payload", {})
+			# 🔎 DEBUG: mensaje bruto recibido
+			print("📥 [MULTI] receive-game-data RAW:", data)
 
+			var data_block = data.get("data", {})
+			if typeof(data_block) != TYPE_DICTIONARY:
+				print("⚠️ [MULTI] data.data no es diccionario:", data_block)
+				return
+
+			var payload = data_block.get("payload", {})
+			if typeof(payload) != TYPE_DICTIONARY:
+				print("⚠️ [MULTI] payload no es diccionario:", payload)
+				return
+
+			# 🔎 DEBUG: payload ya aislado
+			print("📥 [MULTI] payload recibido:", payload)
+
+			# ✅ CUANDO EL OTRO JUGADOR CIERRA LA PARTIDA
 			if payload.has("close") and payload["close"] == true:
-				print("🚪 rival envió close — cerrando partida por remoto.")
+				print("🚪 [MULTI] rival envió close — cerrando partida por remoto. Payload:", payload)
 				await _finalizar_partida_por_rival()
+				return
 
-			if payload.has("type") and payload["type"] == "attack":
-				var dmg = payload.get("damage", 5)
-				print("🔥 ATAQUE RECIBIDO → daño:", dmg)
+			# ======================================================
+			# ⚔️ ATAQUE RECIBIDO
+			# ======================================================
+			if payload.get("type", "") == "attack":
+				var dmg := int(payload.get("damage", 5))
+				print("🔥 [MULTI] ATAQUE RECIBIDO → daño:", dmg, " payload:", payload)
 
-				var nivel = get_tree().current_scene
-				if nivel.has_method("recibir_ataque"):
+				var nivel := get_tree().current_scene
+				if nivel and nivel.has_method("recibir_ataque"):
+					print("📨 [MULTI] Pasando ataque a nivel.recibir_ataque()")
 					nivel.recibir_ataque(dmg)
+				else:
+					print("⚠️ [MULTI] La escena actual no tiene recibir_ataque. Nivel:", nivel)
+
 
 
 		"finish-game":
-			if match_id != "":
-				_enviar({
-					"event": "finish-game",
-					"data": {"matchId": match_id}
-				})
+			# Este evento es saliente según el resumen del servidor.
+			# Si el servidor lo envía como respuesta/ACK o notificación,
+			# aquí solo registramos y NO lo re-enviamos.
+			print("📤 Respuesta a finish-game:", data)
+			return
 
 
 		"rematch-request":
@@ -499,6 +551,16 @@ func _on_mensaje_recibido(msg: String):
 		_:
 			print("ℹ️ Evento no manejado:", evento)
 
+
+
+func _cancelar_invitacion_enviada() -> void:
+	if match_id == "":
+		print("⚠️ [MULTI] No hay match pendiente que cancelar.")
+		return
+	_enviar({
+		"event": "cancel-match-request",
+		"data": {"matchId": match_id}
+	})
 
 
 # ===============================
@@ -840,7 +902,6 @@ func _rechazar_invitacion(info: Dictionary):
 	_update_invite_badge()
 
 
-
 func _actualizar_lista_invitaciones():
 	for c in lista.get_children():
 		c.queue_free()
@@ -878,7 +939,6 @@ func _actualizar_lista_invitaciones():
 # ============ VOLVER ===========
 # ===============================
 func _on_volver_pressed():
-
 	if lobby.visible:
 		print("🚪 Saliendo del lobby manualmente…")
 
@@ -924,6 +984,12 @@ func _on_volver_pressed():
 
 
 	if posicion_menu == 0:
+		# Si estoy asociado a un match, salir aquí debe limpiar instancia y declarar derrota
+		var has_match := match_id != "" or (Network and str(Network.matchId) != "")
+
+		if has_match and Network and Network.has_method("leave_match"):
+			Network.leave_match("leave_from_multiplayer_menu")
+
 		if Network.ws:
 			print("🔌 Cerrando WebSocket al salir del modo multijugador…")
 			Network.apagar()
@@ -931,6 +997,8 @@ func _on_volver_pressed():
 
 		_limpiar_todo()
 		get_tree().change_scene_to_file("res://Assets/Scenes/Menu/menu.tscn")
+
+
 	else:
 		scroll.visible = false
 		btn_enviar.visible = true

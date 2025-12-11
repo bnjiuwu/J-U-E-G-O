@@ -11,7 +11,7 @@
 [ext_resource type="PackedScene" uid="uid://dnmmsfxvt0nu" path="res://Assets/Scenes/EVENT ROULETTE/EFECTOS/+dmg.tscn" id="8_8uy5n"]
 [ext_resource type="PackedScene" uid="uid://bpn8bdiiua2dl" path="res://Assets/Scenes/EVENT ROULETTE/EFECTOS/instakill.tscn" id="9_kc7tb"]
 [ext_resource type="FontFile" uid="uid://dhhjcp1rxp6gj" path="res://Assets/Fonts/minecraft_font.ttf" id="11_qicsw"]
-[ext_resource type="AudioStream" path="res://Assets/Audios/Game_Audios/RULETTE SOUND.mp3" id="12_s2h1m"]
+[ext_resource type="AudioStream" uid="uid://cuv4avnl7reip" path="res://Assets/Audios/Game_Audios/RULETTE SOUND.mp3" id="12_s2h1m"]
 
 [node name="Roulette" type="Node2D"]
 z_index = 20
@@ -79,14 +79,12 @@ stretch_mode = 5
 
 [node name="SpinSfx" type="AudioStreamPlayer" parent="."]
 process_mode = 3
-bus = "SFX"
 stream = ExtResource("12_s2h1m")
-volume_db = -3.0
+volume_db = -30.0
 
 [node name="ResultSfx" type="AudioStreamPlayer" parent="."]
 process_mode = 3
-bus = "SFX"
 stream = ExtResource("12_s2h1m")
-volume_db = -6.0
+volume_db = -10.0
 
 [connection signal="pressed" from="ResultPanel/CloseButton" to="." method="_on_CloseButton_pressed"]

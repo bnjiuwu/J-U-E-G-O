@@ -53,6 +53,7 @@ var _boss_defeated_local: bool = false
 
 
 
+
 func _check_victory_conditions() -> void:
 	if _match_finished:
 		return
@@ -88,9 +89,6 @@ func _notify_opponent_defeated(payload: Dictionary) -> void:
 
 	MatchNotificationss.show_notification(txt, 5.0)
 
-
-
-
 func get_pause_menu() -> Node:
 	return pause_menu
 
@@ -109,7 +107,6 @@ func toggle_pause() -> void:
 	else:
 		push_warning("PauseMenu no válido o sin toggle_pause().")
 
-# level_manager.gd
 
 func exit_to_main_menu_from_pause() -> void:
 	# 1) Quitar pausa visual/engine si aplica
@@ -130,7 +127,7 @@ func exit_to_main_menu_from_pause() -> void:
 			Network.surrender_match("pause_exit")
 		else:
 			# fallback por si aún no agregas surrender_match()
-			Network.send_game_payload({"type": "loss", "reason": "pause_exit"})
+			Network.send_game_payload({"type": "defeat", "reason": "pause_exit"})
 			if Network.has_method("leave_match"):
 				Network.leave_match("pause_exit")
 
@@ -143,6 +140,7 @@ func exit_to_main_menu_from_pause() -> void:
 		get_tree().change_scene_to_file(fallback_scene)
 
 
+var is_multiplayer: bool = false
 
 func _ready() -> void:
 	print("level_manager listo")
@@ -160,11 +158,14 @@ func _ready() -> void:
 	if _roulette_layer == null:
 		push_warning("No encontré CanvasLayer/RouletteLayer. La ruleta se agregará al CanvasLayer.")
 
-	# Escuchar mensajes del servidor DURANTE el gameplay
-	if Engine.has_singleton("Network") or (Network != null):
+	if Network and str(Network.matchId) != "":
+		is_multiplayer = true
 		if not Network.mensaje_recibido.is_connected(_on_network_message):
 			Network.mensaje_recibido.connect(_on_network_message)
-
+		print("🎮 [LEVEL] LevelManager en modo MULTI. matchId =", Network.matchId)
+	else:
+		is_multiplayer = false
+		print("🎮 [LEVEL] LevelManager en modo SOLO.")
 	_cargar_nivel_async(_nivel_actual)
 
 
@@ -373,7 +374,7 @@ func _handle_local_loss() -> void:
 	# Avisar al rival/servidor vía payload estándar
 	if Network:
 		Network.send_game_payload({
-			"type": "loss",
+			"type": "defeat",
 			"reason": "deaths",
 			"count": _deaths_in_match
 		})
@@ -381,16 +382,21 @@ func _handle_local_loss() -> void:
 	_show_death_menu()
 
 func _handle_local_victory() -> void:
+	if _match_finished:
+		return
 	_match_finished = true
-	print("✅ Victoria local.")
 
-	if Network:
+	# 🔫 En lugar de enviar "victory", mandamos un ataque fuerte
+	if Network and Network.matchId != "":
 		Network.send_game_payload({
-			"type": "victory",
-			"reason": "boss"
+			"type": "attack",
+			"damage": 60,          # daño grande, para que en el otro lado sea un ataque importante
+			"source": "boss_clear"   # etiqueta opcional, por si quieres diferenciarlo en logs
 		})
 
-	_show_victory_menu()
+	# Esto es SOLO UI local, no afecta al servidor ni a otros juegos
+	_notify_match_ended()
+
 
 func _update_death_counter_ui() -> void:
 	var lbl := get_tree().get_first_node_in_group("death_counter_ui")
@@ -437,15 +443,17 @@ func _on_network_message(msg: String) -> void:
 		return
 
 	var evento := str(data.get("event", ""))
+	print("📡 [LEVEL_MANAGER] Evento:", evento, " | data:", data)
 
 	# Eventos que nos interesan durante gameplay
 	match evento:
-		"close-match", "player-disconnected":
+		"close-match", "quit-match":
 			_notify_opponent_disconnected(data) # pasamos data por si trae playerName
 		"game-ended":
 			_notify_match_ended()
 		"receive-game-data":
 			_handle_receive_game_data(data)
+
 		_:
 			pass
 
@@ -454,13 +462,14 @@ func _handle_receive_game_data(data: Dictionary) -> void:
 	if typeof(payload) != TYPE_DICTIONARY:
 		return
 
-	# Rival cerró partida
-	if payload.get("close", false) == true:
-		_notify_opponent_disconnected()
-		return
+	var tipo := str(payload.get("type", payload.get("action", "")))
 
-	var tipo := str(payload.get("type", ""))
-
+# Compatibilidad: si aún se envía close:true o tipo quit-match en payload,
+# lo tratamos como cierre remoto
+	if payload.get("close", false) == true or tipo == "quit-match":
+		_notify_opponent_disconnected(data)
+		return    
+			  # cierra el WebSocket → deja de hacer ping
 	match tipo:
 		"loss", "defeat":
 			_opponent_defeated = true
@@ -477,6 +486,7 @@ func _handle_receive_game_data(data: Dictionary) -> void:
 			MatchNotificationss.show_notification(txt, 5.0)
 
 			_check_victory_conditions()
+			
 			return
 
 		"victory":
@@ -494,66 +504,53 @@ func _handle_receive_game_data(data: Dictionary) -> void:
 
 
 
-func _notify_opponent_disconnected(raw: Dictionary = {}) -> void:
-	print("⚠️ Rival desconectado durante partida.")
-	
-	# 1. Inicialización segura de variables
-	var rival_name: String = ""
-	var rival_game: String = ""
+func _notify_opponent_disconnected(data: Dictionary) -> void:
+	var raw = data.get("data", {})
+	var rival_name := str(raw.get("playerName", ""))
 
-	# 2. Intentar obtener datos del Singleton Network
+	if rival_name == "":
+		rival_name = "Rival"
+
+	print("🚪 [LEVEL] Rival desconectado / match cerrado. data:", raw)
+
+	# 🟡 Notificación global (5s, manejado por tu autoload Notifications)
+	MatchNotificationss.show_notification("⚠️ %s se desconectó. Volviendo a solo." % rival_name,5.0)
+
+	# 🧹 Limpiar estado de match y apagar red
 	if Network:
-		rival_name = str(Network.opponent_name)
-		rival_game = str(Network.opponent_game_name)
+		# Limpia matchId, contador de muertes, etc.
+		Network.reset_match_state()
+		# Cierra completamente el WebSocket -> adiós pings y jugador "fantasma"
+		Network.apagar()
 
-	# 3. Fallback: Si Network falló o está vacío, buscar en la data cruda del servidor
-	if raw.has("data"):
-		var d: Dictionary = raw.get("data", {})
-		# Solo sobreescribimos si aún no tenemos nombre
-		if rival_name == "":
-			rival_name = str(d.get("playerName", "Rival"))
+	# 🔻 Bajar a modo singleplayer dentro del mismo nivel
+	_downgrade_to_singleplayer()
 
-	# 4. Construcción del mensaje
-	var txt: String = "El rival se desconecto"
-	if rival_name != "" and rival_name != "Rival":
-		txt = "Se desconecto: %s" % rival_name
-		if rival_game != "":
-			txt += " | %s" % rival_game
-
-	# 5. Actualizar UI de Notificación
-	MatchNotificationss.show_notification(txt, 5.0)
-
-
-		# Opcional: Ocultarlo automáticamente después de unos segundos
-		# create_tween().tween_property(lbl, "visible", false, 0.5).set_delay(5.0)
-
-	# 6. Lógica de "Switch to Singleplayer" (Resetear estado)
-	if Network:
-		Network.matchId = ""
-		Network.reset_death_counter()
-
-	# 7. Limpieza de UI específica (Death Counter)
-	var death_lbl := get_tree().get_first_node_in_group("death_counter_ui") as Label
-	if death_lbl:
-		death_lbl.visible = false
 
 func _downgrade_to_singleplayer() -> void:
+	print("🔻 Cambiando a modo single-player (match terminado)")
 	if Network:
 		Network.reset_match_state()
 
-	# Limpieza local mínima
-	_match_finished = false
-	_deaths_in_match = 0
-	_opponent_defeated_reported = false
-
 	_update_death_counter_ui()
 
+	
 func _notify_match_ended() -> void:
-	print("ℹ️ Match finalizado por servidor.")
+	print("ℹ️ Match finalizado por servidor → pasar a soloplayer y cerrar conexión.")
+
 	var txt := "Partida terminada"
-	MatchNotificationss.show_notification(txt, 5.0)
+	if Engine.has_singleton("MatchNotificationss"):
+		MatchNotificationss.show_notification(txt, 5.0)
+		
 
+	# 2) Cerrar conexión WebSocket para liberar la instancia en el servidor
+	if Network:
+		if Network.has_method("reset_match_state"):
+			Network.reset_match_state()
+		if Network.has_method("apagar"):
+			Network.apagar()
 
+	# 3) Notificación visual durante 5s (ya manejado por el autoload)
 
 # =========================================================
 # ===================== RULETA API ========================

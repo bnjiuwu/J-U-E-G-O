@@ -3,12 +3,12 @@
 importer="mp3"
 type="AudioStreamMP3"
 uid="uid://dukenogd0qaui"
-path="res://.godot/imported/spongebob-hawaiian-cocktail.mp3-d0767b53163e3729e78d47e835c35d3d.mp3str"
+path="res://.godot/imported/spongebob-hawaiian-cocktail.mp3-071601a6e514adec69b7360908b4ccb5.mp3str"
 
 [deps]
 
-source_file="res://Assets/Audios/spongebob-hawaiian-cocktail.mp3"
-dest_files=["res://.godot/imported/spongebob-hawaiian-cocktail.mp3-d0767b53163e3729e78d47e835c35d3d.mp3str"]
+source_file="res://Assets/AUDIOS/spongebob-hawaiian-cocktail.mp3"
+dest_files=["res://.godot/imported/spongebob-hawaiian-cocktail.mp3-071601a6e514adec69b7360908b4ccb5.mp3str"]
 
 [params]
 

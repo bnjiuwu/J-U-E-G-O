@@ -35,12 +35,26 @@ func _on_restart_pressed():
 	get_tree().paused = false
 	get_tree().reload_current_scene()
 
-func _on_quit_pressed():
-	var lm := get_tree().get_first_node_in_group("level_manager")
-	if lm and lm.has_method("exit_to_main_menu_from_pause"):
-		lm.exit_to_main_menu_from_pause()
-		return
+func _on_quit_pressed() -> void:
+	print("🔴 PauseMenu: salir al menú principal")
 
-		# Fallback extremo (si por algún motivo no está LevelManager)
+	# 1) Asegurar que el árbol NO quede pausado
+	#    (esto afecta también al menú principal)
+	Engine.time_scale = 1.0
+
+	# 2) Si estás en multijugador, avisar derrota + cerrar conexión
+	if Network and str(Network.matchId) != "":
+		# Notificar derrota al rival
+		if Network.has_method("send_game_payload"):
+			Network.send_game_payload({
+				"type": "defeat",
+				"reason": "leave_from_pause_menu"
+			})
+
+		# Cerrar match / conexión según tu API de Network
+		if Network.has_method("leave_match"):
+			Network.leave_match("leave_from_pause_menu")
+
+	# 3) Volver al menú principal
+	get_tree().paused = false
 	get_tree().change_scene_to_file("res://Assets/Scenes/Menu/menu.tscn")
-	
