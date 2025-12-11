@@ -425,7 +425,7 @@ texture = ExtResource("10_wv8gn")
 31:1/0 = 0
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_u26w3"]
-texture = ExtResource("11_bmqte")
+texture = ExtResource("10_wv8gn")
 3:11/0 = 0
 4:11/0 = 0
 3:12/0 = 0
@@ -608,7 +608,7 @@ texture = ExtResource("11_bmqte")
 9:13/0 = 0
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_vev6x"]
-texture = ExtResource("5_ct321")
+texture = ExtResource("10_wv8gn")
 use_texture_padding = false
 1:19/0 = 0
 1:19/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
