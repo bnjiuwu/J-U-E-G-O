@@ -14,7 +14,7 @@ var _roulette_instance: Node = null
 var _roulette_active: bool = false
 var _roulette_pending: bool = false
 var _roulette_cooldown_timer: float = 0.0
-@export var roulette_cooldown_seconds: float = 30.0
+@export var roulette_cooldown_seconds: float = 20.0
 
 # ---------------- MULTI: MUERTES / RESULTADOS ----------------
 @export var max_deaths_before_loss: int = 5
@@ -108,6 +108,41 @@ func toggle_pause() -> void:
 		pause_menu.toggle_pause()
 	else:
 		push_warning("PauseMenu no válido o sin toggle_pause().")
+
+# level_manager.gd
+
+func exit_to_main_menu_from_pause() -> void:
+	# 1) Quitar pausa visual/engine si aplica
+	if is_instance_valid(pause_menu) and pause_menu.has_method("force_close"):
+		# si tu PauseMenu tiene un método para cerrar sin lógica extra
+		pause_menu.force_close()
+	elif is_instance_valid(pause_menu) and pause_menu.has_method("toggle_pause"):
+		# fallback seguro
+		if pause_menu.visible:
+			pause_menu.toggle_pause()
+
+	# 2) Si estoy en multijugador activo, esto cuenta como rendición
+	if _is_multiplayer() and Network:
+		_match_finished = true
+
+		# ✅ enviar derrota explícita + cerrar instancia en servidor
+		if Network.has_method("surrender_match"):
+			Network.surrender_match("pause_exit")
+		else:
+			# fallback por si aún no agregas surrender_match()
+			Network.send_game_payload({"type": "loss", "reason": "pause_exit"})
+			if Network.has_method("leave_match"):
+				Network.leave_match("pause_exit")
+
+		# ✅ cortar conexión al salir del modo online
+		if Network.has_method("apagar"):
+			Network.apagar()
+
+	# 3) Volver al menú principal
+	if fallback_scene != "":
+		get_tree().change_scene_to_file(fallback_scene)
+
+
 
 func _ready() -> void:
 	print("level_manager listo")

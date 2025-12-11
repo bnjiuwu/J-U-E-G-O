@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://bci4psncwsqgq" path="res://Levels/LEVEL MANAGER/level_manager.gd" id="1_a0lk0"]
 [ext_resource type="PackedScene" uid="uid://c6n7qrlau6b0k" path="res://Levels/level 1/level_1.tscn" id="2_kycgd"]
-[ext_resource type="PackedScene" uid="uid://bxrtd5wmuxd7f" path="res://Levels/level 2/level_2.tscn" id="3_4yax6"]
+[ext_resource type="PackedScene" uid="uid://d2texu1ylfow0" path="res://Levels/level 2/level_2.tscn" id="3_4yax6"]
 [ext_resource type="FontFile" uid="uid://dhhjcp1rxp6gj" path="res://Assets/Fonts/minecraft_font.ttf" id="4_n1ogb"]
 [ext_resource type="Script" uid="uid://nanomq0jj6vq" path="res://Levels/LEVEL MANAGER/control.gd" id="4_n85ch"]
 [ext_resource type="Texture2D" uid="uid://bciwapajx8de5" path="res://Assets/sprites/objects type shi/memorial.png" id="5_n85ch"]

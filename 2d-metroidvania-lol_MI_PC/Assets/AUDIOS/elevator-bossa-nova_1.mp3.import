@@ -3,12 +3,12 @@
 importer="mp3"
 type="AudioStreamMP3"
 uid="uid://b8nysb4nnytyx"
-path="res://.godot/imported/elevator-bossa-nova_1.mp3-e1f06c16c79a458d3c003ee81a966ac3.mp3str"
+path="res://.godot/imported/elevator-bossa-nova_1.mp3-ac1a6e39bfbec8ac795e2383d534cab5.mp3str"
 
 [deps]
 
-source_file="res://Assets/Audios/elevator-bossa-nova_1.mp3"
-dest_files=["res://.godot/imported/elevator-bossa-nova_1.mp3-e1f06c16c79a458d3c003ee81a966ac3.mp3str"]
+source_file="res://Assets/AUDIOS/elevator-bossa-nova_1.mp3"
+dest_files=["res://.godot/imported/elevator-bossa-nova_1.mp3-ac1a6e39bfbec8ac795e2383d534cab5.mp3str"]
 
 [params]
 

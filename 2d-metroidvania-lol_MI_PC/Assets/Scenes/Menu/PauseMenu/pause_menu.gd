@@ -36,9 +36,11 @@ func _on_restart_pressed():
 	get_tree().reload_current_scene()
 
 func _on_quit_pressed():
-	if Network and Network.has_method("leave_match") and str(Network.matchId) != "":
-		Network.leave_match("leave_from_pause_menu")
+	var lm := get_tree().get_first_node_in_group("level_manager")
+	if lm and lm.has_method("exit_to_main_menu_from_pause"):
+		lm.exit_to_main_menu_from_pause()
+		return
 
-	get_tree().paused = false
+		# Fallback extremo (si por algún motivo no está LevelManager)
 	get_tree().change_scene_to_file("res://Assets/Scenes/Menu/menu.tscn")
 	

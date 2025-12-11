@@ -3,12 +3,12 @@
 importer="mp3"
 type="AudioStreamMP3"
 uid="uid://dumvd65uwah8p"
-path="res://.godot/imported/Eric Skiff - Underclocked  NO COPYRIGHT 8-bit Music  Background.mp3-7a4aee70f51a0f72f34bcb75cf564e76.mp3str"
+path="res://.godot/imported/Eric Skiff - Underclocked  NO COPYRIGHT 8-bit Music  Background.mp3-fcdb94521298e4aa1a77db613dbfcae6.mp3str"
 
 [deps]
 
-source_file="res://Assets/Audios/Background_music/Eric Skiff - Underclocked  NO COPYRIGHT 8-bit Music  Background.mp3"
-dest_files=["res://.godot/imported/Eric Skiff - Underclocked  NO COPYRIGHT 8-bit Music  Background.mp3-7a4aee70f51a0f72f34bcb75cf564e76.mp3str"]
+source_file="res://Assets/AUDIOS/Background_music/Eric Skiff - Underclocked  NO COPYRIGHT 8-bit Music  Background.mp3"
+dest_files=["res://.godot/imported/Eric Skiff - Underclocked  NO COPYRIGHT 8-bit Music  Background.mp3-fcdb94521298e4aa1a77db613dbfcae6.mp3str"]
 
 [params]
 

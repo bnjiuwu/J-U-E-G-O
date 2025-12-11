@@ -35,6 +35,24 @@ func leave_match(reason: String = "user_exit") -> void:
 	opponent_name = ""
 	opponent_game_name = ""
 
+# ✅ NUEVO: rendición explícita (no usa close=true para evitar doble mensaje)
+func surrender_match(reason: String = "pause_exit") -> void:
+	if matchId != "":
+		# 1) Notificar derrota explícita al rival
+		send_game_payload({
+			"type": "loss",
+			"reason": reason
+		})
+
+		# 2) Pedir al servidor cerrar la instancia del match
+		_enviar({
+			"event": "finish-game",
+			"data": {"matchId": matchId}
+		})
+
+	# 3) Limpiar estado local del match
+	reset_match_state()
+
 func set_opponent_context(id: String, name: String, game_name: String = "") -> void:
 	opponent_id = id
 	opponent_name = name
