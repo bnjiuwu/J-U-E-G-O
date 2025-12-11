@@ -3,12 +3,12 @@
 importer="mp3"
 type="AudioStreamMP3"
 uid="uid://di7p7edrb63rp"
-path="res://.godot/imported/retro-hurt-1-236672.mp3-75e4d6c8cb4830149b0d1a2f09692cc6.mp3str"
+path="res://.godot/imported/retro-hurt-1-236672.mp3-62bb51fc7ee52a4735168845cf79a455.mp3str"
 
 [deps]
 
-source_file="res://Assets/Audios/Game_Audios/retro-hurt-1-236672.mp3"
-dest_files=["res://.godot/imported/retro-hurt-1-236672.mp3-75e4d6c8cb4830149b0d1a2f09692cc6.mp3str"]
+source_file="res://Assets/AUDIOS/Game_Audios/retro-hurt-1-236672.mp3"
+dest_files=["res://.godot/imported/retro-hurt-1-236672.mp3-62bb51fc7ee52a4735168845cf79a455.mp3str"]
 
 [params]
 
