@@ -3,12 +3,12 @@
 importer="mp3"
 type="AudioStreamMP3"
 uid="uid://bkobcmobpce51"
-path="res://.godot/imported/kevin_macleod-elevator.mp3-99fac561b670a8b392761970ba531e4f.mp3str"
+path="res://.godot/imported/kevin_macleod-elevator.mp3-d5f4b487dd69daaa8b45932de64cba6a.mp3str"
 
 [deps]
 
-source_file="res://Assets/AUDIOS/kevin_macleod-elevator.mp3"
-dest_files=["res://.godot/imported/kevin_macleod-elevator.mp3-99fac561b670a8b392761970ba531e4f.mp3str"]
+source_file="res://Assets/Audios/kevin_macleod-elevator.mp3"
+dest_files=["res://.godot/imported/kevin_macleod-elevator.mp3-d5f4b487dd69daaa8b45932de64cba6a.mp3str"]
 
 [params]
 
