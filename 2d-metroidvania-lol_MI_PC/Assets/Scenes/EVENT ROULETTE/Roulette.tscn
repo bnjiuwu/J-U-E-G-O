@@ -11,7 +11,7 @@
 [ext_resource type="PackedScene" uid="uid://dnmmsfxvt0nu" path="res://Assets/Scenes/EVENT ROULETTE/EFECTOS/+dmg.tscn" id="8_8uy5n"]
 [ext_resource type="PackedScene" uid="uid://bpn8bdiiua2dl" path="res://Assets/Scenes/EVENT ROULETTE/EFECTOS/instakill.tscn" id="9_kc7tb"]
 [ext_resource type="FontFile" uid="uid://dhhjcp1rxp6gj" path="res://Assets/Fonts/minecraft_font.ttf" id="11_qicsw"]
-[ext_resource type="AudioStream" uid="uid://cuv4avnl7reip" path="res://Assets/Audios/Game_Audios/RULETTE SOUND.mp3" id="12_s2h1m"]
+[ext_resource type="AudioStream" uid="uid://cuv4avnl7reip" path="res://Assets/AUDIOS/Game_Audios/RULETTE SOUND.mp3" id="12_s2h1m"]
 
 [node name="Roulette" type="Node2D"]
 z_index = 20
@@ -38,6 +38,7 @@ scale = Vector2(1, 1.09833)
 texture = ExtResource("7_805u6")
 
 [node name="ResultPanel" type="Panel" parent="."]
+visible = false
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
