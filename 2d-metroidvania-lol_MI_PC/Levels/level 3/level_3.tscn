@@ -1,6 +1,6 @@
-[gd_scene load_steps=39 format=3 uid="uid://c6kipeputwxl"]
+[gd_scene load_steps=37 format=3 uid="uid://c6kipeputwxl"]
 
-[ext_resource type="PackedScene" uid="uid://braj8a8ooxs4t" path="res://Assets/Scenes/Player/player.tscn" id="1_78j0p"]
+[ext_resource type="PackedScene" uid="uid://braj8a8ooxs4t" path="res://Levels/level 2/player.tscn" id="1_78j0p"]
 [ext_resource type="Script" uid="uid://dv7ehm1q2gkkh" path="res://Levels/level 3/level_3.gd" id="1_jayd4"]
 [ext_resource type="Texture2D" uid="uid://b2gps0kqvxav5" path="res://Assets/images/Backgrounds/BIBLIOTECA/ParedBiblioteca0.png" id="1_y81ld"]
 [ext_resource type="FontFile" uid="uid://dhhjcp1rxp6gj" path="res://Assets/Fonts/minecraft_font.ttf" id="2_4lnie"]
@@ -16,8 +16,6 @@
 [ext_resource type="Texture2D" uid="uid://c0y4nb82ea08b" path="res://Assets/images/Backgrounds/BIBLIOTECA/PlataformaBiblioteca0.png" id="11_ros7g"]
 [ext_resource type="PackedScene" uid="uid://b2lni2j37kwvl" path="res://Assets/Scenes/touch_controls/touch_controls.tscn" id="14_bj388"]
 [ext_resource type="PackedScene" uid="uid://jm3orlf4lfkm" path="res://Assets/Scenes/Map Help/Health pack/health pack.tscn" id="16_ry1bv"]
-[ext_resource type="PackedScene" uid="uid://ljb2k5q033bq" path="res://Assets/Scenes/Menu/Death Menu/DeathMenu.tscn" id="18_k1x5a"]
-[ext_resource type="PackedScene" uid="uid://bu5ef6314c7ik" path="res://Assets/Scenes/Menu/PauseMenu/PauseMenu.tscn" id="19_ve4kx"]
 [ext_resource type="PackedScene" uid="uid://cov1bwx3ogxc6" path="res://Assets/Scenes/MiniMap/MiniMap.tscn" id="20_43dxa"]
 [ext_resource type="PackedScene" uid="uid://xoxuswob6rae" path="res://Assets/Scenes/Enemies Scene/Bat Scene/Bat.tscn" id="21_k1x5a"]
 [ext_resource type="PackedScene" uid="uid://b2wq6npi7xnw" path="res://Assets/Scenes/Enemies Scene/Cangri Scene/cangri.tscn" id="22_43dxa"]
@@ -1457,10 +1455,6 @@ scale = Vector2(3, 3)
 [node name="HealthPack18" parent="Map Interactives/health packs" instance=ExtResource("16_ry1bv")]
 position = Vector2(3584, -3200)
 scale = Vector2(3, 3)
-
-[node name="DeathMenu" parent="." instance=ExtResource("18_k1x5a")]
-
-[node name="PauseMenu" parent="." instance=ExtResource("19_ve4kx")]
 
 [node name="MiniMap" parent="." instance=ExtResource("20_43dxa")]
 
