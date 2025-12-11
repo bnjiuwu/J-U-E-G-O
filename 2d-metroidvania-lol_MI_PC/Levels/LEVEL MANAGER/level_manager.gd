@@ -447,20 +447,58 @@ func _on_network_message(msg: String) -> void:
 		return
 
 	var evento := str(data.get("event", ""))
-	print("📡 [LEVEL_MANAGER] Evento:", evento, " | data:", data)
+	
+	# Variables para validación
+	var incoming_match_id = str(data.get("data", {}).get("matchId", ""))
+	var incoming_player_id = str(data.get("data", {}).get("playerId", ""))
+	# A veces el ID viene solo como "id" en player-disconnected
+	if incoming_player_id == "":
+		incoming_player_id = str(data.get("data", {}).get("id", ""))
 
-	# Eventos que nos interesan durante gameplay
+	# --- 🕵️ DEBUG GENERAL ---
+	# Esto te mostrará CUALQUIER evento que llegue mientras juegas
+	# print("📨 [NET-IN] Evento: ", evento, " | MatchID entrante: ", incoming_match_id, " | PlayerID entrante: ", incoming_player_id)
+
 	match evento:
+		# CASO 1: Cierre formal (Rendición / Quit)
 		"close-match", "quit-match":
-			_notify_opponent_disconnected(data) # pasamos data por si trae playerName
+			print("🕵️ [DEBUG] Revisando 'close-match'...")
+			print("   > MatchID Recibido: ", incoming_match_id)
+			print("   > Mi MatchID:       ", Network.matchId)
+
+			if Network and incoming_match_id != "" and incoming_match_id != Network.matchId:
+				print("🛡️ [DEBUG] BLOQUEADO: El mensaje es de otra partida. No hago nada.")
+				return
+			
+			print("✅ [DEBUG] VALIDADO: Es mi partida. Desconectando rival...")
+			_notify_opponent_disconnected(data)
+
+		# CASO 2: Desconexión abrupta (Cable / Alt+F4)
+		"player-disconnected":
+			print("🕵️ [DEBUG] Revisando 'player-disconnected'...")
+			print("   > ID Recibido: ", incoming_player_id)
+			print("   > ID Rival:    ", Network.opponent_id)
+
+			if Network and Network.opponent_id != "" and incoming_player_id == Network.opponent_id:
+				print("✅ [DEBUG] VALIDADO: Mi rival (ID correcto) se desconectó. Volviendo a Solo.")
+				_notify_opponent_disconnected(data)
+			else:
+				print("🛡️ [DEBUG] IGNORADO: Se desconectó alguien (ID: %s), pero no es mi rival." % incoming_player_id)
+
 		"game-ended":
+			# Validación opcional de matchId
+			if incoming_match_id != "" and Network and incoming_match_id != Network.matchId:
+				print("🛡️ [DEBUG] game-ended de otra partida ignorado.")
+				return
+			
+			print("🏁 [DEBUG] game-ended recibido y validado.")
 			_notify_match_ended()
+
 		"receive-game-data":
 			_handle_receive_game_data(data)
 
 		_:
 			pass
-
 func _handle_receive_game_data(data: Dictionary) -> void:
 	var payload = data.get("data", {}).get("payload", {})
 	if typeof(payload) != TYPE_DICTIONARY:
@@ -512,49 +550,56 @@ func _notify_opponent_disconnected(data: Dictionary) -> void:
 	var raw = data.get("data", {})
 	var rival_name := str(raw.get("playerName", ""))
 
+	# Intentar sacar nombre de cache si el paquete no lo trae
+	if rival_name == "" and Network:
+		rival_name = Network.opponent_name
 	if rival_name == "":
 		rival_name = "Rival"
 
-	print("🚪 [LEVEL] Rival desconectado / match cerrado. data:", raw)
+	print("🚪 [LEVEL] Rival desconectado. Volviendo a Solo Player.")
+	
+	if Engine.has_singleton("MatchNotificationss"):
+		MatchNotificationss.show_notification("⚠️ %s se desconecto. Modo Solo activo." % rival_name, 5.0)
 
-	# 🟡 Notificación global (5s, manejado por tu autoload Notifications)
-	MatchNotificationss.show_notification("⚠️ %s se desconectó. Volviendo a solo." % rival_name,5.0)
-
-	# 🧹 Limpiar estado de match y apagar red
-	if Network:
-		# Limpia matchId, contador de muertes, etc.
-		Network.reset_match_state()
-		# Cierra completamente el WebSocket -> adiós pings y jugador "fantasma"
-		Network.apagar()
-
-	# 🔻 Bajar a modo singleplayer dentro del mismo nivel
+	# Esta función se encarga de todo el "downgrade"
 	_downgrade_to_singleplayer()
 
 
+# En level_manager.gd
+
 func _downgrade_to_singleplayer() -> void:
-	print("🔻 Cambiando a modo single-player (match terminado)")
+	print("🔻 EJECUTANDO DOWNGRADE A SINGLE-PLAYER")
+	
 	if Network:
+		# 1. Limpiamos datos del match
 		Network.reset_match_state()
+		Network.clear_opponent_context() # Asegúrate de tener esto o limpia variables manual
+		
+		# 2. Cerramos conexión para evitar recibir más datos fantasmas
+		# (Opcional: si quieres seguir online para chat, quita el apagar(), 
+		# pero para volver a jugar solo es más seguro apagar).
+		Network.apagar()
 
+	# 3. Forzamos actualización de la variable local (aunque uses la función helper)
+	# Si tienes una variable 'is_multiplayer' cacheada, ponla en false:
+	if "is_multiplayer" in self:
+		self.set("is_multiplayer", false)
+
+	# 4. Actualizar UI (Esconder contador de muertes de MP)
 	_update_death_counter_ui()
-
+	
+	# 5. Opcional: Reiniciar el nivel actual si quieres un estado limpio
+	# request_restart_level()
 	
 func _notify_match_ended() -> void:
-	print("ℹ️ Match finalizado por servidor → pasar a soloplayer y cerrar conexión.")
+	print("ℹ️ Match finalizado por servidor (game-ended).")
 
-	var txt := "Partida terminada"
 	if Engine.has_singleton("MatchNotificationss"):
-		MatchNotificationss.show_notification(txt, 5.0)
-		
+		MatchNotificationss.show_notification("Partida finalizada. Modo Solo activo.", 5.0)
 
-	# 2) Cerrar conexión WebSocket para liberar la instancia en el servidor
-	if Network:
-		if Network.has_method("reset_match_state"):
-			Network.reset_match_state()
-		if Network.has_method("apagar"):
-			Network.apagar()
+	# ✅ IMPORTANTE: Aquí también debemos hacer downgrade para limpiar la UI
+	_downgrade_to_singleplayer()
 
-	# 3) Notificación visual durante 5s (ya manejado por el autoload)
 
 # =========================================================
 # ===================== RULETA API ========================

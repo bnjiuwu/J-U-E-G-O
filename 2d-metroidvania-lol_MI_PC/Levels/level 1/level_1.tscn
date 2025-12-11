@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://d3evjk846bf1b" path="res://Assets/Scenes/Enemies Scene/Slime scene/slime.tscn" id="2_3mhv4"]
 [ext_resource type="Script" uid="uid://cr4b4an4vhhvv" path="res://Levels/level 1/world_audio_manager.gd" id="2_vumwe"]
 [ext_resource type="Texture2D" uid="uid://caqfa7afng3wv" path="res://Assets/images/Tile Maps/overworld/Tiles/Assets/Assets.png" id="3_3mhv4"]
-[ext_resource type="AudioStream" uid="uid://lulx6fiw1t4n" path="res://Assets/Audios/Background_music/William Rosati - Floating Also  NO COPYRIGHT 8-bit Music.mp3" id="3_s6fi1"]
+[ext_resource type="AudioStream" uid="uid://lulx6fiw1t4n" path="res://Assets/AUDIOS/Background_music/William Rosati - Floating Also  NO COPYRIGHT 8-bit Music.mp3" id="3_s6fi1"]
 [ext_resource type="PackedScene" uid="uid://bjxvrrouvo5u3" path="res://Assets/Scenes/Map Borders/MapBorders_level1.tscn" id="5_gk84l"]
 [ext_resource type="Texture2D" uid="uid://cthieo60smtmm" path="res://Assets/images/Tile Maps/cave/background1.png" id="6_i6ka7"]
 [ext_resource type="Texture2D" uid="uid://dkwxdyofenfpa" path="res://Assets/images/Tile Maps/cave/background2.png" id="7_ib2b2"]
@@ -11510,7 +11510,7 @@ position = Vector2(157, -77)
 mondongo = NodePath("../player")
 
 [node name="player" parent="." instance=ExtResource("1_n0qsc")]
-position = Vector2(-126, 31)
+position = Vector2(-629, -6179)
 
 [node name="Camera2D" type="Camera2D" parent="player"]
 position = Vector2(-2, 0)
@@ -11872,10 +11872,19 @@ position = Vector2(-222, -6552)
 [node name="HealthPack19" parent="Map Interactives/health packs" instance=ExtResource("26_s6fi1")]
 position = Vector2(1075, -6577)
 
-[node name="Node2D" type="Node2D" parent="."]
+[node name="Cajas" type="Node2D" parent="."]
 
-[node name="MapItem" parent="Node2D" instance=ExtResource("24_s6fi1")]
+[node name="MapItem" parent="Cajas" instance=ExtResource("24_s6fi1")]
 position = Vector2(-434, -37)
+
+[node name="MapItem2" parent="Cajas" instance=ExtResource("24_s6fi1")]
+position = Vector2(1010, -2710)
+
+[node name="MapItem3" parent="Cajas" instance=ExtResource("24_s6fi1")]
+position = Vector2(1073, -474)
+
+[node name="MapItem4" parent="Cajas" instance=ExtResource("24_s6fi1")]
+position = Vector2(117, -3391)
 
 [node name="MiniMap" parent="." instance=ExtResource("26_vumwe")]
 

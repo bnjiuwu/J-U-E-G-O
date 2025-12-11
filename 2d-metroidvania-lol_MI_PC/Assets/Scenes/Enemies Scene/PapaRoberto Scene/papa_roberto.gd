@@ -36,7 +36,6 @@ func _ready() -> void:
 	setup_detection_area()
 	setup_attack_area()
 	_update_health_ui()
-	print("👑 Padre Roberto listo con", health, "HP")
 
 func _physics_process(delta):
 	_wall_flip_timer = max(_wall_flip_timer - delta, 0.0)
@@ -113,12 +112,12 @@ func idle_behavior():
 
 		if direction == 0:
 			velocity.x = 0
-			print("🧘 Papa Roberto se queda quieto")
+
 		else:
 			velocity.x = direction * move_speed
 			is_facing_right = direction > 0
 			animated_sprite.flip_h = not is_facing_right
-			print("🚶 Papa Roberto camina en dirección:", direction)
+
 
 		timer.start(randf_range(1.5, 3.0))
 
@@ -148,7 +147,7 @@ func attack_player():
 	attack_timer = attack_cooldown
 	velocity.x = 0
 
-	print("👑 Papa Roberto se prepara para insultar...")
+
 	await get_tree().create_timer(0.3).timeout
 
 	launch_insult()
@@ -165,7 +164,7 @@ func launch_insult():
 	var direction_to_player = (player.global_position - global_position).normalized()
 	insult.direction = direction_to_player
 	get_tree().current_scene.add_child(insult)
-	print("📢 ¡Papa Roberto lanzó un insulto!")
+
 
 # --- Animaciones ---
 func update_animation():
@@ -202,7 +201,7 @@ func die():
 		return
 
 	is_dead = true
-	print("💀 Papa Roberto ha muerto")
+
 	
 	# Desactivamos colisiones para que no siga molestando
 	$CollisionShape2D.set_deferred("disabled", true)
@@ -229,11 +228,11 @@ func die():
 func _on_player_detected(body):
 	if body.is_in_group("player"):
 		player = body
-		print("🎯 Jugador detectado")
+
 
 func _on_player_lost(body):
 	if body == player:
-		print("❌ Jugador perdido")
+
 		player = null
 
 func _on_attack_range_entered(body):
@@ -250,7 +249,7 @@ func _on_hitbox_area_entered(area: Area2D):
 	if area.is_in_group("Skills"):
 		if area is PlayerProjectile:
 			return
-		print("💥 Mago recibió impacto de bala")
+
 		take_damage(area.damage)
 		area.queue_free()
 

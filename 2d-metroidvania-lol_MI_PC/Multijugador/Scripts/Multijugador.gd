@@ -355,7 +355,7 @@ func _on_mensaje_recibido(msg: String):
 		"match-rejected":
 			print("❌ Tu solicitud de partida fue rechazada.")
 			if Engine.has_singleton("MatchNotificationss"):
-				MatchNotificationss.show_notification("El jugador rechazó tu solicitud.", 4.0)
+				MatchNotificationss.show_notification("El jugador rechazo tu solicitud.", 4.0)
 			match_id = ""
 			
 		"match-canceled-by-sender":
@@ -366,7 +366,7 @@ func _on_mensaje_recibido(msg: String):
 			_actualizar_lista_invitaciones()
 			_update_invite_badge()
 			if Engine.has_singleton("MatchNotificationss"):
-				MatchNotificationss.show_notification("La invitación fue cancelada por el otro jugador.", 4.0)
+				MatchNotificationss.show_notification("La invitacion fue cancelada por el otro jugador.", 4.0)
 
 			
 		"connect-match":
@@ -419,7 +419,7 @@ func _on_mensaje_recibido(msg: String):
 
 			Network.matchId = match_id
 
-			# ✅ RESETEO CORRECTO AL INICIAR PARTIDA
+				# ✅ RESETEO CORRECTO AL INICIAR PARTIDA
 			Network.reset_death_counter()
 
 			print("✅ Network.matchId seteado:", Network.matchId)
@@ -428,18 +428,27 @@ func _on_mensaje_recibido(msg: String):
 			var rival_name := ""
 			var rival_game := ""
 
+				# --- 🛠️ CORRECCIÓN AQUÍ ---
+				# Buscamos al rival en la lista de jugadores y GUARDAMOS SU ID
 			for pid in jugadores.keys():
 				var j = jugadores[pid]
 				var n := str(j.get("name", ""))
+					
+					# Si el nombre está en el match y no soy yo, es el rival
 				if jugadores_del_match.has(n) and n != my_name:
 					rival_name = n
 					rival_game = str(j.get("game_name", "Juego NO REPORTADO"))
+					
+					# ✅ IMPORTANTE: Guardamos el ID en Network
+					Network.opponent_id = str(pid)
+					print("🎯 [DEBUG] ID Rival guardado explícitamente: ", Network.opponent_id)
 					break
+				# ---------------------------
 
 			Network.opponent_name = rival_name
 			Network.opponent_game_name = rival_game
 			Network.my_game_name = MY_GAME_NAME
-
+			
 			_cache_opponent_info_for_gameplay()
 			await get_tree().process_frame
 			get_tree().change_scene_to_file("res://Levels/LEVEL MANAGER/level_manager.tscn")
@@ -475,7 +484,7 @@ func _on_mensaje_recibido(msg: String):
 
 			# Notificación global (si estás todavía en alguna escena con el autoload activo)
 			if Engine.has_singleton("MatchNotificationss"):
-				MatchNotificationss.show_notification("La partida terminó (quit-match).", 5.0)
+				MatchNotificationss.show_notification("La partida termino (quit-match).", 5.0)
 
 			# Cortar estado de match y WebSocket
 			if Network:
@@ -653,7 +662,7 @@ func _abrir_lobby():
 			btn_estado.disabled = false
 
 			btn_estado.pressed.connect(func():
-				btn_estado.text = "⏳ Esperando confirmación..."
+				btn_estado.text = "⏳ Esperando confirmacion..."
 				print("🟢 Enviando ping-match...")
 
 				_enviar({
@@ -691,7 +700,7 @@ func _eliminar_rival_de_lobby_por_nombre(rival_name: String):
 				sub.disabled = true
 				sub.text = "⏳ Rival desconectado"
 
-	label.text = "El rival abandonó la sala"
+	label.text = "El rival abandono la sala"
 
 
 func _actualizar_ready_ui_de(jugador_ready: String, listo: bool):
