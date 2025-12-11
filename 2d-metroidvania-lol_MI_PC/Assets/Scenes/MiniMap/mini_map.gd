@@ -38,16 +38,3 @@ func _set_minimap_limits(used_rect:Rect2i) -> void:
 	minimap_camera.limit_bottom = (used_rect.position.y + used_rect.size.y) * 16
 	
 	pass
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
