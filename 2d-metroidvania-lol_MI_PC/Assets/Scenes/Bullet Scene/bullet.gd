@@ -5,6 +5,7 @@ class_name Bullet
 
 var start_position: Vector2
 var has_hit := false
+@onready var hit_sfx: AudioStreamPlayer2D = $HitSfx if has_node("HitSfx") else null
 
 func _ready() -> void:
 	start_position = global_position
@@ -39,6 +40,7 @@ func _on_body_entered(body: Node) -> void:
 		return
 
 	if body.is_in_group("enemy") and apply_damage(body):
+		_play_enemy_hit_sfx()
 		impact_effect()
 
 func _on_area_entered(area: Area2D) -> void:
@@ -47,6 +49,7 @@ func _on_area_entered(area: Area2D) -> void:
 
 	# Si el hitbox pertenece a enemigo, igual funcionará
 	if area.is_in_group("enemy") and apply_damage(area):
+		_play_enemy_hit_sfx()
 		impact_effect()
 
 func impact_effect() -> void:
@@ -60,4 +63,14 @@ func impact_effect() -> void:
 		await get_tree().process_frame
 		await sprite.animation_finished
 
+	var wait_audio := hit_sfx and hit_sfx.playing
+	if wait_audio:
+		await hit_sfx.finished
+
 	queue_free()
+
+func _play_enemy_hit_sfx() -> void:
+	if hit_sfx == null:
+		return
+	hit_sfx.stop()
+	hit_sfx.play()

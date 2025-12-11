@@ -1,8 +1,9 @@
-[gd_scene load_steps=18 format=3 uid="uid://bfjsyuqkbr65o"]
+[gd_scene load_steps=19 format=3 uid="uid://bfjsyuqkbr65o"]
 
 [ext_resource type="Texture2D" uid="uid://cnf2n3ev2g2g" path="res://Assets/sprites/objects type shi/bullet/bullet.png" id="1_dy3qj"]
 [ext_resource type="Script" uid="uid://vofbt7m1bla6" path="res://Assets/Scenes/Bullet Scene/bullet.gd" id="1_p470f"]
 [ext_resource type="Texture2D" uid="uid://cy7osonxmx84f" path="res://Assets/sprites/objects type shi/bullet/spritesheet.png" id="2_apk1h"]
+[ext_resource type="AudioStream" uid="uid://bt8cv7jny4372" path="res://Assets/Audios/Game_Audios/retro-hurt-2-236675.mp3" id="3_xqs96"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_d37u8"]
 atlas = ExtResource("2_apk1h")
@@ -122,6 +123,13 @@ position = Vector2(1.04688, -8.76188e-06)
 rotation = 1.5708
 shape = SubResource("RectangleShape2D_p470f")
 debug_color = Color(0.662745, 0, 0.180392, 0.298039)
+
+[node name="HitSfx" type="AudioStreamPlayer2D" parent="."]
+process_mode = 3
+stream = ExtResource("3_xqs96")
+bus = "SFX"
+max_distance = 1500.0
+volume_db = -3.0
 
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
