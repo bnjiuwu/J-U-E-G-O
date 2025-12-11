@@ -354,6 +354,10 @@ func _on_player_died() -> void:
 	if _cargando:
 		return
 
+	var death_menu := _get_level_death_menu()
+	if is_instance_valid(death_menu):
+		return  # el nivel muestra su propio menú de muerte
+
 	# reinicio seguro fuera del frame actual
 	call_deferred("_reiniciar_nivel")
 
@@ -368,6 +372,21 @@ func _force_cleanup_roulette() -> void:
 	if is_instance_valid(_roulette_instance):
 		_roulette_instance.queue_free()
 		_roulette_instance = null
+
+func _get_level_death_menu() -> CanvasLayer:
+	if not is_instance_valid(_nivel_instanciado):
+		return null
+
+	var candidate = null
+	if "death_menu" in _nivel_instanciado:
+		candidate = _nivel_instanciado.death_menu
+		if candidate is NodePath:
+			candidate = _nivel_instanciado.get_node_or_null(candidate)
+
+	if candidate == null and _nivel_instanciado.has_node("DeathMenu"):
+		candidate = _nivel_instanciado.get_node("DeathMenu")
+
+	return candidate if (candidate is CanvasLayer and is_instance_valid(candidate)) else null
 func trigger_roulette(tipo: String = "", dmg: int = 0, use_countdown: bool = false) -> void:
 	# buscar player
 	var player := get_tree().get_first_node_in_group("player")
