@@ -25,7 +25,7 @@ func _process(delta: float) -> void:
 		player_marker.global_position = player_node.global_position
 	pass
 
-func _setup_minimap(minimap_tilemap: TileMapLayer) -> void:
+func _setup_minimap(minimap_tilemap: TileMap) -> void:
 	sub_viewport.add_child(minimap_tilemap)
 	
 	pass
