@@ -213,18 +213,18 @@ target_position = Vector2(0, -25)
 
 [node name="HealthBar" type="ProgressBar" parent="."]
 offset_left = -42.0
-offset_top = -93.0
+offset_top = -26.0
 offset_right = 43.0
-offset_bottom = -85.0
+offset_bottom = -18.0
 theme_override_styles/fill = SubResource("StyleBoxFlat_e58xu")
 value = 100.0
 show_percentage = false
 
 [node name="HealthBarNumber" type="Label" parent="."]
-offset_left = -21.0
-offset_top = -123.0
-offset_right = 19.0
-offset_bottom = -100.0
+offset_left = -20.0
+offset_top = -50.0
+offset_right = 20.0
+offset_bottom = -27.0
 
 [connection signal="body_entered" from="DetectionZone" to="." method="_on_DetectionArea_body_entered"]
 [connection signal="body_exited" from="DetectionZone" to="." method="_on_DetectionArea_body_exited"]
