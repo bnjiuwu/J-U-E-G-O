@@ -1,0 +1,80 @@
+[gd_scene load_steps=11 format=3 uid="uid://83m2530cc642"]
+
+[ext_resource type="Script" uid="uid://bmthuigwolrux" path="res://Assets/Scenes/Enemies Scene/Cursed Scroll/cursed_ink_shot.gd" id="1_1b4sx"]
+[ext_resource type="Texture2D" uid="uid://sm4puwlrnk1u" path="res://Assets/sprites/enemies/cursed Scroll/cursed Scroll disparo.png" id="2_1pg51"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8ijci"]
+atlas = ExtResource("2_1pg51")
+region = Rect2(0, 184, 225, 184)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xpdbw"]
+atlas = ExtResource("2_1pg51")
+region = Rect2(225, 184, 225, 184)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_o6iek"]
+atlas = ExtResource("2_1pg51")
+region = Rect2(450, 184, 225, 184)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tx6nq"]
+atlas = ExtResource("2_1pg51")
+region = Rect2(0, 0, 225, 184)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tx8m0"]
+atlas = ExtResource("2_1pg51")
+region = Rect2(225, 0, 225, 184)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0qf2q"]
+atlas = ExtResource("2_1pg51")
+region = Rect2(450, 0, 225, 184)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_qkr62"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8ijci")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xpdbw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_o6iek")
+}],
+"loop": false,
+"name": &"contact",
+"speed": 7.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tx6nq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tx8m0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0qf2q")
+}],
+"loop": false,
+"name": &"default",
+"speed": 7.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_1k0o0"]
+radius = 12.0
+
+[node name="CursedInkShot" type="Area2D" groups=["enemy_projectile", "projectile"]]
+collision_layer = 16
+collision_mask = 3
+script = ExtResource("1_1b4sx")
+speed = 340.0
+damage = 22
+lifetime = 2.4
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(-3.0000005, 4)
+scale = Vector2(0.19666667, 0.25815216)
+sprite_frames = SubResource("SpriteFrames_qkr62")
+frame = 2
+frame_progress = 1.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_1k0o0")

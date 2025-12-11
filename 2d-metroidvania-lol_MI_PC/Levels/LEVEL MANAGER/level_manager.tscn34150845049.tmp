@@ -1,0 +1,61 @@
+[gd_scene load_steps=8 format=3 uid="uid://b3cdnplemw2yg"]
+
+[ext_resource type="Script" uid="uid://bci4psncwsqgq" path="res://Levels/LEVEL MANAGER/level_manager.gd" id="1_a0lk0"]
+[ext_resource type="PackedScene" uid="uid://c6n7qrlau6b0k" path="res://Levels/level 1/level_1.tscn" id="2_kycgd"]
+[ext_resource type="PackedScene" uid="uid://bxrtd5wmuxd7f" path="res://Levels/level 2/level_2.tscn" id="3_4yax6"]
+[ext_resource type="FontFile" uid="uid://dhhjcp1rxp6gj" path="res://Assets/Fonts/minecraft_font.ttf" id="4_n1ogb"]
+[ext_resource type="Script" uid="uid://nanomq0jj6vq" path="res://Levels/LEVEL MANAGER/control.gd" id="4_n85ch"]
+[ext_resource type="Texture2D" uid="uid://fsin2keclnao" path="res://Assets/sprites/objects type shi/memorial.png" id="5_n85ch"]
+[ext_resource type="PackedScene" uid="uid://bgj1kec0hcvbb" path="res://Assets/Scenes/EVENT ROULETTE/Roulette.tscn" id="7_mr4tj"]
+
+[node name="LevelManager" type="Node2D"]
+script = ExtResource("1_a0lk0")
+niveles = Array[PackedScene]([ExtResource("2_kycgd"), ExtResource("3_4yax6")])
+roulette_scene = ExtResource("7_mr4tj")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="AttackNotice" type="Label" parent="CanvasLayer"]
+offset_left = 451.0
+offset_top = 118.0
+offset_right = 491.0
+offset_bottom = 141.0
+theme_override_fonts/font = ExtResource("4_n1ogb")
+
+[node name="RouletteLayer" type="Node2D" parent="CanvasLayer"]
+
+[node name="LoadingScreen" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("4_n85ch")
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer/LoadingScreen"]
+layout_mode = 0
+offset_right = 960.0
+offset_bottom = 480.0
+color = Color(0.13682577, 0.13682574, 0.13682571, 1)
+
+[node name="ProgressBar" type="ProgressBar" parent="CanvasLayer/LoadingScreen"]
+layout_mode = 1
+offset_left = 127.0
+offset_top = 403.0
+offset_right = 826.0
+offset_bottom = 450.0
+theme_override_fonts/font = ExtResource("4_n1ogb")
+
+[node name="Memorial" type="Sprite2D" parent="CanvasLayer/LoadingScreen"]
+position = Vector2(476.45718, 170.875)
+scale = Vector2(0.383279, 0.27986112)
+texture = ExtResource("5_n85ch")
+
+[node name="Label" type="Label" parent="CanvasLayer/LoadingScreen"]
+layout_mode = 0
+offset_left = 91.0
+offset_top = 353.0
+offset_right = 875.0
+offset_bottom = 389.0
+theme_override_fonts/font = ExtResource("4_n1ogb")
+theme_override_font_sizes/font_size = 28
+text = "UN MEMORIAL A LA SERIE DE ROBERTO MANFINFLA"

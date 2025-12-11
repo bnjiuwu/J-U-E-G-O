@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://dx7r64gixxe7v"]
+
+[ext_resource type="Script" uid="uid://mlymrakxu08s" path="res://Assets/Scenes/UI/match_notifications.gd" id="1_4lr5t"]
+[ext_resource type="FontFile" uid="uid://dhhjcp1rxp6gj" path="res://Assets/Fonts/minecraft_font.ttf" id="1_v8hh3"]
+
+[node name="CanvasLayer" type="CanvasLayer"]
+script = ExtResource("1_4lr5t")
+
+[node name="Label" type="Label" parent="." groups=["match_notification_ui"]]
+offset_left = 270.0
+offset_top = 116.0
+offset_right = 651.0
+offset_bottom = 221.0
+theme_override_fonts/font = ExtResource("1_v8hh3")
+horizontal_alignment = 1
+autowrap_mode = 3

@@ -1,0 +1,66 @@
+[gd_scene load_steps=10 format=3 uid="uid://c5rhhi5dbb2e8"]
+
+[ext_resource type="Script" uid="uid://bnhlaqbsi8rxt" path="res://Assets/Scenes/Flambo/MiniFlambo/mini_flambo.gd" id="1_fx4er"]
+[ext_resource type="Texture2D" uid="uid://bqn57k4iq3sxg" path="res://Assets/sprites/Flambo/MiniFlambo/MiniFlambo-removebg-preview (1).png" id="2_b1qkc"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kcl8l"]
+atlas = ExtResource("2_b1qkc")
+region = Rect2(0, 0, 140, 166)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_il5ke"]
+atlas = ExtResource("2_b1qkc")
+region = Rect2(140, 0, 140, 166)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_p6u8w"]
+atlas = ExtResource("2_b1qkc")
+region = Rect2(268, 3, 232, 174)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e6pp5"]
+atlas = ExtResource("2_b1qkc")
+region = Rect2(0, 164, 500, 164)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xktdo"]
+atlas = ExtResource("2_b1qkc")
+region = Rect2(0, 328, 500, 164)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_vuuq5"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kcl8l")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_il5ke")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_p6u8w")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_e6pp5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xktdo")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_bf5is"]
+radius = 12.0415945
+
+[node name="MiniFlambo" type="Area2D" groups=["projectile"]]
+collision_layer = 8
+collision_mask = 16
+script = ExtResource("1_fx4er")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(-44, -4)
+scale = Vector2(0.24, 0.25609756)
+sprite_frames = SubResource("SpriteFrames_vuuq5")
+frame_progress = 0.9411327
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_bf5is")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]

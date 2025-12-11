@@ -1,0 +1,66 @@
+[gd_scene load_steps=6 format=3 uid="uid://bu5ef6314c7ik"]
+
+[ext_resource type="Script" uid="uid://cwj5nl4qyktps" path="res://Assets/Scenes/Menu/PauseMenu/pause_menu.gd" id="1_o2l1m"]
+[ext_resource type="PackedScene" uid="uid://bklv4hrgtjjcc" path="res://Assets/Scenes/Menu/opciones/options.tscn" id="2_culc7"]
+[ext_resource type="Texture2D" uid="uid://c3i56v4uby2j7" path="res://Assets/images/menus/PAUSED/waiting.png" id="2_lcq84"]
+[ext_resource type="FontFile" uid="uid://cntibmnp43iod" path="res://Assets/Fonts/Brotheric Regular Demo.otf" id="3_culc7"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_kbmxk"]
+font = ExtResource("3_culc7")
+font_size = 50
+
+[node name="PauseMenu" type="CanvasLayer"]
+process_mode = 3
+script = ExtResource("1_o2l1m")
+options = ExtResource("2_culc7")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.47843137, 0.47843137, 0.47843137, 0.94509804)
+
+[node name="TextureRect" type="TextureRect" parent="ColorRect"]
+modulate = Color(1, 1, 1, 0.33333334)
+layout_mode = 0
+offset_right = 960.0
+offset_bottom = 480.0
+texture = ExtResource("2_lcq84")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -120.5
+offset_top = -64.0
+offset_right = 120.5
+offset_bottom = 64.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+
+[node name="Label" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "PAUSED"
+label_settings = SubResource("LabelSettings_kbmxk")
+horizontal_alignment = 1
+
+[node name="reanudar" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "🗣REANUDAR"
+
+[node name="reiniciar" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "😭REINICIAR"
+
+[node name="salir_a_menu" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "🥶SALIR A MENU"
+
+[connection signal="pressed" from="VBoxContainer/reanudar" to="." method="_on_resume_pressed"]
+[connection signal="pressed" from="VBoxContainer/reiniciar" to="." method="_on_restart_pressed"]
+[connection signal="pressed" from="VBoxContainer/salir_a_menu" to="." method="_on_quit_pressed"]

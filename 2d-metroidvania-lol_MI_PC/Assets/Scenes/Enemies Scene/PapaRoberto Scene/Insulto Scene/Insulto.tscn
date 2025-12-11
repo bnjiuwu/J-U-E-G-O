@@ -1,0 +1,47 @@
+[gd_scene load_steps=5 format=3 uid="uid://mh33218besl7"]
+
+[ext_resource type="Script" uid="uid://brvsfr8jpe2j0" path="res://Assets/Scenes/Enemies Scene/PapaRoberto Scene/Insulto Scene/insulto.gd" id="1_qt0ti"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qt0ti"]
+size = Vector2(64, 18)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qt0ti"]
+bg_color = Color(0.7778729, 0.5516501, 0.17184411, 0.68)
+
+[sub_resource type="LabelSettings" id="LabelSettings_qt0ti"]
+font_size = 13
+font_color = Color(1, 0, 0, 1)
+
+[node name="Insulto" type="Area2D" groups=["enemy proyectile"]]
+collision_layer = 32
+collision_mask = 3
+script = ExtResource("1_qt0ti")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_qt0ti")
+
+[node name="InsultBubble" type="NinePatchRect" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -32.0
+offset_top = -9.0
+offset_right = 32.0
+offset_bottom = 9.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="InsultBubble"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme_override_colors/font_color = Color(1, 0, 0, 1)
+theme_override_styles/normal = SubResource("StyleBoxFlat_qt0ti")
+text = "¡INSULTO!"
+label_settings = SubResource("LabelSettings_qt0ti")
+horizontal_alignment = 1
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

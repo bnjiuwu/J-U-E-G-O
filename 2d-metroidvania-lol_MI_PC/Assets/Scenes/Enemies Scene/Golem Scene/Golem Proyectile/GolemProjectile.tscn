@@ -1,0 +1,96 @@
+[gd_scene load_steps=14 format=3 uid="uid://c6s0b7bi7l7yl"]
+
+[ext_resource type="Script" uid="uid://dsr1o106q6nq" path="res://Assets/Scenes/Enemies Scene/Golem Scene/Golem Proyectile/golem_projectile.gd" id="1_mht63"]
+[ext_resource type="Texture2D" uid="uid://h6fohr0v4f0p" path="res://Assets/sprites/enemies/Golem/Golem_Proyectile_Sprites/contact golem_proyectile.png" id="2_r6b6r"]
+[ext_resource type="Texture2D" uid="uid://bmqbj3cggfnhl" path="res://Assets/sprites/enemies/Golem/Golem_Proyectile_Sprites/default golem_proyectile.png" id="3_77t2t"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fbpdh"]
+atlas = ExtResource("2_r6b6r")
+region = Rect2(0, 0, 165, 166)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8jjmx"]
+atlas = ExtResource("2_r6b6r")
+region = Rect2(165, 0, 165, 166)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ubt0b"]
+atlas = ExtResource("2_r6b6r")
+region = Rect2(330, 0, 165, 166)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gencs"]
+atlas = ExtResource("2_r6b6r")
+region = Rect2(330, 332, 165, 166)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rg5n5"]
+atlas = ExtResource("3_77t2t")
+region = Rect2(502, 257, 251, 257)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vcs3o"]
+atlas = ExtResource("3_77t2t")
+region = Rect2(502, 514, 251, 257)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6wu4v"]
+atlas = ExtResource("3_77t2t")
+region = Rect2(753, 514, 251, 257)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jr6i7"]
+atlas = ExtResource("3_77t2t")
+region = Rect2(753, 257, 251, 257)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ag5am"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fbpdh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8jjmx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ubt0b")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gencs")
+}],
+"loop": false,
+"name": &"contact",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rg5n5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vcs3o")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6wu4v")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jr6i7")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_xill4"]
+radius = 32.01562
+
+[node name="GolemProjectile" type="Area2D" groups=["enemy proyectile"]]
+collision_layer = 32
+collision_mask = 3
+script = ExtResource("1_mht63")
+speed = 260.0
+damage = 55
+lifetime = 5.0
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(1.0000038, -5)
+scale = Vector2(0.22390434, 0.20680934)
+sprite_frames = SubResource("SpriteFrames_ag5am")
+animation = &"contact"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+position = Vector2(3, -2)
+shape = SubResource("CircleShape2D_xill4")
