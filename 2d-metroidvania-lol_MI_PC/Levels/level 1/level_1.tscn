@@ -1,6 +1,6 @@
 [gd_scene load_steps=45 format=4 uid="uid://c6n7qrlau6b0k"]
 
-[ext_resource type="PackedScene" uid="uid://braj8a8ooxs4t" path="res://Levels/level Golem/player.tscn" id="1_n0qsc"]
+[ext_resource type="PackedScene" uid="uid://braj8a8ooxs4t" path="res://Levels/level 2/player.tscn" id="1_n0qsc"]
 [ext_resource type="Script" uid="uid://by4hegpiwf1wp" path="res://Levels/level 1/level_1.gd" id="1_r7d4j"]
 [ext_resource type="PackedScene" uid="uid://d3evjk846bf1b" path="res://Assets/Scenes/Enemies Scene/Slime scene/slime.tscn" id="2_3mhv4"]
 [ext_resource type="Script" uid="uid://cr4b4an4vhhvv" path="res://Levels/level 1/world_audio_manager.gd" id="2_vumwe"]
