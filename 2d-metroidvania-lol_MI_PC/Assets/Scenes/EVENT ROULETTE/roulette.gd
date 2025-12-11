@@ -69,6 +69,7 @@ func start_spin():
 	if rainbow_panel:
 		rainbow_panel.visible = true
 	_play_spin_sfx()
+	GlobalsSignals.background_music_pause_requested.emit()
 
 func _ready() -> void:
 	indicator.position = get_local_view_center()
@@ -188,6 +189,7 @@ func _on_CloseButton_pressed() -> void:
 	_stop_spin_sfx()
 	if result_sfx and result_sfx.playing:
 		result_sfx.stop()
+	GlobalsSignals.background_music_resume_requested.emit()
 	queue_free()
 	
 func _get_item_sprite(node: Node) -> Sprite2D:

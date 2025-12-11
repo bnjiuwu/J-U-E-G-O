@@ -47,6 +47,7 @@ func show_death(message: String = "Has muerto") -> void:
 		retry_btn.grab_focus()
 
 	_play_menu_music()
+	GlobalsSignals.background_music_pause_requested.emit()
 
 func _notify_close_if_needed() -> void:
 	if not _is_multiplayer_now():
@@ -74,16 +75,19 @@ func _on_retry() -> void:
 	if _multi_context:
 		return
 	get_tree().paused = false
+	GlobalsSignals.background_music_resume_requested.emit()
 	get_tree().reload_current_scene()
 
 func _on_main_menu() -> void:
 	_notify_close_if_needed()
 	get_tree().paused = false
+	GlobalsSignals.background_music_resume_requested.emit()
 	get_tree().change_scene_to_file(main_menu_scene)
 
 func _on_quit() -> void:
 	_notify_close_if_needed()
 	get_tree().paused = false
+	GlobalsSignals.background_music_resume_requested.emit()
 	get_tree().quit()
 
 
