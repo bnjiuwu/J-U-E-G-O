@@ -1265,6 +1265,7 @@ layer_0/tile_data = PackedInt32Array(-458791, 4, 1, -393255, 4, 2, -327719, 4, 3
 position = Vector2(0, -2)
 zoom = Vector2(1.5, 1.5)
 limit_left = -2000
+limit_top = -1037
 limit_right = 2000
 limit_bottom = 58
 limit_smoothed = true
