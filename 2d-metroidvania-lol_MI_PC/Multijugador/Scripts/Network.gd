@@ -14,9 +14,44 @@ var player_name := ""
 var game_id := ""
 var game_key := ""
 var my_id := ""
+# ====== CONTEXTO DEL RIVAL (para UI in-game) ======
+var opponent_id: String = ""
+var opponent_name: String = ""
+var opponent_game_name: String = ""
+var my_game_name: String = ""
+
+func leave_match(reason: String = "user_exit") -> void:
+	if matchId != "":
+		# 1) Avisar al rival (ruta estándar que ya manejas)
+		send_game_payload({"close": true, "reason": reason})
+
+		# 2) Pedir al servidor cerrar la instancia del match
+		_enviar({
+			"event": "finish-game",
+			"data": {"matchId": matchId}
+		})
+
+	reset_match_state()
+	opponent_name = ""
+	opponent_game_name = ""
+
+func set_opponent_context(id: String, name: String, game_name: String = "") -> void:
+	opponent_id = id
+	opponent_name = name
+	opponent_game_name = game_name
+
+func clear_opponent_context() -> void:
+	opponent_id = ""
+	opponent_name = ""
+	opponent_game_name = ""
+
+# ====== NUEVO: MUERTES MULTI ======
+var death_count: int = 0
+var death_limit: int = 5
 
 signal mensaje_recibido(msg)
 signal conectado_servidor()
+signal local_defeat(deaths: int)
 
 func iniciar(nombre, gameId, gameKey):
 	player_name = str(nombre)
@@ -112,13 +147,27 @@ func apagar():
 	ws = WebSocketPeer.new()
 # ✅ API pública para enviar payload de partida (ataques, etc.)
 
+
+
+func reset_match_state() -> void:
+	matchId = ""
+	death_count = 0
+	clear_opponent_context()
+
+func reset_death_counter() -> void:
+	death_count = 0
+
+# ya tienes:
+# var matchId := ""
+# signal mensaje_recibido(msg)
+
 func send_game_payload(payload: Dictionary) -> void:
-	if payload == null:
+	if not conectado:
+		print("⚠️ [NETWORK] No conectado, no envío payload.")
 		return
 
-	# Debe existir un match activo
-	if str(matchId) == "":
-		print("⚠️ [NETWORK] No hay matchId activo, no envío payload:", payload)
+	if matchId == "":
+		print("⚠️ [NETWORK] matchId vacío, no envío payload:", payload)
 		return
 
 	_enviar({

@@ -27,45 +27,66 @@ var _level_complete_triggered: bool = false
 
 
 
+
+
+
 func _physics_process(delta: float) -> void:
 	
 	
 	pass
 func _ready():
-	# --- DEBUG + FORZAR SIN LOOP ---
+	# --- tu bloque fade intacto ---
 	var fade_anim: Animation = animation_player.get_animation("fade")
 	if fade_anim:
-		fade_anim.loop_mode = Animation.LOOP_NONE   # 👈 forzamos sin loop
-		print("FADE loop_mode =", fade_anim.loop_mode)  # debería ser 0 (LOOP_NONE)
-
-	# Conectar señal para saber cuándo termina
+		fade_anim.loop_mode = Animation.LOOP_NONE
 	if not animation_player.animation_finished.is_connected(_on_animation_finished):
 		animation_player.animation_finished.connect(_on_animation_finished)
-
-	# Reproducir SOLO aquí
 	animation_player.play("fade")
 
 	boss_walls.visible = false
 	boss_walls.collision_enabled = false
 
+	# ================================
+	#  MENÚS: preferir LevelManager
+	# ================================
+	var manager := _find_level_manager()
+
+	if manager:
+		if pause_menu == null and manager.has_method("get_pause_menu"):
+			pause_menu = manager.get_pause_menu()
+		if death_menu == null and manager.has_method("get_death_menu"):
+			death_menu = manager.get_death_menu()
+
+	# fallback por grupo si no hay manager
+	if pause_menu == null:
+		pause_menu = get_tree().get_first_node_in_group("pause_menu")
+	if death_menu == null:
+		death_menu = get_tree().get_first_node_in_group("death_menu")
+
+	# conectar muerte del jugador
 	if player and death_menu:
-		player.died.connect(_on_player_died)
+		if not player.died.is_connected(_on_player_died):
+			player.died.connect(_on_player_died)
 		print("✅ Death menu conectado correctamente al jugador")
 	else:
 		print("❌ Error: No se encontró el player o el death menu")
 
 	print("🟩 level_1 listo")
-	touch_controls.pause_pressed.connect(_on_pause_button_pressed)
+
+	# pausa desde controles móviles
+	if touch_controls and not touch_controls.pause_pressed.is_connected(_on_pause_button_pressed):
+		touch_controls.pause_pressed.connect(_on_pause_button_pressed)
+
 	if boss_node.is_empty():
 		boss_node = DEFAULT_BOSS_PATH
 	_connect_boss_signals()
+
 	if victory_label:
 		victory_label.visible = false
-	
+
 	if mini_map and player:
 		mini_map.player_node = player
-		pass
-	
+
 
 func _connect_boss_signals() -> void:
 	var boss := get_node_or_null(boss_node) if not boss_node.is_empty() else null
@@ -93,7 +114,16 @@ func _handle_level_completion() -> void:
 	if _level_complete_triggered:
 		return
 	_level_complete_triggered = true
+
 	_show_victory_message()
+
+	# ✅ si es multi, avisar victoria al servidor
+	if Network and Network.matchId != "" and Network.has_method("send_game_payload"):
+		Network.send_game_payload({
+			"type": "victory",
+			"reason": "boss_defeated"
+		})
+
 	var delay: float = max(level_complete_delay, 0.0)
 	if delay > 0.0:
 		await get_tree().create_timer(delay).timeout
@@ -137,13 +167,34 @@ func _show_victory_message() -> void:
 		victory_label.text = VICTORY_TEXT
 
 func _on_player_died() -> void:
-	print("💀 Jugador murió - Mostrando death menu")
+	if Network and str(Network.matchId) != "":
+		# En multi deja que lo maneje LevelManager
+		return
 	death_menu.show_death("¡HAS MUERTO!")
+
+
 
 func _on_pause_button_pressed():
 	print("🟢 Señal recibida en level_1 → abrir menú")
-	pause_menu.toggle_pause()
 
+	# 1) Preferir LevelManager
+	var manager := _find_level_manager()
+	if manager and manager.has_method("toggle_pause"):
+		manager.toggle_pause()
+		return
+
+	# 2) Fallback por variable export (si aún la usas)
+	if pause_menu and pause_menu.has_method("toggle_pause"):
+		pause_menu.toggle_pause()
+		return
+
+	# 3) Fallback por grupo (muy recomendado)
+	var pm := get_tree().get_first_node_in_group("pause_menu")
+	if pm and pm.has_method("toggle_pause"):
+		pm.toggle_pause()
+		return
+
+	push_warning("No pude encontrar PauseMenu para pausar.")
 
 func _on_animation_finished(anim_name: StringName) -> void:
 	if anim_name == &"fade":

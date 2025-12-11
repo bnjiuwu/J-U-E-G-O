@@ -1,4 +1,4 @@
-[gd_scene load_steps=45 format=4 uid="uid://c6n7qrlau6b0k"]
+[gd_scene load_steps=43 format=4 uid="uid://c6n7qrlau6b0k"]
 
 [ext_resource type="PackedScene" uid="uid://braj8a8ooxs4t" path="res://Assets/Scenes/Player/player.tscn" id="1_n0qsc"]
 [ext_resource type="Script" uid="uid://by4hegpiwf1wp" path="res://Levels/level 1/level_1.gd" id="1_r7d4j"]
@@ -14,9 +14,7 @@
 [ext_resource type="Texture2D" uid="uid://bingjbajxml1c" path="res://Assets/images/Tile Maps/cave/mainlev_build.png" id="11_hao24"]
 [ext_resource type="FontFile" uid="uid://dhhjcp1rxp6gj" path="res://Assets/Fonts/minecraft_font.ttf" id="11_tetkf"]
 [ext_resource type="PackedScene" uid="uid://b2lni2j37kwvl" path="res://Assets/Scenes/touch_controls/touch_controls.tscn" id="12_cq012"]
-[ext_resource type="PackedScene" uid="uid://bu5ef6314c7ik" path="res://Assets/Scenes/Menu/PauseMenu/PauseMenu.tscn" id="12_hao24"]
 [ext_resource type="Script" uid="uid://ceepuvci2an32" path="res://Levels/level 1/boss_room_trigger.gd" id="13_tetkf"]
-[ext_resource type="PackedScene" uid="uid://ljb2k5q033bq" path="res://Assets/Scenes/Menu/Death Menu/DeathMenu.tscn" id="15_gdql1"]
 [ext_resource type="PackedScene" uid="uid://gbohe3bsoon2" path="res://Assets/Scenes/Enemies Scene/PapaRoberto Scene/PapaRoberto.tscn" id="16_o7ywo"]
 [ext_resource type="PackedScene" uid="uid://bbvjvjd6c7l7f" path="res://Assets/Scenes/Enemies Scene/KintamaBoss/Kintama.tscn" id="16_vn1ki"]
 [ext_resource type="PackedScene" uid="uid://xoxuswob6rae" path="res://Assets/Scenes/Enemies Scene/Bat Scene/Bat.tscn" id="17_4l21d"]
@@ -11447,8 +11445,8 @@ b = Vector2(-165, 30)
 
 [node name="level_1" type="Node2D" node_paths=PackedStringArray("pause_menu", "death_menu")]
 script = ExtResource("1_r7d4j")
-pause_menu = NodePath("PauseMenu")
-death_menu = NodePath("DeathMenu")
+pause_menu = NodePath("")
+death_menu = NodePath("")
 
 [node name="WorldAudioManager" type="Node" parent="."]
 script = ExtResource("2_vumwe")
@@ -11880,12 +11878,6 @@ position = Vector2(1075, -6577)
 position = Vector2(-434, -37)
 
 [node name="MiniMap" parent="." instance=ExtResource("26_vumwe")]
-
-[node name="PauseMenu" parent="." instance=ExtResource("12_hao24")]
-visible = false
-
-[node name="DeathMenu" parent="." instance=ExtResource("15_gdql1")]
-visible = false
 
 [node name="VictoryCanvas" type="CanvasLayer" parent="."]
 layer = 5

@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://c1jb675isjs8x"]
+[gd_scene load_steps=7 format=3 uid="uid://c1jb675isjs8x"]
 
 [ext_resource type="Script" uid="uid://dsl1p3yreo66s" path="res://Multijugador/Scripts/Multijugador.gd" id="1_ni7w4"]
 [ext_resource type="FontFile" uid="uid://dhhjcp1rxp6gj" path="res://Assets/Fonts/minecraft_font.ttf" id="2_h81ph"]
@@ -9,6 +9,14 @@ corner_radius_top_left = 60
 corner_radius_top_right = 60
 corner_radius_bottom_right = 60
 corner_radius_bottom_left = 60
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_h81ph"]
+bg_color = Color(0.6, 0, 0, 0.68235296)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0, 0, 0, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_syex5"]
 bg_color = Color(1, 1, 1, 1)
@@ -109,7 +117,27 @@ theme_override_fonts/font = ExtResource("2_h81ph")
 theme_override_font_sizes/font_size = 30
 text = "Ver Invitaciones"
 
+[node name="InviteBadge" type="Panel" parent="Panel/Ver"]
+modulate = Color(18.892002, 18.892002, 18.892002, 1)
+layout_mode = 0
+offset_left = 309.0
+offset_top = -16.0
+offset_right = 349.0
+offset_bottom = 14.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_h81ph")
+
+[node name="Count" type="Label" parent="Panel/Ver/InviteBadge"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 30.0
+theme_override_fonts/font = ExtResource("2_h81ph")
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [node name="Lobby" type="Panel" parent="Panel"]
+visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -148,11 +176,12 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_ni7w4")
 text = "Volver"
 
 [node name="Panel2" type="Panel" parent="."]
+visible = false
 layout_mode = 0
 offset_left = 201.0
-offset_top = 99.0
+offset_top = 85.0
 offset_right = 779.0
-offset_bottom = 479.0
+offset_bottom = 465.0
 
 [node name="ColorRect" type="ColorRect" parent="Panel2"]
 layout_mode = 0
@@ -189,4 +218,4 @@ theme_override_font_sizes/font_size = 30
 text = "Conectar"
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
-volume_db = -10.0
+volume_db = -20.0

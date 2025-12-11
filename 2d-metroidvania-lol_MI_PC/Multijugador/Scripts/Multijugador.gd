@@ -9,6 +9,10 @@ var multi_music = preload("res://Assets/AUDIOS/elevator-bossa-nova_1.mp3")
 @onready var scroll: ScrollContainer = $Panel/ScrollContainer
 @onready var btn_enviar: Button = $Panel/Enviar
 @onready var btn_ver: Button = $Panel/Ver
+
+@onready var invite_badge: Control = $Panel/Ver/InviteBadge
+@onready var invite_badge_count: Label = $Panel/Ver/InviteBadge/Count
+
 @onready var volver: Button = $Volver
 @onready var lobby: Panel = $Panel/Lobby
 
@@ -48,6 +52,34 @@ func _my_name() -> String:
 		n = default_player_name
 	return n
 
+func _setup_invite_badge() -> void:
+	if invite_badge == null:
+		return
+
+	invite_badge.visible = false
+	invite_badge.custom_minimum_size = Vector2(22, 22)
+
+	# Si InviteBadge es Panel, le damos estilo rojo.
+	# Si es Control, puedes ignorar este bloque o cambiarlo a ColorRect.
+	if invite_badge_count:
+		invite_badge_count.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		invite_badge_count.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+		invite_badge_count.add_theme_font_size_override("font_size", 13)
+		invite_badge_count.add_theme_color_override("font_color", Color.WHITE)
+
+func _update_invite_badge() -> void:
+	if invite_badge == null or invite_badge_count == null:
+		return
+
+	var count := invitaciones.size()
+
+	if count <= 0:
+		invite_badge.visible = false
+		return
+	
+	invite_badge_count.text = str(count)
+	invite_badge.visible = true
+	invite_badge_count.text = "9+" if count > 9 else str(count)
 
 # === READY ===
 func _ready():
@@ -71,6 +103,9 @@ func _ready():
 	# ✅ bloquear botones hasta conectar
 	btn_enviar.disabled = true
 	btn_ver.disabled = true
+	
+	_setup_invite_badge()
+	_update_invite_badge()
 
 	_play_menu_music()
 #===== PROCESS ========= 
@@ -186,6 +221,8 @@ func _limpiar_todo():
 	match_status = "WAITING_PLAYERS"
 	for c in lista.get_children():
 		c.queue_free()
+		
+	_update_invite_badge()
 
 
 # ===============================
@@ -269,6 +306,8 @@ func _on_mensaje_recibido(msg: String):
 
 				if rival_name != "":
 					jugadores_del_match = [my_name, rival_name]
+					_cache_rival_context(rival_id, rival_name)
+
 				else:
 					print("⚠️ Error: No se pudo determinar el nombre del rival.")
 
@@ -301,6 +340,8 @@ func _on_mensaje_recibido(msg: String):
 
 			if rival_name != "":
 				jugadores_del_match = [my_name, rival_name]
+				_cache_rival_context(rival_id, rival_name)
+
 			else:
 				print("⚠️ Error: No se pudo determinar el nombre del rival.")
 
@@ -361,10 +402,29 @@ func _on_mensaje_recibido(msg: String):
 				match_id = str(data.get("data", {}).get("matchId", ""))
 
 			Network.matchId = match_id
+
+			# ✅ RESETEO CORRECTO AL INICIAR PARTIDA
+			Network.reset_death_counter()
+
 			print("✅ Network.matchId seteado:", Network.matchId)
 
-			_stop_menu_music()
+			var my_name := _my_name()
+			var rival_name := ""
+			var rival_game := ""
 
+			for pid in jugadores.keys():
+				var j = jugadores[pid]
+				var n := str(j.get("name", ""))
+				if jugadores_del_match.has(n) and n != my_name:
+					rival_name = n
+					rival_game = str(j.get("game_name", "Juego NO REPORTADO"))
+					break
+
+			Network.opponent_name = rival_name
+			Network.opponent_game_name = rival_game
+			Network.my_game_name = MY_GAME_NAME
+
+			_cache_opponent_info_for_gameplay()
 			await get_tree().process_frame
 			get_tree().change_scene_to_file("res://Levels/LEVEL MANAGER/level_manager.tscn")
 
@@ -425,7 +485,11 @@ func _on_mensaje_recibido(msg: String):
 
 
 		"finish-game":
-			print("📤 Respuesta a finish-game:", data)
+			if match_id != "":
+				_enviar({
+					"event": "finish-game",
+					"data": {"matchId": match_id}
+				})
 
 
 		"rematch-request":
@@ -664,8 +728,8 @@ func _on_ver_pressed():
 	modo = 2
 	label.text = "Invitaciones recibidas"
 	_actualizar_lista_invitaciones()
-
-
+	_update_invite_badge()
+	
 func _actualizar_lista():
 	for c in lista.get_children():
 		c.queue_free()
@@ -723,6 +787,8 @@ func _recibir_invitacion(data: Dictionary):
 	invitador_id = pid
 	invitaciones.append({"playerId": pid, "matchId": mid, "name": nombre})
 	_actualizar_lista_invitaciones()
+	
+	_update_invite_badge()
 
 
 func _enviar_invitacion(jugador: Dictionary):
@@ -758,6 +824,8 @@ func _aceptar_invitacion(info: Dictionary):
 		else:
 			print("⚠️ Rival ID encontrado pero nombre vacío. ID:", invitador_id)
 
+	_update_invite_badge()
+
 
 func _rechazar_invitacion(info: Dictionary):
 	_enviar({"event": "reject-match"})
@@ -768,6 +836,9 @@ func _rechazar_invitacion(info: Dictionary):
 	)
 
 	_actualizar_lista_invitaciones()
+	
+	_update_invite_badge()
+
 
 
 func _actualizar_lista_invitaciones():
@@ -800,6 +871,7 @@ func _actualizar_lista_invitaciones():
 		panel.add_child(margin)
 		lista.add_child(panel)
 
+	_update_invite_badge()
 
 
 # ===============================
@@ -865,7 +937,33 @@ func _on_volver_pressed():
 		btn_ver.visible = true
 		posicion_menu = 0
 		label.text = "Modo Multijugador"
+		
+func _cache_rival_context(rival_id: String, rival_name: String) -> void:
+	if Network == null:
+		return
 
+	var rival_game := ""
+	if rival_id != "" and jugadores.has(rival_id):
+		rival_game = str(jugadores[rival_id].get("game_name", ""))
+
+	Network.set_opponent_context(rival_id, rival_name, rival_game)
+
+func _cache_opponent_info_for_gameplay() -> void:
+	var my_name := _my_name()
+	var rival_name := ""
+	var rival_game := ""
+
+	# usamos la lista que ya armas para el match
+	for pid in jugadores.keys():
+		var j : Dictionary =jugadores[pid]
+		var name := str(j.get("name", ""))
+		if name != "" and name != my_name and jugadores_del_match.has(name):
+			rival_name = name
+			rival_game = str(j.get("game_name", ""))
+			break
+
+	Network.opponent_name = rival_name
+	Network.opponent_game_name = rival_game
 
 
 # ===============================

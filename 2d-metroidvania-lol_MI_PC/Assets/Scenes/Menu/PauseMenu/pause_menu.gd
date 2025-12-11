@@ -36,6 +36,9 @@ func _on_restart_pressed():
 	get_tree().reload_current_scene()
 
 func _on_quit_pressed():
+	if Network and Network.has_method("leave_match") and str(Network.matchId) != "":
+		Network.leave_match("leave_from_pause_menu")
+
 	get_tree().paused = false
 	get_tree().change_scene_to_file("res://Assets/Scenes/Menu/menu.tscn")
 	
