@@ -3,12 +3,12 @@
 importer="mp3"
 type="AudioStreamMP3"
 uid="uid://cuv4avnl7reip"
-path="res://.godot/imported/RULETTE SOUND.mp3-4d044ef168d2bf62aef6436167f78d4a.mp3str"
+path="res://.godot/imported/RULETTE SOUND.mp3-8fbbb9ef546bd2f6e8a708e3d19d7851.mp3str"
 
 [deps]
 
-source_file="res://Assets/AUDIOS/Game_Audios/RULETTE SOUND.mp3"
-dest_files=["res://.godot/imported/RULETTE SOUND.mp3-4d044ef168d2bf62aef6436167f78d4a.mp3str"]
+source_file="res://Assets/Audios/Game_Audios/RULETTE SOUND.mp3"
+dest_files=["res://.godot/imported/RULETTE SOUND.mp3-8fbbb9ef546bd2f6e8a708e3d19d7851.mp3str"]
 
 [params]
 
