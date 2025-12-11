@@ -140,6 +140,7 @@ func exit_to_main_menu_from_pause() -> void:
 
 	# 3) Volver al menú principal
 	if fallback_scene != "":
+		_mostrar_pantalla_carga()
 		get_tree().change_scene_to_file(fallback_scene)
 
 
@@ -245,6 +246,9 @@ func request_next_level() -> void:
 
 func request_level(index: int) -> void:
 	_cargar_nivel_async(index)
+
+func request_restart_level() -> void:
+	_reiniciar_nivel()
 
 
 func _instanciar_nivel(packed: PackedScene) -> void:
