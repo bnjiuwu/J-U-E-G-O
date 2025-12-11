@@ -31,16 +31,20 @@ func show_death(message: String = "Has muerto") -> void:
 	get_tree().paused = true
 	retry_btn.grab_focus()
 	_play_menu_music()
+	GlobalsSignals.background_music_pause_requested.emit()
 
 func _on_retry() -> void:
 	get_tree().paused = false
+	GlobalsSignals.background_music_resume_requested.emit()
 	get_tree().reload_current_scene()
 
 func _on_main_menu() -> void:
 	get_tree().paused = false
+	GlobalsSignals.background_music_resume_requested.emit()
 	get_tree().change_scene_to_file(main_menu_scene)
 
 func _on_quit() -> void:
+	GlobalsSignals.background_music_resume_requested.emit()
 	get_tree().quit()
 
 func _play_menu_music() -> void:
