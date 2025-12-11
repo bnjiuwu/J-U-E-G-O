@@ -31,7 +31,8 @@ var _match_finished: bool = false
 #  - "match_status_ui" (Label)
 
 # ---------------- LOADING ----------------
-var _nivel_actual: int = 1
+var _nivel_actual: int = 2
+
 var _nivel_instanciado: Node = null
 
 @onready var _loading_screen: Control = $CanvasLayer/LoadingScreen

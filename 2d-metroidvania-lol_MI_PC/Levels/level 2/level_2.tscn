@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=3 uid="uid://bxrtd5wmuxd7f"]
+[gd_scene load_steps=35 format=3 uid="uid://bxrtd5wmuxd7f"]
 
 [ext_resource type="Texture2D" uid="uid://dft1ys4ww55xj" path="res://Assets/images/Backgrounds/GOLEM/golem_bk1.png" id="1_ab74o"]
 [ext_resource type="Texture2D" uid="uid://dpr1ca0q4b8p1" path="res://Assets/images/Backgrounds/GOLEM/cielo1.png" id="1_u26w3"]
@@ -1099,6 +1099,12 @@ sources/2 = SubResource("TileSetAtlasSource_vev6x")
 
 [node name="LevelGolem" type="Node2D"]
 script = ExtResource("14_es23n")
+golem_path = null
+next_level_path = null
+level_complete_delay = null
+victory_label_path = null
+victory_text = null
+fallback_pause_menu_scene = null
 
 [node name="WorldAudioManager" type="Node" parent="."]
 script = ExtResource("16_x9h3n")
