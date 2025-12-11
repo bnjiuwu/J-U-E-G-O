@@ -1,20 +1,112 @@
-[gd_scene load_steps=6 format=3 uid="uid://85sqmcso35sm"]
+[gd_scene load_steps=20 format=3 uid="uid://85sqmcso35sm"]
 
 [ext_resource type="Script" uid="uid://c8sbsf2gcrmns" path="res://Assets/Scenes/Objects - Skills/basic skill/basic_skill.gd" id="1_bgd66"]
-[ext_resource type="Texture2D" uid="uid://c68xbx5tawd0w" path="res://Assets/sprites/objects type shi/big bullet (1).png" id="2_pyo1f"]
+[ext_resource type="Texture2D" uid="uid://bcdemtwnebg85" path="res://Assets/sprites/objects type shi/Explotions/explotion-a.png" id="2_iu0wm"]
+[ext_resource type="Texture2D" uid="uid://bjyc7mbyg6f4j" path="res://Assets/sprites/objects type shi/big bullet (1).png" id="2_pyo1f"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g0x2e"]
+atlas = ExtResource("2_iu0wm")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_h3erd"]
+atlas = ExtResource("2_iu0wm")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g4m34"]
+atlas = ExtResource("2_iu0wm")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qcnja"]
+atlas = ExtResource("2_iu0wm")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w0kng"]
+atlas = ExtResource("2_iu0wm")
+region = Rect2(128, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1g5yd"]
+atlas = ExtResource("2_iu0wm")
+region = Rect2(160, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vxw8j"]
+atlas = ExtResource("2_iu0wm")
+region = Rect2(192, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rk06b"]
+atlas = ExtResource("2_iu0wm")
+region = Rect2(224, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bgd66"]
+atlas = ExtResource("2_pyo1f")
+region = Rect2(0, 0, 250, 125)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pyo1f"]
+atlas = ExtResource("2_pyo1f")
+region = Rect2(250, 0, 250, 125)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_iu0wm"]
+atlas = ExtResource("2_pyo1f")
+region = Rect2(0, 125, 250, 125)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ysul3"]
+atlas = ExtResource("2_pyo1f")
+region = Rect2(250, 125, 250, 125)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bn3p2"]
+atlas = ExtResource("2_pyo1f")
+region = Rect2(0, 250, 250, 125)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_f2cv1"]
 atlas = ExtResource("2_pyo1f")
-region = Rect2(0, 0, 626, 462)
+region = Rect2(250, 250, 250, 125)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_ysul3"]
 animations = [{
-"frames": [],
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_g0x2e")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_h3erd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_g4m34")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qcnja")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_w0kng")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1g5yd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vxw8j")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rk06b")
+}],
 "loop": false,
 "name": &"contact",
-"speed": 10.0
+"speed": 20.0
 }, {
 "frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bgd66")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pyo1f")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_iu0wm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ysul3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bn3p2")
+}, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_f2cv1")
 }],
@@ -28,19 +120,19 @@ size = Vector2(30, 66)
 
 [node name="BasicSkill" type="Area2D" groups=["projectile"]]
 collision_layer = 8
-collision_mask = 16
+collision_mask = 17
 script = ExtResource("1_bgd66")
 damage = 50
 hit_on_contact = false
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-position = Vector2(-43.999996, -5.9999995)
-scale = Vector2(0.5263461, 0.5263461)
+position = Vector2(48, 4)
+scale = Vector2(0.7479835, 0.60994625)
 sprite_frames = SubResource("SpriteFrames_ysul3")
-animation = &"contact"
+frame_progress = 0.8204474
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(30, 4.000001)
+position = Vector2(48, 4)
 rotation = 1.5707964
 shape = SubResource("RectangleShape2D_bgd66")
 
