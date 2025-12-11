@@ -1,4 +1,4 @@
-[gd_scene load_steps=37 format=3 uid="uid://c6kipeputwxl"]
+[gd_scene load_steps=41 format=3 uid="uid://c6kipeputwxl"]
 
 [ext_resource type="PackedScene" uid="uid://braj8a8ooxs4t" path="res://Levels/level 2/player.tscn" id="1_78j0p"]
 [ext_resource type="Script" uid="uid://dv7ehm1q2gkkh" path="res://Levels/level 3/level_3.gd" id="1_jayd4"]
@@ -21,6 +21,8 @@
 [ext_resource type="PackedScene" uid="uid://b2wq6npi7xnw" path="res://Assets/Scenes/Enemies Scene/Cangri Scene/cangri.tscn" id="22_43dxa"]
 [ext_resource type="PackedScene" uid="uid://crab0kq2pvqtb" path="res://Assets/Scenes/Enemies Scene/Don cangrejo/DonCangrejo.tscn" id="23_43dxa"]
 [ext_resource type="PackedScene" uid="uid://crj0elc3jro0b" path="res://Assets/Scenes/Enemies Scene/Magic book/MagicBook.tscn" id="23_ypd4o"]
+[ext_resource type="Script" uid="uid://cr4b4an4vhhvv" path="res://Levels/level 1/world_audio_manager.gd" id="24_uyjk6"]
+[ext_resource type="AudioStream" uid="uid://dumvd65uwah8p" path="res://Assets/AUDIOS/Background_music/Eric Skiff - Underclocked  NO COPYRIGHT 8-bit Music  Background.mp3" id="25_uyjk6"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_fijtx"]
 texture = ExtResource("1_y81ld")
@@ -1323,6 +1325,7 @@ _data = {
 
 [node name="Level3" type="Node2D"]
 script = ExtResource("1_jayd4")
+boss_node = NodePath("enemigos/Cangri/Cangri")
 
 [node name="TileMaps" type="Node2D" parent="."]
 
@@ -1469,7 +1472,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_fonts/font = ExtResource("2_4lnie")
 theme_override_font_sizes/font_size = 64
-text = "¡Felicidades!"
+text = "¡ALEGALE!"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -1519,6 +1522,7 @@ position = Vector2(-3552, -340)
 [node name="Cangri" parent="enemigos/Cangri" instance=ExtResource("22_43dxa")]
 position = Vector2(-1, -6573)
 scale = Vector2(4, 4)
+max_health = 50
 
 [node name="MagicBook" type="Node2D" parent="enemigos"]
 
@@ -1622,3 +1626,7 @@ patrol_speed = 100.0
 position = Vector2(1405, -4851)
 scale = Vector2(3, 3)
 patrol_speed = 100.0
+
+[node name="WorldAudioManager" type="Node" parent="."]
+script = ExtResource("24_uyjk6")
+music_stream = ExtResource("25_uyjk6")

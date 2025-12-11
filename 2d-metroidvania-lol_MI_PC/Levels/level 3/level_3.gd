@@ -7,7 +7,7 @@ class_name level3
 @export var death_menu: CanvasLayer
 @export var boss_node: NodePath
 @export var next_level_index: int = 2
-@export var next_level_path: String = "res://Levels/level 2/level_2.tscn"
+@export var next_level_path: String = "res://Assets/Scenes/Menu/menu.tscn"
 @export var level_complete_delay: float = 2.5
 
 @onready var animation_player: AnimationPlayer = $player/Camera2D/AnimationPlayer
@@ -17,10 +17,11 @@ var intro_shown: bool = false
 
 @onready var player: CharacterBody2D = $player
 @onready var mini_map: CanvasLayer = $MiniMap
+@onready var victory_canvas: CanvasLayer = $VictoryCanvas
 @onready var victory_label: Label = $VictoryCanvas/VictoryLabel
 
 const DEFAULT_BOSS_PATH := NodePath("enemies/Kintama/Kintama")
-const VICTORY_TEXT := "¡Felicidades!"
+const VICTORY_TEXT := "¡ALEGALE!"
 
 var _boss_instance: Node = null
 var _level_complete_triggered: bool = false
@@ -32,6 +33,7 @@ func _physics_process(delta: float) -> void:
 	
 	pass
 func _ready():
+	_resolve_ui_references()
 	# --- DEBUG + FORZAR SIN LOOP ---
 	var fade_anim: Animation = animation_player.get_animation("fade")
 	if fade_anim:
@@ -56,6 +58,8 @@ func _ready():
 	if boss_node.is_empty():
 		boss_node = DEFAULT_BOSS_PATH
 	_connect_boss_signals()
+	if victory_canvas:
+		victory_canvas.visible = false
 	if victory_label:
 		victory_label.visible = false
 	
@@ -63,6 +67,17 @@ func _ready():
 		mini_map.player_node = player
 		pass
 	
+
+func _resolve_ui_references() -> void:
+	if pause_menu == null:
+		pause_menu = get_node_or_null("PauseMenu")
+	if death_menu == null:
+		death_menu = get_node_or_null("DeathMenu")
+	if pause_menu == null:
+		push_warning("No se asignó PauseMenu")
+	if death_menu == null:
+		push_warning("No se asignó DeathMenu")
+
 
 func _connect_boss_signals() -> void:
 	var boss := get_node_or_null(boss_node) if not boss_node.is_empty() else null
@@ -129,6 +144,8 @@ func _find_boss_candidate() -> Node:
 	return get_node_or_null(DEFAULT_BOSS_PATH)
 
 func _show_victory_message() -> void:
+	if victory_canvas:
+		victory_canvas.visible = true
 	if victory_label:
 		victory_label.visible = true
 		victory_label.text = VICTORY_TEXT
