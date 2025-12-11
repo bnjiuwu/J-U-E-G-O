@@ -1,10 +1,11 @@
-[gd_scene load_steps=43 format=4 uid="uid://c6n7qrlau6b0k"]
+[gd_scene load_steps=44 format=4 uid="uid://c6n7qrlau6b0k"]
 
-[ext_resource type="PackedScene" uid="uid://braj8a8ooxs4t" path="res://Assets/Scenes/Player/player.tscn" id="1_n0qsc"]
+[ext_resource type="PackedScene" uid="uid://braj8a8ooxs4t" path="res://Levels/level 2/player.tscn" id="1_n0qsc"]
 [ext_resource type="Script" uid="uid://by4hegpiwf1wp" path="res://Levels/level 1/level_1.gd" id="1_r7d4j"]
 [ext_resource type="PackedScene" uid="uid://d3evjk846bf1b" path="res://Assets/Scenes/Enemies Scene/Slime scene/slime.tscn" id="2_3mhv4"]
 [ext_resource type="Script" uid="uid://cr4b4an4vhhvv" path="res://Levels/level 1/world_audio_manager.gd" id="2_vumwe"]
 [ext_resource type="Texture2D" uid="uid://caqfa7afng3wv" path="res://Assets/images/Tile Maps/overworld/Tiles/Assets/Assets.png" id="3_3mhv4"]
+[ext_resource type="AudioStream" uid="uid://lulx6fiw1t4n" path="res://Assets/Audios/Background_music/William Rosati - Floating Also  NO COPYRIGHT 8-bit Music.mp3" id="3_s6fi1"]
 [ext_resource type="PackedScene" uid="uid://bjxvrrouvo5u3" path="res://Assets/Scenes/Map Borders/MapBorders_level1.tscn" id="5_gk84l"]
 [ext_resource type="Texture2D" uid="uid://cthieo60smtmm" path="res://Assets/images/Tile Maps/cave/background1.png" id="6_i6ka7"]
 [ext_resource type="Texture2D" uid="uid://dkwxdyofenfpa" path="res://Assets/images/Tile Maps/cave/background2.png" id="7_ib2b2"]
@@ -11443,13 +11444,12 @@ size = Vector2(20, 70)
 a = Vector2(2287, 30)
 b = Vector2(-165, 30)
 
-[node name="level_1" type="Node2D" node_paths=PackedStringArray("pause_menu", "death_menu")]
+[node name="level_1" type="Node2D"]
 script = ExtResource("1_r7d4j")
-pause_menu = NodePath("")
-death_menu = NodePath("")
 
 [node name="WorldAudioManager" type="Node" parent="."]
 script = ExtResource("2_vumwe")
+music_stream = ExtResource("3_s6fi1")
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
 scroll_base_scale = Vector2(1.5, 1.5)
