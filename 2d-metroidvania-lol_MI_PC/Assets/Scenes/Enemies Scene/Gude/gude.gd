@@ -16,6 +16,7 @@ var current_state = State.PATROL
 @export var recover_duration: float = 1.0
 @export var missile_max_duration: float = 2.5
 @export var my_max_health: int = 120
+@export var wall_flip_cooldown: float = 0.15
 
 # --- REFERENCIAS ---
 @onready var floor_detector: RayCast2D = get_node_or_null("FloorDetector")
@@ -29,6 +30,7 @@ var _is_showing_explosion: bool = false
 var _is_recovering: bool = false
 var _rebound_time_left: float = 0.0
 var _last_attack_direction: int = 1
+var _wall_flip_timer: float = 0.0
 
 func _ready():
 	max_health = my_max_health
@@ -51,6 +53,7 @@ func _ready():
 	velocity.x = direction * patrol_speed
 
 func ground_behavior(delta: float) -> void:
+	_wall_flip_timer = max(_wall_flip_timer - delta, 0.0)
 	match current_state:
 		State.PATROL:
 			_state_patrol(delta)
@@ -75,10 +78,18 @@ func _state_patrol(delta):
 		return
 
 	velocity.x = direction * patrol_speed
+	var should_flip := false
+
 	if wall_detector and wall_detector.is_colliding():
-		flip_direction()
+		should_flip = true
 	elif floor_detector and not floor_detector.is_colliding() and is_on_floor():
+		should_flip = true
+	elif is_on_wall() and _wall_flip_timer <= 0.0:
+		should_flip = true
+
+	if should_flip:
 		flip_direction()
+		_wall_flip_timer = wall_flip_cooldown
 
 # --- 2. EMBESTIDA EN EL PISO ---
 func _state_missile(delta):

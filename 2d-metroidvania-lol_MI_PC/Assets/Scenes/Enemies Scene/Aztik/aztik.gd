@@ -9,6 +9,7 @@ class_name Aztik
 @export var missile_damage: int = 18
 @export var missile_scene: PackedScene = preload("res://Assets/Scenes/Enemies Scene/Aztik/AztikMissile.tscn")
 @export var my_max_health: int = 110
+@export var wall_flip_cooldown: float = 0.15
 
 @onready var floor_detector: RayCast2D = get_node_or_null("FloorDetector")
 @onready var wall_detector: RayCast2D = get_node_or_null("WallDetector")
@@ -19,6 +20,7 @@ class_name Aztik
 var player_target: Node2D = null
 var _is_preparing_attack: bool = false
 var _can_attack: bool = true
+var _wall_flip_timer: float = 0.0
 
 func _ready() -> void:
 	max_health = my_max_health
@@ -41,7 +43,8 @@ func _ready() -> void:
 		if not detection_zone.body_exited.is_connected(_on_detection_exit):
 			detection_zone.body_exited.connect(_on_detection_exit)
 
-func ground_behavior(_delta: float) -> void:
+func ground_behavior(delta: float) -> void:
+	_wall_flip_timer = max(_wall_flip_timer - delta, 0.0)
 	if _is_preparing_attack:
 		velocity.x = 0
 		return
@@ -53,11 +56,18 @@ func ground_behavior(_delta: float) -> void:
 
 func _patrol() -> void:
 	velocity.x = direction * patrol_speed
+	var should_flip := false
 
 	if wall_detector and wall_detector.is_colliding():
-		flip_direction()
+		should_flip = true
 	elif floor_detector and is_on_floor() and not floor_detector.is_colliding():
+		should_flip = true
+	elif is_on_wall() and _wall_flip_timer <= 0.0:
+		should_flip = true
+
+	if should_flip:
 		flip_direction()
+		_wall_flip_timer = wall_flip_cooldown
 
 	is_attacking = false
 

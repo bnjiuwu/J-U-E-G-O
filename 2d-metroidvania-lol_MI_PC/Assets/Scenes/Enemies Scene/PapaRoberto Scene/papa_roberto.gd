@@ -7,6 +7,8 @@ extends CharacterBody2D
 @export var attack_range: float = 150.0
 @export var attack_cooldown: float = 2.0
 @export var insult_scene: PackedScene
+@export var wall_flip_cooldown: float = 0.35
+@export var wall_push_distance: float = 8.0
 
 var health: int
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
@@ -16,12 +18,16 @@ var attack_timer: float = 0.0
 var is_facing_right: bool = true
 var is_dead: bool = false
 var direction: int = 0
+var _wall_flip_timer: float = 0.0
 
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var detection_area: Area2D = $DetectionArea
 @onready var attack_area: Area2D = $AttackArea
 @onready var insult_spawn_point: Node2D = $InsultSpawnPoint
 @onready var floor_check : RayCast2D = $RayCast2D
+@onready var detection_shape: CollisionShape2D = detection_area.get_node_or_null("CollisionShape2D") if detection_area else null
+@onready var health_bar: ProgressBar = get_node_or_null("HealthBar")
+@onready var health_label: Label = get_node_or_null("HealthBarNumber")
 
 func _ready() -> void:
 	health = max_health
@@ -29,10 +35,13 @@ func _ready() -> void:
 	insult_scene = preload("res://Assets/Scenes/Enemies Scene/PapaRoberto Scene/Insulto Scene/Insulto.tscn")
 	setup_detection_area()
 	setup_attack_area()
+	_update_health_ui()
 	print("👑 Padre Roberto listo con", health, "HP")
 
 func _physics_process(delta):
-		# Actualizar raycast
+	_wall_flip_timer = max(_wall_flip_timer - delta, 0.0)
+
+	# Actualizar raycast
 	var tp = floor_check.target_position
 	tp.x = 10 * direction
 	tp.y = 30
@@ -47,10 +56,8 @@ func _physics_process(delta):
 	update_behavior(delta)
 	update_animation()
 	move_and_slide()
-	
-	if is_on_floor() and (not floor_check.is_colliding()):
-		direction *= -1
-		animated_sprite.flip_h = direction == 1
+	_resolve_wall_stick()
+	_handle_platform_boundaries()
 		
 
 
@@ -58,6 +65,7 @@ func _physics_process(delta):
 func setup_detection_area():
 	detection_area.body_entered.connect(_on_player_detected)
 	detection_area.body_exited.connect(_on_player_lost)
+	_update_detection_shape()
 
 func setup_attack_area():
 	attack_area.body_entered.connect(_on_attack_range_entered)
@@ -127,6 +135,7 @@ func chase_player():
 	is_attacking = false
 	var dir = sign(player.global_position.x - global_position.x)
 	velocity.x = dir * move_speed
+	direction = dir if dir != 0 else direction
 	is_facing_right = dir > 0
 	animated_sprite.flip_h = not is_facing_right
 
@@ -180,7 +189,9 @@ func take_damage(amount: int):
 		return
 	
 	health -= amount
+	health = clamp(health, 0, max_health)
 	print("💥 Papa Roberto recibió", amount, "daño | HP:", health)
+	_update_health_ui()
 
 	if health <= 0:
 		die()
@@ -203,7 +214,15 @@ func die():
 	GlobalsSignals.enemy_defeated.emit()
 	# ----------------------------------------
 
-	# Eliminamos al enemigo inmediatamente (ya que no hay animación de muerte)
+	if health_bar:
+		health_bar.visible = false
+	if health_label:
+		health_label.visible = false
+
+	if animated_sprite and animated_sprite.sprite_frames and animated_sprite.sprite_frames.has_animation("death"):
+		animated_sprite.play("death")
+		await animated_sprite.animation_finished
+
 	queue_free()
 
 # --- Señales ---
@@ -223,9 +242,75 @@ func _on_attack_range_entered(body):
 
 func _on_hitbox_area_entered(area: Area2D):
 	if area.is_in_group("projectile"):
-		take_damage(area.damage)
+		if area is PlayerProjectile:
+			return
+		if "damage" in area:
+			take_damage(area.damage)
 		area.queue_free()
 	if area.is_in_group("Skills"):
+		if area is PlayerProjectile:
+			return
 		print("💥 Mago recibió impacto de bala")
 		take_damage(area.damage)
 		area.queue_free()
+
+func _resolve_wall_stick() -> void:
+	if not is_on_wall():
+		return
+	if _wall_flip_timer > 0.0:
+		return
+
+	_wall_flip_timer = wall_flip_cooldown
+	var new_dir = direction
+	if new_dir == 0:
+		new_dir = -1 if is_facing_right else 1
+	new_dir *= -1
+	direction = new_dir
+	is_facing_right = direction > 0
+	animated_sprite.flip_h = not is_facing_right
+	velocity.x = direction * move_speed
+	global_position.x += direction * wall_push_distance
+
+func _handle_platform_boundaries() -> void:
+	var should_flip := false
+	if floor_check and is_on_floor() and not floor_check.is_colliding():
+		should_flip = true
+	if is_on_wall():
+		should_flip = true
+	if not should_flip:
+		return
+
+	if direction == 0:
+		direction = -1 if is_facing_right else 1
+
+	direction *= -1
+	is_facing_right = direction > 0
+	animated_sprite.flip_h = not is_facing_right
+	velocity.x = direction * move_speed
+	if detection_shape:
+		detection_shape.position.x = abs(detection_shape.position.x) * (1 if is_facing_right else -1)
+func _update_detection_shape() -> void:
+	if detection_shape == null or detection_shape.shape == null:
+		return
+
+	var range: float = max(detection_range, 10.0)
+	var total_length: float = range * 2.0
+	var shape_res := detection_shape.shape
+
+	if shape_res is CapsuleShape2D:
+		var capsule := shape_res as CapsuleShape2D
+		capsule.radius = min(capsule.radius, range)
+		capsule.height = max(total_length - capsule.radius * 2.0, 0.0)
+	elif shape_res is RectangleShape2D:
+		shape_res.size.x = total_length
+	elif shape_res is CircleShape2D:
+		shape_res.radius = range
+
+func _update_health_ui() -> void:
+	if health_bar:
+		health_bar.max_value = max_health
+		health_bar.value = clamp(health, 0, max_health)
+		health_bar.visible = true
+	if health_label:
+		health_label.text = str(clamp(health, 0, max_health))
+		health_label.visible = true

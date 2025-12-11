@@ -19,7 +19,7 @@ roulette_scene = ExtResource("7_mr4tj")
 [node name="RouletteLayer" type="CanvasLayer" parent="CanvasLayer"]
 layer = 100
 
-[node name="LoadingScreen" type="Control" parent="CanvasLayer"]
+[node name="LoadingScreen" type="Control" parent="CanvasLayer" groups=["loading_screen"]]
 layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0

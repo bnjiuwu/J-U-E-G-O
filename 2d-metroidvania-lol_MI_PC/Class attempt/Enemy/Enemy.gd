@@ -131,6 +131,8 @@ func die():
 
 func _on_hitbox_area_entered(area: Area2D) -> void:
 	if area.is_in_group("projectile"):
+		if area is PlayerProjectile:
+			return
 		if "damage" in area:
 			take_damage(area.damage)
 		area.queue_free()

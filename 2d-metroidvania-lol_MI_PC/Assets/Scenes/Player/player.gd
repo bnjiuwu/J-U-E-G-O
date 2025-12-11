@@ -75,7 +75,36 @@ var projectile_instakill: bool = false
 
 
 #==== joystick =======
-@onready var joystick := get_node_or_null("/root/level_1/Control/touch_controls/Joystick")
+var joystick: Joystick = null
+
+func _get_touch_controls_node() -> Node:
+	return get_tree().get_first_node_in_group("touch_controls_ui")
+
+func _ensure_joystick_reference() -> void:
+	if joystick and is_instance_valid(joystick):
+		return
+	var controls := _get_touch_controls_node()
+	if controls:
+		var candidate := controls.get_node_or_null("Joystick")
+		if candidate:
+			joystick = candidate as Joystick
+
+func _get_joystick_direction() -> Vector2:
+	_ensure_joystick_reference()
+	if joystick and joystick.pressing:
+		var joy: Vector2 = joystick.posVector
+		if joy.length() > 0.1:
+			return joy.normalized()
+	return Vector2.ZERO
+
+func _get_default_shoot_direction() -> Vector2:
+	var is_looking_up = Input.is_action_pressed("look_up")
+	var moving_horizontally = Input.is_action_pressed("move_right") or Input.is_action_pressed("move_left")
+	if is_looking_up:
+		if moving_horizontally:
+			return Vector2.from_angle(deg_to_rad(-45)) if is_facing_right else Vector2.from_angle(deg_to_rad(-135))
+		return Vector2.UP
+	return Vector2.RIGHT if is_facing_right else Vector2.LEFT
 
 #==== damage knockback =======
 @export var invulnerability_time: float = 1.0
@@ -184,6 +213,8 @@ func _ready() -> void:
 	
 	_update_attack_bar()
 	call_deferred("_update_attack_bar")
+	_ensure_joystick_reference()
+	call_deferred("_ensure_joystick_reference")
 
 func _process(_delta):
 	var delta2 = _delta
@@ -422,33 +453,9 @@ func fire_bullet():
 	var bullet = bullet_scene.instantiate()
 	# ✅ conectar barra
 	_connect_projectile_meter(bullet, false)
-	var dir = Vector2.ZERO
-# simple y efectivo
-
-	# Obtener vector del joystick
-	if joystick and joystick.pressing:
-		var joy = joystick.posVector
-		if joy.length() > 0.1:  # margen de error
-			dir = joy.normalized()
-		else:
-			dir = Vector2.RIGHT if is_facing_right else Vector2.LEFT
-	else:
-		# fallback a input teclado
-		var is_looking_up = Input.is_action_pressed("look_up")
-		var moving_horizontally = Input.is_action_pressed("move_right") or Input.is_action_pressed("move_left")
-		
-		if is_looking_up:
-			if moving_horizontally:
-				if is_facing_right:
-					dir = Vector2.from_angle(deg_to_rad(-45))
-				else:
-					dir = Vector2.from_angle(deg_to_rad(-135))
-			else:
-				dir = Vector2.UP
-		elif is_facing_right:
-			dir = Vector2.RIGHT
-		else:
-			dir = Vector2.LEFT
+	var dir: Vector2 = _get_joystick_direction()
+	if dir == Vector2.ZERO:
+		dir = _get_default_shoot_direction()
 
 	# Configurar muzzle según dirección
 	$muzzle.position = dir * 14  # distancia base del muzzle
@@ -472,32 +479,9 @@ func fire_bullet():
 func activate_skill():
 	var basic_skill = big_bullet_scene.instantiate()
 	_connect_projectile_meter(basic_skill, true)
-	var dir = Vector2.ZERO
-	
-	# Obtener vector del joystick
-	if joystick and joystick.pressing:
-		var joy = joystick.posVector
-		if joy.length() > 0.1:  # margen de error
-			dir = joy.normalized()
-		else:
-			dir = Vector2.RIGHT if is_facing_right else Vector2.LEFT
-	else:
-		# fallback a input teclado
-		var is_looking_up = Input.is_action_pressed("look_up")
-		var moving_horizontally = Input.is_action_pressed("move_right") or Input.is_action_pressed("move_left")
-		
-		if is_looking_up:
-			if moving_horizontally:
-				if is_facing_right:
-					dir = Vector2.from_angle(deg_to_rad(-45))
-				else:
-					dir = Vector2.from_angle(deg_to_rad(-135))
-			else:
-				dir = Vector2.UP
-		elif is_facing_right:
-			dir = Vector2.RIGHT
-		else:
-			dir = Vector2.LEFT
+	var dir: Vector2 = _get_joystick_direction()
+	if dir == Vector2.ZERO:
+		dir = _get_default_shoot_direction()
 
 	# Configurar muzzle según dirección
 	$muzzle.position = dir * 14  # distancia base del muzzle
