@@ -1325,7 +1325,6 @@ _data = {
 
 [node name="Level3" type="Node2D"]
 script = ExtResource("1_jayd4")
-boss_node = NodePath("enemigos/Cangri/Cangri")
 
 [node name="TileMaps" type="Node2D" parent="."]
 
@@ -1391,71 +1390,28 @@ offset_bottom = 40.0
 [node name="health packs" type="Node2D" parent="Map Interactives"]
 
 [node name="HealthPack" parent="Map Interactives/health packs" instance=ExtResource("16_ry1bv")]
-position = Vector2(2080, -1920)
-scale = Vector2(3, 3)
-
-[node name="HealthPack1" parent="Map Interactives/health packs" instance=ExtResource("16_ry1bv")]
-position = Vector2(-160, -2752)
-scale = Vector2(3, 3)
+position = Vector2(-437, -475)
 
 [node name="HealthPack2" parent="Map Interactives/health packs" instance=ExtResource("16_ry1bv")]
-position = Vector2(-4928, -640)
-scale = Vector2(3, 3)
+position = Vector2(-967, -199)
 
 [node name="HealthPack3" parent="Map Interactives/health packs" instance=ExtResource("16_ry1bv")]
-position = Vector2(-4928, -1856)
-scale = Vector2(3, 3)
+position = Vector2(1779, -560)
 
 [node name="HealthPack4" parent="Map Interactives/health packs" instance=ExtResource("16_ry1bv")]
-position = Vector2(-2016, -1920)
-scale = Vector2(3, 3)
+position = Vector2(-245, -937)
 
 [node name="HealthPack5" parent="Map Interactives/health packs" instance=ExtResource("16_ry1bv")]
-position = Vector2(-3680, -3072)
-scale = Vector2(3, 3)
+position = Vector2(-760, -1805)
 
 [node name="HealthPack6" parent="Map Interactives/health packs" instance=ExtResource("16_ry1bv")]
-position = Vector2(1760, -4288)
-scale = Vector2(3, 3)
+position = Vector2(759, -1824)
 
 [node name="HealthPack7" parent="Map Interactives/health packs" instance=ExtResource("16_ry1bv")]
-position = Vector2(-1248, -5472)
-scale = Vector2(3, 3)
+position = Vector2(-376, -1642)
 
 [node name="HealthPack8" parent="Map Interactives/health packs" instance=ExtResource("16_ry1bv")]
-position = Vector2(1792, -5440)
-scale = Vector2(3, 3)
-
-[node name="HealthPack9" parent="Map Interactives/health packs" instance=ExtResource("16_ry1bv")]
-position = Vector2(1607, 67)
-
-[node name="HealthPack10" parent="Map Interactives/health packs" instance=ExtResource("16_ry1bv")]
-position = Vector2(5952, -608)
-scale = Vector2(3, 3)
-
-[node name="HealthPack11" parent="Map Interactives/health packs" instance=ExtResource("16_ry1bv")]
-position = Vector2(5952, -1824)
-scale = Vector2(3, 3)
-
-[node name="HealthPack12" parent="Map Interactives/health packs" instance=ExtResource("16_ry1bv")]
-position = Vector2(-2016, -704)
-scale = Vector2(3, 3)
-
-[node name="HealthPack13" parent="Map Interactives/health packs" instance=ExtResource("16_ry1bv")]
-position = Vector2(2080, -704)
-scale = Vector2(3, 3)
-
-[node name="HealthPack14" parent="Map Interactives/health packs" instance=ExtResource("16_ry1bv")]
-position = Vector2(-1632, -4160)
-scale = Vector2(3, 3)
-
-[node name="HealthPack17" parent="Map Interactives/health packs" instance=ExtResource("16_ry1bv")]
-position = Vector2(0, -5944)
-scale = Vector2(3, 3)
-
-[node name="HealthPack18" parent="Map Interactives/health packs" instance=ExtResource("16_ry1bv")]
-position = Vector2(3584, -3200)
-scale = Vector2(3, 3)
+position = Vector2(768, -1250)
 
 [node name="MiniMap" parent="." instance=ExtResource("20_43dxa")]
 
@@ -1479,151 +1435,41 @@ vertical_alignment = 1
 [node name="Bats" type="Node2D" parent="enemigos"]
 scale = Vector2(2, 2)
 
-[node name="Bat" parent="enemigos/Bats" instance=ExtResource("21_k1x5a")]
-position = Vector2(2384, -596)
-
-[node name="Bat2" parent="enemigos/Bats" instance=ExtResource("21_k1x5a")]
-position = Vector2(-2464, -944)
-
-[node name="Bat3" parent="enemigos/Bats" instance=ExtResource("21_k1x5a")]
-position = Vector2(-720, -796)
-
-[node name="Bat4" parent="enemigos/Bats" instance=ExtResource("21_k1x5a")]
-position = Vector2(-1616, -328)
-
-[node name="Bat5" parent="enemigos/Bats" instance=ExtResource("21_k1x5a")]
-position = Vector2(-1504, -1560)
-
-[node name="Bat6" parent="enemigos/Bats" instance=ExtResource("21_k1x5a")]
-position = Vector2(1664, -988)
-
-[node name="Bat7" parent="enemigos/Bats" instance=ExtResource("21_k1x5a")]
-position = Vector2(-1616, -940)
-
-[node name="Bat8" parent="enemigos/Bats" instance=ExtResource("21_k1x5a")]
-position = Vector2(1664, -388)
-
 [node name="Bat9" parent="enemigos/Bats" instance=ExtResource("21_k1x5a")]
-position = Vector2(832, -728)
-
-[node name="Bat10" parent="enemigos/Bats" instance=ExtResource("21_k1x5a")]
-position = Vector2(3552, -344)
-
-[node name="Bat11" parent="enemigos/Bats" instance=ExtResource("21_k1x5a")]
-position = Vector2(1648, -1564)
-
-[node name="Bat12" parent="enemigos/Bats" instance=ExtResource("21_k1x5a")]
-position = Vector2(-3552, -340)
+position = Vector2(321.5, -464)
 
 [node name="Cangri" type="Node2D" parent="enemigos"]
 
 [node name="Cangri" parent="enemigos/Cangri" instance=ExtResource("22_43dxa")]
-position = Vector2(-1, -6573)
-scale = Vector2(4, 4)
-max_health = 50
+position = Vector2(-6, -1902)
 
 [node name="MagicBook" type="Node2D" parent="enemigos"]
 
+[node name="MagicBook" parent="enemigos/MagicBook" instance=ExtResource("23_ypd4o")]
+position = Vector2(-719, 1)
+
 [node name="MagicBook2" parent="enemigos/MagicBook" instance=ExtResource("23_ypd4o")]
-position = Vector2(1882, 134)
-scale = Vector2(2, 2)
-patrol_speed = 100.0
+position = Vector2(1132, -13)
 
 [node name="MagicBook3" parent="enemigos/MagicBook" instance=ExtResource("23_ypd4o")]
-position = Vector2(-1889, 133)
-scale = Vector2(2, 2)
-patrol_speed = 100.0
+position = Vector2(1379, -371)
 
 [node name="MagicBook4" parent="enemigos/MagicBook" instance=ExtResource("23_ypd4o")]
-position = Vector2(-1, -1169)
-scale = Vector2(2, 2)
-patrol_speed = 100.0
-
-[node name="MagicBook5" parent="enemigos/MagicBook" instance=ExtResource("23_ypd4o")]
-position = Vector2(4766, 135)
-scale = Vector2(2, 2)
-patrol_speed = 100.0
-
-[node name="MagicBook6" parent="enemigos/MagicBook" instance=ExtResource("23_ypd4o")]
-position = Vector2(-4767, 135)
-scale = Vector2(2, 2)
-patrol_speed = 100.0
-
-[node name="MagicBook11" parent="enemigos/MagicBook" instance=ExtResource("23_ypd4o")]
-position = Vector2(-1921, -3602)
-scale = Vector2(2, 2)
-patrol_speed = 100.0
-
-[node name="MagicBook7" parent="enemigos/MagicBook" instance=ExtResource("23_ypd4o")]
-position = Vector2(1922, -3601)
-scale = Vector2(2, 2)
-patrol_speed = 100.0
-
-[node name="MagicBook8" parent="enemigos/MagicBook" instance=ExtResource("23_ypd4o")]
-position = Vector2(-5695, -1166)
-scale = Vector2(2, 2)
-patrol_speed = 100.0
-
-[node name="MagicBook9" parent="enemigos/MagicBook" instance=ExtResource("23_ypd4o")]
-position = Vector2(5695, -1170)
-scale = Vector2(2, 2)
-patrol_speed = 100.0
-
-[node name="MagicBook10" parent="enemigos/MagicBook" instance=ExtResource("23_ypd4o")]
-position = Vector2(-2848, -1172)
-scale = Vector2(2, 2)
-patrol_speed = 100.0
-
-[node name="MagicBook12" parent="enemigos/MagicBook" instance=ExtResource("23_ypd4o")]
-position = Vector2(2849, -1171)
-scale = Vector2(2, 2)
+position = Vector2(-597, -603)
 
 [node name="DonCangri" type="Node2D" parent="enemigos"]
 
 [node name="DonCangrejo" parent="enemigos/DonCangri" instance=ExtResource("23_43dxa")]
-position = Vector2(-1925, -2378)
-scale = Vector2(3, 3)
-patrol_speed = 100.0
+position = Vector2(-1421, -399)
 
 [node name="DonCangrejo2" parent="enemigos/DonCangri" instance=ExtResource("23_43dxa")]
-position = Vector2(-4737, -2375)
-scale = Vector2(3, 3)
-patrol_speed = 100.0
+position = Vector2(876, -1086)
 
 [node name="DonCangrejo3" parent="enemigos/DonCangri" instance=ExtResource("23_43dxa")]
-position = Vector2(1914, -2376)
-scale = Vector2(3, 3)
-patrol_speed = 100.0
+position = Vector2(-953, -1105)
 
 [node name="DonCangrejo4" parent="enemigos/DonCangri" instance=ExtResource("23_43dxa")]
-position = Vector2(4736, -2380)
-scale = Vector2(3, 3)
-patrol_speed = 100.0
-
-[node name="DonCangrejo5" parent="enemigos/DonCangri" instance=ExtResource("23_43dxa")]
-position = Vector2(-2, -3593)
-scale = Vector2(3, 3)
-patrol_speed = 100.0
-
-[node name="DonCangrejo6" parent="enemigos/DonCangri" instance=ExtResource("23_43dxa")]
-position = Vector2(-3781, -3594)
-scale = Vector2(3, 3)
-patrol_speed = 100.0
-
-[node name="DonCangrejo7" parent="enemigos/DonCangri" instance=ExtResource("23_43dxa")]
-position = Vector2(3774, -3592)
-scale = Vector2(3, 3)
-patrol_speed = 100.0
-
-[node name="DonCangrejo8" parent="enemigos/DonCangri" instance=ExtResource("23_43dxa")]
-position = Vector2(-1424, -4821)
-scale = Vector2(3, 3)
-patrol_speed = 100.0
-
-[node name="DonCangrejo9" parent="enemigos/DonCangri" instance=ExtResource("23_43dxa")]
-position = Vector2(1405, -4851)
-scale = Vector2(3, 3)
-patrol_speed = 100.0
+position = Vector2(121, -407)
 
 [node name="WorldAudioManager" type="Node" parent="."]
 script = ExtResource("24_uyjk6")
