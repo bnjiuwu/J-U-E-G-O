@@ -1,8 +1,11 @@
-[gd_scene load_steps=28 format=3 uid="uid://gbohe3bsoon2"]
+[gd_scene load_steps=25 format=3 uid="uid://gbohe3bsoon2"]
 
 [ext_resource type="Script" uid="uid://bn4ipw1chsa2f" path="res://Assets/Scenes/Enemies Scene/PapaRoberto Scene/papa_roberto.gd" id="1_wv475"]
 [ext_resource type="PackedScene" uid="uid://mh33218besl7" path="res://Assets/Scenes/Enemies Scene/PapaRoberto Scene/Insulto Scene/Insulto.tscn" id="2_b4u60"]
 [ext_resource type="Texture2D" uid="uid://bskkdoku1etre" path="res://Assets/sprites/enemies/Papa Roberto/Padre Roberto Update.png" id="2_jpdcp"]
+[ext_resource type="Texture2D" uid="uid://dga83p68pdgfu" path="res://Assets/sprites/objects type shi/Explotions/explotion-g.png" id="5_e58xu"]
+[ext_resource type="FontFile" uid="uid://dhhjcp1rxp6gj" path="res://Assets/Fonts/minecraft_font.ttf" id="4_b4u60"]
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_b4u60"]
 atlas = ExtResource("2_jpdcp")
 region = Rect2(0, 0, 42, 64)
@@ -26,6 +29,34 @@ region = Rect2(42, 64, 42, 63)
 [sub_resource type="AtlasTexture" id="AtlasTexture_557b5"]
 atlas = ExtResource("2_jpdcp")
 region = Rect2(84, 64, 42, 63)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_explo0"]
+atlas = ExtResource("5_e58xu")
+region = Rect2(0, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_explo1"]
+atlas = ExtResource("5_e58xu")
+region = Rect2(48, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_explo2"]
+atlas = ExtResource("5_e58xu")
+region = Rect2(96, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_explo3"]
+atlas = ExtResource("5_e58xu")
+region = Rect2(144, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_explo4"]
+atlas = ExtResource("5_e58xu")
+region = Rect2(192, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_explo5"]
+atlas = ExtResource("5_e58xu")
+region = Rect2(240, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_explo6"]
+atlas = ExtResource("5_e58xu")
+region = Rect2(288, 0, 48, 48)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_rvslg"]
 animations = [{
@@ -56,6 +87,32 @@ animations = [{
 "loop": true,
 "name": &"walk",
 "speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_explo0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_explo1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_explo2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_explo3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_explo4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_explo5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_explo6")
+}],
+"loop": false,
+"name": &"death",
+"speed": 10.0
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_afvr2"]
@@ -71,11 +128,24 @@ size = Vector2(446, 32)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2tv7y"]
 size = Vector2(39, 53)
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wxyix"]
+bg_color = Color(0.83571845, 1.732707e-06, 4.813075e-07, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+anti_aliasing = false
+
 [node name="PapaRoberto" type="CharacterBody2D" groups=["enemy"]]
 collision_layer = 16
 collision_mask = 11
 script = ExtResource("1_wv475")
-max_health = 300
+max_health = 180
 insult_scene = ExtResource("2_b4u60")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
@@ -103,7 +173,7 @@ collision_mask = 11
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AttackArea"]
 shape = SubResource("RectangleShape2D_jpdcp")
 
-[node name="Hitbox" type="Area2D" parent="." groups=["enemy"]]
+[node name="Hitbox" type="Area2D" parent="." groups=["enemy", "enemy_hitbox"]]
 collision_layer = 16
 collision_mask = 11
 
@@ -114,5 +184,22 @@ debug_color = Color(0.98740715, 0.07660497, 0.20819211, 0.41960785)
 
 [node name="RayCast2D" type="RayCast2D" parent="."]
 target_position = Vector2(0, 29)
+
+[node name="HealthBar" type="ProgressBar" parent="."]
+offset_left = -26.0
+offset_top = -35.0
+offset_right = 28.0
+offset_bottom = -29.0
+theme_override_styles/fill = SubResource("StyleBoxFlat_wxyix")
+max_value = 180.0
+value = 180.0
+show_percentage = false
+
+[node name="HealthBarNumber" type="Label" parent="."]
+offset_left = -20.0
+offset_top = -60.0
+offset_right = 20.0
+offset_bottom = -37.0
+theme_override_fonts/font = ExtResource("4_b4u60")
 
 [connection signal="area_entered" from="Hitbox" to="." method="_on_hitbox_area_entered"]
