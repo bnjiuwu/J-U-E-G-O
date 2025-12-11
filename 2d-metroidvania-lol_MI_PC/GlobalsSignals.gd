@@ -4,6 +4,8 @@ extends Node
 signal enemy_defeated
 signal meme_mode_changed(enabled: bool)
 signal touch_controls_visibility_changed(show_on_desktop: bool)
+signal background_music_pause_requested
+signal background_music_resume_requested
 
 const SETTINGS_PATH := "user://settings.cfg"
 const SECTION_GAMEPLAY := "gameplay"
