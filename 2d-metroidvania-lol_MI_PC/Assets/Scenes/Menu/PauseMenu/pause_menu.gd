@@ -23,15 +23,18 @@ func toggle_pause():
 func _pause():
 	get_tree().paused = true
 	visible = true
+	GlobalsSignals.background_music_pause_requested.emit()
 
 func _resume():
 	get_tree().paused = false
 	visible = false
+	GlobalsSignals.background_music_resume_requested.emit()
 
 func _on_resume_pressed():
 	_resume()
 
 func _on_restart_pressed():
+	GlobalsSignals.background_music_resume_requested.emit()
 	get_tree().paused = false
 	get_tree().reload_current_scene()
 
@@ -56,5 +59,6 @@ func _on_quit_pressed() -> void:
 			Network.leave_match("leave_from_pause_menu")
 
 	# 3) Volver al menú principal
+	GlobalsSignals.background_music_resume_requested.emit()
 	get_tree().paused = false
 	get_tree().change_scene_to_file("res://Assets/Scenes/Menu/menu.tscn")
