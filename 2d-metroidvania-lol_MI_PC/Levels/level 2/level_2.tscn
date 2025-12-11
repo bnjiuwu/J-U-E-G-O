@@ -425,7 +425,7 @@ texture = ExtResource("10_wv8gn")
 31:1/0 = 0
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_u26w3"]
-texture = ExtResource("8_jts62")
+texture = ExtResource("11_bmqte")
 3:11/0 = 0
 4:11/0 = 0
 3:12/0 = 0
@@ -1087,7 +1087,7 @@ sources/0 = SubResource("TileSetAtlasSource_ct321")
 sources/1 = SubResource("TileSetAtlasSource_u26w3")
 sources/2 = SubResource("TileSetAtlasSource_vev6x")
 
-[node name="LevelGolem" type="Node2D"]
+[node name="Level_2" type="Node2D"]
 script = ExtResource("14_es23n")
 
 [node name="WorldAudioManager" type="Node" parent="."]
